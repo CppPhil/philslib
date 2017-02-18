@@ -1,5 +1,5 @@
 /*! \file memory.hpp
- *  \brief This header defines various memory management utilities.
+ *  \brief This header defines various dynamic memory management utilities.
 **/
 
 #ifndef INCG_PL_MEMORY_HPP
