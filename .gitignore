@@ -478,3 +478,7 @@ __pycache__/
 # !tools/packages.config
 
 # End of https://www.gitignore.io/api/linux,windows,c,c++,qt,cmake,visualstudio,visualstudiocode,clion
+
+### Testing ###
+main.cpp
+catch.hpp
