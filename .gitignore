@@ -479,6 +479,9 @@ __pycache__/
 
 # End of https://www.gitignore.io/api/linux,windows,c,c++,qt,cmake,visualstudio,visualstudiocode,clion
 
+### Missing QtCreator files ###
+*.pro
+
 ### Testing ###
 main.cpp
 catch.hpp
