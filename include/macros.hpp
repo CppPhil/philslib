@@ -130,6 +130,22 @@
  * \note Uses the C++17 attribute if available
 **/
 
+/*!
+ * \def PL_PARENT(parent)
+ * \brief Macro that can be used to mark something as a parent.
+ *        Can be used when using Qt Framework's parent system for instance.
+**/
+
+/*!
+ * \def PL_FOREVER
+ * \brief Expands to for (;;). Macro to create a never ending loop.
+**/
+
+/*!
+ * \def PL_NULL_TERMINATED
+ * \brief Macro to annotate char * and char[] types as null terminated.
+**/
+
 #if PL_COMPILER == PL_COMPILER_GCC
 #   define PL_ALWAYS_INLINE __attribute__((always_inline)) inline
 #   define PL_NEVER_INLINE __attribute__((noinline))
@@ -202,5 +218,11 @@
 #   define PL_FALLTHROUGH /* nothing */
 #   define PL_NODISCARD /* nothing */
 #endif
+
+#define PL_PARENT(parent) parent
+
+#define PL_FOREVER for (;;)
+
+#define PL_NULL_TERMINATED /* nothing */
 
 #endif // INCG_PL_MACROS_HPP
