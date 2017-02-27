@@ -87,35 +87,56 @@
 /*!
  * \def PL_IN
  * \brief Annotates a pointer or reference parameter as an input parameter.
+ *
+ * Indicates that the referenced object will only be read from.
 **/
 
 /*!
  * \def PL_OUT
  * \brief Annotates a pointer or reference parameter as an output parameter.
+ * \note Allows the pointer or reference parameter to refer to an unitialized
+ *       object as the object referenced will only be written.
+ *
+ * Indicates that the referenced object will only be written to,
+ * but not be read from.
 **/
 
 /*!
  * \def PL_INOUT
  * \brief Annotates a pointer or reference paramater as an input-output
  *        parameter.
+ *
+ * Indicates that the referenced object will be both read from and
+ * be written to.
 **/
 
 /*!
  * \def PL_IN_OPT
  * \brief Annotates a pointer parameter as an optional input parameter.
  * \note Pass nullptr to not use the input parameter.
+ *
+ * Indicates that if the pointer is not a null pointer the pointed to object
+ * will only be read from.
 **/
 
 /*!
  * \def PL_OUT_OPT
  * \brief Annotates a pointer parameter as an optional output parameter.
  * \note Pass nullptr to not use the output parameter.
+ * \note The pointer is allowed to point to an uninitialized object as
+ *       the pointed to object will only be written to and not be read from.
+ *
+ * Indicates that if the pointer is not a null pointer the pointed to object
+ * will only be written to, but never be read from.
 **/
 
 /*!
  * \def PL_INOUT_OPT
  * \brief Annotates a pointer parameter as an optional input-output parameter.
  * \note Pass nullptr to not use the input-output parameter.
+ *
+ * Indicates that if the pointer is not a null pointer the pointed to object
+ * will be both read from and written to.
 **/
 
 /*!
@@ -144,6 +165,13 @@
 /*!
  * \def PL_NULL_TERMINATED
  * \brief Macro to annotate char * and char[] types as null terminated.
+**/
+
+/*!
+ * \def PL_IMPLICIT
+ * \brief Macro to annotate constructors callable with a single argument
+ *        (converting constructors) and implicit conversion operators that
+ *        lack the explicit keyword on purpose as implicit.
 **/
 
 #if PL_COMPILER == PL_COMPILER_GCC
@@ -224,5 +252,7 @@
 #define PL_FOREVER for (;;)
 
 #define PL_NULL_TERMINATED /* nothing */
+
+#define PL_IMPLICIT /* nothing */
 
 #endif // INCG_PL_MACROS_HPP

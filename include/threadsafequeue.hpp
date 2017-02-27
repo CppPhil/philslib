@@ -9,6 +9,7 @@
 #include <mutex> // std::mutex, std::unique_lock
 #include <condition_variable> // std::condition_variable
 #include <utility> // std::move
+#include <ciso646> // not
 namespace pl
 {
 /*!
@@ -48,7 +49,7 @@ public:
     {
         std::unique_lock<std::mutex> lock{ m_mutex };
         m_cvHasElements.wait(lock, [this] {
-            return !m_cont.empty();
+            return not m_cont.empty();
         });
         auto retMe = m_cont.front();
         m_cont.pop();
