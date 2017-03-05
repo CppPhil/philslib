@@ -174,6 +174,40 @@
  *        lack the explicit keyword on purpose as implicit.
 **/
 
+/*!
+ * \def PL_PACKED_START
+ * \brief Place this macro before the beginning of a struct declaration in order
+ *        to declare the struct as packed.
+ * \warning Don't forget to place the PL_PACKED_END macro at the end of the struct
+ *          declaration.
+ * \see PL_PACKED_END
+ * \example PL_PACKED_START
+ *          struct PackedStruct
+ *          {
+ *              std::uint32_t a;
+ *              std::uint16_t b;
+ *          };
+ *          PL_PACKED_END
+ *
+ * A packed struct will contain no padding.
+ * This can be used to treat packed structs as raw memory.
+**/
+
+/*!
+ * \def PL_PACKED_END
+ * \brief The macro that ends a packed struct declaration introduced by
+ *        PL_PACKED_START
+ * \see PL_PACKED_START
+**/
+
+/*!
+ * \def PL_PRETTY_FUNCTION
+ * \brief Expands to a C-String literal that represents the current function.
+ * \note Uses the 'prettiest' function macro that the compiler being used provides.
+ * \warning Depending on the compiler used, this macro will expand to a different
+ *          C-String literal!
+**/
+
 #if PL_COMPILER == PL_COMPILER_GCC
 #   define PL_ALWAYS_INLINE __attribute__((always_inline)) inline
 #   define PL_NEVER_INLINE __attribute__((noinline))
@@ -254,5 +288,21 @@
 #define PL_NULL_TERMINATED /* nothing */
 
 #define PL_IMPLICIT /* nothing */
+
+#if PL_COMPILER == PL_COMPILER_MSVC
+#   define PL_PACKED_START __pragma(pack(push, 1))
+#   define PL_PACKED_END __pragma(pack(pop))
+#else
+#   define PL_PACKED_START _Pragma("pack(push, 1)")
+#   define PL_PACKED_END _Pragma("pack(pop)")
+#endif
+
+#if PL_COMPILER == PL_COMPILER_MSVC
+#   define PL_PRETTY_FUNCTION __FUNCSIG__
+#elif PL_COMPILER == PL_COMPILER_GCC || PL_COMPILER == PL_COMPILER_CLANG
+#   define PL_PRETTY_FUNCTION __PRETTY_FUNCTION__
+#else
+#   define PL_PRETTY_FUNCTION __func__
+#endif
 
 #endif // INCG_PL_MACROS_HPP
