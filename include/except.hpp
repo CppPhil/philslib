@@ -36,4 +36,27 @@
             return base_type::what(); \
         } \
     }
+
+namespace pl
+{
+/*!
+ * \brief Function to handle uncaught exceptions.
+ * \warning Only call this function in a catch block!
+ * \note This function attempts to rethrow the exception that was just caught.
+ * \example int main()
+ *          try {
+ *              app::throwException();
+ *          } catch (...) {
+ *              pl::handleExceptions();
+ *          }
+ *
+ * This function can be used to handle uncaught exceptions that would escape
+ * from the main function for instance.
+ * This function shall be called in a try { } catch (...) { } block.
+ * pl::handleException will rethrow the exception that was just caught and
+ * handle it, by printing the information associated with that exception to
+ * std::cerr.
+**/
+void handleExceptions();
+} // namespace pl
 #endif // INCG_PL_EXCEPT_HPP

@@ -74,7 +74,7 @@ auto back(PL_IN Type (&arr)[Size]) -> decltype(auto)
  *          the container passed in was empty.
 **/
 template <typename Cont>
-auto data(PL_IN Cont &cont) -> decltype(auto)
+auto data(PL_IN Cont &cont) noexcept -> decltype(auto)
 {
     return cont.data();
 }
@@ -85,9 +85,33 @@ auto data(PL_IN Cont &cont) -> decltype(auto)
  *        to get the pointer to its first element from.
 **/
 template <typename Type, std::size_t Size>
-auto data(PL_IN Type (&arr)[Size]) -> decltype(auto)
+auto data(PL_IN Type (&arr)[Size]) noexcept -> decltype(auto)
 {
     return std::addressof(arr[0]);
+}
+
+/*!
+ * \brief Gets the size of a container, which is the amount of elements
+ *        currently stored in that container.
+ * \param cont The container to get the size of.
+ * \return The size of the container passed into the parameter.
+**/
+template <typename Cont>
+auto size(PL_IN Cont &cont) noexcept -> decltype(auto)
+{
+    return cont.size();
+}
+
+/*!
+ * \brief Gets the size of a C-Array.
+ * \param arr The C-Array to get the size of.
+ * \return The size of the C-Array passed into the parameter is returned.
+**/
+template <typename Type, std::size_t Size>
+std::size_t size(PL_IN Type (&arr)[Size]) noexcept
+{
+    PL_UNUSED(arr);
+    return Size;
 }
 
 /*!

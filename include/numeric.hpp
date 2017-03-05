@@ -6,6 +6,7 @@
 #define INCG_PL_NUMERIC_HPP
 #include <ciso646> // not, and
 #include <stdexcept> // std::invalid_argument
+#include <cstddef> // std::size_t
 namespace pl
 {
 /*!
