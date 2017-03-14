@@ -21,9 +21,9 @@
 namespace pl
 {
 /*!
- * \brief Gets the first element of a container.
- * \param cont The container to get the first element of.
- * \return The first element of the container.
+ * \brief Gets the first (index 0) element of a container.
+ * \param cont The container to get the first (index 0) element of.
+ * \return The first (index 0) element of the container.
  * \warning Undefined behavior occurs if the container passed is empty.
 **/
 template <typename Cont>
@@ -33,9 +33,9 @@ auto front(PL_IN Cont &cont) -> decltype(auto)
 }
 
 /*!
- * \brief Gets the first element of a C-Array.
- * \param arr The C-Array to get the first element of.
- * \return The first element of the C-Array.
+ * \brief Gets the first (index 0) element of a C-Array.
+ * \param arr The C-Array to get the first (index 0) element of.
+ * \return The first (index 0) element of the C-Array.
 **/
 template <typename Type, std::size_t Size>
 auto front(PL_IN Type (&arr)[Size]) -> decltype(auto)
@@ -80,9 +80,9 @@ auto data(PL_IN Cont &cont) noexcept -> decltype(auto)
 }
 
 /*!
- * \brief Function to get a pointer to the first element of a C-Array.
+ * \brief Function to get a pointer to the first (index 0) element of a C-Array.
  * \param arr The C-Array for which
- *        to get the pointer to its first element from.
+ *        to get the pointer to its first (index 0) element from.
 **/
 template <typename Type, std::size_t Size>
 auto data(PL_IN Type (&arr)[Size]) noexcept -> decltype(auto)

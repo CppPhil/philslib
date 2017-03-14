@@ -10,7 +10,7 @@
  * \def PL_DEFINE_EXCEPTION_TYPE(exceptionTypeIdentifier, baseClass)
  * \brief Defines an exception type. Its name will be exceptionTypeIdentifier
  *        and the base class will be baseClass. The exception type is defined
- *        in the current namespace. This macro make defining new exception
+ *        in the current namespace. This macro makes defining new exception
  *        types a lot more convenient by generating a lot of boilerplate code.
 **/
 #define PL_DEFINE_EXCEPTION_TYPE(exceptionTypeIdentifier, baseClass) \
