@@ -11,6 +11,40 @@
 namespace pl
 {
 /*!
+ * \brief Generic type of function pointer.
+ * \warning The function pointer stored in a variable of this type must be
+ *          cast back to its actual type before being used!
+ * \note It is illegal to store function pointers in non-function pointer types
+ *       like void *.
+ * \example #include <pl/utility.hpp>
+ *          #include <iostream>
+ *
+ *          namespace app
+ *          {
+ *          void myFunction(void *p)
+ *          {
+ *              std::cout << "hello address: " << p << '\n';
+ *          }
+ *          } // namespace app
+ *
+ *          int main()
+ *          {
+ *              // store the function pointer in a generic type of function pointer.
+ *              pl::FunctionPointer p = reinterpret_cast<pl::FunctionPointer>(&app::myFunction);
+ *
+ *              // to use it must be cast back to its actual type.
+ *              reinterpret_cast<void (*)(void *)>(p)(nullptr);
+ *
+ *              std::cout << std::flush;
+ *          }
+ *
+ * May be used to store pointers to functions. To call the function stored in
+ * a variable of this type you must first cast it back to its actual type.
+ * This type serves as a generic type of function pointer.
+**/
+using FunctionPointer = void (*)();
+
+/*!
  * \brief Toggles the boolean passed in.
  * \param b The boolean to be toggled.
  * \return The new value of the the boolean passed in.

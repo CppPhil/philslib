@@ -175,7 +175,7 @@ bool isBitSet(Numeric numeric, Numeric bit)
  * The bytes of that copy are then reversed and the result is passed back out.
 **/
 template <typename Type>
-Type bswap(Type ty)
+inline Type bswap(Type ty)
 {
     auto begin = asBytes(ty);
     auto const end = begin + sizeof(Type);
