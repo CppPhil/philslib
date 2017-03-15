@@ -1,9 +1,9 @@
-/*! \file hash.hpp
- *  \brief Header file that defines hashing utilities.
- *         So that implementing hash functions for user defined types
- *         becomes easier.
+/*!
+ * \file hash.hpp
+ * \brief Header file that defines hashing utilities.
+ *        So that implementing hash functions for user defined types
+ *        becomes easier.
 **/
-
 #ifndef INCG_PL_HASH_HPP
 #define INCG_PL_HASH_HPP
 #include "macros.hpp" // PL_IN, PL_INOUT, PL_UNUSED

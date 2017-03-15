@@ -1,11 +1,10 @@
-/*! \file except.hpp
- *  \brief This header defines various utilities for working with exceptions.
+/*!
+ * \file except.hpp
+ * \brief This header defines various utilities for working with exceptions.
 **/
-
 #ifndef INCG_PL_EXCEPT_HPP
 #define INCG_PL_EXCEPT_HPP
 #include <string> // std::string
-
 /*!
  * \def PL_DEFINE_EXCEPTION_TYPE(exceptionTypeIdentifier, baseClass)
  * \brief Defines an exception type. Its name will be exceptionTypeIdentifier

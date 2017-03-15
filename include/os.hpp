@@ -1,10 +1,9 @@
-/*! \file os.hpp
- *  \brief defines macros to detect the operating system used.
+/*!
+ * \file os.hpp
+ * \brief defines macros to detect the operating system used.
 **/
-
 #ifndef INCG_PL_OS_HPP
 #define INCG_PL_OS_HPP
-
 /*!
  * \def PL_OS_WINDOWS
  * \brief PL_OS will be defined as this if the operating system used is

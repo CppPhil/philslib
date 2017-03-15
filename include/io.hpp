@@ -1,5 +1,6 @@
-/*! \file io.hpp
- *  \brief Defines various input/output utilities.
+/*!
+ * \file io.hpp
+ * \brief Defines various input/output utilities.
 **/
 
 #ifndef INCG_PL_IO_HPP

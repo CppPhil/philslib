@@ -1,14 +1,13 @@
-/*! \file iterator.hpp
- *  \brief This file defines various utilities for working with iterators.
+/*!
+ * \file iterator.hpp
+ * \brief This file defines various utilities for working with iterators.
 **/
-
 #ifndef INCG_PL_ITERATOR_HPP
 #define INCG_PL_ITERATOR_HPP
+#include "macros.hpp" // PL_IN
 #include <cstddef> // std::size_t
 #include <iterator> // std::reverse_iterator
 #include <type_traits> // std::true_type, std::false_type
-#include "macros.hpp" // PL_IN
-
 /*!
  * \def PL_BEGIN_END(cont)
  * \brief Macro that can be used to call a function that expects begin and

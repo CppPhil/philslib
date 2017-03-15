@@ -1,5 +1,6 @@
-/*! \file string.hpp
- *  \brief This header defines various string utilities.
+/*!
+ * \file string.hpp
+ * \brief This header defines various string utilities.
 **/
 
 #ifndef INCG_PL_STRING_HPP

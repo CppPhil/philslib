@@ -1,7 +1,7 @@
-/*! \file utility.hpp
- *  \brief Defines various general utilities.
+/*!
+ * \file utility.hpp
+ * \brief Defines various general utilities.
 **/
-
 #ifndef INCG_PL_UTILITY_HPP
 #define INCG_PL_UTILITY_HPP
 #include "macros.hpp" // PL_INOUT, PL_UNUSED

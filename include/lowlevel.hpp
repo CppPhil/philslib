@@ -1,7 +1,7 @@
-/*! \file lowlevel.hpp
- *  \brief This header defines various low level utilities.
+/*!
+ * \file lowlevel.hpp
+ * \brief This header defines various low level utilities.
 **/
-
 #ifndef INCG_PL_LOWLEVEL_HPP
 #define INCG_PL_LOWLEVEL_HPP
 #include "macros.hpp" // PL_IN, PL_IN_OPT

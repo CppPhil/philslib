@@ -1,9 +1,9 @@
-/*! \file concurrent.hpp
- *  \brief Defines the Concurrent type which wraps an instance of any type
- *         and manages a thread that runs callables on the instance wrapped.
- *         Those callables are passed in by users.
+/*!
+ * \file concurrent.hpp
+ * \brief Defines the Concurrent type which wraps an instance of any type
+ *        and manages a thread that runs callables on the instance wrapped.
+ *        Those callables are passed in by users.
 **/
-
 #ifndef INCG_PL_CONCURRENT_HPP
 #define INCG_PL_CONCURRENT_HPP
 #include "macros.hpp" // PL_IN, PL_OUT, PL_INOUT

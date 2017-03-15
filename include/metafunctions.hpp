@@ -1,5 +1,6 @@
-/*! \file metafunctions.hpp
- *  \brief Defines various meta functions.
+/*!
+ * \file metafunctions.hpp
+ * \brief Defines various meta functions.
 **/
 #ifndef INCG_PL_METAFUNCTIONS_HPP
 #define INCG_PL_METAFUNCTIONS_HPP

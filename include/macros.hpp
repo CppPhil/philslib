@@ -1,11 +1,10 @@
-/*! \file macros.hpp
- *  \brief Defines various useful macros.
+/*!
+ * \file macros.hpp
+ * \brief Defines various useful macros.
 **/
-
 #ifndef INCG_PL_MACROS_HPP
 #define INCG_PL_MACROS_HPP
 #include "compiler.hpp" // PL_COMPILER, PL_COMPILER_GCC, PL_COMPILER_CLANG, PL_COMPILER_ICC, PL_COMPILER_MSVC, PL_COMPILER_UNKNOWN
-
 /*!
  * \def PL_ALWAYS_INLINE
  * \brief Declares a function as always to be inlined (if possible).
@@ -95,7 +94,7 @@
  * \def PL_OUT
  * \brief Annotates a pointer or reference parameter as an output parameter.
  * \note Allows the pointer or reference parameter to refer to an unitialized
- *       object as the object referenced will only be written.
+ *       object as the object referenced will only be written to.
  *
  * Indicates that the referenced object will only be written to,
  * but not be read from.
@@ -304,5 +303,4 @@
 #else
 #   define PL_PRETTY_FUNCTION __func__
 #endif
-
 #endif // INCG_PL_MACROS_HPP

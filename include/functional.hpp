@@ -1,7 +1,7 @@
-/*! \file functional.hpp
- *  \brief Defines function objects and associated utilities.
+/*!
+ * \file functional.hpp
+ * \brief Defines function objects and associated utilities.
 **/
-
 #ifndef INCG_PL_FUNCTIONAL_HPP
 #define INCG_PL_FUNCTIONAL_HPP
 #include "macros.hpp" // PL_IN

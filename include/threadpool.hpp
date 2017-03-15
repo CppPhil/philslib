@@ -1,5 +1,6 @@
-/*! \file threadpool.hpp
- *  \brief Defines the ThreadPool class.
+/*!
+ * \file threadpool.hpp
+ * \brief Defines the ThreadPool class.
 **/
 #include "macros.hpp" // PL_IN, PL_NODISCARD
 #include <memory> // std::shared_ptr, std::unique_ptr
@@ -12,7 +13,6 @@
 #include <queue> // std::priority_queue
 #include <cstddef> // std::size_t
 #include <cstdint> // std::uint8_t
-
 namespace pl
 {
 /*!

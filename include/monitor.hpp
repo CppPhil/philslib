@@ -1,14 +1,13 @@
-/*! \file monitor.hpp
- *  \brief Defines the Monitor class that can be used to synchronize access
+/*!
+ * \file monitor.hpp
+ * \brief Defines the Monitor class that can be used to synchronize access
  *         from multiple threads to some shared data.
 **/
-
 #ifndef INCG_PL_MONITOR_HPP
 #define INCG_PL_MONITOR_HPP
 #include "macros.hpp" // PL_IN
 #include <mutex> // std::mutex, std::lock_guard
 #include <utility> // std::move
-
 namespace pl
 {
 /*!

@@ -1,7 +1,7 @@
-/*! \file container.hpp
- *  \brief Defines a few utility functions for working with containers.
+/*!
+ * \file container.hpp
+ * \brief Defines a few utility functions for working with containers.
 **/
-
 #ifndef INCG_PL_CONTAINER_HPP
 #define INCG_PL_CONTAINER_HPP
 #include "macros.hpp" // PL_IN
@@ -296,6 +296,5 @@ struct container_traits<std::unordered_multimap<Type, Comparator, Allocator>>
 **/
 template <typename Container>
 using container_traits_category = typename container_traits<Container>::category;
-
 } // namespace pl
 #endif // INCG_PL_CONTAINER_HPP

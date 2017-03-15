@@ -1,7 +1,7 @@
-/*! \file threadsafequeue.hpp
- *  \brief This header file defines the pl::ThreadSafeQueue class
+/*!
+ * \file threadsafequeue.hpp
+ * \brief This header file defines the pl::ThreadSafeQueue class
 **/
-
 #ifndef INCG_PL_THREADSAFEQUEUE_HPP
 #define INCG_PL_THREADSAFEQUEUE_HPP
 #include "macros.hpp" // PL_IN, PL_NODISCARD

@@ -1,10 +1,9 @@
-/*! \file compiler.hpp
- *  \brief Defines macros to determine the compiler being used.
+/*!
+ * \file compiler.hpp
+ * \brief Defines macros to determine the compiler being used.
 **/
-
 #ifndef INCG_PL_COMPILER_HPP
 #define INCG_PL_COMPILER_HPP
-
 /*!
  * \def PL_COMPILER_CLANG
  * \brief PL_COMPILER will be defined as this if clang is being used.
