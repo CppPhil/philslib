@@ -83,5 +83,25 @@ using element_type = typename Type::element_type;
 **/
 template <typename Type>
 using deleter_type = typename Type::deleter_type;
+
+/*!
+ * \brief Meta function to get the unqualifid type of a type.
+ *
+ * The nested type type will have its reference type modifiers removed
+ * and will have its const and volatile type qualifiers removed.
+**/
+template <typename Type>
+struct unqualified
+    : public std::remove_cv<std::remove_reference_t<Type>>
+{
+};
+
+/*!
+ * \brief C++14 style meta function helper that is an alias of the nested type
+ *        type of pl::unqualified. Reduces the necessity of the typename keyword
+ *        in application code.
+**/
+template <typename Type>
+using unqualified_t = typename unqualified<Type>::type;
 } // namespace pl
 #endif // INCG_PL_METAFUNCTIONS_HPP
