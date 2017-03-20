@@ -159,6 +159,8 @@
 /*!
  * \def PL_FOREVER
  * \brief Expands to for (;;). Macro to create a never ending loop.
+ * \note Using for (;;) rather than while (true) avoids pedantic warnings
+ *       regarding constant expressions being evaluated.
 **/
 
 /*!
@@ -243,7 +245,7 @@
 
 #define PL_BEGIN_MACRO do {
 
-#define PL_END_MACRO } while (PL_UNUSED(0), 0)
+#define PL_END_MACRO } while (PL_UNUSED(0), 0) /* avoid warnings */
 
 #define PL_DETAIL_STRINGIFY(tokens) #tokens
 
@@ -311,7 +313,7 @@
 #elif PL_COMPILER == PL_COMPILER_GCC || PL_COMPILER == PL_COMPILER_CLANG
 #   define PL_PRETTY_FUNCTION __PRETTY_FUNCTION__
 #else
-#   define PL_PRETTY_FUNCTION __func__
+#   define PL_PRETTY_FUNCTION __func__ /* use __func__ from C99 as fallback */
 #endif
 
 #define PL_SOURCE_LINE PL_STRINGIFY(__LINE__)
