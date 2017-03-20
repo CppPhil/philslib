@@ -214,6 +214,7 @@
 /*!
  * \def PL_SOURCE_LINE
  * \brief The current line in the current source file.
+ * \note Note that the line number may have been manipulated using #line.
  *
  * Macro that expands to a C-String literal of the current line in the current
  * source file. Equivalent to the stringification of the standard predefined
