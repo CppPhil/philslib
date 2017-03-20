@@ -9,6 +9,51 @@
 #include <iostream> // std::cerr
 namespace pl
 {
+AssertionViolationException::AssertionViolationException(const std::string &what_arg)
+    : base_type{ what_arg }
+{
+}
+
+AssertionViolationException::AssertionViolationException(const char *what_arg)
+    : base_type{ what_arg }
+{
+}
+
+const char *AssertionViolationException::what() const noexcept
+{
+    return base_type::what();
+}
+
+PreconditionViolationException::PreconditionViolationException(const std::string &what_arg)
+    : base_type{ what_arg }
+{
+}
+
+PreconditionViolationException::PreconditionViolationException(const char *what_arg)
+    : base_type{ what_arg }
+{
+}
+
+const char *PreconditionViolationException::what() const noexcept
+{
+    return base_type::what();
+}
+
+PostconditionViolationException::PostconditionViolationException(const std::string &what_arg)
+    : base_type{ what_arg }
+{
+}
+
+PostconditionViolationException::PostconditionViolationException(const char *what_arg)
+    : base_type{ what_arg }
+{
+}
+
+const char *PostconditionViolationException::what() const noexcept
+{
+    return base_type::what();
+}
+
 namespace detail
 {
 /*!

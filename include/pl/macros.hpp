@@ -205,8 +205,18 @@
  * \note Uses the 'prettiest' function macro that the compiler being used provides.
  * \warning Depending on the compiler used, this macro will expand to a different
  *          C-String literal!
+ * \warning The result of the macro expansion can not be string concatenated
+ *          at compile time with other C-String literals.
 **/
 
+/*!
+ * \def PL_SOURCE_LINE
+ * \brief The current line in the current source file.
+ *
+ * Macro that expands to a C-String literal of the current line in the current
+ * source file. Equivalent to the stringification of the standard predefined
+ * macro __LINE__
+**/
 #if PL_COMPILER == PL_COMPILER_GCC
 #   define PL_ALWAYS_INLINE __attribute__((always_inline)) inline
 #   define PL_NEVER_INLINE __attribute__((noinline))
@@ -303,4 +313,6 @@
 #else
 #   define PL_PRETTY_FUNCTION __func__
 #endif
+
+#define PL_SOURCE_LINE PL_STRINGIFY(__LINE__)
 #endif // INCG_PL_MACROS_HPP
