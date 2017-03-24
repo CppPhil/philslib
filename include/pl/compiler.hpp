@@ -39,11 +39,11 @@
  *        depending on which compiler is being used.
 **/
 
-#define PL_COMPILER_CLANG (0x0004)
-#define PL_COMPILER_ICC (0x0005)
-#define PL_COMPILER_MSVC (0x0006)
-#define PL_COMPILER_GCC (0x0007)
-#define PL_COMPILER_UNKNOWN (0x0008)
+#define PL_COMPILER_CLANG (0x0004) /* meaningless number */
+#define PL_COMPILER_ICC (0x0005) /* meaningless number */
+#define PL_COMPILER_MSVC (0x0006) /* meaningless number */
+#define PL_COMPILER_GCC (0x0007) /* meaningless number */
+#define PL_COMPILER_UNKNOWN (0x0008) /* meaningless number */
 
 #if defined(__clang__)
 #   define PL_COMPILER PL_COMPILER_CLANG

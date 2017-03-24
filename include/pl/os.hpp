@@ -35,10 +35,10 @@
  *        PL_OS_UNKNOWN
 **/
 
-#define PL_OS_WINDOWS (0x0000)
-#define PL_OS_MAC (0x0001)
-#define PL_OS_LINUX (0x0002)
-#define PL_OS_UNKNOWN (0x0003)
+#define PL_OS_WINDOWS (0x0000) /* meaningless number */
+#define PL_OS_MAC (0x0001) /* meaningless number */
+#define PL_OS_LINUX (0x0002) /* meaningless number */
+#define PL_OS_UNKNOWN (0x0003) /* meaningless number */
 
 #if defined(_WIN32)
 #   define PL_OS PL_OS_WINDOWS

@@ -1,6 +1,6 @@
 /*!
  * \file integer.hpp
- * \brief This header defines various fixed size integer types.
+ * \brief This header defines various integer types.
 **/
 #ifndef INCG_PL_INTEGER_HPP
 #define INCG_PL_INTEGER_HPP
