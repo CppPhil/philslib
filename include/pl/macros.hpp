@@ -37,7 +37,7 @@
  * \def PL_UNUSED(param)
  * \brief marks something as unused.
  *
- * Can be used to suppress compiler warning about unused variables.
+ * Can be used to suppress compiler warnings about unused variables.
 **/
 
 /*!
@@ -208,7 +208,7 @@
  * \warning Depending on the compiler used, this macro will expand to a different
  *          C-String literal!
  * \warning The result of the macro expansion can not be string concatenated
- *          at compile time with other C-String literals.
+ *          by the preprocessor with other C-String literals.
 **/
 
 /*!

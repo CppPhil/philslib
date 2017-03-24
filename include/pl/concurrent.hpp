@@ -98,6 +98,7 @@ public:
     }
 
 private:
+    // these type aliases are just for gcc
     using Function = std::function<void ()>;
     using concurrent_queue = ThreadSafeQueue<Function>;
 
