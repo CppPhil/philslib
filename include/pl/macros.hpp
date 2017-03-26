@@ -5,6 +5,7 @@
 #ifndef INCG_PL_MACROS_HPP
 #define INCG_PL_MACROS_HPP
 #include "compiler.hpp" // PL_COMPILER, PL_COMPILER_GCC, PL_COMPILER_CLANG, PL_COMPILER_ICC, PL_COMPILER_MSVC, PL_COMPILER_UNKNOWN
+#include <cstddef> // std::nullptr_t
 /*!
  * \def PL_ALWAYS_INLINE
  * \brief Declares a function as always to be inlined (if possible).
@@ -157,6 +158,13 @@
 **/
 
 /*!
+ * \def PL_NO_PARENT
+ * \brief Macro that expands to nullptr. Can be used when using Qt Framework's 
+ *        parent system for instance. Can be used to create a QObject type with 
+ *        no parent.
+**/
+
+/*!
  * \def PL_FOREVER
  * \brief Expands to for (;;). Macro to create a never ending loop.
  * \note Using for (;;) rather than while (true) avoids pedantic warnings
@@ -294,6 +302,8 @@
 #endif
 
 #define PL_PARENT(parent) parent
+
+#define PL_NO_PARENT nullptr
 
 #define PL_FOREVER for (;;)
 
