@@ -6,6 +6,7 @@
 #define INCG_PL_MACROS_HPP
 #include "compiler.hpp" // PL_COMPILER, PL_COMPILER_GCC, PL_COMPILER_CLANG, PL_COMPILER_ICC, PL_COMPILER_MSVC, PL_COMPILER_UNKNOWN
 #include <cstddef> // std::nullptr_t
+#include <ciso646> // not
 /*!
  * \def PL_ALWAYS_INLINE
  * \brief Declares a function as always to be inlined (if possible).
@@ -159,8 +160,8 @@
 
 /*!
  * \def PL_NO_PARENT
- * \brief Macro that expands to nullptr. Can be used when using Qt Framework's 
- *        parent system for instance. Can be used to create a QObject type with 
+ * \brief Macro that expands to nullptr. Can be used when using Qt Framework's
+ *        parent system for instance. Can be used to create a QObject type with
  *        no parent.
 **/
 
@@ -228,6 +229,30 @@
  * source file. Equivalent to the stringification of the standard predefined
  * macro __LINE__
 **/
+
+/*!
+ * \def PL_UNLESS(condition)
+ * \brief Control flow statement that will execute its body unless the condition
+ *        is true.
+ * \note Behaves the same as if (not condition)
+**/
+
+/*!
+ * \def PL_REPEAT
+ * \brief Introduces a repeat until loop.
+ * \warning Must be ended with PL_UNTIL
+ * \note The repeat until loop behaves like do { } while (not condition)
+**/
+
+/*!
+ * \def PL_UNTIL(condition)
+ * \brief The until part of the repeat until loop. The loop will run until
+ *        the condition is true, that is the loop will repeat its body as long
+ *        as the condition is false.
+ * \warning Must be introduced with PL_UNTIL
+ * \note The repeat until loop behaves like do { } while (not condition)
+**/
+
 #if PL_COMPILER == PL_COMPILER_GCC
 #   define PL_ALWAYS_INLINE __attribute__((always_inline)) inline
 #   define PL_NEVER_INLINE __attribute__((noinline))
@@ -328,4 +353,11 @@
 #endif
 
 #define PL_SOURCE_LINE PL_STRINGIFY(__LINE__)
+
+#define PL_UNLESS(condition) if (not (condition))
+
+#define PL_REPEAT do
+
+#define PL_UNTIL(condition) while (not (condition))
+
 #endif // INCG_PL_MACROS_HPP

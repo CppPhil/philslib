@@ -54,6 +54,36 @@ const char *PostconditionViolationException::what() const noexcept
     return base_type::what();
 }
 
+NullPointerException::NullPointerException(const std::string &what_arg)
+    : base_type{ what_arg }
+{
+}
+
+NullPointerException::NullPointerException(const char *what_arg)
+    : base_type{ what_arg }
+{
+}
+
+const char *NullPointerException::what() const noexcept
+{
+    return base_type::what();
+}
+
+NotYetImplementedException::NotYetImplementedException(const std::string &what_arg)
+    : base_type{ what_arg }
+{
+}
+
+NotYetImplementedException::NotYetImplementedException(const char *what_arg)
+    : base_type{ what_arg }
+{
+}
+
+const char *NotYetImplementedException::what() const noexcept
+{
+    return base_type::what();
+}
+
 namespace detail
 {
 /*!
