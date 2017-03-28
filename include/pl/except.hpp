@@ -38,6 +38,14 @@
  * \see PL_THROW_WITH_SOURCE_INFO
 **/
 
+/*!
+ * \def PL_NOT_YET_IMPLEMENTED
+ * \brief Throws pl::NotYetImplementedException. Can be used to 'implement'
+ *        functions that are net yet implmented so that they throw when called.
+ * \note Uses PL_THROW_WITH_SOURCE_INFO internally.
+ * \see PL_THROW_WITH_SOURCE_INFO
+**/
+
 #define PL_DEFINE_EXCEPTION_TYPE(exceptionTypeIdentifier, baseClass) \
     class exceptionTypeIdentifier \
         : public baseClass \
@@ -80,6 +88,10 @@
             PL_STRINGIFY(pointer) " was null!"); \
     } \
     PL_END_MACRO
+
+#define PL_NOT_YET_IMPLEMENTED \
+    PL_THROW_WITH_SOURCE_INFO(pl::NotYetImplementedException, \
+        "function has not yet been implemented!")
 
 namespace pl
 {
