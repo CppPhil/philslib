@@ -15,6 +15,7 @@
 #include <memory> // std::make_shared
 #include <future> // std::future, std::promise
 #include <exception> // std::current_exception
+
 namespace pl
 {
 /*!

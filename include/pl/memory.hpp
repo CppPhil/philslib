@@ -4,6 +4,7 @@
 **/
 #ifndef INCG_PL_MEMORY_HPP
 #define INCG_PL_MEMORY_HPP
+
 namespace pl
 {
 

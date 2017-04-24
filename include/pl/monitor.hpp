@@ -8,6 +8,7 @@
 #include "macros.hpp" // PL_IN
 #include <mutex> // std::mutex, std::lock_guard
 #include <utility> // std::move
+
 namespace pl
 {
 /*!

@@ -2,6 +2,7 @@
 #include <ciso646> // not, or
 #include <algorithm> // std::for_each
 #include <new> // new
+
 namespace pl
 {
 ThreadPool::ThreadPool(std::size_t amtThreads)

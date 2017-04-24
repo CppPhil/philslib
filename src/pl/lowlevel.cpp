@@ -1,5 +1,6 @@
 #include "../../include/pl/lowlevel.hpp"
 #include <cstring> // std::memset
+
 namespace pl
 {
 void *zeroMemory(PL_OUT void *dest, std::size_t countBytes)

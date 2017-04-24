@@ -7,6 +7,7 @@
 #include <memory> // std::bad_weak_ptr
 #include <typeinfo> // std::bad_typeid
 #include <iostream> // std::cerr
+
 namespace pl
 {
 AssertionViolationException::AssertionViolationException(const std::string &what_arg)
@@ -90,6 +91,12 @@ namespace detail
  * \brief Prints the information from an exception's error code.
  * \param e An exception that has an error code of which the associated
  *        information shall be printed.
+ * \todo This should only be doing anything if the compiler's standard library
+ *       implementation conforms to the C++11 standard.
+ *       In particular std::ios_base::failure needs to be derived from
+ *       std::system_error, as well as std::runtime_error and std::excetion.
+ *       See http://en.cppreference.com/w/cpp/io/ios_base/failure for instance.
+ *       GCC 4.9 is not C++11 compliant in regards to this issue.
 **/
 template <typename Ty>
 inline void handleCodeException(PL_IN const Ty &e)

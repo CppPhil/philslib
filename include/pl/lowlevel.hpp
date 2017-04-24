@@ -9,6 +9,7 @@
 #include <type_traits> // std::is_pointer, std::remove_pointer_t, std::is_const, std::is_unsigned
 #include <memory> // std::addressof
 #include <algorithm> // std::reverse
+
 namespace pl
 {
 /*!

@@ -1,5 +1,6 @@
 #include "../../include/pl/utility.hpp"
 #include <ciso646> // not
+
 namespace pl
 {
 bool toggleBool(PL_INOUT bool &b)

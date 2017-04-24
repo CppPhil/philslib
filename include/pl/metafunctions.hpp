@@ -5,6 +5,7 @@
 #ifndef INCG_PL_METAFUNCTIONS_HPP
 #define INCG_PL_METAFUNCTIONS_HPP
 #include <type_traits> // std::is_same
+
 namespace pl
 {
 namespace detail

@@ -4,6 +4,7 @@
 **/
 #ifndef INCG_PL_STRING_HPP
 #define INCG_PL_STRING_HPP
+
 namespace pl
 {
 

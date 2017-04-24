@@ -4,6 +4,13 @@
 **/
 #ifndef INCG_PL_COMPILER_HPP
 #define INCG_PL_COMPILER_HPP
+
+/*!
+ * \todo Add macros to get the version number of the compiler being used.
+ *       Also offer a convenient interface to compare the version number
+ *       of the compiler being used to a given version number.
+**/
+
 /*!
  * \def PL_COMPILER_CLANG
  * \brief PL_COMPILER will be defined as this if clang is being used.
