@@ -4,7 +4,7 @@
 **/
 #ifndef INCG_PL_EXCEPT_HPP
 #define INCG_PL_EXCEPT_HPP
-#include "macros.hpp" // PL_SOURCE_LINE, PL_PRETTY_FUNCTION, PL_BEGIN_MACRO, PL_END_MACRO, PL_STRINGIFY
+#include "macros.hpp" // PL_SOURCE_LINE, PL_CURRENT_FUNCTION, PL_BEGIN_MACRO, PL_END_MACRO, PL_STRINGIFY
 #include "utility.hpp" // pl::isNull
 #include <string> // std::string
 #include <stdexcept> // std::runtime_error
@@ -78,7 +78,7 @@
           "\nfile: " __FILE__ \
           "\nline: " PL_SOURCE_LINE \
           "\nfunction: " \
-        + std::string{ PL_PRETTY_FUNCTION } \
+        + std::string{ PL_CURRENT_FUNCTION } \
     }
 
 #define PL_THROW_IF_NULL(pointer) \

@@ -211,7 +211,7 @@
 **/
 
 /*!
- * \def PL_PRETTY_FUNCTION
+ * \def PL_CURRENT_FUNCTION
  * \brief Expands to a C-String literal that represents the current function.
  * \note Uses the 'prettiest' function macro that the compiler being used provides.
  * \warning Depending on the compiler used, this macro will expand to a different
@@ -345,11 +345,11 @@
 #endif
 
 #if PL_COMPILER == PL_COMPILER_MSVC
-#   define PL_PRETTY_FUNCTION __FUNCSIG__
+#   define PL_CURRENT_FUNCTION __FUNCSIG__
 #elif PL_COMPILER == PL_COMPILER_GCC || PL_COMPILER == PL_COMPILER_CLANG
-#   define PL_PRETTY_FUNCTION __PRETTY_FUNCTION__
+#   define PL_CURRENT_FUNCTION __PRETTY_FUNCTION__
 #else
-#   define PL_PRETTY_FUNCTION __func__ /* use __func__ from C99 as fallback */
+#   define PL_CURRENT_FUNCTION __func__ /* use __func__ from C99 as fallback */
 #endif
 
 #define PL_SOURCE_LINE PL_STRINGIFY(__LINE__)
