@@ -1,4 +1,5 @@
 #include "../../include/pl/threadpool.hpp"
+#include "../../include/pl/lowlevel.hpp" // pl::Byte
 #include <ciso646> // not, or
 #include <algorithm> // std::for_each
 #include <new> // new
@@ -13,7 +14,7 @@ ThreadPool::ThreadPool(std::size_t amtThreads)
       m_threadCount{ amtThreads },
       m_threads{ // get the memory needed for the threads.
                  // the unique_ptr will deallocate the memory automatically.
-          std::make_unique<std::uint8_t[]>(m_threadCount * sizeof(std::thread))
+          std::make_unique<pl::Byte[]>(m_threadCount * sizeof(std::thread))
       },
       m_threadBegin{ // begin iterator to the range of threads
           reinterpret_cast<std::thread *>(m_threads.get())
@@ -41,7 +42,7 @@ ThreadPool::~ThreadPool()
     join();
 
     /* Call the destructors of the threads.
-     * the unique_ptr will only free the raw memory of std::uint8_ts.
+     * the unique_ptr will only free the raw memory of pl::Bytes.
     **/
     std::for_each(m_threadBegin, m_threadEnd,
                   [] (PL_OUT std::thread &t) {
