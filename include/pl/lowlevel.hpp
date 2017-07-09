@@ -37,6 +37,7 @@ using Byte = unsigned char;
  *          is cv void *, cv char *, cv unsigned char *, cv std::byte * (since C++17),
  *          or there there is a based/derived relation between the pointed to types
  *          or there merely is an unsigned/signed mismatch between the pointed to types.
+ *          Note that std::uint8_t and std::int8_t are not required to be exceptions!
  *          This also makes common code like
  *          // assuming unsigned long long and double have the same width in bytes
  *          double d;
@@ -76,6 +77,7 @@ CastTo unrelated_pointer_cast(PL_IN_OPT void *p)
  *          is cv void *, cv char *, cv unsigned char *, cv std::byte * (since C++17),
  *          or there there is a based/derived relation between the pointed to types
  *          or there merely is an unsigned/signed mismatch between the pointed to types.
+ *          Note that std::uint8_t and std::int8_t are not required to be exceptions!
  *          This also makes common code like
  *          // assuming unsigned long long and double have the same width in bytes
  *          double d;
