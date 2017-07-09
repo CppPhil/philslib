@@ -95,8 +95,6 @@
 
 namespace pl
 {
-/* TODO: add documentation for the exception types defined below.
-**/
 class AssertionViolationException
     : public std::runtime_error
 {

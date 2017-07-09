@@ -22,7 +22,7 @@ namespace pl
  * \brief Allows callables to be run on an object managed by a thread.
 **/
 template <typename Type>
-class Concurrent final
+class Concurrent
 {
 public:
     using this_type = Concurrent;
