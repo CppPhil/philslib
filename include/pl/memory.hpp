@@ -21,7 +21,7 @@ namespace pl
  *          object.
 **/
 template <typename Ty>
-inline void checkedDelete(Ty *p)
+inline void checkedDelete(PL_IN Ty *p)
 {
     using incompleteTypeNotAllowed = unsigned char[sizeof(Ty) ? 1 : -1];
     PL_UNUSED(sizeof(incompleteTypeNotAllowed));
@@ -39,7 +39,7 @@ inline void checkedDelete(Ty *p)
  *          pointed to C-style array.
  */
 template <typename Ty>
-inline void checkedArrayDelete(Ty *p)
+inline void checkedArrayDelete(PL_IN Ty *p)
 {
     using incompleteTypeNotAllowed = unsigned char[sizeof(Ty) ? 1 : -1];
     PL_UNUSED(sizeof(incompleteTypeNotAllowed));
@@ -52,7 +52,7 @@ inline void checkedArrayDelete(Ty *p)
  * \see pl::checkedDelete
  */
 template <typename Ty>
-inline void checkedDeleteAndNull(Ty *&p)
+inline void checkedDeleteAndNull(PL_INOUT Ty *&p)
 {
     checkedDelete(p);
     p = nullptr;
@@ -64,7 +64,7 @@ inline void checkedDeleteAndNull(Ty *&p)
  * \see pl::checkedArrayDelete
  */
 template <typename Ty>
-inline void checkedArrayDeleteAndNull(Ty *&p)
+inline void checkedArrayDeleteAndNull(PL_INOUT Ty *&p)
 {
     checkedArrayDelete(p);
     p = nullptr;
