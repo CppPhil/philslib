@@ -87,31 +87,5 @@ void forEachArgument(Callable &&callable, Args &&...args)
         }
     );
 }
-
-/*!
- * \brief Determines if the object passed into the parameter is 'null' or not.
- * \param object The object to check against null.
- * \return true if the object passed into the parameter is 'null'; false otherwise.
- * \note The object passed into the parameter is compared to nullptr using operator==
- *       to determine the result of this function.
-**/
-template <typename PointerLike>
-constexpr bool isNull(const PointerLike &object) noexcept
-{
-    return object == nullptr;
-}
-
-/*!
- * \brief Determines if the object passed into the parameter is not null.
- * \param object The object to check.
- * \return true if the object compares false to nullptr; false otherwise.
- * \note Calls isNull and negates the result. isNull internally uses
- *       operator== to compare the object with nullptr.
-**/
-template <typename PointerLike>
-constexpr bool isNotNull(const PointerLike &object) noexcept
-{
-    return not isNull(object);
-}
 } // namespace pl
 #endif // INCG_PL_UTILITY_HPP
