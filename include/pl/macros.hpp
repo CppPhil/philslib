@@ -170,6 +170,9 @@
  * \brief Expands to for (;;). Macro to create a never ending loop.
  * \note Using for (;;) rather than while (true) avoids pedantic warnings
  *       regarding constant expressions being evaluated.
+ * \warning Be careful not to create a never ending loop that has no
+ *          observable behavior.
+ * \see http://en.cppreference.com/w/cpp/language/memory_model#Forward_progress
 **/
 
 /*!
