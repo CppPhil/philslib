@@ -5,7 +5,6 @@
 #ifndef INCG_PL_EXCEPT_HPP
 #define INCG_PL_EXCEPT_HPP
 #include "macros.hpp" // PL_SOURCE_LINE, PL_CURRENT_FUNCTION, PL_BEGIN_MACRO, PL_END_MACRO, PL_STRINGIFY
-#include "utility.hpp" // pl::isNull
 #include <string> // std::string
 #include <stdexcept> // std::runtime_error
 /*!
@@ -83,7 +82,7 @@
 
 #define PL_THROW_IF_NULL(pointer) \
     PL_BEGIN_MACRO \
-    if (pl::isNull((pointer))) { \
+    if ((pointer) == nullptr) { \
         PL_THROW_WITH_SOURCE_INFO(pl::NullPointerException, \
             PL_STRINGIFY(pointer) " was null!"); \
     } \
