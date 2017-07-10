@@ -1,15 +1,5 @@
-/*!
- * \file container.hpp
- * \brief Defines a few utility functions for working with containers.
-**/
-#ifndef INCG_PL_CONTAINER_HPP
-#define INCG_PL_CONTAINER_HPP
-#include "macros.hpp" // PL_IN
-#include <cstddef> // std::size_t
-#include <memory> // std::addressof
-#include <array> // std::array
-#include <type_traits> // std::common_type_t
-#include <utility> // std::forward
+#ifndef INCG_PL_CONT_CONTAINER_TRAITS_HPP
+#define INCG_PL_CONT_CONTAINER_TRAITS_HPP
 #include <deque> // std::deque
 #include <forward_list> // std::forward_list
 #include <list> // std::list
@@ -21,118 +11,8 @@
 
 namespace pl
 {
-/*!
- * \brief Gets the first (index 0) element of a container.
- * \param cont The container to get the first (index 0) element of.
- * \return The first (index 0) element of the container.
- * \warning Undefined behavior occurs if the container passed is empty.
-**/
-template <typename Cont>
-auto front(PL_IN Cont &cont) -> decltype(auto)
+namespace cont
 {
-    return cont.front();
-}
-
-/*!
- * \brief Gets the first (index 0) element of a C-Array.
- * \param arr The C-Array to get the first (index 0) element of.
- * \return The first (index 0) element of the C-Array.
-**/
-template <typename Type, std::size_t Size>
-auto front(PL_IN Type (&arr)[Size]) -> decltype(auto)
-{
-    return arr[static_cast<std::size_t>(0U)];
-}
-
-/*!
- * \brief Gets the last element of a container.
- * \param cont The container to get the last element of.
- * \return The last element of the container.
- * \warning Undefined behavior occurs if the container passed in is empty.
-**/
-template <typename Cont>
-auto back(PL_IN Cont &cont) -> decltype(auto)
-{
-    return cont.back();
-}
-
-/*!
- * \brief Gets the last element of a C-Array.
- * \param arr The C-Array to get the last element of.
- * \return The last element of the C-Array.
-**/
-template <typename Type, std::size_t Size>
-auto back(PL_IN Type (&arr)[Size]) -> decltype(auto)
-{
-    return arr[Size - static_cast<std::size_t>(1U)];
-}
-
-/*!
- * \brief Calls .data() on the container passed in.
- * \param cont The container to call .data() on.
- * \return The result of calling .data() on cont.
- * \warning Do not dereference the pointer returned by this function if
- *          the container passed in was empty.
-**/
-template <typename Cont>
-auto data(PL_IN Cont &cont) noexcept -> decltype(auto)
-{
-    return cont.data();
-}
-
-/*!
- * \brief Function to get a pointer to the first (index 0) element of a C-Array.
- * \param arr The C-Array for which
- *        to get the pointer to its first (index 0) element from.
-**/
-template <typename Type, std::size_t Size>
-auto data(PL_IN Type (&arr)[Size]) noexcept -> decltype(auto)
-{
-    return std::addressof(arr[0]);
-}
-
-/*!
- * \brief Gets the size of a container, which is the amount of elements
- *        currently stored in that container.
- * \param cont The container to get the size of.
- * \return The size of the container passed into the parameter.
-**/
-template <typename Cont>
-auto size(PL_IN Cont &cont) noexcept -> decltype(auto)
-{
-    return cont.size();
-}
-
-/*!
- * \brief Gets the size of a C-Array.
- * \param arr The C-Array to get the size of.
- * \return The size of the C-Array passed into the parameter is returned.
-**/
-template <typename Type, std::size_t Size>
-std::size_t size(PL_IN Type (&arr)[Size]) noexcept
-{
-    PL_UNUSED(arr);
-    return Size;
-}
-
-/*!
- * \brief Creates a std::array from a template type parameter pack.
- * \param args The arguments to construct the std::array returned from.
- * \return The resulting std::array.
- * \note The resulting std::array will use the common type for all of its
- *       elements. Some of the values passed in may be converted to that common type.
-**/
-template <typename ...Args>
-constexpr auto makeArray(PL_IN Args &&...args)
-    -> std::array<std::common_type_t<Args ...>, sizeof...(args)>
-{
-    return {
-        static_cast<std::common_type_t<Args ...>>(
-            std::forward<Args>(args)
-        )...
-    };
-}
-
 /*!
  * \brief Tag for vector-like containers.
  *
@@ -292,10 +172,11 @@ struct container_traits<std::unordered_multimap<Type, Comparator, Allocator>>
 
 /*!
  * \brief C++14 style template type alias for the nested type of container_traits
- *        called category. Make usage simpler as it doesn't require the typename
+ *        called category. Makes usage simpler as it doesn't require the typename
  *        keyword.
 **/
 template <typename Container>
 using container_traits_category = typename container_traits<Container>::category;
+} // namespace cont
 } // namespace pl
-#endif // INCG_PL_CONTAINER_HPP
+#endif // INCG_PL_CONT_CONTAINER_TRAITS_HPP
