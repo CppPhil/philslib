@@ -1,5 +1,5 @@
 #include "../../include/pl/threadpool.hpp"
-#include "../../include/pl/lowlevel.hpp" // pl::Byte
+#include "../../include/pl/byte.hpp" // pl::Byte
 #include <ciso646> // not, or
 #include <algorithm> // std::for_each
 #include <new> // new
