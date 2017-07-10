@@ -5,7 +5,7 @@
 #ifndef INCG_PL_ALGO_GATHER_HPP
 #define INCG_PL_ALGO_GATHER_HPP
 #include "../macros.hpp" // PL_IN
-#include "../functional.hpp" // pl::negatePredicate
+#include "../negate_predicate.hpp" // pl::negatePredicate
 #include <utility> // std::pair
 #include <algorithm> // std::stable_partition
 
