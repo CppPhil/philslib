@@ -1,6 +1,7 @@
 /*!
  * \file assert.hpp
- * \brief Defines various assertion macros.
+ * \brief Defines various assertion macros including macros specifically designed
+ *        for pre- and postconditions.
 **/
 #ifndef INCG_PL_ASSERT_HPP
 #define INCG_PL_ASSERT_HPP
@@ -91,7 +92,6 @@
  * condition evaluates to false and NDEBUG is not defined.
  * If NDEBUG is defined does nothing.
 **/
-
 
 #define PL_DETAIL_ASSERTION_IMPLEMENTATION(condition, exceptionType, violationTypeString) \
     PL_BEGIN_MACRO \

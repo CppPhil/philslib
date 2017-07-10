@@ -1,6 +1,6 @@
 /*!
  * \file compiler.hpp
- * \brief Defines macros to determine the compiler being used.
+ * \brief Defines macros to determine the compiler and the version of that compiler being used.
 **/
 #ifndef INCG_PL_COMPILER_HPP
 #define INCG_PL_COMPILER_HPP
