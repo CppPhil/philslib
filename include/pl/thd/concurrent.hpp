@@ -4,10 +4,10 @@
  *        and manages a thread that runs callables on the instance wrapped.
  *        Those callables are passed in by users.
 **/
-#ifndef INCG_PL_CONCURRENT_HPP
-#define INCG_PL_CONCURRENT_HPP
-#include "macros.hpp" // PL_IN, PL_OUT, PL_INOUT
-#include "threadsafequeue.hpp" // pl::ThreadSafeQueue
+#ifndef INCG_PL_THD_CONCURRENT_HPP
+#define INCG_PL_THD_CONCURRENT_HPP
+#include "../macros.hpp" // PL_IN, PL_OUT, PL_INOUT
+#include "../threadsafequeue.hpp" // pl::ThreadSafeQueue
 #include <functional> // std::function
 #include <thread> // std::thread
 #include <utility> // std::move
@@ -17,6 +17,8 @@
 #include <exception> // std::current_exception
 
 namespace pl
+{
+namespace thd
 {
 /*!
  * \brief Allows callables to be run on an object managed by a thread.
@@ -131,5 +133,6 @@ private:
     bool m_isDone; //!< only accessed from m_thd
     std::thread m_thd;
 };
+} // namespace thd
 } // namespace pl
-#endif // INCG_PL_CONCURRENT_HPP
+#endif // INCG_PL_THD_CONCURRENT_HPP
