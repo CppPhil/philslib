@@ -1,9 +1,9 @@
 /*!
- * \file functional.hpp
- * \brief Defines function objects and associated utilities.
+ * \file negate_predicate.hpp
+ * \brief Exports the negatePredicate function.
 **/
-#ifndef INCG_PL_FUNCTIONAL_HPP
-#define INCG_PL_FUNCTIONAL_HPP
+#ifndef INCG_PL_NEGATE_PREDICATE_HPP
+#define INCG_PL_NEGATE_PREDICATE_HPP
 #include "macros.hpp" // PL_IN
 #include <ciso646> // not
 #include <utility> // std::move_if_noexcept, std::forward
@@ -68,4 +68,4 @@ negatePredicate(PL_IN Predicate &&predicate)
     };
 }
 } // namespace pl
-#endif // INCG_PL_FUNCTIONAL_HPP
+#endif // INCG_PL_NEGATE_PREDICATE_HPP
