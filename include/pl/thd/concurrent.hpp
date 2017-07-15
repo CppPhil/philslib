@@ -7,7 +7,7 @@
 #ifndef INCG_PL_THD_CONCURRENT_HPP
 #define INCG_PL_THD_CONCURRENT_HPP
 #include "../annotations.hpp" // PL_IN, PL_OUT, PL_INOUT
-#include "../threadsafequeue.hpp" // pl::ThreadSafeQueue
+#include "thread_safe_queue.hpp" // pl::ThreadSafeQueue
 #include <functional> // std::function
 #include <thread> // std::thread
 #include <utility> // std::move

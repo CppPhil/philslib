@@ -3,12 +3,14 @@
  * \brief This header file defines trait-like metafunctions that operate
  *        on iterator types.
 **/
-#ifndef INCG_PL_ITERATOR_TRAITS_HPP
-#define INCG_PL_ITERATOR_TRAITS_HPP
+#ifndef INCG_PL_META_ITERATOR_TRAITS_HPP
+#define INCG_PL_META_ITERATOR_TRAITS_HPP
 #include <type_traits> // std::false_type, std::true_type
 #include <iterator> // std::output_iterator_tag, ...
 
 namespace pl
+{
+namespace meta
 {
 namespace detail
 {
@@ -168,7 +170,7 @@ struct iterator_category
 };
 
 /*!
- * \brief A template alias of the nested type type of ::pl::detail::iterator_category.
+ * \brief A template alias of the nested type type of ::pl::meta::detail::iterator_category.
 **/
 template <typename Iter>
 using iterator_category_t = typename iterator_category<Iter>::type;
@@ -191,7 +193,7 @@ struct is_output_iterator
 };
 
 /*!
- * \brief A template alias for the nested type type of pl::is_output_iterator.
+ * \brief A template alias for the nested type type of pl::meta::is_output_iterator.
 **/
 template <typename Iter>
 using is_output_iterator_t = typename is_output_iterator<Iter>::type;
@@ -214,7 +216,7 @@ struct is_random_access_iterator
 };
 
 /*!
- * \brief A template alias for the nested type type of pl::is_random_access_iterator
+ * \brief A template alias for the nested type type of pl::meta::is_random_access_iterator
 **/
 template <typename Iter>
 using is_random_access_iterator_t = typename is_random_access_iterator<Iter>::type;
@@ -237,7 +239,7 @@ struct is_bidirectional_iterator
 };
 
 /*!
- * \brief A template alias for the nested type type of pl::is_bidirectional_iterator
+ * \brief A template alias for the nested type type of pl::meta::is_bidirectional_iterator
 **/
 template <typename Iter>
 using is_bidirectional_iterator_t = typename is_bidirectional_iterator<Iter>::type;
@@ -260,7 +262,7 @@ struct is_forward_iterator
 };
 
 /*!
- * \brief A template alias for the nested type type of pl::is_forward_iterator
+ * \brief A template alias for the nested type type of pl::meta::is_forward_iterator
 **/
 template <typename Iter>
 using is_forward_iterator_t = typename is_forward_iterator<Iter>::type;
@@ -283,9 +285,10 @@ struct is_input_iterator
 };
 
 /*!
- * \brief A template alias for the nested type type of pl::is_input_iterator
+ * \brief A template alias for the nested type type of pl::meta::is_input_iterator
 **/
 template <typename Iter>
 using is_input_iterator_t = typename is_input_iterator<Iter>::type;
+} // namespace meta
 } // namespace pl
-#endif // INCG_PL_ITERATOR_TRAITS_HPP
+#endif // INCG_PL_META_ITERATOR_TRAITS_HPP

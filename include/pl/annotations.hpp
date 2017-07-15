@@ -17,8 +17,6 @@
 /*!
  * \def PL_OUT
  * \brief Annotates a pointer or reference parameter as an output parameter.
- * \note Allows the pointer or reference parameter to refer to an unitialized
- *       object as the object referenced will only be written to.
  *
  * Indicates that the referenced object will only be written to,
  * but not be read from.
@@ -46,8 +44,6 @@
  * \def PL_OUT_OPT
  * \brief Annotates a pointer parameter as an optional output parameter.
  * \note Pass nullptr to not use the output parameter.
- * \note The pointer is allowed to point to an uninitialized object as
- *       the pointed to object will only be written to and not be read from.
  *
  * Indicates that if the pointer is not a null pointer the pointed to object
  * will only be written to, but never be read from.
