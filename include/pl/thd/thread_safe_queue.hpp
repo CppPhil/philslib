@@ -1,10 +1,10 @@
 /*!
- * \file threadsafequeue.hpp
+ * \file thread_safe_queue.hpp
  * \brief This header file defines the pl::ThreadSafeQueue class
 **/
-#ifndef INCG_PL_THREADSAFEQUEUE_HPP
-#define INCG_PL_THREADSAFEQUEUE_HPP
-#include "annotations.hpp" // PL_IN, PL_NODISCARD
+#ifndef INCG_PL_THD_THREAD_SAFE_QUEUE_HPP
+#define INCG_PL_THD_THREAD_SAFE_QUEUE_HPP
+#include "../annotations.hpp" // PL_IN, PL_NODISCARD
 #include <queue> // std::queue
 #include <mutex> // std::mutex, std::unique_lock
 #include <condition_variable> // std::condition_variable
@@ -12,6 +12,8 @@
 #include <ciso646> // not
 
 namespace pl
+{
+namespace thd
 {
 /*!
  * \brief Allows the user to push elements to the back of the ThreadSafeQueue
@@ -112,4 +114,5 @@ private:
     std::condition_variable m_cvHasElements;
 };
 } // namespace pl
-#endif // INCG_PL_THREADSAFEQUEUE_HPP
+} // namespace thd
+#endif // INCG_PL_THD_THREAD_SAFE_QUEUE_HPP
