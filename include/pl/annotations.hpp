@@ -90,6 +90,17 @@
  *        lack the explicit keyword on purpose as implicit.
 **/
 
+/*!
+ * \def PL_NULL_TERMINATED(type)
+ * \brief Macro to annotate a cv char * or cv char[] type as null terminated.
+**/
+
+/*!
+ * \def PL_FMT_STR(type)
+ * \brief Macro to annotate a cv char * or cv char[] type as a null terminated
+ *        printf style format string.
+**/
+
 #define PL_IN /* nothing */
 #define PL_OUT /* nothing */
 #define PL_INOUT /* nothing */
@@ -132,4 +143,8 @@
 #define PL_NO_PARENT nullptr
 
 #define PL_IMPLICIT /* nothing */
+
+#define PL_NULL_TERMINATED(type) /* nothing */
+
+#define PL_FMT_STR(type) /* nothing */
 #endif // INCG_PL_ANNOTATIONS_HPP
