@@ -1,10 +1,12 @@
-#include "../../include/pl/threadpool.hpp"
-#include "../../include/pl/byte.hpp" // pl::Byte
+#include "../../../include/pl/thd/thread_pool.hpp"
+#include "../../../include/pl/byte.hpp" // pl::Byte
 #include <ciso646> // not, or
 #include <algorithm> // std::for_each
 #include <new> // new
 
 namespace pl
+{
+namespace thd
 {
 ThreadPool::ThreadPool(std::size_t amtThreads)
     : m_tasksShared{ },
@@ -87,10 +89,10 @@ void ThreadPool::threadFunction()
     while (running) {
         std::unique_lock<std::mutex> lock{ m_mutex };
         m_cv.wait(lock, // wait until shutdown or got task to run.
-                          [this] {
-                               return m_isFinishedShared
-                                      or not m_tasksShared.empty();
-                           });
+                  [this] {
+                       return m_isFinishedShared
+                              or not m_tasksShared.empty();
+                   });
 
         // if we woke up because there's a task to run.
         if (not m_tasksShared.empty()) {
@@ -126,4 +128,5 @@ void ThreadPool::join()
         t.join();
     });
 }
+} // namespace thd
 } // namespace pl

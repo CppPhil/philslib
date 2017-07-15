@@ -1,8 +1,11 @@
 /*!
- * \file threadpool.hpp
+ * \file thread_pool.hpp
  * \brief Defines the ThreadPool class.
 **/
-#include "annotations.hpp" // PL_IN, PL_NODISCARD
+#ifndef INCG_PL_THD_THREAD_POOL_HPP
+#define INCG_PL_THD_THREAD_POOL_HPP
+#include "../annotations.hpp" // PL_IN, PL_NODISCARD
+#include "../byte.hpp" // pl::Byte
 #include <memory> // std::shared_ptr, std::unique_ptr
 #include <functional> // std::bind
 #include <thread> // std::thread
@@ -15,6 +18,8 @@
 #include <cstdint> // std::uint8_t
 
 namespace pl
+{
+namespace thd
 {
 /*!
  * \brief A thread pool. Can be created with a count of threads. Will manage
@@ -376,10 +381,12 @@ private:
                                   **/
     bool m_isFinishedShared; //!< flag that will be set to true on shutdown.
     const std::size_t m_threadCount; //!< the amount of threads.
-    std::unique_ptr<std::uint8_t[]> m_threads; /*!< raw memory that the threads
-                                                *   live in.
-                                               **/
+    std::unique_ptr<pl::Byte[]> m_threads; /*!< raw memory that the threads
+                                            *   live in.
+                                           **/
     std::thread *m_threadBegin; //!< iterator to the first thread.
     std::thread *m_threadEnd; //!< end iterator of the range of threads.
 };
+} // namespace thd
 } // namespace pl
+#endif // INCG_PL_THD_THREAD_POOL_HPP
