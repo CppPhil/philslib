@@ -2,8 +2,8 @@
  * \file all_true.hpp
  * \brief Defines the AllTrue meta function.
 **/
-#ifndef INCG_PL_ALL_TRUE_HPP
-#define INCG_PL_ALL_TRUE_HPP
+#ifndef INCG_PL_META_ALL_TRUE_HPP
+#define INCG_PL_META_ALL_TRUE_HPP
 #include "bool_pack.hpp" // pl::meta::BoolPack
 #include <type_traits> // std::is_same
 
@@ -32,4 +32,4 @@ using AllTrue
     = std::is_same<BoolPack<true, Values ...>, BoolPack<Values ..., true>>;
 } // namespace meta
 } // namespace pl
-#endif // INCG_PL_ALL_TRUE_HPP
+#endif // INCG_PL_META_ALL_TRUE_HPP

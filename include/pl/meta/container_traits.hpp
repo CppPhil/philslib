@@ -1,5 +1,5 @@
-#ifndef INCG_PL_CONT_CONTAINER_TRAITS_HPP
-#define INCG_PL_CONT_CONTAINER_TRAITS_HPP
+#ifndef INCG_PL_META_CONTAINER_TRAITS_HPP
+#define INCG_PL_META_CONTAINER_TRAITS_HPP
 #include <deque> // std::deque
 #include <forward_list> // std::forward_list
 #include <list> // std::list
@@ -11,7 +11,7 @@
 
 namespace pl
 {
-namespace cont
+namespace meta
 {
 /*!
  * \brief Tag for vector-like containers.
@@ -177,6 +177,6 @@ struct container_traits<std::unordered_multimap<Type, Comparator, Allocator>>
 **/
 template <typename Container>
 using container_traits_category = typename container_traits<Container>::category;
-} // namespace cont
+} // namespace meta
 } // namespace pl
-#endif // INCG_PL_CONT_CONTAINER_TRAITS_HPP
+#endif // INCG_PL_META_CONTAINER_TRAITS_HPP

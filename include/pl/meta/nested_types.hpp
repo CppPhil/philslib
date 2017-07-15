@@ -2,8 +2,8 @@
  * \file nested_types.hpp
  * \brief Exports meta functions to fetch commonly defined nested types.
 **/
-#ifndef INCG_PL_NESTED_TYPES_HPP
-#define INCG_PL_NESTED_TYPES_HPP
+#ifndef INCG_PL_META_NESTED_TYPES_HPP
+#define INCG_PL_META_NESTED_TYPES_HPP
 
 namespace pl
 {
@@ -64,4 +64,4 @@ template <typename Type>
 using container_type = typename Type::container_type;
 } // namespace meta
 } // namespace pl
-#endif // INCG_PL_NESTED_TYPES_HPP
+#endif // INCG_PL_META_NESTED_TYPES_HPP

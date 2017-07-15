@@ -1,5 +1,5 @@
-#ifndef INCG_PL_UNQUALIFIED_HPP
-#define INCG_PL_UNQUALIFIED_HPP
+#ifndef INCG_PL_META_UNQUALIFIED_HPP
+#define INCG_PL_META_UNQUALIFIED_HPP
 #include <type_traits> // std::remove_cv, std::remove_reference_t
 
 namespace pl
@@ -27,4 +27,4 @@ template <typename Type>
 using unqualified_t = typename unqualified<Type>::type;
 } // namespace meta
 } // namespace pl
-#endif // INCG_PL_UNQUALIFIED_HPP
+#endif // INCG_PL_META_UNQUALIFIED_HPP

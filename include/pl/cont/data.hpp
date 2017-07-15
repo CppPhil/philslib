@@ -6,7 +6,7 @@
 **/
 #ifndef INCG_PL_CONT_DATA_HPP
 #define INCG_PL_CONT_DATA_HPP
-#include "../macros.hpp" // PL_IN
+#include "../annotations.hpp" // PL_IN
 #include <cstddef> // std::size_t
 #include <memory> // std::addressof
 

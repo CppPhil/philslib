@@ -4,7 +4,7 @@
 **/
 #ifndef INCG_PL_ALGO_SLIDE_HPP
 #define INCG_PL_ALGO_SLIDE_HPP
-#include "../macros.hpp" // PL_IN
+#include "../annotations.hpp" // PL_IN
 #include <utility> // std::pair
 #include <algorithm> // std::rotate
 

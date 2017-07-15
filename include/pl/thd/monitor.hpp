@@ -3,13 +3,15 @@
  * \brief Defines the Monitor class that can be used to synchronize access
  *         from multiple threads to some shared data.
 **/
-#ifndef INCG_PL_MONITOR_HPP
-#define INCG_PL_MONITOR_HPP
-#include "annotations.hpp" // PL_IN
+#ifndef INCG_PL_THD_MONITOR_HPP
+#define INCG_PL_THD_MONITOR_HPP
+#include "../annotations.hpp" // PL_IN
 #include <mutex> // std::mutex, std::lock_guard
 #include <utility> // std::move
 
 namespace pl
+{
+namespace thd
 {
 /*!
  * \brief Stores shared data in its private section.
@@ -53,5 +55,6 @@ private:
                                  *   to the shared data
                                 **/
 };
+} // namespace thd
 } // namespace pl
-#endif // INCG_PL_MONITOR_HPP
+#endif // INCG_PL_THD_MONITOR_HPP

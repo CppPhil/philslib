@@ -5,8 +5,8 @@
 **/
 #ifndef INCG_PL_ALGO_ERASE_HPP
 #define INCG_PL_ALGO_ERASE_HPP
-#include "../macros.hpp" // PL_IN, PL_INOUT
-#include "../container.hpp" // pl::vectorlike_tag, pl::listlike_tag, pl::associative_tag, container_traits_category
+#include "../annotations.hpp" // PL_IN, PL_INOUT
+#include "../meta/container_traits.hpp" // pl::meta::vectorlike_tag, pl::meta::listlike_tag, pl::meta::associative_tag, pl::meta::container_traits_category
 #include <utility> // std::forward
 #include <algorithm> // std::remove, std::remove_if
 
@@ -25,9 +25,12 @@ namespace detail
 **/
 template <typename Container, typename Type>
 inline void
-eraseHelper(PL_INOUT Container &container, PL_IN const Type &elementToRemove, vectorlike_tag)
+eraseHelper(PL_INOUT Container &container, PL_IN const Type &elementToRemove,
+            meta::vectorlike_tag)
 {
-    container.erase(std::remove(container.begin(), container.end(), elementToRemove), container.end());
+    container.erase(std::remove(container.begin(), container.end(),
+                                elementToRemove),
+                    container.end());
 }
 
 /*!
@@ -40,7 +43,8 @@ eraseHelper(PL_INOUT Container &container, PL_IN const Type &elementToRemove, ve
 **/
 template <typename Container, typename UnaryPredicate>
 inline void
-eraseIfHelper(PL_INOUT Container &container, PL_IN UnaryPredicate &&unaryPredicate, vectorlike_tag)
+eraseIfHelper(PL_INOUT Container &container,
+              PL_IN UnaryPredicate &&unaryPredicate, meta::vectorlike_tag)
 {
     container.erase(
         std::remove_if(container.begin(), container.end(),
@@ -58,7 +62,8 @@ eraseIfHelper(PL_INOUT Container &container, PL_IN UnaryPredicate &&unaryPredica
 **/
 template <typename Container, typename Type>
 inline void
-eraseHelper(PL_INOUT Container &container, PL_IN const Type &elementToRemove, listlike_tag)
+eraseHelper(PL_INOUT Container &container, PL_IN const Type &elementToRemove,
+            meta::listlike_tag)
 {
     container.remove(elementToRemove);
 }
@@ -73,7 +78,8 @@ eraseHelper(PL_INOUT Container &container, PL_IN const Type &elementToRemove, li
 **/
 template <typename Container, typename UnaryPredicate>
 inline void
-eraseIfHelper(PL_INOUT Container &container, PL_IN UnaryPredicate &&unaryPredicate, listlike_tag)
+eraseIfHelper(PL_INOUT Container &container,
+              PL_IN UnaryPredicate &&unaryPredicate, meta::listlike_tag)
 {
     container.remove_if(std::forward<UnaryPredicate>(unaryPredicate));
 }
@@ -89,7 +95,8 @@ eraseIfHelper(PL_INOUT Container &container, PL_IN UnaryPredicate &&unaryPredica
 **/
 template <typename Container, typename Type>
 inline void
-eraseHelper(PL_INOUT Container &container, PL_IN const Type &elementToRemove, associative_tag)
+eraseHelper(PL_INOUT Container &container, PL_IN const Type &elementToRemove,
+            meta::associative_tag)
 {
     container.erase(elementToRemove);
 }
@@ -104,7 +111,8 @@ eraseHelper(PL_INOUT Container &container, PL_IN const Type &elementToRemove, as
 **/
 template <typename Container, typename UnaryPredicate>
 inline void
-eraseIfHelper(PL_INOUT Container &container, UnaryPredicate unaryPredicate, associative_tag)
+eraseIfHelper(PL_INOUT Container &container, UnaryPredicate unaryPredicate,
+              meta::associative_tag)
 {
     const auto endIter = container.end();
     for (auto iterator = container.begin(); iterator != endIter;) {
@@ -136,9 +144,11 @@ eraseIfHelper(PL_INOUT Container &container, UnaryPredicate unaryPredicate, asso
  *       remove into elementToRemove.
 **/
 template <typename Container, typename Type>
-inline void erase(PL_INOUT Container &container, PL_IN const Type &elementToRemove)
+inline void erase(PL_INOUT Container &container,
+                  PL_IN const Type &elementToRemove)
 {
-    detail::eraseHelper(container, elementToRemove, container_traits_category<Container>{ });
+    detail::eraseHelper(container, elementToRemove,
+                        meta::container_traits_category<Container>{ });
 }
 
 /*!
@@ -152,12 +162,13 @@ inline void erase(PL_INOUT Container &container, PL_IN const Type &elementToRemo
  * if it is to be removed.
 **/
 template <typename Container, typename UnaryPredicate>
-inline void eraseIf(PL_INOUT Container &container, PL_IN UnaryPredicate &&unaryPredicate)
+inline void eraseIf(PL_INOUT Container &container,
+                    PL_IN UnaryPredicate &&unaryPredicate)
 {
     detail::eraseIfHelper(
         container,
         std::forward<UnaryPredicate>(unaryPredicate),
-        container_traits_category<Container>{ }
+        meta::container_traits_category<Container>{ }
     );
 }
 } // namespace algo

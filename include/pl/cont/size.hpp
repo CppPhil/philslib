@@ -5,7 +5,8 @@
 **/
 #ifndef INCG_PL_CONT_SIZE_HPP
 #define INCG_PL_CONT_SIZE_HPP
-#include "../macros.hpp" // PL_IN, PL_UNUSED
+#include "../annotations.hpp" // PL_IN
+#include "../unused.hpp" // PL_UNUSED
 #include <cstddef> // std::size_t
 
 namespace pl
