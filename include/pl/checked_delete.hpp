@@ -1,9 +1,11 @@
 /*!
- * \file memory.hpp
- * \brief This header defines various dynamic memory management utilities.
+ * \file checked_delete.hpp
+ * \brief This header defines functions to call delete and delete[] operators
+ *        on raw pointers while ensuring that the pointed to type is a complete
+ *        type.
 **/
-#ifndef INCG_PL_MEMORY_HPP
-#define INCG_PL_MEMORY_HPP
+#ifndef INCG_PL_CHECKED_DELETE_HPP
+#define INCG_PL_CHECKED_DELETE_HPP
 #include "annotations.hpp" // PL_IN, PL_INOUT
 #include "unused.hpp" // PL_UNUSED
 #include <new> // operator delete, operator delete[]
@@ -71,4 +73,4 @@ inline void checkedArrayDeleteAndNull(PL_INOUT Ty *&p)
     p = nullptr;
 }
 } // namespace pl
-#endif // INCG_PL_MEMORY_HPP
+#endif // INCG_PL_CHECKED_DELETE_HPP
