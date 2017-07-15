@@ -4,7 +4,8 @@
 **/
 #ifndef INCG_PL_MEMORY_HPP
 #define INCG_PL_MEMORY_HPP
-#include "macros.hpp" // PL_UNUSED
+#include "annotations.hpp" // PL_IN, PL_INOUT
+#include "unused.hpp" // PL_UNUSED
 #include <new> // operator delete, operator delete[]
 #include <cstddef> // std::nullptr_t
 

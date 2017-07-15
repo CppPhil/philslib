@@ -4,7 +4,7 @@
 **/
 #ifndef INCG_PL_THREADSAFEQUEUE_HPP
 #define INCG_PL_THREADSAFEQUEUE_HPP
-#include "macros.hpp" // PL_IN, PL_NODISCARD
+#include "annotations.hpp" // PL_IN, PL_NODISCARD
 #include <queue> // std::queue
 #include <mutex> // std::mutex, std::unique_lock
 #include <condition_variable> // std::condition_variable

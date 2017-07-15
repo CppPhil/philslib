@@ -4,7 +4,10 @@
 **/
 #ifndef INCG_PL_EXCEPT_HPP
 #define INCG_PL_EXCEPT_HPP
-#include "macros.hpp" // PL_SOURCE_LINE, PL_CURRENT_FUNCTION, PL_BEGIN_MACRO, PL_END_MACRO, PL_STRINGIFY
+#include "source_line.hpp" // PL_SOURCE_LINE
+#include "current_function.hpp" // PL_CURRENT_FUNCTION
+#include "begin_end_macro.hpp" // PL_BEGIN_MACRO, PL_END_MACRO
+#include "stringify.hpp" // PL_STRINGIFY
 #include <string> // std::string
 #include <stdexcept> // std::runtime_error
 /*!

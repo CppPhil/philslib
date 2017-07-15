@@ -4,7 +4,7 @@
 **/
 #ifndef INCG_PL_BITS_HPP
 #define INCG_PL_BITS_HPP
-#include "macros.hpp" // PL_INOUT
+#include "annotations.hpp" // PL_INOUT
 #include <type_traits> // std::is_unsigned
 
 namespace pl
@@ -17,7 +17,7 @@ namespace pl
  *          of bits in Numeric - 1.
 **/
 template <typename Numeric>
-void setBit(PL_INOUT Numeric &numeric, Numeric bit)
+inline void setBit(PL_INOUT Numeric &numeric, Numeric bit)
 {
     static_assert(std::is_unsigned<Numeric>::value,
                   "Numeric in pl::setBit should be an unsigned type.");
@@ -34,7 +34,7 @@ void setBit(PL_INOUT Numeric &numeric, Numeric bit)
  *          Numeric - 1.
 **/
 template <typename Numeric>
-void clearBit(PL_INOUT Numeric &numeric, Numeric bit)
+inline void clearBit(PL_INOUT Numeric &numeric, Numeric bit)
 {
     static_assert(std::is_unsigned<Numeric>::value,
                   "Numeric in pl::clearBit should be an unsigned type.");
@@ -56,7 +56,7 @@ void clearBit(PL_INOUT Numeric &numeric, Numeric bit)
  * will be 1 after having executed this function.
 **/
 template <typename Numeric>
-void toggleBit(PL_INOUT Numeric &numeric, Numeric bit)
+inline void toggleBit(PL_INOUT Numeric &numeric, Numeric bit)
 {
     static_assert(std::is_unsigned<Numeric>::value,
                   "Numeric in pl::toggleBit should be an unsigned type.");
@@ -74,7 +74,7 @@ void toggleBit(PL_INOUT Numeric &numeric, Numeric bit)
  *          the number of bits in Numeric - 1.
 **/
 template <typename Numeric>
-bool isBitSet(Numeric numeric, Numeric bit)
+inline bool isBitSet(Numeric numeric, Numeric bit)
 {
     static_assert(std::is_unsigned<Numeric>::value,
                   "Numeric in pl::isBitSet should be an unsigned type.");

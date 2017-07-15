@@ -6,7 +6,8 @@
 **/
 #ifndef INCG_PL_HASH_HPP
 #define INCG_PL_HASH_HPP
-#include "macros.hpp" // PL_IN, PL_INOUT, PL_UNUSED
+#include "annotations.hpp" // PL_IN, PL_INOUT
+#include "unused.hpp" // PL_UNUSED
 #include <functional> // std::hash
 #include <cstddef> // std::size_t
 #include <initializer_list> // std::initializer_list

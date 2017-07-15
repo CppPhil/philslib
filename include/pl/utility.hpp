@@ -4,7 +4,8 @@
 **/
 #ifndef INCG_PL_UTILITY_HPP
 #define INCG_PL_UTILITY_HPP
-#include "macros.hpp" // PL_INOUT, PL_UNUSED
+#include "annotations.hpp" // PL_INOUT
+#include "unused.hpp" // PL_UNUSED
 #include <cstdint> // std::uint8_t
 #include <initializer_list> // std::initializer_list
 #include <utility> // std::forward

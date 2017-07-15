@@ -4,7 +4,7 @@
 **/
 #ifndef INCG_PL_UNRELATED_POINTER_CAST_HPP
 #define INCG_PL_UNRELATED_POINTER_CAST_HPP
-#include "macros.hpp" // PL_IN_OPT
+#include "annotations.hpp" // PL_IN_OPT
 #include <type_traits> // std::is_pointer, std::is_const, std::remove_pointer_t
 
 namespace pl

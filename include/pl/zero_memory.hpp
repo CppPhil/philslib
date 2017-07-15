@@ -4,7 +4,8 @@
 **/
 #ifndef INCG_PL_ZERO_MEMORY_HPP
 #define INCG_PL_ZERO_MEMORY_HPP
-#include "macros.hpp" // PL_OUT, PL_ALWAYS_INLINE
+#include "annotations.hpp" // PL_OUT
+#include "inline.hpp" // PL_ALWAYS_INLINE
 #include "byte.hpp" // pl::Byte
 #include <cstddef> // std::size_t
 

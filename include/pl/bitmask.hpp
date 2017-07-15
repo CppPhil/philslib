@@ -5,7 +5,7 @@
 **/
 #ifndef INCG_PL_BITMASK_HPP
 #define INCG_PL_BITMASK_HPP
-#include "macros.hpp" // PL_INOUT
+#include "annotations.hpp" // PL_INOUT
 #include <type_traits> // std::enable_if_t, std::underlying_type_t
 /*!
  * \def PL_ENABLE_BITMASK_OPERATORS(ScopedEnumType)

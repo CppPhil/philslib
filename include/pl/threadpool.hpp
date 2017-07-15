@@ -2,7 +2,7 @@
  * \file threadpool.hpp
  * \brief Defines the ThreadPool class.
 **/
-#include "macros.hpp" // PL_IN, PL_NODISCARD
+#include "annotations.hpp" // PL_IN, PL_NODISCARD
 #include <memory> // std::shared_ptr, std::unique_ptr
 #include <functional> // std::bind
 #include <thread> // std::thread
