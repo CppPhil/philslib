@@ -10,56 +10,56 @@ namespace pl
 {
 namespace detail
 {
-template <int Bytes>
+template <int Bits>
 struct IntImpl;
 
 template <>
-struct IntImpl<1>
+struct IntImpl<8>
 {
     using type = std::int8_t;
 };
 
 template <>
-struct IntImpl<2>
+struct IntImpl<16>
 {
     using type = std::int16_t;
 };
 
 template <>
-struct IntImpl<4>
+struct IntImpl<32>
 {
     using type = std::int32_t;
 };
 
 template <>
-struct IntImpl<8>
+struct IntImpl<64>
 {
     using type = std::int64_t;
 };
 
-template <int Bytes>
+template <int Bits>
 struct UintImpl;
 
 template <>
-struct UintImpl<1>
+struct UintImpl<8>
 {
     using type = std::uint8_t;
 };
 
 template <>
-struct UintImpl<2>
+struct UintImpl<16>
 {
     using type = std::uint16_t;
 };
 
 template <>
-struct UintImpl<4>
+struct UintImpl<32>
 {
     using type = std::uint32_t;
 };
 
 template <>
-struct UintImpl<8>
+struct UintImpl<64>
 {
     using type = std::uint64_t;
 };
@@ -67,16 +67,16 @@ struct UintImpl<8>
 
 /*!
  * \brief Fixed size signed integer type.
- * \note The only valid values for the template parameter are 1, 2, 4 and 8.
+ * \note The only valid values for the template parameter are 8, 16, 32 and 64.
 **/
-template <int Bytes>
-using Int = typename detail::IntImpl<Bytes>::type;
+template <int Bits>
+using Int = typename detail::IntImpl<Bits>::type;
 
 /*!
  * \brief Fixed size unsigned integer type.
- * \note The only valid values for the template parameter are 1, 2, 4 and 8.
+ * \note The only valid values for the template parameter are 8, 16, 32 and 64.
 **/
-template <int Bytes>
-using Uint = typename detail::UintImpl<Bytes>::type;
+template <int Bits>
+using Uint = typename detail::UintImpl<Bits>::type;
 } // namespace pl
 #endif // INCG_PL_INTEGER_HPP
