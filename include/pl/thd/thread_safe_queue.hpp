@@ -22,7 +22,7 @@ namespace thd
  * This class can be accessed from multiple threads at the same time.
 **/
 template <typename ValueType>
-class ThreadSafeQueue final
+class ThreadSafeQueue
 {
 public:
     using this_type = ThreadSafeQueue;
