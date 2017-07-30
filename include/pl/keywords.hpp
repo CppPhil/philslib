@@ -1,6 +1,7 @@
 /*!
  * \file keywords.hpp
  * \brief Exports keyword like macros.
+ *        Define PL_NO_KEYWORDS to disable the keyword-like variants.
 **/
 #ifndef INCG_PL_KEYWORDS_HPP
 #define INCG_PL_KEYWORDS_HPP
