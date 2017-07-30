@@ -71,6 +71,19 @@
 **/
 
 /*!
+ * \def PL_PRINTF_FUNCTION(formatStrPos, varArgsPos)
+ * \brief Annotates a function as a printf-style function.
+ * \note This allows GCC and clang to issue warnings if the arguments
+ *       and the format string do not match.
+ *
+ * Annotates a function as a printf-style function. To be placed
+ * after the parameter list in a function declaration.
+ * formatStrPos is the parameter (starting at 1) which will hold the
+ * format string, varArgsPos is the parameter which will be the C-style
+ * varargs.
+**/
+
+/*!
  * \def PL_PARENT(parent)
  * \brief Macro that can be used to mark something as a parent.
  *        Can be used when using Qt Framework's parent system for instance.
@@ -116,6 +129,7 @@
 #       define PL_FALLTHROUGH /* nothing */
 #       define PL_NODISCARD /* nothing */
 #   endif
+#   define PL_PRINTF_FUNCTION(formatStrPos, varArgsPos) __attribute__((format (printf, formatStrPos, varArgsPos)))
 #elif PL_COMPILER == PL_COMPILER_CLANG
 #   if __has_cpp_attribute(fallthrough)
 #       define PL_FALLTHROUGH [[fallthrough]];
@@ -127,15 +141,19 @@
 #   else
 #       define PL_NODISCARD /* nothing */
 #   endif
+#   define PL_PRINTF_FUNCTION(formatStrPos, varArgsPos) __attribute__((format (printf, formatStrPos, varArgsPos)))
 #elif PL_COMPILER == PL_COMPILER_MSVC
 #   define PL_FALLTHROUGH /* nothing */
 #   define PL_NODISCARD /* nothing */
+#   define PL_PRINTF_FUNCTION(formatStrPos, varArgsPos) /* nothing */
 #elif PL_COMPILER == PL_COMPILER_ICC
 #   define PL_FALLTHROUGH /* nothing */
 #   define PL_NODISCARD /* nothing */
+#   define PL_PRINTF_FUNCTION(formatStrPos, varArgsPos) /* nothing */
 #else
 #   define PL_FALLTHROUGH /* nothing */
 #   define PL_NODISCARD /* nothing */
+#   define PL_PRINTF_FUNCTION(formatStrPos, varArgsPos) /* nothing */
 #endif
 
 #define PL_PARENT(parent) parent
@@ -144,7 +162,7 @@
 
 #define PL_IMPLICIT /* nothing */
 
-#define PL_NULL_TERMINATED(type) /* nothing */
+#define PL_NULL_TERMINATED(type) type
 
-#define PL_FMT_STR(type) /* nothing */
+#define PL_FMT_STR(type) type
 #endif // INCG_PL_ANNOTATIONS_HPP
