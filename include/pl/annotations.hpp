@@ -80,7 +80,10 @@
  * after the parameter list in a function declaration.
  * formatStrPos is the parameter (starting at 1) which will hold the
  * format string, varArgsPos is the parameter which will be the C-style
- * varargs.
+ * varargs. If implementing a vprinf-style function taking a std::va_list
+ * argument use 0 as the varArgsPos.
+ * Note that if used on non-static member functions the this pointer 
+ * will be considered to be the first argument!
 **/
 
 /*!
