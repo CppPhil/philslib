@@ -8,7 +8,7 @@ int eprintf(PL_IN PL_FMT_STR(const char *)formatString, ...)
 {
     std::va_list args{ };
     va_start(args, formatString);
-    int retVal = std::vfprintf(stderr, formatString, args);
+    const int retVal{ std::vfprintf(stderr, formatString, args) };
     va_end(args);
 
     return retVal;

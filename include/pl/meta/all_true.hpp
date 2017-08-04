@@ -19,7 +19,7 @@ namespace meta
  *          void f(Args ...args)
  *          {
  *              static_assert(
- *                  pl::AllTrue<std::is_pod<Args>::value ...>::value,
+ *                  pl::meta::AllTrue<std::is_pod<Args>::value ...>::value,
  *                  "All elements of the template type parameter pack in function f must be pod."
  *              );
  *          }

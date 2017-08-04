@@ -15,6 +15,8 @@ namespace pl
  * \return Number of characters written if successful
  *         or negative value if an error occurred.
  * \note Behaves exactly like std::printf, but prints to stderr rather than stdout.
+ * \warning Be careful not to use incorrect format specifiers or an incorrect
+ *          amount of arguments for the printf-style string.
 **/
 int eprintf(PL_IN PL_FMT_STR(const char *)formatString, ...) PL_PRINTF_FUNCTION(1, 2);
 } // namespace pl
