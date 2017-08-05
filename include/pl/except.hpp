@@ -101,70 +101,42 @@ class AssertionViolationException
     : public std::runtime_error
 {
 public:
-    using this_type = AssertionViolationException;
-    using base_type = std::runtime_error;
-
-    explicit AssertionViolationException(const std::string &what_arg);
-
-    explicit AssertionViolationException(const char *what_arg);
-
-    virtual const char *what() const noexcept override;
+    using std::runtime_error::runtime_error;
 };
 
 class PreconditionViolationException
     : public AssertionViolationException
 {
 public:
-    using this_type = PreconditionViolationException;
-    using base_type = AssertionViolationException;
-
-    explicit PreconditionViolationException(const std::string &what_arg);
-
-    explicit PreconditionViolationException(const char *what_arg);
-
-    virtual const char *what() const noexcept override;
+    using AssertionViolationException::AssertionViolationException;
 };
 
 class PostconditionViolationException
     : public AssertionViolationException
 {
 public:
-    using this_type = PostconditionViolationException;
-    using base_type = AssertionViolationException;
-
-    explicit PostconditionViolationException(const std::string &what_arg);
-
-    explicit PostconditionViolationException(const char *what_arg);
-
-    virtual const char *what() const noexcept override;
+    using AssertionViolationException::AssertionViolationException;
 };
 
 class NullPointerException
     : public std::runtime_error
 {
 public:
-    using this_type = NullPointerException;
-    using base_type = std::runtime_error;
-
-    explicit NullPointerException(const std::string &what_arg);
-
-    explicit NullPointerException(const char *what_arg);
-
-    virtual const char *what() const noexcept override;
+    using std::runtime_error::runtime_error;
 };
 
 class NotYetImplementedException
     : public std::runtime_error
 {
 public:
-    using this_type = NotYetImplementedException;
-    using base_type = std::runtime_error;
+    using std::runtime_error::runtime_error;
+};
 
-    explicit NotYetImplementedException(const std::string &what_arg);
-
-    explicit NotYetImplementedException(const char *what_arg);
-
-    virtual const char *what() const noexcept override;
+class AsprintfFailureException
+    : public std::runtime_error
+{
+public:
+    using std::runtime_error::runtime_error;
 };
 
 /*!
