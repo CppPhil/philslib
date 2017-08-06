@@ -8,6 +8,7 @@
 #define INCG_PL_THD_CONCURRENT_HPP
 #include "../annotations.hpp" // PL_IN, PL_OUT, PL_INOUT
 #include "thread_safe_queue.hpp" // pl::ThreadSafeQueue
+#include "../invoke.hpp" // pl::invoke
 #include <functional> // std::function
 #include <thread> // std::thread
 #include <utility> // std::move
@@ -112,7 +113,7 @@ private:
     static void setValue(PL_OUT std::promise<Fut> &p, PL_IN Callable &callable,
                          PL_INOUT Ty &ty)
     {
-        p.set_value(callable(ty));
+        p.set_value(invoke(callable, ty));
     }
 
     /*!
@@ -124,7 +125,7 @@ private:
     static void setValue(PL_OUT std::promise<void> &p, PL_IN Callable &callable,
                          PL_INOUT Ty &ty)
     {
-        callable(ty);
+        invoke(callable, ty);
         p.set_value();
     }
 
