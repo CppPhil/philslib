@@ -6,7 +6,7 @@
 #define INCG_PL_ASPRINTF_HPP
 #include "annotations.hpp" // PL_OUT, PL_IN, PL_FMT_STR, PL_NODISCARD
 #include "except.hpp" // pl::AsprintfFailureException
-#include "meta/all_true.hpp" // pl::meta::AllTrue
+#include "meta/all.hpp" // pl::meta::AllTrue
 #include <cstddef> // std::size_t
 #include <cstdio> // std::snprintf
 #include <string> // std::string
@@ -30,7 +30,7 @@ template <typename ...Args>
 PL_NODISCARD inline std::unique_ptr<char[]> asprintfUptr(PL_IN PL_FMT_STR(const char *)fmtStr,
                                                          const Args &...args)
 {
-    static_assert(pl::meta::AllTrue<std::is_pod<Args>::value ...>::value,
+    static_assert(pl::meta::All<std::is_pod<Args> ...>::value,
                   "All elements of the template type parameter pack in function pl::asprintf must be pod.");
 
     const auto bytesToWrite
@@ -66,7 +66,7 @@ template <typename ...Args>
 PL_NODISCARD inline std::string asprintfStr(PL_IN PL_FMT_STR(const char *)fmtStr,
                                             const Args &...args)
 {
-    static_assert(pl::meta::AllTrue<std::is_pod<Args>::value ...>::value,
+    static_assert(pl::meta::All<std::is_pod<Args> ...>::value,
                   "All elements of the template type parameter pack in function pl::asprintf must be pod.");
 
     const auto bytesToWrite
