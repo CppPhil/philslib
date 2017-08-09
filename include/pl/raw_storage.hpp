@@ -1,0 +1,4 @@
+#ifndef RAW_STORAGE_HPP
+#define RAW_STORAGE_HPP
+
+#endif // RAW_STORAGE_HPP
