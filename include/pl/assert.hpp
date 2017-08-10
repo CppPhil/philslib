@@ -5,6 +5,7 @@
 **/
 #ifndef INCG_PL_ASSERT_HPP
 #define INCG_PL_ASSERT_HPP
+#include "begin_end_macro.hpp" // PL_BEGIN_MACRO, PL_END_MACRO
 #include "except.hpp" // pl::AssertionViolationException, pl::PreconditionViolationException, pl::PostconditionViolationException
 #include <cassert> // NDEBUG
 /*!
