@@ -15,7 +15,7 @@ namespace pl
 namespace detail
 {
 /*!
- * \brief Implementation functinon template of invoke.
+ * \brief Implementation function template of invoke.
  *        Not to be used directly.
 **/
 template <typename Callable, typename ...Args>
@@ -28,7 +28,7 @@ auto invokeImpl(std::true_type, PL_IN Callable &&callable,
 }
 
 /*!
- * \brief Implementation functinon template of invoke.
+ * \brief Implementation function template of invoke.
  *        Not to be used directly.
 **/
 template <typename Callable, typename ...Args>

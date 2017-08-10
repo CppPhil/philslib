@@ -139,6 +139,34 @@ public:
     using std::runtime_error::runtime_error;
 };
 
+class ArithmeticException
+    : public std::runtime_error
+{
+public:
+    using std::runtime_error::runtime_error;
+};
+
+class IllegalArgumentException
+    : public std::runtime_error
+{
+public:
+    using std::runtime_error::runtime_error;
+};
+
+class IndexOutOfBoundsException
+    : public std::runtime_error
+{
+public:
+    using std::runtime_error::runtime_error;
+};
+
+class OperationNotSupportedException
+    : public std::runtime_error
+{
+public:
+    using std::runtime_error::runtime_error;
+};
+
 /*!
  * \brief Function to handle uncaught exceptions.
  * \warning Only call this function in a catch block!
