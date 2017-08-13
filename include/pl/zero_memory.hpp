@@ -53,7 +53,7 @@ PL_ALWAYS_INLINE void *zeroMemory(PL_OUT void *dest, std::size_t countBytes)
  * \note Unlike pl::zeroMemory a call to this function will never be
  *       optimized away.
  * \warning If the object pointed to by dest is not trivially-copyable
- *          (e.g., scalar, array, or a C-compatible struct), the behaviour is
+ *          (e.g., scalar, array, or a C-compatible struct), the behavior is
  *          undefined.
  * \warning If countBytes is greater than the size of the object pointed to by
  *          dest, the behavior is undefined.

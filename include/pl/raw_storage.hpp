@@ -8,6 +8,7 @@
 #include <ciso646> // not
 #include <cstring> // std::memcpy
 #include <new> // ::operator new
+#include <memory> // std::addressof
 #include <type_traits> // std::is_reference, std::aligned_storage_t
 
 namespace pl
@@ -108,7 +109,7 @@ public:
     template <typename ...Args>
     element_type &constructParentheses(PL_IN Args &&...args)
     {
-        return *new(&m_data) element_type(std::forward<Args>(args) ...);
+        return *::new(static_cast<void *>(std::addressof(m_data))) element_type(std::forward<Args>(args) ...);
     }
 
     /*!
@@ -123,7 +124,7 @@ public:
     template <typename ...Args>
     element_type &construct(PL_IN Args &&...args)
     {
-        return *new(&m_data) element_type{ std::forward<Args>(args) ... };
+        return *::new(static_cast<void *>(std::addressof(m_data))) element_type{ std::forward<Args>(args) ... };
     }
 
     /*!
