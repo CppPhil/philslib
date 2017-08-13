@@ -66,10 +66,6 @@
         { \
         } \
         \
-        virtual const char *what() const noexcept override \
-        { \
-            return base_type::what(); \
-        } \
     }
 
 #define PL_THROW_WITH_SOURCE_INFO(exceptionType, message) \
@@ -161,6 +157,13 @@ public:
 };
 
 class OperationNotSupportedException
+    : public std::runtime_error
+{
+public:
+    using std::runtime_error::runtime_error;
+};
+
+class InvalidSizeException
     : public std::runtime_error
 {
 public:
