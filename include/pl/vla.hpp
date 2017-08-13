@@ -19,6 +19,9 @@
  * \warning Internally uses PL_ALLOCA. Beware of stack overflow. See the
  *          documentation of PL_ALLOCA.
  * \see PL_ALLOCA
+ * \note If the type contains a comma such as std::unordered_map<int, std::string>
+ *       you have to use a type alias for that type, rather than using the type
+ *       directly so that the comma effectively disappears.
 **/
 
 #define PL_VLA(type, identifier, ...) \
