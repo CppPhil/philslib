@@ -4,6 +4,7 @@
 **/
 #ifndef INCG_PL_ALGO_DESTROY_AT_HPP
 #define INCG_PL_ALGO_DESTROY_AT_HPP
+#include "../annotations.hpp" // PL_OUT
 
 namespace pl
 {
@@ -15,7 +16,7 @@ namespace algo
  * \param ptr A pointer to the object to be destroyed. May not be nullptr!
 **/
 template <typename Ty>
-void destroy_at(Ty *ptr)
+void destroy_at(PL_OUT Ty *ptr)
 {
     ptr->~Ty();
 }
