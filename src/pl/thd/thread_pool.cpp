@@ -1,8 +1,10 @@
 #include "../../../include/pl/thd/thread_pool.hpp"
 #include "../../../include/pl/byte.hpp" // pl::Byte
+#include "../../../include/pl/algo/destroy.hpp" // pl::algo::destroy
 #include <ciso646> // not, or
-#include <algorithm> // std::for_each
 #include <new> // new
+#include <memory> // std::addressof
+#include <algorithm> // std::for_each
 
 namespace pl
 {
@@ -33,7 +35,7 @@ ThreadPool::ThreadPool(std::size_t amtThreads)
     // non-static member function of ThreadPool.
     std::for_each(m_threadBegin, m_threadEnd,
                   [self, this] (PL_OUT std::thread &t) {
-        new (&t) std::thread{ &ThreadPool::threadFunction, self };
+        ::new (static_cast<void *>(std::addressof(t))) std::thread{ &ThreadPool::threadFunction, self };
     });
 }
 
@@ -46,10 +48,7 @@ ThreadPool::~ThreadPool()
     /* Call the destructors of the threads.
      * the unique_ptr will only free the raw memory of pl::Bytes.
     **/
-    std::for_each(m_threadBegin, m_threadEnd,
-                  [] (PL_OUT std::thread &t) {
-        t.~thread();
-    });
+    algo::destroy(m_threadBegin, m_threadEnd);
 }
 
 PL_NODISCARD std::size_t ThreadPool::getThreadCount() const
