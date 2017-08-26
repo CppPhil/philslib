@@ -4,6 +4,7 @@
 **/
 #ifndef INCG_PL_RANDOM_NUMBER_GENERATOR_HPP
 #define INCG_PL_RANDOM_NUMBER_GENERATOR_HPP
+#include "annotations.hpp" // PL_INOUT
 #include "assert.hpp" // PL_DBG_CHECK_PRE
 #include "no_macro_substitution.hpp" // PL_NO_MACRO_SUBSTITUTION
 #include "meta/identity.hpp" // pl::meta::identity_t
@@ -266,7 +267,7 @@ public:
      * \return A reference to this RandomNumberGenerator.
     **/
     template <typename Container>
-    this_type &shuffle(Container &container)
+    this_type &shuffle(PL_INOUT Container &container)
     {
         return shuffle(std::begin(container), std::end(container));
     }
