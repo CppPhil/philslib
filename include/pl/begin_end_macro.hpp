@@ -5,6 +5,7 @@
 **/
 #ifndef INCG_PL_BEGIN_END_MACRO_HPP
 #define INCG_PL_BEGIN_END_MACRO_HPP
+#include "unused.hpp" // PL_UNUSED
 
 /*!
  * \def PL_BEGIN_MACRO
