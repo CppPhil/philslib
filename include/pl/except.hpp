@@ -93,6 +93,11 @@
 
 namespace pl
 {
+/*!
+ * \brief Exception thrown on assertion violation.
+ * \note Not to be caught, this exception indicates a bug.
+ * \see assert.hpp
+**/
 class AssertionViolationException
     : public std::runtime_error
 {
@@ -100,6 +105,11 @@ public:
     using std::runtime_error::runtime_error;
 };
 
+/*!
+ * \brief Exception thrown on precondition violation.
+ * \note Not to be caught, this exception indicates a bug.
+ * \see assert.hpp
+**/
 class PreconditionViolationException
     : public AssertionViolationException
 {
@@ -107,6 +117,11 @@ public:
     using AssertionViolationException::AssertionViolationException;
 };
 
+/*!
+ * \brief Exception thrown on postcondition violation.
+ * \note Not to be caught, this exception indicates a bug.
+ * \see assert.hpp
+**/
 class PostconditionViolationException
     : public AssertionViolationException
 {
@@ -114,6 +129,9 @@ public:
     using AssertionViolationException::AssertionViolationException;
 };
 
+/*!
+ * \brief Exception that you can throw if given an unexpected null pointer.
+**/
 class NullPointerException
     : public std::runtime_error
 {
@@ -121,6 +139,9 @@ public:
     using std::runtime_error::runtime_error;
 };
 
+/*!
+ * \brief Used by the PL_NOT_YET_IMPLEMENTED macro.
+**/
 class NotYetImplementedException
     : public std::runtime_error
 {
@@ -128,6 +149,10 @@ public:
     using std::runtime_error::runtime_error;
 };
 
+/*!
+ * \brief May be thrown by the functions in asprintf.hpp
+ * \see asprintf.hpp
+**/
 class AsprintfFailureException
     : public std::runtime_error
 {
@@ -135,6 +160,9 @@ public:
     using std::runtime_error::runtime_error;
 };
 
+/*!
+ * \brief Exception that you can throw if an arithmetic error were to occur.
+**/
 class ArithmeticException
     : public std::runtime_error
 {
@@ -142,6 +170,9 @@ public:
     using std::runtime_error::runtime_error;
 };
 
+/*!
+ * \brief Exception that you can throw if given an illegal argument.
+**/
 class IllegalArgumentException
     : public std::runtime_error
 {
@@ -149,6 +180,9 @@ public:
     using std::runtime_error::runtime_error;
 };
 
+/*!
+ * \brief Exception that you can throw if an index is out of bounds.
+**/
 class IndexOutOfBoundsException
     : public std::runtime_error
 {
@@ -156,6 +190,9 @@ public:
     using std::runtime_error::runtime_error;
 };
 
+/*!
+ * \brief Exception that you can throw if a requested operation is not supported.
+**/
 class OperationNotSupportedException
     : public std::runtime_error
 {
@@ -163,6 +200,10 @@ public:
     using std::runtime_error::runtime_error;
 };
 
+/*!
+ * \brief Exception that indicates an invalid size.
+ * \note Thrown by the std::initializer_list constructor of pl::RawMemoryArray.
+**/
 class InvalidSizeException
     : public std::runtime_error
 {
