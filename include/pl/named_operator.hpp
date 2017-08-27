@@ -5,6 +5,7 @@
 #ifndef INCG_PL_NAMED_OPERATOR_HPP
 #define INCG_PL_NAMED_OPERATOR_HPP
 #include "invoke.hpp" // pl::invoke
+#include <utility> // std::move
 
 namespace pl
 {
@@ -17,6 +18,18 @@ namespace detail
 template <typename BinaryCallable, typename Type>
 struct BinaryCallableWithValue
 {
+    /*!
+     * \brief Constructor.
+     * \param p_BinaryCallable The BinaryCallable.
+     * \param p_value The left hand side object.
+    **/
+    constexpr BinaryCallableWithValue(BinaryCallable p_BinaryCallable,
+                                      Type &p_value)
+        : binaryCallable{ std::move(p_BinaryCallable) },
+          value{ p_value }
+    {
+    }
+
     BinaryCallable binaryCallable; /*!< The callable to run in operator> */
     Type &value; /*!< The left hand side value */
 };
@@ -29,6 +42,15 @@ struct BinaryCallableWithValue
 template <typename BinaryCallable>
 struct NamedOperator
 {
+    /*!
+     * \brief Constructor for NamedOperator.
+     * \param p_binaryCallable The BinaryCallable to use for the NamedOperator.
+    **/
+    constexpr explicit NamedOperator(BinaryCallable p_binaryCallable)
+        : binaryCallable{ std::move(p_binaryCallable) }
+    {
+    }
+
     BinaryCallable binaryCallable; /*!< The callable to run in operator> */
 };
 
@@ -62,7 +84,7 @@ template <typename BinaryCallable>
 constexpr NamedOperator<BinaryCallable>
 makeNamedOperator(BinaryCallable binaryCallable)
 {
-    return { binaryCallable };
+    return NamedOperator<BinaryCallable>{ binaryCallable };
 }
 
 inline namespace named_operator
@@ -77,7 +99,8 @@ template <typename BinaryCallable, typename Type>
 inline detail::BinaryCallableWithValue<BinaryCallable, Type>
 operator<(Type &value, NamedOperator<BinaryCallable> namedOperator)
 {
-    return { namedOperator.binaryCallable, value };
+    return detail::BinaryCallableWithValue<BinaryCallable, Type>{
+        namedOperator.binaryCallable, value };
 }
 
 /*!
@@ -90,7 +113,8 @@ template <typename BinaryCallable, typename Type>
 inline detail::BinaryCallableWithValue<BinaryCallable, const Type>
 operator<(const Type &value, NamedOperator<BinaryCallable> namedOperator)
 {
-    return { namedOperator.binaryCallable, value };
+    return detail::BinaryCallableWithValue<BinaryCallable, const Type>{
+        namedOperator.binaryCallable, value };
 }
 
 /*!
