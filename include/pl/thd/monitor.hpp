@@ -30,7 +30,7 @@ public:
      * \brief Creates a Monitor.
      * \param sharedData the data to be protected by the Monitor.
     **/
-    Monitor(element_type sharedData)
+    explicit Monitor(element_type sharedData)
         : m_sharedData{ std::move(sharedData) },
           m_mutex{ }
     {

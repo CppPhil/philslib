@@ -36,7 +36,7 @@ public:
      * \param value The object that the callables passed in the call operator
      *        will operate on.
     **/
-    Concurrent(Type value)
+    explicit Concurrent(Type value)
         : m_value{ std::move(value) },
           m_q{ },
           m_isDone{ false },
