@@ -202,7 +202,6 @@ public:
 
 /*!
  * \brief Exception that indicates an invalid size.
- * \note Thrown by the std::initializer_list constructor of pl::RawMemoryArray.
 **/
 class InvalidSizeException
     : public std::runtime_error
