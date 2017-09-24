@@ -1,90 +1,78 @@
 /*!
  * \file asprintf.hpp
- * \brief Exports asprinf functions.
+ * \brief Exports asprintf functions.
 **/
 #ifndef INCG_PL_ASPRINTF_HPP
 #define INCG_PL_ASPRINTF_HPP
-#include "annotations.hpp" // PL_OUT, PL_IN, PL_FMT_STR, PL_NODISCARD
-#include "except.hpp" // pl::AsprintfFailureException
-#include "meta/conjunction.hpp" // pl::meta::conjunction
-#include <cstddef> // std::size_t
-#include <cstdio> // std::snprintf
+#include "annotations.hpp" // PL_OUT, PL_IN, PL_FMT_STR, PL_NODISCARD, ...
+#include <cstdarg> // std::va_list
 #include <string> // std::string
 #include <memory> // std::unique_ptr
-#include <type_traits> // std::is_pod
 
 namespace pl
 {
 /*!
- * \brief Allocates a new C-style string that is filled in a printf-style.
- * \param fmtStr The printf-style format string. May not be nullptr!
- * \param args The arguments that match with the format specifiers in 'fmtStr'.
- * \return The string.
- * \note If there are no characters to write the string to be returned
- *       will be an empty string.
- * \warning Be careful not to use incorrect format specifiers or an incorrect
- *          amount of arguments for the printf-style string.
- * \throws pl::AsprintfFailureException if an error occurred.
+ * \brief Allocates a string and prints to it in a printf style.
+ * \param strp Pointer to a unique_ptr<char[]>. The unique_ptr<char[]> pointed
+ *             to will be replaced with a new unique_ptr<char[]> that will
+ *             own the newly allocated memory which will contain the resulting
+ *             string. May not be nullptr!
+ * \param fmt A null-terminated byte character string to be used as the
+ *            printf style format string. May not be nullptr!
+ * \param ap The va_list that contains the arguments as specified by 'fmt'.
+ * \return The number of bytes written on success or a negative number on
+ *         error.
+ * \warning Will cause undefined behavior if 'strp' or 'fmt' is nullptr.
+ * \note In general you probably want to be using asprintf instead.
 **/
-template <typename ...Args>
-PL_NODISCARD inline std::unique_ptr<char[]> asprintfUptr(PL_IN PL_FMT_STR(const char *)fmtStr,
-                                                         const Args &...args)
-{
-    static_assert(pl::meta::conjunction<std::is_pod<Args> ...>::value,
-                  "All elements of the template type parameter pack in function pl::asprintf must be pod.");
-
-    const auto bytesToWrite
-        = static_cast<std::size_t>(std::snprintf(nullptr, 0U, fmtStr, args ...));
-
-    auto retVal = std::make_unique<char[]>(bytesToWrite);
-
-    if (bytesToWrite == 0U) {
-        return std::make_unique<char[]>(1);
-    }
-
-    if (std::snprintf(retVal.get(), bytesToWrite, fmtStr, args ...) < 0) {
-        throw AsprintfFailureException {
-            "pl::asprintf failed!"
-        };
-    }
-
-    return retVal;
-}
+PL_NODISCARD int vasprintf(PL_OUT std::unique_ptr<char[]> *strp,
+                           PL_IN PL_FMT_STR(const char *)fmt,
+                           std::va_list ap) noexcept PL_PRINTF_FUNCTION(2, 0);
 
 /*!
- * \brief Allocates a new string that is filled in a printf-style.
- * \param fmtStr The printf-style format string. May not be nullptr!
- * \param args The arguments that match with the format specifiers in 'fmtStr'.
- * \return The string
- * \note If there are no characters to write the string returned
- *       will be an empty string.
- * \warning Be careful not to use incorrect format specifiers or an incorrect
- *          amount of arguments for the printf-style string.
- * \throws pl::AsprinfFailureException if an error occurred.
+ * \brief Creates a string and prints to it in a printf style.
+ * \param strp Pointer to a string. The string pointed to will be resized
+ *             to be large enough and be filled with the resulting string.
+ *             May not be nullptr!
+ * \param fmt A null-terminated byte character string to be used as the
+ *            printf style format string. May not be nullptr!
+ * \param ap The va_list that contains the arguments as specified by 'fmt'.
+ * \return The number of bytes written on success or a negative number on
+ *         error.
+ * \warning Will cause undefined behavior if 'strp' or 'fmt' is nullptr.
+ * \note In general you probably want to be using asprintf instead.
 **/
-template <typename ...Args>
-PL_NODISCARD inline std::string asprintfStr(PL_IN PL_FMT_STR(const char *)fmtStr,
-                                            const Args &...args)
-{
-    static_assert(pl::meta::conjunction<std::is_pod<Args> ...>::value,
-                  "All elements of the template type parameter pack in function pl::asprintf must be pod.");
+PL_NODISCARD int vasprintf(PL_OUT std::string *strp,
+                           PL_IN PL_FMT_STR(const char *)fmt,
+                           std::va_list ap) noexcept PL_PRINTF_FUNCTION(2, 0);
 
-    const auto bytesToWrite
-        = static_cast<std::size_t>(std::snprintf(nullptr, 0U, fmtStr, args ...));
+/*!
+ * \brief Allocates a string and prints to it in a printf style.
+ * \param strp Pointer to a unique_ptr<char[]>. The unique_ptr<char[]> will be
+ *             replaced with a newly created unique_ptr<char[]> that owns
+ *             newly allocated memory containing the resulting string.
+ *             May not be nullptr!
+ * \param fmt A null-terminated byte character string to be used as the printf
+ *            style format string. May not be nullptr!
+ * \return The number of bytes written on success or a negative number on error.
+ * \warning Will cause undefined behavior if 'strp' or 'fmt' is nullptr.
+**/
+PL_NODISCARD int asprintf(PL_OUT std::unique_ptr<char[]> *strp,
+                          PL_IN PL_FMT_STR(const char *)fmt,
+                          ...) noexcept PL_PRINTF_FUNCTION(2, 3);
 
-    if (bytesToWrite == 0U) {
-        return std::string{ };
-    }
-
-    std::string retVal(bytesToWrite, '\0');
-
-    if (std::snprintf(&retVal[0], bytesToWrite, fmtStr, args ...) < 0) {
-        throw AsprintfFailureException{
-            "pl::asprintf failed!"
-        };
-    }
-
-    return retVal;
-}
+/*!
+ * \brief Creates a string and prints to it in a printf style.
+ * \param strp Pointer to a string. The string will be resized to be large
+ *             enough and will be made to contain the resulting string.
+ *             May not be nullptr!
+ * \param fmt A null-terminated byte character string to be used as the printf
+ *            style format string. May not be nullptr!
+ * \return The number of bytes written on success or a negative number on error.
+ * \warning Will cause undefined behavior if 'strp' or 'fmt' is nullptr.
+**/
+PL_NODISCARD int asprintf(PL_OUT std::string *strp,
+                          PL_IN PL_FMT_STR(const char *)fmt,
+                          ...) noexcept PL_PRINTF_FUNCTION(2, 3);
 } // namespace pl
 #endif // INCG_PL_ASPRINTF_HPP

@@ -150,17 +150,6 @@ public:
 };
 
 /*!
- * \brief May be thrown by the functions in asprintf.hpp
- * \see asprintf.hpp
-**/
-class AsprintfFailureException
-    : public std::runtime_error
-{
-public:
-    using std::runtime_error::runtime_error;
-};
-
-/*!
  * \brief Exception that you can throw if an arithmetic error were to occur.
 **/
 class ArithmeticException
