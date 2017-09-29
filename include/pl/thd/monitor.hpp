@@ -20,7 +20,7 @@ namespace thd
  *        by passing in callables that operate on the shared data.
 **/
 template <typename SharedData>
-class Monitor final
+class Monitor
 {
 public:
     using this_type = Monitor;
