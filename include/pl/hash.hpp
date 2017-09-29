@@ -45,7 +45,8 @@ void addHash(PL_INOUT std::size_t &hashSeed, PL_IN const Hashable &hashable)
  * this function.
 **/
 template <typename ...Args>
-std::size_t hash(PL_IN const Args &...args) {
+std::size_t hash(PL_IN const Args &...args)
+{
     auto hashSeed = static_cast<std::size_t>(0U);
 
     PL_UNUSED(std::initializer_list<int>{
