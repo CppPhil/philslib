@@ -6,7 +6,7 @@
 #define INCG_PL_NEGATE_PREDICATE_HPP
 #include "annotations.hpp" // PL_IN
 #include <ciso646> // not
-#include <utility> // std::move_if_noexcept, std::forward
+#include <utility> // std::move, std::forward
 #include <type_traits> // std::is_nothrow_move_constructible, std::remove_reference_t
 
 namespace pl
@@ -32,7 +32,7 @@ public:
     **/
     explicit NegatedPredicate(value_type predicate)
     noexcept(std::is_nothrow_move_constructible<value_type>::value)
-        : m_predicate{ std::move_if_noexcept(predicate) }
+        : m_predicate{ std::move(predicate) }
     {
     }
 
