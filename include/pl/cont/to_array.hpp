@@ -34,7 +34,8 @@ toArrayImpl(PL_IN Ty (&array)[Size], std::index_sequence<Indices ...>)
  * corresponding element of 'array'.
 **/
 template <typename Ty, std::size_t Size>
-constexpr std::array<std::remove_cv_t<Ty>, Size> toArray(PL_IN Ty (&array)[Size])
+constexpr std::array<std::remove_cv_t<Ty>, Size> toArray(
+    PL_IN Ty (&array)[Size])
 {
     return detail::toArrayImpl(array, std::make_index_sequence<Size>{ });
 }

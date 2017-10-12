@@ -66,7 +66,9 @@ PL_ALWAYS_INLINE void *zeroMemory(PL_OUT void *dest, std::size_t countBytes)
  * even if the object pointed to by dest will not be referenced after
  * a call to this function.
 **/
-PL_ALWAYS_INLINE void *secureZeroMemory(PL_OUT void *dest, std::size_t countBytes)
+PL_ALWAYS_INLINE void *secureZeroMemory(
+    PL_OUT void *dest,
+    std::size_t countBytes)
 {
     volatile Byte *ptr = static_cast<volatile Byte *>(dest);
 

@@ -41,8 +41,9 @@ public:
      * \param b The second operand.
      * \return true if a's priority is less than b's priority; false otherwise.
     **/
-    PL_NODISCARD friend bool operator<(PL_IN const ExecutorBase &a,
-                                       PL_IN const ExecutorBase &b);
+    PL_NODISCARD friend bool operator<(
+        PL_IN const ExecutorBase &a,
+        PL_IN const ExecutorBase &b);
 
     /*!
      * \brief Constructs a ThreadPool.
@@ -182,8 +183,9 @@ private:
          * \param b The second operand.
          * \return true if a's priority is less than b's priority; false otherwise.
         **/
-        PL_NODISCARD friend bool operator<(PL_IN const ExecutorBase &a,
-                                           PL_IN const ExecutorBase &b);
+        PL_NODISCARD friend bool operator<(
+            PL_IN const ExecutorBase &a,
+            PL_IN const ExecutorBase &b);
 
         /*!
          * \brief pure virtual member function to be implemented by deriving
@@ -335,8 +337,9 @@ private:
          *         true if *p1 is considered less than *p2; false otherwise.
         **/
         template <typename Pointer>
-        PL_NODISCARD bool operator()(PL_IN Pointer const &p1,
-                                     PL_IN Pointer const &p2)
+        PL_NODISCARD bool operator()(
+            PL_IN Pointer const &p1,
+            PL_IN Pointer const &p2)
         {
             std::less<decltype(*p1)> lessComparator{ };
             return lessComparator(*p1, *p2);

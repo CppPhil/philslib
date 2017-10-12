@@ -26,9 +26,10 @@ namespace pl
  * \return 'destination' is returned.
  * \warning Make sure 'byteCount' is correct!
 **/
-PL_ALWAYS_INLINE void *memxor(PL_INOUT void * PL_RESTRICT destination,
-                              PL_IN const void * PL_RESTRICT source,
-                              std::size_t byteCount)
+PL_ALWAYS_INLINE void *memxor(
+    PL_INOUT void * PL_RESTRICT destination,
+    PL_IN const void * PL_RESTRICT source,
+    std::size_t byteCount)
 {
     auto dest = static_cast<Byte * PL_RESTRICT>(destination);
     auto src  = static_cast<const Byte * PL_RESTRICT>(source);

@@ -84,7 +84,7 @@ public:
      *         The returned future can be joined on using .get() for instance.
     **/
     template <typename Callable>
-    auto operator()(PL_IN Callable &&callable) const
+    auto operator()(PL_IN Callable &&callable)
     {
         auto p = std::make_shared<std::promise<decltype(callable(m_value))>>();
 
@@ -129,8 +129,8 @@ private:
         p.set_value();
     }
 
-    mutable Type m_value;
-    mutable concurrent_queue m_q;
+    Type m_value;
+    concurrent_queue m_q;
     bool m_isDone; //!< only accessed from m_thd
     std::thread m_thd;
 };

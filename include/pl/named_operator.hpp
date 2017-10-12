@@ -23,8 +23,9 @@ struct BinaryCallableWithValue
      * \param p_BinaryCallable The BinaryCallable.
      * \param p_value The left hand side object.
     **/
-    constexpr BinaryCallableWithValue(BinaryCallable p_BinaryCallable,
-                                      Type &p_value)
+    constexpr BinaryCallableWithValue(
+        BinaryCallable p_BinaryCallable,
+        Type &p_value)
         : binaryCallable{ std::move(p_BinaryCallable) },
           value{ p_value }
     {
@@ -127,9 +128,9 @@ operator<(const Type &value, NamedOperator<BinaryCallable> namedOperator)
  *         object and the right hand side object.
 **/
 template <typename BinaryCallable, typename Type1, typename Type2>
-inline auto
-operator>(const detail::BinaryCallableWithValue<BinaryCallable, Type1> &callableWithValue,
-          const Type2 &value) -> decltype(auto)
+inline auto operator>(
+    const detail::BinaryCallableWithValue<BinaryCallable, Type1> &callableWithValue,
+    const Type2 &value) -> decltype(auto)
 {
     return ::pl::invoke(callableWithValue.binaryCallable,
                         callableWithValue.value, value);
@@ -147,9 +148,9 @@ operator>(const detail::BinaryCallableWithValue<BinaryCallable, Type1> &callable
  *         hand side object.
 **/
 template <typename BinaryCallable, typename Type1, typename Type2>
-inline auto
-operator>=(const detail::BinaryCallableWithValue<BinaryCallable, Type1> &callableWithValue,
-           const Type2 &value) -> decltype(auto)
+inline auto operator>=(
+    const detail::BinaryCallableWithValue<BinaryCallable, Type1> &callableWithValue,
+    const Type2 &value) -> decltype(auto)
 {
     return callableWithValue.value = callableWithValue > value;
 }

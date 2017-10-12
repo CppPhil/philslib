@@ -32,9 +32,10 @@ namespace algo
  * \note The complexity is linear in 'count'.
 **/
 template <typename InputIterator, typename SizeType, typename ForwardIterator>
-std::pair<InputIterator, ForwardIterator> uninitialized_move_n(InputIterator first,
-                                                               SizeType count,
-                                                               ForwardIterator dest)
+std::pair<InputIterator, ForwardIterator> uninitialized_move_n(
+    InputIterator first,
+    SizeType count,
+    ForwardIterator dest)
 {
     using value_type = typename std::iterator_traits<ForwardIterator>::value_type;
 

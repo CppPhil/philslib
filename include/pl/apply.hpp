@@ -19,11 +19,14 @@ namespace detail
  * \brief Implementation function of apply; not to be used directly!
 **/
 template <typename Callable, typename TupleLike, std::size_t ...Indices>
-constexpr auto applyImpl(PL_IN Callable &&callable, PL_IN TupleLike &&tupleLike,
-                         std::index_sequence<Indices ...>) -> decltype(auto)
+constexpr auto applyImpl(
+    PL_IN Callable &&callable,
+    PL_IN TupleLike &&tupleLike,
+    std::index_sequence<Indices ...>) -> decltype(auto)
 {
-    return invoke(std::forward<Callable>(callable),
-                  std::get<Indices>(std::forward<TupleLike>(tupleLike)) ...);
+    return ::pl::invoke(
+        std::forward<Callable>(callable),
+        std::get<Indices>(std::forward<TupleLike>(tupleLike)) ...);
 }
 } // namespace detail
 
@@ -37,16 +40,14 @@ constexpr auto applyImpl(PL_IN Callable &&callable, PL_IN TupleLike &&tupleLike,
  *       std::array and std::pair may be used.
 **/
 template <typename Callable, typename TupleLike>
-constexpr auto apply(PL_IN Callable &&callable,
-                     PL_IN TupleLike &&tupleLike) -> decltype(auto)
+constexpr auto apply(
+    PL_IN Callable &&callable,
+    PL_IN TupleLike &&tupleLike) -> decltype(auto)
 {
-    return detail::applyImpl(std::forward<Callable>(callable),
-                             std::forward<TupleLike>(tupleLike),
-                             std::make_index_sequence<
-                                std::tuple_size<
-                                    std::decay_t<TupleLike>
-                                >::value
-                             >{ });
+    return detail::applyImpl(
+        std::forward<Callable>(callable),
+        std::forward<TupleLike>(tupleLike),
+        std::make_index_sequence<std::tuple_size<std::decay_t<TupleLike>>::value>{ });
 }
 } // namespace pl
 #endif // INCG_PL_APPLY_HPP

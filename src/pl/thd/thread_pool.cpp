@@ -74,8 +74,9 @@ ThreadPool::ExecutorBase::~ExecutorBase()
 {
 }
 
-PL_NODISCARD bool operator<(PL_IN const ThreadPool::ExecutorBase &a,
-                            PL_IN const ThreadPool::ExecutorBase &b)
+PL_NODISCARD bool operator<(
+    PL_IN const ThreadPool::ExecutorBase &a,
+    PL_IN const ThreadPool::ExecutorBase &b)
 {
     return a.m_priority < b.m_priority; // compare the priorities stored.
 }
@@ -122,10 +123,13 @@ void ThreadPool::join()
     m_cv.notify_all();
 
     // join every thread.
-    std::for_each(m_threadBegin, m_threadEnd,
-                  [] (PL_OUT std::thread &t) {
-        t.join();
-    });
+    std::for_each(
+        m_threadBegin,
+        m_threadEnd,
+        [] (PL_INOUT std::thread &t) {
+            t.join();
+        }
+    );
 }
 } // namespace thd
 } // namespace pl

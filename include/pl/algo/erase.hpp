@@ -24,9 +24,10 @@ namespace detail
  *        compare equal to this will be removed from the container.
 **/
 template <typename Container, typename Type>
-inline void
-eraseHelper(PL_INOUT Container &container, PL_IN const Type &elementToRemove,
-            meta::vectorlike_tag)
+inline void eraseHelper(
+    PL_INOUT Container &container,
+    PL_IN const Type &elementToRemove,
+    meta::vectorlike_tag)
 {
     container.erase(std::remove(container.begin(), container.end(),
                                 elementToRemove),
@@ -42,9 +43,10 @@ eraseHelper(PL_INOUT Container &container, PL_IN const Type &elementToRemove,
  *        from the container.
 **/
 template <typename Container, typename UnaryPredicate>
-inline void
-eraseIfHelper(PL_INOUT Container &container,
-              PL_IN UnaryPredicate &&unaryPredicate, meta::vectorlike_tag)
+inline void eraseIfHelper(
+    PL_INOUT Container &container,
+    PL_IN UnaryPredicate &&unaryPredicate,
+    meta::vectorlike_tag)
 {
     container.erase(
         std::remove_if(container.begin(), container.end(),
@@ -61,9 +63,10 @@ eraseIfHelper(PL_INOUT Container &container,
  *        compare equal to this will be removed from the container.
 **/
 template <typename Container, typename Type>
-inline void
-eraseHelper(PL_INOUT Container &container, PL_IN const Type &elementToRemove,
-            meta::listlike_tag)
+inline void eraseHelper(
+    PL_INOUT Container &container,
+    PL_IN const Type &elementToRemove,
+    meta::listlike_tag)
 {
     container.remove(elementToRemove);
 }
@@ -77,9 +80,10 @@ eraseHelper(PL_INOUT Container &container, PL_IN const Type &elementToRemove,
  *        from the container.
 **/
 template <typename Container, typename UnaryPredicate>
-inline void
-eraseIfHelper(PL_INOUT Container &container,
-              PL_IN UnaryPredicate &&unaryPredicate, meta::listlike_tag)
+inline void eraseIfHelper(
+    PL_INOUT Container &container,
+    PL_IN UnaryPredicate &&unaryPredicate,
+    meta::listlike_tag)
 {
     container.remove_if(std::forward<UnaryPredicate>(unaryPredicate));
 }
@@ -94,9 +98,10 @@ eraseIfHelper(PL_INOUT Container &container,
  *        compare equivalent/equal to this will be removed from the container.
 **/
 template <typename Container, typename Type>
-inline void
-eraseHelper(PL_INOUT Container &container, PL_IN const Type &elementToRemove,
-            meta::associative_tag)
+inline void eraseHelper(
+    PL_INOUT Container &container,
+    PL_IN const Type &elementToRemove,
+    meta::associative_tag)
 {
     container.erase(elementToRemove);
 }
@@ -110,9 +115,10 @@ eraseHelper(PL_INOUT Container &container, PL_IN const Type &elementToRemove,
  *        from the container.
 **/
 template <typename Container, typename UnaryPredicate>
-inline void
-eraseIfHelper(PL_INOUT Container &container, UnaryPredicate unaryPredicate,
-              meta::associative_tag)
+inline void eraseIfHelper(
+    PL_INOUT Container &container,
+    UnaryPredicate unaryPredicate,
+    meta::associative_tag)
 {
     const auto endIter = container.end();
     for (auto iterator = container.begin(); iterator != endIter;) {
@@ -144,8 +150,9 @@ eraseIfHelper(PL_INOUT Container &container, UnaryPredicate unaryPredicate,
  *       remove into elementToRemove.
 **/
 template <typename Container, typename Type>
-inline void erase(PL_INOUT Container &container,
-                  PL_IN const Type &elementToRemove)
+inline void erase(
+    PL_INOUT Container &container,
+    PL_IN const Type &elementToRemove)
 {
     detail::eraseHelper(container, elementToRemove,
                         meta::container_traits_category<Container>{ });
@@ -162,8 +169,9 @@ inline void erase(PL_INOUT Container &container,
  * if it is to be removed.
 **/
 template <typename Container, typename UnaryPredicate>
-inline void eraseIf(PL_INOUT Container &container,
-                    PL_IN UnaryPredicate &&unaryPredicate)
+inline void eraseIf(
+    PL_INOUT Container &container,
+    PL_IN UnaryPredicate &&unaryPredicate)
 {
     detail::eraseIfHelper(
         container,

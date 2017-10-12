@@ -8,9 +8,10 @@
 
 namespace pl
 {
-PrintBytesAsHex::PrintBytesAsHex(PL_IN const void *dataToPrint,
-                                 std::size_t countBytes,
-                                 std::string delim)
+PrintBytesAsHex::PrintBytesAsHex(
+    PL_IN const void *dataToPrint,
+    std::size_t countBytes,
+    std::string delim)
     : m_dataToPrint{ dataToPrint },
       m_countBytes{ countBytes },
       m_delim{ std::move(delim) }
@@ -32,8 +33,9 @@ PrintBytesAsHex &PrintBytesAsHex::operator=(const this_type &) = default;
 
 PrintBytesAsHex &PrintBytesAsHex::operator=(this_type &&) = default;
 
-std::ostream &operator<<(PL_INOUT std::ostream &os,
-                         PL_IN const PrintBytesAsHex &toPrint)
+std::ostream &operator<<(
+    PL_INOUT std::ostream &os,
+    PL_IN const PrintBytesAsHex &toPrint)
 {
     static constexpr auto nibblesPerByte = 2;
     static constexpr auto fillChar = '0';

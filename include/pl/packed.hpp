@@ -12,8 +12,8 @@
  * \example PL_PACKED_START
  *          struct PackedStruct
  *          {
- *              std::uint32_t a;
- *              std::uint16_t b;
+ *              std::uint16_t a;
+ *              std::uint32_t b;
  *          };
  *          PL_PACKED_END
  *

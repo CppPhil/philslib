@@ -27,8 +27,10 @@ namespace algo
  * \note The complexity is linear in the distance between 'first' and 'last'.
 **/
 template <typename InputIterator, typename ForwardIterator>
-ForwardIterator uninitialized_move(InputIterator first, InputIterator last,
-                                   ForwardIterator dest)
+ForwardIterator uninitialized_move(
+    InputIterator first,
+    InputIterator last,
+    ForwardIterator dest)
 {
     using value_type = typename std::iterator_traits<ForwardIterator>::value_type;
 

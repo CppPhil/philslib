@@ -58,8 +58,10 @@ public:
      *          be aliases of the above mentioned types, which are exempt
      *          from the strict aliasing rules.
     **/
-    RawMemoryArray(PL_OUT void *rawMemory, size_type byteCount,
-                   PL_IN const_reference initialValue = value_type())
+    RawMemoryArray(
+        PL_OUT void *rawMemory,
+        size_type byteCount,
+        PL_IN const_reference initialValue = value_type())
         : m_data{ static_cast<pointer>(rawMemory) },
           m_size{ byteCount / sizeof(value_type) }
     {
@@ -93,8 +95,10 @@ public:
      *          be aliases of the above mentioned types, which are exempt
      *          from the strict aliasing rules.
     **/
-    RawMemoryArray(PL_OUT void *rawMemory, size_type byteCount,
-                   std::initializer_list<value_type> initList)
+    RawMemoryArray(
+        PL_OUT void *rawMemory,
+        size_type byteCount,
+        std::initializer_list<value_type> initList)
         : m_data{ static_cast<pointer>(rawMemory) },
           m_size{ byteCount / sizeof(value_type) }
     {
@@ -501,8 +505,9 @@ private:
  * \note Returns false if 'lhs' and 'rhs' are not of the same size.
 **/
 template <typename Ty>
-bool operator==(const ::pl::RawMemoryArray<Ty> &lhs,
-                const ::pl::RawMemoryArray<Ty> &rhs)
+bool operator==(
+    const ::pl::RawMemoryArray<Ty> &lhs,
+    const ::pl::RawMemoryArray<Ty> &rhs)
 {
     if (lhs.size() != rhs.size()) {
         return false;
@@ -522,8 +527,9 @@ bool operator==(const ::pl::RawMemoryArray<Ty> &lhs,
  * \note Returns true if 'lhs' and 'rhs' are not of the same size.
 **/
 template <typename Ty>
-bool operator!=(const ::pl::RawMemoryArray<Ty> &lhs,
-                const ::pl::RawMemoryArray<Ty> &rhs)
+bool operator!=(
+    const ::pl::RawMemoryArray<Ty> &lhs,
+    const ::pl::RawMemoryArray<Ty> &rhs)
 {
     return not (lhs == rhs);
 }
@@ -536,8 +542,9 @@ bool operator!=(const ::pl::RawMemoryArray<Ty> &lhs,
  *         the contents of 'rhs', false otherwise
 **/
 template <typename Ty>
-bool operator<(const ::pl::RawMemoryArray<Ty> &lhs,
-               const ::pl::RawMemoryArray<Ty> &rhs)
+bool operator<(
+    const ::pl::RawMemoryArray<Ty> &lhs,
+    const ::pl::RawMemoryArray<Ty> &rhs)
 {
     return std::lexicographical_compare(lhs.begin(), lhs.end(),
                                         rhs.begin(), rhs.end());
@@ -551,8 +558,9 @@ bool operator<(const ::pl::RawMemoryArray<Ty> &lhs,
  *         the contents of 'rhs', false otherwise
 **/
 template <typename Ty>
-bool operator<=(const ::pl::RawMemoryArray<Ty> &lhs,
-                const ::pl::RawMemoryArray<Ty> &rhs)
+bool operator<=(
+    const ::pl::RawMemoryArray<Ty> &lhs,
+    const ::pl::RawMemoryArray<Ty> &rhs)
 {
     return not (rhs < lhs);
 }
@@ -565,8 +573,9 @@ bool operator<=(const ::pl::RawMemoryArray<Ty> &lhs,
  *         the contents of 'rhs', false otherwise
 **/
 template <typename Ty>
-bool operator>(const ::pl::RawMemoryArray<Ty> &lhs,
-               const ::pl::RawMemoryArray<Ty> &rhs)
+bool operator>(
+    const ::pl::RawMemoryArray<Ty> &lhs,
+    const ::pl::RawMemoryArray<Ty> &rhs)
 {
     return rhs < lhs;
 }
@@ -579,8 +588,9 @@ bool operator>(const ::pl::RawMemoryArray<Ty> &lhs,
  *         equal the contents of 'rhs', false otherwise
 **/
 template <typename Ty>
-bool operator>=(const ::pl::RawMemoryArray<Ty> &lhs,
-                const ::pl::RawMemoryArray<Ty> &rhs)
+bool operator>=(
+    const ::pl::RawMemoryArray<Ty> &lhs,
+    const ::pl::RawMemoryArray<Ty> &rhs)
 {
     return not (lhs < rhs);
 }

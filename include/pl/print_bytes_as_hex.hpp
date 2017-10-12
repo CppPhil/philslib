@@ -31,8 +31,10 @@ public:
      * \throws pl::NullPointerException if 'dataToPrint' is nullptr.
      *         pl::InvalidSizeException if countBytes is 0.
     **/
-    PrintBytesAsHex(PL_IN const void *dataToPrint, std::size_t countBytes,
-                    std::string delim = " ");
+    PrintBytesAsHex(
+        PL_IN const void *dataToPrint,
+        std::size_t countBytes,
+        std::string delim = " ");
 
     /*!
      * \brief Defaulted copy constructor to suppress 'has pointer data members
@@ -65,8 +67,9 @@ public:
      * \param toPrint The PrintBytesAsHex object to print.
      * \return A reference to 'os'.
     **/
-    friend std::ostream &operator<<(PL_INOUT std::ostream &os,
-                                    PL_IN const this_type &toPrint);
+    friend std::ostream &operator<<(
+        PL_INOUT std::ostream &os,
+        PL_IN const this_type &toPrint);
 
 private:
     const void *m_dataToPrint; /*!< Pointer to the data to print */

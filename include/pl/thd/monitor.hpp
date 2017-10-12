@@ -44,17 +44,17 @@ public:
      *         as the callable's call operator's argument.
     **/
     template <typename Callable>
-    auto operator()(PL_IN Callable &&callable) const -> decltype(auto)
+    auto operator()(PL_IN Callable &&callable) -> decltype(auto)
     {
         std::lock_guard<std::mutex> lockGuard{ m_mutex };
         return ::pl::invoke(std::forward<Callable>(callable), m_sharedData);
     }
 
 private:
-    mutable element_type m_sharedData; //!< the shared data
-    mutable std::mutex m_mutex; /*!< the mutex to guard access
-                                 *   to the shared data
-                                **/
+    element_type m_sharedData; //!< the shared data
+    std::mutex m_mutex; /*!< the mutex to guard access
+                         *   to the shared data
+                        **/
 };
 } // namespace thd
 } // namespace pl

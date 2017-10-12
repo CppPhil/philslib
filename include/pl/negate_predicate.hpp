@@ -60,8 +60,8 @@ private:
  *         passed into the parameter.
 **/
 template <typename Predicate>
-detail::NegatedPredicate<std::remove_reference_t<Predicate>>
-negatePredicate(PL_IN Predicate &&predicate)
+detail::NegatedPredicate<std::remove_reference_t<Predicate>> negatePredicate(
+    PL_IN Predicate &&predicate)
 {
     return detail::NegatedPredicate<std::remove_reference_t<Predicate>>{
         std::forward<Predicate>(predicate)

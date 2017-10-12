@@ -37,9 +37,10 @@ namespace algo
  * ranges are typically half open in C++.
 **/
 template <typename RandomAccessIterator>
-auto slide(PL_IN const RandomAccessIterator &first,
-           PL_IN const RandomAccessIterator &last,
-           PL_IN const RandomAccessIterator &place)
+auto slide(
+    PL_IN const RandomAccessIterator &first,
+    PL_IN const RandomAccessIterator &last,
+    PL_IN const RandomAccessIterator &place)
 -> std::pair<RandomAccessIterator, RandomAccessIterator>
 {
     if (place < first) {

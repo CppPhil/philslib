@@ -19,7 +19,9 @@ namespace detail
  * \warning Not to be used directly, use pl::makeFromTuple!.
 **/
 template <typename Ty, typename TupleLike, std::size_t ...Indices>
-constexpr Ty makeFromTupleImpl(PL_IN TupleLike &&tupleLike, std::index_sequence<Indices ...>)
+constexpr Ty makeFromTupleImpl(
+    PL_IN TupleLike &&tupleLike,
+    std::index_sequence<Indices ...>)
 {
     return Ty(std::get<Indices>(std::forward<TupleLike>(tupleLike)) ...);
 }
@@ -38,8 +40,8 @@ template <typename Ty, typename TupleLike>
 constexpr Ty makeFromTuple(PL_IN TupleLike &&tupleLike)
 {
     return detail::makeFromTupleImpl<Ty>(
-                std::forward<TupleLike>(tupleLike),
-                std::make_index_sequence<std::tuple_size<std::decay_t<TupleLike>>::value>{ });
+        std::forward<TupleLike>(tupleLike),
+        std::make_index_sequence<std::tuple_size<std::decay_t<TupleLike>>::value>{ });
 }
 } // namespace pl
 #endif // INCG_PL_MAKE_FROM_TUPLE_HPP

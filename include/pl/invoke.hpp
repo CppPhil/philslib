@@ -19,8 +19,10 @@ namespace detail
  *        Not to be used directly.
 **/
 template <typename Callable, typename ...Args>
-auto invokeImpl(std::true_type, PL_IN Callable &&callable,
-                PL_IN Args &&...args)
+auto invokeImpl(
+    std::true_type,
+    PL_IN Callable &&callable,
+    PL_IN Args &&...args)
     noexcept(noexcept(std::mem_fn(callable)(std::forward<Args>(args) ...)))
     -> decltype(auto)
 {
@@ -32,8 +34,10 @@ auto invokeImpl(std::true_type, PL_IN Callable &&callable,
  *        Not to be used directly.
 **/
 template <typename Callable, typename ...Args>
-auto invokeImpl(std::false_type, PL_IN Callable &&callable,
-                PL_IN Args &&...args)
+auto invokeImpl(
+    std::false_type,
+    PL_IN Callable &&callable,
+    PL_IN Args &&...args)
     noexcept(noexcept(std::forward<Callable>(callable)(std::forward<Args>(args) ...)))
     -> decltype(auto)
 {

@@ -35,9 +35,10 @@ namespace algo
  * \return 'first' + 'n'
 **/
 template <typename InputIterator, typename SizeType, typename UnaryInvocable>
-InputIterator for_each_n(InputIterator first,
-                         SizeType n,
-                         UnaryInvocable unaryInvocable)
+InputIterator for_each_n(
+    InputIterator first,
+    SizeType n,
+    UnaryInvocable unaryInvocable)
 {
     for (SizeType i{ }; i < n; ++first) {
         pl::invoke(unaryInvocable, *first);

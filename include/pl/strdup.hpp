@@ -12,7 +12,8 @@ namespace pl
  *            May not be nullptr!
  * \return The copy.
 **/
-PL_NODISCARD std::unique_ptr<char[]> strdup(PL_IN PL_NULL_TERMINATED(const char *)str);
+PL_NODISCARD std::unique_ptr<char[]> strdup(
+    PL_IN PL_NULL_TERMINATED(const char *)str);
 
 /*!
  * \brief Creates a unique_ptr that holds a null-terminated byte string.
@@ -26,7 +27,8 @@ PL_NODISCARD std::unique_ptr<char[]> strdup(PL_IN PL_NULL_TERMINATED(const char 
  * to by 'str'. If the null terminator is not encountered in the first
  * 'size' bytes, it is added to the duplicated string.
 **/
-PL_NODISCARD std::unique_ptr<char[]> strndup(PL_IN PL_NULL_TERMINATED(const char *)str,
-                                             std::size_t size);
+PL_NODISCARD std::unique_ptr<char[]> strndup(
+    PL_IN PL_NULL_TERMINATED(const char *)str,
+    std::size_t size);
 } // namespace pl
 #endif // INCG_PL_STRDUP_HPP

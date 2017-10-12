@@ -40,8 +40,11 @@ namespace algo
  *          Only works for floating-point 'Ty' if NaNs are avoided.
 **/
 template <typename Ty, typename BinaryComparator>
-constexpr const Ty &clamp(const Ty &value, const Ty &lowerBound,
-                          const Ty &upperBound, BinaryComparator comp)
+constexpr const Ty &clamp(
+    const Ty &value,
+    const Ty &lowerBound,
+    const Ty &upperBound,
+    BinaryComparator comp)
 {
     return ((comp(value, lowerBound)) ? (lowerBound)
                                       : ((comp(upperBound, value)) ? (upperBound)
@@ -68,8 +71,10 @@ constexpr const Ty &clamp(const Ty &value, const Ty &lowerBound,
  *          Only works for floating-point 'Ty' if NaNs are avoided.
 **/
 template <typename Ty>
-constexpr const Ty &clamp(const Ty &value, const Ty &lowerBound,
-                          const Ty &upperBound)
+constexpr const Ty &clamp(
+    const Ty &value,
+    const Ty &lowerBound,
+    const Ty &upperBound)
 {
     return ::pl::algo::clamp(value, lowerBound, upperBound, std::less<>{ });
 }

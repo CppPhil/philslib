@@ -57,7 +57,7 @@ inline void checkedArrayDelete(PL_IN Ty *p)
 template <typename Ty>
 inline void checkedDeleteAndNull(PL_INOUT Ty *&p)
 {
-    checkedDelete(p);
+    ::pl::checkedDelete(p);
     p = nullptr;
 }
 
@@ -69,7 +69,7 @@ inline void checkedDeleteAndNull(PL_INOUT Ty *&p)
 template <typename Ty>
 inline void checkedArrayDeleteAndNull(PL_INOUT Ty *&p)
 {
-    checkedArrayDelete(p);
+    ::pl::checkedArrayDelete(p);
     p = nullptr;
 }
 } // namespace pl

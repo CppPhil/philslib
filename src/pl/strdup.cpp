@@ -12,10 +12,11 @@ namespace
  * \param maximumLength The 'maximum length'.
  * \return std::strlen(string) or maximumLength, whichever is less.
 **/
-std::size_t strnlen(PL_IN PL_NULL_TERMINATED(const char *)string,
-                    std::size_t maximumLength)
+std::size_t strnlen(
+    PL_IN PL_NULL_TERMINATED(const char *)string,
+    std::size_t maximumLength)
 {
-    std::size_t pos{ };
+    std::size_t pos{ 0U };
 
     for (; pos < maximumLength; ++pos) {
         if (string[pos] == '\0') {
@@ -27,16 +28,18 @@ std::size_t strnlen(PL_IN PL_NULL_TERMINATED(const char *)string,
 }
 } // anonymous namespace
 
-PL_NODISCARD std::unique_ptr<char[]> strdup(PL_IN PL_NULL_TERMINATED(const char *)str)
+PL_NODISCARD std::unique_ptr<char[]> strdup(
+    PL_IN PL_NULL_TERMINATED(const char *)str)
 {
-      auto bytesNeeded = std::strlen(str) + static_cast<std::size_t>(1U);
+      const auto bytesNeeded = std::strlen(str) + static_cast<std::size_t>(1U);
       auto returnValue = std::make_unique<char[]>(bytesNeeded);
       std::memcpy(returnValue.get(), str, bytesNeeded);
       return returnValue;
 }
 
-PL_NODISCARD std::unique_ptr<char[]> strndup(PL_IN PL_NULL_TERMINATED(const char *)str,
-                                             std::size_t size)
+PL_NODISCARD std::unique_ptr<char[]> strndup(
+    PL_IN PL_NULL_TERMINATED(const char *)str,
+    std::size_t size)
 {
     const auto stringLength = strnlen(str, size);
     auto returnValue = std::make_unique<char[]>(stringLength + 1U);

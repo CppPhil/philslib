@@ -223,14 +223,17 @@ public:
      *       see http://cplusplus.github.io/LWG/lwg-closed.html#2326.
     **/
     template <typename Numeric>
-    auto generate(meta::identity_t<Numeric> begin
-                      = std::numeric_limits<Numeric>::min PL_NO_MACRO_SUBSTITUTION(),
-                  meta::identity_t<Numeric> end
-                      = std::numeric_limits<Numeric>::max PL_NO_MACRO_SUBSTITUTION())
+    auto generate(
+        meta::identity_t<Numeric> begin
+            = std::numeric_limits<Numeric>::min PL_NO_MACRO_SUBSTITUTION(),
+        meta::identity_t<Numeric> end
+            = std::numeric_limits<Numeric>::max PL_NO_MACRO_SUBSTITUTION())
     -> meta::disable_if_t<std::is_same<meta::uncvref_t<Numeric>, bool>::value, Numeric>
     {
-        return generateImpl<Numeric>(begin, end,
-                                     typename std::is_floating_point<Numeric>::type{ });
+        return generateImpl<Numeric>(
+            begin,
+            end,
+            typename std::is_floating_point<Numeric>::type{ });
     }
 
     /*!
@@ -274,9 +277,10 @@ public:
 
 private:
     template <typename Numeric>
-    Numeric generateImpl(meta::identity_t<Numeric> begin,
-                         meta::identity_t<Numeric> end,
-                         std::true_type)
+    Numeric generateImpl(
+        meta::identity_t<Numeric> begin,
+        meta::identity_t<Numeric> end,
+        std::true_type)
     {
         PL_DBG_CHECK_PRE(begin < end);
         detail::distribution_of_t<Numeric> dist{ begin, end };
@@ -284,9 +288,10 @@ private:
     }
 
     template <typename Numeric>
-    Numeric generateImpl(meta::identity_t<Numeric> begin,
-                         meta::identity_t<Numeric> end,
-                         std::false_type)
+    Numeric generateImpl(
+        meta::identity_t<Numeric> begin,
+        meta::identity_t<Numeric> end,
+        std::false_type)
     {
         PL_DBG_CHECK_PRE(begin <= end);
         detail::distribution_of_t<Numeric> dist{ begin, end };

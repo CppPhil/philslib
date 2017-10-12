@@ -189,8 +189,9 @@ inline ObserverPtr<WatchedType> makeObserver(PL_IN_OPT WatchedType *p) noexcept
  *         otherwise false.
 **/
 template <typename WatchedType1, typename WatchedType2>
-inline bool operator==(PL_IN const ObserverPtr<WatchedType1> &p1,
-                       PL_IN const ObserverPtr<WatchedType2> &p2)
+inline bool operator==(
+    PL_IN const ObserverPtr<WatchedType1> &p1,
+    PL_IN const ObserverPtr<WatchedType2> &p2)
 {
     return p1.get() == p2.get();
 }
@@ -203,8 +204,9 @@ inline bool operator==(PL_IN const ObserverPtr<WatchedType1> &p1,
  *         false if the arguments compare equal.
 **/
 template <typename WatchedType1, typename WatchedType2>
-inline bool operator!=(PL_IN const ObserverPtr<WatchedType1> &p1,
-                       PL_IN const ObserverPtr<WatchedType2> &p2)
+inline bool operator!=(
+    PL_IN const ObserverPtr<WatchedType1> &p1,
+    PL_IN const ObserverPtr<WatchedType2> &p2)
 {
     return not (p1 == p2);
 }
@@ -262,8 +264,9 @@ inline bool operator!=(std::nullptr_t, PL_IN const ObserverPtr<WatchedType> &p) 
  *         false otherwise.
 **/
 template <typename WatchedType1, typename WatchedType2>
-inline bool operator<(PL_IN const ObserverPtr<WatchedType1> &p1,
-                      PL_IN const ObserverPtr<WatchedType2> &p2)
+inline bool operator<(
+    PL_IN const ObserverPtr<WatchedType1> &p1,
+    PL_IN const ObserverPtr<WatchedType2> &p2)
 {
     return static_cast<const void *>(p1.get()) < static_cast<const void *>(p2.get());
 }
@@ -276,8 +279,9 @@ inline bool operator<(PL_IN const ObserverPtr<WatchedType1> &p1,
  *         false otherwise.
 **/
 template <typename WatchedType1, typename WatchedType2>
-inline bool operator>(PL_IN const ObserverPtr<WatchedType1> &p1,
-                      PL_IN const ObserverPtr<WatchedType2> &p2)
+inline bool operator>(
+    PL_IN const ObserverPtr<WatchedType1> &p1,
+    PL_IN const ObserverPtr<WatchedType2> &p2)
 {
     return p2 < p1;
 }
@@ -290,8 +294,9 @@ inline bool operator>(PL_IN const ObserverPtr<WatchedType1> &p1,
  *         false otherwise.
 **/
 template <typename WatchedType1, typename WatchedType2>
-inline bool operator<=(PL_IN const ObserverPtr<WatchedType1> &p1,
-                       PL_IN const ObserverPtr<WatchedType2> &p2)
+inline bool operator<=(
+    PL_IN const ObserverPtr<WatchedType1> &p1,
+    PL_IN const ObserverPtr<WatchedType2> &p2)
 {
     return not (p2 < p1);
 }
@@ -304,8 +309,9 @@ inline bool operator<=(PL_IN const ObserverPtr<WatchedType1> &p1,
  *         otherwise false is returned.
 **/
 template <typename WatchedType1, typename WatchedType2>
-inline bool operator>=(PL_IN const ObserverPtr<WatchedType1> &p1,
-                       PL_IN const ObserverPtr<WatchedType2> &p2)
+inline bool operator>=(
+    PL_IN const ObserverPtr<WatchedType1> &p1,
+    PL_IN const ObserverPtr<WatchedType2> &p2)
 {
     return not (p1 < p2);
 }
@@ -320,8 +326,9 @@ inline bool operator>=(PL_IN const ObserverPtr<WatchedType1> &p1,
  * Calls lhs.swap(rhs).
 **/
 template <typename WatchedType>
-inline void swap(PL_INOUT ObserverPtr<WatchedType> &lhs,
-                 PL_INOUT ObserverPtr<WatchedType> &rhs) noexcept
+inline void swap(
+    PL_INOUT ObserverPtr<WatchedType> &lhs,
+    PL_INOUT ObserverPtr<WatchedType> &rhs) noexcept
 {
     lhs.swap(rhs);
 }

@@ -27,7 +27,9 @@ namespace algo
  *       The complexity is linear in 'n'.
 **/
 template <typename ForwardIterator, typename SizeType>
-ForwardIterator uninitialized_value_construct_n(ForwardIterator first, SizeType n)
+ForwardIterator uninitialized_value_construct_n(
+    ForwardIterator first,
+    SizeType n)
 {
     using value_type = typename std::iterator_traits<ForwardIterator>::value_type;
 
