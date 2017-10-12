@@ -4,7 +4,7 @@
 **/
 #ifndef INCG_PL_FOR_EACH_ARGUMENT_HPP
 #define INCG_PL_FOR_EACH_ARGUMENT_HPP
-#include "unused.hpp" // PL_UNUSED
+#include "invoke.hpp" // pl::invoke
 #include <initializer_list> // std::initializer_list
 #include <utility> // std::forward
 
@@ -24,9 +24,9 @@ namespace pl
 template <typename Callable, typename ...Args>
 void forEachArgument(Callable &&callable, Args &&...args)
 {
-    PL_UNUSED(
+    static_cast<void>(
         std::initializer_list<int>{
-            (callable(std::forward<Args>(args)), 0)...
+            ((void)::pl::invoke(callable, std::forward<Args>(args)), 0)...
         }
     );
 }

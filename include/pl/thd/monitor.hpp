@@ -6,7 +6,7 @@
 #ifndef INCG_PL_THD_MONITOR_HPP
 #define INCG_PL_THD_MONITOR_HPP
 #include "../annotations.hpp" // PL_IN
-#include "../invoke.hpp" // pl::invoke.
+#include "../invoke.hpp" // pl::invoke
 #include <mutex> // std::mutex, std::lock_guard
 #include <utility> // std::move, std::forward
 
@@ -47,7 +47,7 @@ public:
     auto operator()(PL_IN Callable &&callable) const -> decltype(auto)
     {
         std::lock_guard<std::mutex> lockGuard{ m_mutex };
-        return invoke(std::forward<Callable>(callable), m_sharedData);
+        return ::pl::invoke(std::forward<Callable>(callable), m_sharedData);
     }
 
 private:
