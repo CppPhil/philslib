@@ -546,8 +546,9 @@ bool operator<(
     const ::pl::RawMemoryArray<Ty> &lhs,
     const ::pl::RawMemoryArray<Ty> &rhs)
 {
-    return std::lexicographical_compare(lhs.begin(), lhs.end(),
-                                        rhs.begin(), rhs.end());
+    return std::lexicographical_compare(
+        lhs.begin(), lhs.end(),
+        rhs.begin(), rhs.end());
 }
 
 /*!
