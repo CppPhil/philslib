@@ -1,0 +1,47 @@
+rework phils libraries
+ 
+more examples in documentation
+
+try and find more sub-categories
+
+try to not return void.
+no global variable or local static variable in a source file may call a run-time constructor (would fuck up if compiled as statically linked library)
+anonymous namespaces for translation unit local types, functions, etc..
+make constexpr what can be
+make (noexcept) default constructible if possible
+make swappable what can be
+make noexcept what should be
+- default ctor
+- mctor
+- move assignment operator
+- swap
+- ...
+make inline / force inline what should be
+add comparison operators where possible
+use macro annotations where appropriate
+add debug assertions for undefined behavior etc (but have it say it's UB)
+have assertion in header in inline function that calls an impl
+function defined in the .cpp
+ensure it functions properly with min and max macros defined
+(std::numeric_limits<int>::max)() for instance.
+
+minimize header dependencies
+use PIMPL whereever possible (non-template classes)
+always use source, destination style interfaces.
+always use haystack, needle style interfaces.
+remove code duplication
+document everything
+static analyzers
+test everything
+make it build with gcc, clang, msvc15, msvc17, MinGW
+add a README.md describing the components
+add LICENSE.md
+linux and windows build scripts for (.lib)
+how to generate documentation
+running the tests
+
+get rid of the history by deleting the remote repo,
+creating a new one and pushing to just the raw sources to that new repo.
+
+
+
