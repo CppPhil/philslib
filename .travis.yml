@@ -1,0 +1,25 @@
+dist: trusty
+language: cpp
+
+notifications:
+  email:
+    recipients:
+      - 0f9234u9f0jw3@gmx.de
+    on_success: always
+    on_failure: always
+
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-5
+      
+script:
+  - cd ./test
+  - wget https://raw.githubusercontent.com/onqtam/doctest/master/doctest/doctest.h
+  - cd ./..
+  - CXX=/usr/bin/g++-5 CC=/usr/bin/gcc-5 cmake . # generate build scripts
+  - cmake --build . -- -j2                       # build using 2 threads
+  - ctest --verbose .                            # run the tests
+

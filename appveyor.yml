@@ -1,0 +1,17 @@
+image:
+  - Visual Studio 2015
+clone_folder: C:\philslib
+
+build_script:
+- cmd: >-
+    cd C:\philslib
+    
+    cmake -G "Visual Studio 14" C:\philslib
+    
+    cmake --build C:\philslib
+    
+test: on
+test_script:
+  - cmd: >-
+      ctest --verbose C:\philslib
+
