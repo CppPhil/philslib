@@ -135,6 +135,8 @@ inline void eraseIfHelper(
  * \brief Function to remove elements from a container.
  * \param container The container to remove elements from.
  * \param elementToRemove The value of the elements to remove.
+ *                        If 'container' is a map-like type 'elementToRemove'
+ *                        must be the 'key' to remove.
  * \note If the container is a std::vector, std::deque, std::forward_list,
  *       std::list, std::unordered_set, std::unordered_map, std::unordered_multiset or a
  *       std::unordered_multimap all elements that compare equal

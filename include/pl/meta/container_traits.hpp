@@ -8,6 +8,7 @@
 #include <unordered_map> // std::unordered_map, std::unordered_multimap
 #include <unordered_set> // std::unordered_set, std::unordered_multiset
 #include <vector> // std::vector
+#include <string> // std::basic_string
 
 namespace pl
 {
@@ -66,6 +67,16 @@ struct container_traits<std::vector<Type, Allocator>>
 **/
 template <typename Type, typename Allocator>
 struct container_traits<std::deque<Type, Allocator>>
+{
+    using category = vectorlike_tag;
+};
+
+/*!
+ * \brief template specialization for std::basic_string.
+ *        category is defined as vectorlike_tag.
+**/
+template <typename CharT, typename CharTraits, typename Allocator>
+struct container_traits<std::basic_string<CharT, CharTraits, Allocator>>
 {
     using category = vectorlike_tag;
 };

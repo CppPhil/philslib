@@ -134,7 +134,8 @@ set(TEST_HEADERS
 
 set(TEST_SOURCES
     test/src/test_main.cpp
-    test/src/algo/clamp_test.cpp)
+    test/src/algo/clamp_test.cpp
+    test/src/algo/erase_test.cpp)
 
 add_executable(${UNIT_TEST_NAME} 
     "${TEST_HEADERS}" 
