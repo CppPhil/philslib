@@ -29,7 +29,7 @@ namespace pl
 constexpr void *memxor(
     PL_INOUT void * PL_RESTRICT destination,
     PL_IN const void * PL_RESTRICT source,
-    std::size_t byteCount) noexcept
+    std::size_t byteCount)
 {
     PL_DBG_CHECK_PRE(destination != nullptr);
     PL_DBG_CHECK_PRE(source != nullptr);

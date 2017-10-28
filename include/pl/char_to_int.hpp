@@ -16,7 +16,7 @@ namespace pl
  * \return Returns a value of [0..9] for a character of the range ['0'..'9'].
  * \warning Do not pass in characters outside of the range ['0'..'9'].
 **/
-constexpr std::uint8_t charToInt(unsigned char ch) noexcept
+constexpr std::uint8_t charToInt(unsigned char ch)
 {
     PL_DBG_CHECK_PRE(
         (ch >= static_cast<unsigned char>('0'))

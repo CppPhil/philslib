@@ -153,7 +153,7 @@ public:
      * \return Returns a pointer to the object watched by *this, i.e. get().
      * \warning Do not call this function if get() == nullptr.
     **/
-    constexpr element_type *operator->() const noexcept
+    constexpr element_type *operator->() const
     {
         PL_DBG_CHECK_PRE(this->operator bool());
         return get();

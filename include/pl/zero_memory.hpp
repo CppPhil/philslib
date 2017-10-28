@@ -35,7 +35,7 @@ namespace pl
 **/
 PL_ALWAYS_INLINE void *zeroMemory(
     PL_OUT void *dest,
-    std::size_t countBytes) noexcept
+    std::size_t countBytes)
 {
     PL_DBG_CHECK_PRE(dest != nullptr);
 
@@ -73,7 +73,7 @@ PL_ALWAYS_INLINE void *zeroMemory(
 **/
 PL_ALWAYS_INLINE void *secureZeroMemory(
     PL_OUT void *dest,
-    std::size_t countBytes) noexcept
+    std::size_t countBytes)
 {
     PL_DBG_CHECK_PRE(dest != nullptr);
 

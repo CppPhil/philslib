@@ -202,7 +202,7 @@ public:
      * \warning Calling front on an empty RawMemoryArray is undefined.
      * \note Constant complexity.
     **/
-    PL_NODISCARD reference front() noexcept
+    PL_NODISCARD reference front()
     {
         PL_DBG_CHECK_PRE(not empty());
         return *begin();
@@ -214,7 +214,7 @@ public:
      * \warning Calling front on an empty RawMemoryArray is undefined.
      * \note Constant complexity.
     **/
-    PL_NODISCARD const_reference front() const noexcept
+    PL_NODISCARD const_reference front() const
     {
         return const_cast<this_type *>(this)->front();
     }
@@ -225,7 +225,7 @@ public:
      * \warning Calling back on an empty RawMemoryArray is undefined.
      * \note Constant complexity.
     **/
-    PL_NODISCARD reference back() noexcept
+    PL_NODISCARD reference back()
     {
         PL_DBG_CHECK_PRE(not empty());
         return *rbegin();
@@ -237,7 +237,7 @@ public:
      * \warning Calling back on an empty RawMemoryArray is undefined.
      * \note Constant complexity.
     **/
-    PL_NODISCARD const_reference back() const noexcept
+    PL_NODISCARD const_reference back() const
     {
         return const_cast<this_type *>(this)->back();
     }

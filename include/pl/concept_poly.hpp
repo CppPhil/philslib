@@ -281,7 +281,7 @@ public:
      * \return A Concept & to the object managed.
      * \warning Precondition: this object is not in the moved-from state.
     **/
-    Concept &operator*() noexcept
+    Concept &operator*()
     {
         PL_DBG_CHECK_PRE(this->operator bool());
         return *m_ptr;
@@ -292,7 +292,7 @@ public:
      * \return A const Concept & to the object managed.
      * \warning Precondition: this object is not in the moved-from state.
     **/
-    const Concept &operator*() const noexcept
+    const Concept &operator*() const
     {
         return const_cast<this_type *>(this)->operator*();
     }
@@ -303,7 +303,7 @@ public:
      * \return A Concept *.
      * \warning Precondition: this object is not in the moved-from state.
     **/
-    Concept *operator->() noexcept
+    Concept *operator->()
     {
         PL_DBG_CHECK_PRE(this->operator bool());
         return m_ptr.operator->();
@@ -315,7 +315,7 @@ public:
      * \return A const Concept *.
      * \warning Precondition: this object is not in the moved-from state.
     **/
-    const Concept *operator->() const noexcept
+    const Concept *operator->() const
     {
         return const_cast<this_type *>(this)->operator->();
     }
