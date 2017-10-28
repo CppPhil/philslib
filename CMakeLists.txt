@@ -19,7 +19,7 @@ find_package(Threads REQUIRED)
 ### STATICALLY LINKED LIBRARY ###
 set(LIBRARY_NAME philslib)
 
-set(HEADERS
+set(LIB_HEADERS
     include/pl/algo/clamp.hpp
     include/pl/algo/destroy.hpp
     include/pl/algo/destroy_at.hpp
@@ -111,7 +111,7 @@ set(HEADERS
     include/pl/vla.hpp
     include/pl/zero_memory.hpp)
 
-set(SOURCES
+set(LIB_SOURCES
     src/pl/thd/thread_pool.cpp
     src/pl/asprintf.cpp
     src/pl/eprintf.cpp
@@ -120,7 +120,7 @@ set(SOURCES
     src/pl/strdup.cpp
     src/pl/timer.cpp)
 
-add_library(${LIBRARY_NAME} STATIC "${HEADERS}" "${SOURCES}")
+add_library(${LIBRARY_NAME} STATIC "${LIB_HEADERS}" "${LIB_SOURCES}")
 
 target_link_libraries(${LIBRARY_NAME} Threads::Threads)
 
@@ -132,9 +132,10 @@ set(UNIT_TEST_NAME unittest)
 set(TEST_SOURCES
     test/src/test_main.cpp)
 
-add_executable(${UNIT_TEST_NAME} "${TEST_SOURCES}") 
+add_executable(${UNIT_TEST_NAME} "${TEST_SOURCES}" "${LIB_HEADERS}") 
 
 target_link_libraries(${UNIT_TEST_NAME} Threads::Threads)
+target_link_libraries(${UNIT_TEST_NAME} ${LIBRARY_NAME})
 
 add_test(Unittest ${UNIT_TEST_NAME})
 
