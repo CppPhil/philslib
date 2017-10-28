@@ -202,7 +202,8 @@ public:
 /*!
  * \brief Function to handle uncaught exceptions.
  * \warning Only call this function in a catch block!
- * \note This function attempts to rethrow the exception that was just caught.
+ * \note This function attempts to rethrow the exception that was just caught
+ *       in order to catch it again.
  * \example int main()
  *          try {
  *              app::throwException();
@@ -215,7 +216,7 @@ public:
  * This function shall be called in a try { } catch (...) { } block.
  * pl::handleException will rethrow the exception that was just caught and
  * handle it, by printing the information associated with that exception to
- * std::cerr.
+ * std::cerr. May be used for debugging purposes.
 **/
 void handleExceptions();
 } // namespace pl

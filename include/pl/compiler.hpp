@@ -104,13 +104,13 @@
     #define PL_COMPILER_MINOR __GNUC_MINOR__
     #define PL_COMPILER_PATCH __GNUC_PATCHLEVEL__
 #else
-    #define PL_COMPILER_MAJOR (0x00)
-    #define PL_COMPILER_MINOR (0x00)
-    #define PL_COMPILER_PATCH_VERSION (0x00)
+    #define PL_COMPILER_MAJOR (0x00) /* 0 for unknown compiler */
+    #define PL_COMPILER_MINOR (0x00) /* 0 for unknown compiler */
+    #define PL_COMPILER_PATCH_VERSION (0x00) /* 0 for unknown compiler */
 #endif
 
 #define PL_COMPILER_VERSION_CHECK(major, minor, patch) \
-    (((major) * 16777216) + ((minor) * 65536) + (patch))
+    (((major) * 16777216) + ((minor) * 65536) + (patch)) /* multipliers to 'push' the numbers leftward */
 
 #define PL_COMPILER_VERSION \
     PL_COMPILER_VERSION_CHECK(PL_COMPILER_MAJOR, PL_COMPILER_MINOR, PL_COMPILER_PATCH)

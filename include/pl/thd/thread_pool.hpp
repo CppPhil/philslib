@@ -58,8 +58,14 @@ public:
     **/
     explicit ThreadPool(std::size_t amtThreads);
 
+    /*!
+     * \brief This type is non-copyable.
+    **/
     ThreadPool(const this_type &) = delete;
 
+    /*!
+     * \brief This type is non-copyable.
+    **/
     this_type &operator=(const this_type &) = delete;
 
     /*!

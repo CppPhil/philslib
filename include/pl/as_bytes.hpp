@@ -21,7 +21,7 @@ namespace pl
 template <typename Type>
 Byte *asBytes(PL_IN Type &object)
 {
-    return unrelated_pointer_cast<Byte *>(std::addressof(object));
+    return ::pl::unrelated_pointer_cast<Byte *>(std::addressof(object));
 }
 
 /*!
@@ -34,7 +34,7 @@ Byte *asBytes(PL_IN Type &object)
 template <typename Type>
 const Byte *asBytes(PL_IN const Type &object)
 {
-    return unrelated_pointer_cast<const Byte *>(std::addressof(object));
+    return ::pl::unrelated_pointer_cast<const Byte *>(std::addressof(object));
 }
 } // namespace pl
 #endif // INCG_PL_AS_BYTES_HPP

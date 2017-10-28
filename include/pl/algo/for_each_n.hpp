@@ -41,7 +41,7 @@ InputIterator for_each_n(
     UnaryInvocable unaryInvocable)
 {
     for (SizeType i{ }; i < n; ++first) {
-        pl::invoke(unaryInvocable, *first);
+        ::pl::invoke(unaryInvocable, *first);
         ++i;
     }
 
