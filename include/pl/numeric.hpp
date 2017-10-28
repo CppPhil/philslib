@@ -17,10 +17,10 @@ namespace pl
  * \note Only pass in numbers.
 **/
 template <typename Numeric>
-inline bool isEven(Numeric numeric)
+constexpr bool isEven(Numeric numeric)
 {
-    static constexpr Numeric zero = 0;
-    static constexpr Numeric one = 1;
+    constexpr Numeric zero = 0;
+    constexpr Numeric one = 1;
     return ((numeric & one) == zero);
 }
 
@@ -31,7 +31,7 @@ inline bool isEven(Numeric numeric)
  * \note Only pass in numbers.
 **/
 template <typename Numeric>
-inline bool isOdd(Numeric numeric)
+constexpr bool isOdd(Numeric numeric)
 {
     return not ::pl::isEven(numeric);
 }
@@ -48,7 +48,7 @@ inline bool isOdd(Numeric numeric)
  * \note lowerBound must be <= upperBound; otherwise this function throws.
 **/
 template <typename Numeric>
-inline bool isBetween(Numeric checkMe, Numeric lowerBound, Numeric upperBound)
+constexpr bool isBetween(Numeric checkMe, Numeric lowerBound, Numeric upperBound)
 {
     if (lowerBound > upperBound) {
         throw std::invalid_argument{

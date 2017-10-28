@@ -6,7 +6,6 @@
 #ifndef INCG_PL_CONT_SIZE_HPP
 #define INCG_PL_CONT_SIZE_HPP
 #include "../annotations.hpp" // PL_IN
-#include "../unused.hpp" // PL_UNUSED
 #include <cstddef> // std::size_t
 
 namespace pl
@@ -20,7 +19,7 @@ namespace cont
  * \return The size of the container passed into the parameter.
 **/
 template <typename Cont>
-auto size(PL_IN Cont &cont) noexcept -> decltype(auto)
+constexpr auto size(PL_IN Cont &cont) -> decltype(cont.size())
 {
     return cont.size();
 }
@@ -31,9 +30,9 @@ auto size(PL_IN Cont &cont) noexcept -> decltype(auto)
  * \return The size of the C-Array passed into the parameter is returned.
 **/
 template <typename Type, std::size_t Size>
-std::size_t size(PL_IN Type (&arr)[Size]) noexcept
+constexpr std::size_t size(PL_IN Type (&arr)[Size]) noexcept
 {
-    PL_UNUSED(arr);
+    (void)arr;
     return Size;
 }
 } // namespace cont

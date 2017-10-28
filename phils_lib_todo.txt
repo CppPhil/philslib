@@ -2,8 +2,6 @@ rework phils libraries
  
 more examples in documentation
 
-anonymous namespaces for translation unit local types, functions, etc..
-make constexpr what can be
 make (noexcept) default constructible if possible
 make swappable what can be
 make noexcept what should be

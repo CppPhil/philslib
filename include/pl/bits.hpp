@@ -18,11 +18,11 @@ namespace pl
  *          of bits in Numeric - 1.
 **/
 template <typename Numeric>
-inline Numeric &setBit(PL_INOUT Numeric &numeric, Numeric bit)
+constexpr Numeric &setBit(PL_INOUT Numeric &numeric, Numeric bit)
 {
     static_assert(std::is_unsigned<Numeric>::value,
                   "Numeric in pl::setBit should be an unsigned type.");
-    static constexpr Numeric activeBit = 1U;
+    constexpr Numeric activeBit = 1U;
 
     numeric |= (activeBit << bit);
     return numeric;
@@ -37,11 +37,11 @@ inline Numeric &setBit(PL_INOUT Numeric &numeric, Numeric bit)
  *          Numeric - 1.
 **/
 template <typename Numeric>
-inline Numeric &clearBit(PL_INOUT Numeric &numeric, Numeric bit)
+constexpr Numeric &clearBit(PL_INOUT Numeric &numeric, Numeric bit)
 {
     static_assert(std::is_unsigned<Numeric>::value,
                   "Numeric in pl::clearBit should be an unsigned type.");
-    static constexpr Numeric activeBit = 1U;
+    constexpr Numeric activeBit = 1U;
 
     numeric &= ~(activeBit << bit);
     return numeric;
@@ -61,11 +61,11 @@ inline Numeric &clearBit(PL_INOUT Numeric &numeric, Numeric bit)
  * will be 1 after having executed this function.
 **/
 template <typename Numeric>
-inline Numeric &toggleBit(PL_INOUT Numeric &numeric, Numeric bit)
+constexpr Numeric &toggleBit(PL_INOUT Numeric &numeric, Numeric bit)
 {
     static_assert(std::is_unsigned<Numeric>::value,
                   "Numeric in pl::toggleBit should be an unsigned type.");
-    static constexpr Numeric activeBit = 1U;
+    constexpr Numeric activeBit = 1U;
 
     numeric ^= (activeBit << bit);
     return numeric;
@@ -80,11 +80,11 @@ inline Numeric &toggleBit(PL_INOUT Numeric &numeric, Numeric bit)
  *          the number of bits in Numeric - 1.
 **/
 template <typename Numeric>
-inline bool isBitSet(Numeric numeric, Numeric bit)
+constexpr bool isBitSet(Numeric numeric, Numeric bit)
 {
     static_assert(std::is_unsigned<Numeric>::value,
                   "Numeric in pl::isBitSet should be an unsigned type.");
-    static constexpr Numeric activeBit = 1U;
+    constexpr Numeric activeBit = 1U;
 
     return ((numeric & (activeBit << bit)) != 0);
 }

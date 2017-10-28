@@ -19,7 +19,7 @@ namespace cont
  * \warning Undefined behavior occurs if the container passed is empty.
 **/
 template <typename Cont>
-auto front(PL_IN Cont &cont) -> decltype(auto)
+constexpr auto front(PL_IN Cont &cont) -> decltype(auto)
 {
     return cont.front();
 }
@@ -30,7 +30,7 @@ auto front(PL_IN Cont &cont) -> decltype(auto)
  * \return The first (index 0) element of the C-Array.
 **/
 template <typename Type, std::size_t Size>
-auto front(PL_IN Type (&arr)[Size]) -> decltype(auto)
+constexpr auto front(PL_IN Type (&arr)[Size]) noexcept -> decltype(auto)
 {
     return arr[static_cast<std::size_t>(0U)];
 }

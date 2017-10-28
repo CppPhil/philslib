@@ -19,7 +19,7 @@ namespace pl
  * If the boolean passed in is false it will be assigned true and the
  * value return will be true.
 **/
-inline bool toggleBool(PL_INOUT bool &b)
+constexpr bool toggleBool(PL_INOUT bool &b)
 {
     b = not b;
     return b;

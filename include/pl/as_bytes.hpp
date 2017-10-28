@@ -19,7 +19,7 @@ namespace pl
  * \note The pointer returned will never be nullptr.
 **/
 template <typename Type>
-Byte *asBytes(PL_IN Type &object)
+constexpr Byte *asBytes(PL_IN Type &object)
 {
     return ::pl::unrelated_pointer_cast<Byte *>(std::addressof(object));
 }
@@ -32,7 +32,7 @@ Byte *asBytes(PL_IN Type &object)
  * \note The pointer returned will never be nullptr.
 **/
 template <typename Type>
-const Byte *asBytes(PL_IN const Type &object)
+constexpr const Byte *asBytes(PL_IN const Type &object)
 {
     return ::pl::unrelated_pointer_cast<const Byte *>(std::addressof(object));
 }

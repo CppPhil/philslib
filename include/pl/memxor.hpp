@@ -5,7 +5,6 @@
 #ifndef INCG_PL_MEMXOR_HPP
 #define INCG_PL_MEMXOR_HPP
 #include "annotations.hpp" // PL_IN, PL_INOUT
-#include "inline.hpp" // PL_ALWAYS_INLINE
 #include "restrict.hpp" // PL_RESTRICT
 #include "byte.hpp" // pl::Byte
 #include <cstddef> // std::size_t
@@ -26,7 +25,7 @@ namespace pl
  * \return 'destination' is returned.
  * \warning Make sure 'byteCount' is correct!
 **/
-PL_ALWAYS_INLINE void *memxor(
+constexpr void *memxor(
     PL_INOUT void * PL_RESTRICT destination,
     PL_IN const void * PL_RESTRICT source,
     std::size_t byteCount)

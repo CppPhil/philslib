@@ -40,7 +40,7 @@ namespace pl
  *          should be suspect.
 **/
 template <typename CastTo>
-CastTo unrelated_pointer_cast(PL_IN_OPT void *p)
+constexpr CastTo unrelated_pointer_cast(PL_IN_OPT void *p)
 {
     static_assert(std::is_pointer<CastTo>::value,
         "The type to cast to must be a raw pointer type in pl::unrelated_pointer_cast (non-const)");
@@ -80,7 +80,7 @@ CastTo unrelated_pointer_cast(PL_IN_OPT void *p)
  *          should be suspect.
 **/
 template <typename CastTo>
-CastTo unrelated_pointer_cast(PL_IN_OPT const void *p)
+constexpr CastTo unrelated_pointer_cast(PL_IN_OPT const void *p)
 {
     static_assert(std::is_pointer<CastTo>::value,
         "The type to cast to must be a raw pointer type in pl::unrelated_pointer_cast (const)");

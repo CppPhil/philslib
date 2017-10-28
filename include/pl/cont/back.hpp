@@ -19,7 +19,7 @@ namespace cont
  * \warning Undefined behavior occurs if the container passed in is empty.
 **/
 template <typename Cont>
-auto back(PL_IN Cont &cont) -> decltype(auto)
+constexpr auto back(PL_IN Cont &cont) -> decltype(auto)
 {
     return cont.back();
 }
@@ -30,7 +30,7 @@ auto back(PL_IN Cont &cont) -> decltype(auto)
  * \return The last element of the C-Array.
 **/
 template <typename Type, std::size_t Size>
-auto back(PL_IN Type (&arr)[Size]) -> decltype(auto)
+constexpr auto back(PL_IN Type (&arr)[Size]) noexcept -> decltype(auto)
 {
     return arr[Size - static_cast<std::size_t>(1U)];
 }
