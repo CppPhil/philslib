@@ -18,7 +18,7 @@ namespace pl
  *          of bits in Numeric - 1.
 **/
 template <typename Numeric>
-constexpr Numeric &setBit(PL_INOUT Numeric &numeric, Numeric bit)
+constexpr Numeric &setBit(PL_INOUT Numeric &numeric, Numeric bit) noexcept
 {
     static_assert(std::is_unsigned<Numeric>::value,
                   "Numeric in pl::setBit should be an unsigned type.");
@@ -37,7 +37,7 @@ constexpr Numeric &setBit(PL_INOUT Numeric &numeric, Numeric bit)
  *          Numeric - 1.
 **/
 template <typename Numeric>
-constexpr Numeric &clearBit(PL_INOUT Numeric &numeric, Numeric bit)
+constexpr Numeric &clearBit(PL_INOUT Numeric &numeric, Numeric bit) noexcept
 {
     static_assert(std::is_unsigned<Numeric>::value,
                   "Numeric in pl::clearBit should be an unsigned type.");
@@ -61,7 +61,7 @@ constexpr Numeric &clearBit(PL_INOUT Numeric &numeric, Numeric bit)
  * will be 1 after having executed this function.
 **/
 template <typename Numeric>
-constexpr Numeric &toggleBit(PL_INOUT Numeric &numeric, Numeric bit)
+constexpr Numeric &toggleBit(PL_INOUT Numeric &numeric, Numeric bit) noexcept
 {
     static_assert(std::is_unsigned<Numeric>::value,
                   "Numeric in pl::toggleBit should be an unsigned type.");
@@ -80,7 +80,7 @@ constexpr Numeric &toggleBit(PL_INOUT Numeric &numeric, Numeric bit)
  *          the number of bits in Numeric - 1.
 **/
 template <typename Numeric>
-constexpr bool isBitSet(Numeric numeric, Numeric bit)
+constexpr bool isBitSet(Numeric numeric, Numeric bit) noexcept
 {
     static_assert(std::is_unsigned<Numeric>::value,
                   "Numeric in pl::isBitSet should be an unsigned type.");

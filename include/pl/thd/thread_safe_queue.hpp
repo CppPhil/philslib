@@ -106,7 +106,7 @@ public:
      * \brief Queries the queue as to whether or not it is empty.
      * \return true if the queue is empty; false otherwise.
     **/
-    PL_NODISCARD bool empty() const
+    PL_NODISCARD bool empty() const noexcept
     {
         std::unique_lock<std::mutex> lock{ m_mutex };
         return m_cont.empty();
@@ -116,7 +116,7 @@ public:
      * \brief Queries the queue's size.
      * \return The size of the queue.
     **/
-    size_type size() const
+    size_type size() const noexcept
     {
         std::unique_lock<std::mutex> lock{ m_mutex };
         return m_cont.size();

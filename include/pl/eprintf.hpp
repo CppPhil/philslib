@@ -18,6 +18,6 @@ namespace pl
  * \warning Be careful not to use incorrect format specifiers or an incorrect
  *          amount of arguments for the printf-style string.
 **/
-int eprintf(PL_IN PL_FMT_STR(const char *)formatString, ...) PL_PRINTF_FUNCTION(1, 2);
+int eprintf(PL_IN PL_FMT_STR(const char *)formatString, ...) noexcept PL_PRINTF_FUNCTION(1, 2);
 } // namespace pl
 #endif // INCG_PL_EPRINTF_HPP

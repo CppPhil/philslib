@@ -28,7 +28,7 @@ namespace pl
 constexpr void *memxor(
     PL_INOUT void * PL_RESTRICT destination,
     PL_IN const void * PL_RESTRICT source,
-    std::size_t byteCount)
+    std::size_t byteCount) noexcept
 {
     auto dest = static_cast<Byte * PL_RESTRICT>(destination);
     auto src  = static_cast<const Byte * PL_RESTRICT>(source);

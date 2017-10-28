@@ -7,12 +7,12 @@ Timer::Timer() noexcept
 {
 }
 
-std::chrono::steady_clock::duration Timer::elapsedTime() const
+std::chrono::steady_clock::duration Timer::elapsedTime() const noexcept
 {
     return std::chrono::steady_clock::now() - m_timeStored;
 }
 
-Timer &Timer::reset()
+Timer &Timer::reset() noexcept
 {
     // replace the time stored with the current time.
     m_timeStored = std::chrono::steady_clock::now();

@@ -32,7 +32,9 @@ namespace pl
  * \warning dest may not be a null pointer.
  * \see secureZeroMemory
 **/
-PL_ALWAYS_INLINE void *zeroMemory(PL_OUT void *dest, std::size_t countBytes)
+PL_ALWAYS_INLINE void *zeroMemory(
+    PL_OUT void *dest,
+    std::size_t countBytes) noexcept
 {
     Byte *ptr = static_cast<Byte *>(dest);
 
@@ -68,7 +70,7 @@ PL_ALWAYS_INLINE void *zeroMemory(PL_OUT void *dest, std::size_t countBytes)
 **/
 PL_ALWAYS_INLINE void *secureZeroMemory(
     PL_OUT void *dest,
-    std::size_t countBytes)
+    std::size_t countBytes) noexcept
 {
     volatile Byte *ptr = static_cast<volatile Byte *>(dest);
 

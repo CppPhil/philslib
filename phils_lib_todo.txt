@@ -2,14 +2,6 @@ rework phils libraries
  
 more examples in documentation
 
-make noexcept what should be
-- default ctor
-- mctor
-- move assignment operator
-- swap
-- ...
-make inline / force inline what should be
-add comparison operators where possible
 use macro annotations where appropriate
 add debug assertions for undefined behavior etc (but have it say it's UB)
 have assertion in header in inline function that calls an impl

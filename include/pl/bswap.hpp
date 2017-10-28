@@ -24,9 +24,9 @@ namespace pl
  * The bytes of that copy are then reversed and the result is passed back out.
 **/
 template <typename Type>
-inline Type bswap(Type ty)
+inline Type bswap(Type ty) noexcept
 {
-    auto begin = asBytes(ty);
+    auto begin = ::pl::asBytes(ty);
     const auto end = begin + sizeof(Type);
 
     std::reverse(begin, end);

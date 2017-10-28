@@ -18,7 +18,7 @@ namespace detail
  *        information shall be printed.
 **/
 template <typename Ty>
-inline void handleCodeException(PL_IN const Ty &e)
+inline void handleCodeException(PL_IN const Ty &e) noexcept
 {
 #if !((PL_COMPILER == PL_COMPILER_GCC) && (PL_COMPILER_VERSION < PL_COMPILER_VERSION_CHECK(6, 3, 0)))
     auto code = e.code();
@@ -33,7 +33,7 @@ inline void handleCodeException(PL_IN const Ty &e)
 }
 } // namespace detail
 
-void handleExceptions()
+void handleExceptions() noexcept
 {
     static constexpr char functionName[] = "pl::handleExceptions";
 

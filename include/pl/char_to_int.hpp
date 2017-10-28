@@ -14,7 +14,7 @@ namespace pl
  * \return Returns a value of [0..9] for a character of the range ['0'..'9'].
  * \warning Do not pass in characters outside of the range ['0'..'9'].
 **/
-constexpr std::uint8_t charToInt(unsigned char ch)
+constexpr std::uint8_t charToInt(unsigned char ch) noexcept
 {
     constexpr unsigned char subtractThis = '0';
     return static_cast<std::uint8_t>(ch - subtractThis);

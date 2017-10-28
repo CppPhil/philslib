@@ -275,7 +275,7 @@ public:
      * \return A Concept & to the object managed.
      * \warning Precondition: this object is not in the moved-from state.
     **/
-    Concept &operator*()
+    Concept &operator*() noexcept
     {
         return *m_ptr;
     }
@@ -285,7 +285,7 @@ public:
      * \return A const Concept & to the object managed.
      * \warning Precondition: this object is not in the moved-from state.
     **/
-    const Concept &operator*() const
+    const Concept &operator*() const noexcept
     {
         return const_cast<this_type *>(this)->operator*();
     }

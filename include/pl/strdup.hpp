@@ -13,7 +13,7 @@ namespace pl
  * \return The copy.
 **/
 PL_NODISCARD std::unique_ptr<char[]> strdup(
-    PL_IN PL_NULL_TERMINATED(const char *)str);
+    PL_IN PL_NULL_TERMINATED(const char *)str) noexcept;
 
 /*!
  * \brief Creates a unique_ptr that holds a null-terminated byte string.
@@ -29,6 +29,6 @@ PL_NODISCARD std::unique_ptr<char[]> strdup(
 **/
 PL_NODISCARD std::unique_ptr<char[]> strndup(
     PL_IN PL_NULL_TERMINATED(const char *)str,
-    std::size_t size);
+    std::size_t size) noexcept;
 } // namespace pl
 #endif // INCG_PL_STRDUP_HPP

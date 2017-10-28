@@ -173,7 +173,7 @@ public:
      * \warning Causes undefined behavior if 'pos' is out of bounds.
      * \note Constant complexity.
     **/
-    PL_NODISCARD constexpr reference operator[](size_type pos)
+    PL_NODISCARD constexpr reference operator[](size_type pos) noexcept
     {
         return m_data[pos];
     }
@@ -186,7 +186,7 @@ public:
      * \warning Causes undefined behavior if 'pos' is out of bounds.
      * \note Constant complexity.
     **/
-    PL_NODISCARD const_reference operator[](size_type pos) const
+    PL_NODISCARD const_reference operator[](size_type pos) const noexcept
     {
         return const_cast<this_type *>(this)->operator[](pos);
     }
@@ -197,7 +197,7 @@ public:
      * \warning Calling front on an empty RawMemoryArray is undefined.
      * \note Constant complexity.
     **/
-    PL_NODISCARD reference front()
+    PL_NODISCARD reference front() noexcept
     {
         return *begin();
     }
@@ -208,7 +208,7 @@ public:
      * \warning Calling front on an empty RawMemoryArray is undefined.
      * \note Constant complexity.
     **/
-    PL_NODISCARD const_reference front() const
+    PL_NODISCARD const_reference front() const noexcept
     {
         return const_cast<this_type *>(this)->front();
     }
@@ -219,7 +219,7 @@ public:
      * \warning Calling back on an empty RawMemoryArray is undefined.
      * \note Constant complexity.
     **/
-    PL_NODISCARD reference back()
+    PL_NODISCARD reference back() noexcept
     {
         return *rbegin();
     }
@@ -230,7 +230,7 @@ public:
      * \warning Calling back on an empty RawMemoryArray is undefined.
      * \note Constant complexity.
     **/
-    PL_NODISCARD const_reference back() const
+    PL_NODISCARD const_reference back() const noexcept
     {
         return const_cast<this_type *>(this)->back();
     }

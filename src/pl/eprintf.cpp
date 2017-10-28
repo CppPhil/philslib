@@ -4,7 +4,7 @@
 
 namespace pl
 {
-int eprintf(PL_IN PL_FMT_STR(const char *)formatString, ...)
+int eprintf(PL_IN PL_FMT_STR(const char *)formatString, ...) noexcept
 {
     std::va_list args{ };
     va_start(args, formatString);

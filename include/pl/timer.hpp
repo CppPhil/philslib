@@ -30,14 +30,14 @@ public:
      *         invoked) and the time stored. The return value can be cast
      *         to the desired duration type using std::chrono::duration_cast.
     **/
-    std::chrono::steady_clock::duration elapsedTime() const;
+    std::chrono::steady_clock::duration elapsedTime() const noexcept;
 
     /*!
      * \brief Resets the time stored. The time stored is discarded and
      *        replaced with the current time (when this function is invoked)
      * \return A reference to this Timer object.
     **/
-    this_type &reset();
+    this_type &reset() noexcept;
 
 private:
     std::chrono::time_point<std::chrono::steady_clock> m_timeStored; /*!< The time stored */
