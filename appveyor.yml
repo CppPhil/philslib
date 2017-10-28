@@ -6,6 +6,9 @@ build_script:
 - cmd: >-
     cd C:\philslib
     
+    bitsadmin.exe /transfer "doctest" "https://raw.githubusercontent.com/onqtam/doctest/master/doctest/doctes
+t.h" "C:\philslib\test\doctest.h"
+    
     cmake -G "Visual Studio 14" C:\philslib
     
     cmake --build C:\philslib
