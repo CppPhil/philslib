@@ -55,6 +55,8 @@ inline void handleCodeException(PL_IN const Ty &e) noexcept
               << "- def category: " << code.default_error_condition().category().name() << '\n'
               << "- def value:    " << code.default_error_condition().value() << '\n'
               << "- def msg:      " << code.default_error_condition().message() << std::endl;
+#else
+    (void)e;
 #endif
 }
 } // namespace detail
