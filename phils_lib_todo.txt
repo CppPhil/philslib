@@ -2,9 +2,6 @@ rework phils libraries
  
 more examples in documentation
 
-try and find more sub-categories
-
-try to not return void.
 no global variable or local static variable in a source file may call a run-time constructor (would fuck up if compiled as statically linked library)
 anonymous namespaces for translation unit local types, functions, etc..
 make constexpr what can be

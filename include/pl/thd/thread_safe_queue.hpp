@@ -63,29 +63,33 @@ public:
      * \brief Pushes the object passed into the parameter to the back of the
      *        queue.
      * \param data The object to push the the back of the queue.
+     * \return A reference to this object.
      *
      * Will notify threads waiting for the queue to no longer be empty that
      * the queue is no longer empty.
     **/
-    void push(PL_IN const value_type &data)
+    this_type &push(PL_IN const value_type &data)
     {
         std::unique_lock<std::mutex> lock{ m_mutex };
         m_cont.push(data);
         m_cvHasElements.notify_all();
+        return *this;
     }
 
     /*!
      * \brief Pushes the rvalue passed to the back of the queue.
      * \param data The rvalue to add to the back of the queue
+     * \return A reference to this object.
      *
      * Will notify threads waiting for the queue to no longer be empty that
      * the queue is no longer empty.
     **/
-    void push(PL_IN value_type &&data)
+    this_type &push(PL_IN value_type &&data)
     {
         std::unique_lock<std::mutex> lock{ m_mutex };
         m_cont.push(std::move(data));
         m_cvHasElements.notify_all();
+        return *this;
     }
 
     /*!

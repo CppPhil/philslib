@@ -13,40 +13,45 @@ namespace pl
  * \brief Sets the bit at position bit of numeric.
  * \param numeric The number to have its bit bit set.
  * \param bit The bit to set in numeric. [0..bits(Numeric))
+ * \return A reference to 'numeric'.
  * \warning Do not pass a value in bit that is larger than the amount
  *          of bits in Numeric - 1.
 **/
 template <typename Numeric>
-inline void setBit(PL_INOUT Numeric &numeric, Numeric bit)
+inline Numeric &setBit(PL_INOUT Numeric &numeric, Numeric bit)
 {
     static_assert(std::is_unsigned<Numeric>::value,
                   "Numeric in pl::setBit should be an unsigned type.");
     static constexpr Numeric activeBit = 1U;
 
     numeric |= (activeBit << bit);
+    return numeric;
 }
 
 /*!
  * \brief Clears the bit bit in numeric.
  * \param numeric The number to have its bit bit cleared.
  * \param bit The bit to clear in numeric. [0..bits(Numeric))
+ * \return A reference to 'numeric'.
  * \warning The value in bit must not be larger than the amount of bits in
  *          Numeric - 1.
 **/
 template <typename Numeric>
-inline void clearBit(PL_INOUT Numeric &numeric, Numeric bit)
+inline Numeric &clearBit(PL_INOUT Numeric &numeric, Numeric bit)
 {
     static_assert(std::is_unsigned<Numeric>::value,
                   "Numeric in pl::clearBit should be an unsigned type.");
     static constexpr Numeric activeBit = 1U;
 
     numeric &= ~(activeBit << bit);
+    return numeric;
 }
 
 /*!
  * \brief Toggles the bit bit in numeric.
  * \param numeric The number to have its bit bit toggled.
  * \param bit The bit in numeric to toggle. [0..bits(Numeric))
+ * \return A reference to 'numeric'.
  * \warning Do not pass a value in bit that is larger than
  *          the number of bits in Numeric - 1.
  *
@@ -56,13 +61,14 @@ inline void clearBit(PL_INOUT Numeric &numeric, Numeric bit)
  * will be 1 after having executed this function.
 **/
 template <typename Numeric>
-inline void toggleBit(PL_INOUT Numeric &numeric, Numeric bit)
+inline Numeric &toggleBit(PL_INOUT Numeric &numeric, Numeric bit)
 {
     static_assert(std::is_unsigned<Numeric>::value,
                   "Numeric in pl::toggleBit should be an unsigned type.");
     static constexpr Numeric activeBit = 1U;
 
     numeric ^= (activeBit << bit);
+    return numeric;
 }
 
 /*!
