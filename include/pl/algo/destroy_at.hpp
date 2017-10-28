@@ -5,6 +5,8 @@
 #ifndef INCG_PL_ALGO_DESTROY_AT_HPP
 #define INCG_PL_ALGO_DESTROY_AT_HPP
 #include "../annotations.hpp" // PL_OUT
+#include "../assert.hpp" // PL_DBG_CHECK_PRE
+#include <cstddef> // std::nullptr_t
 
 namespace pl
 {
@@ -18,6 +20,8 @@ namespace algo
 template <typename Ty>
 void destroy_at(PL_OUT Ty *ptr)
 {
+    PL_DBG_CHECK_PRE(ptr != nullptr);
+
     ptr->~Ty();
 }
 } // namespace algo

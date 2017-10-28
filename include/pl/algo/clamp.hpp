@@ -5,7 +5,9 @@
 #ifndef INCG_PL_ALGO_CLAMP_HPP
 #define INCG_PL_ALGO_CLAMP_HPP
 #include "../annotations.hpp" // PL_IN
+#include "../assert.hpp" // PL_DBG_CHECK_PRE
 #include <functional> // std::less
+#include <ciso646> // not
 
 namespace pl
 {
@@ -47,6 +49,8 @@ constexpr const Ty &clamp(
     PL_IN const Ty &upperBound,
     BinaryComparator comp)
 {
+    PL_DBG_CHECK_PRE(not comp(upperBound, lowerBound));
+
     return ((comp(value, lowerBound)) ? (lowerBound)
                                       : ((comp(upperBound, value)) ? (upperBound)
                                                                    : (value)));

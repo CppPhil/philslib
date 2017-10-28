@@ -4,6 +4,7 @@
 #include "except.hpp" // pl::InvalidSizeException
 #include "algo/uninitialized_move.hpp" // pl::algo::uninitialized_move
 #include "algo/destroy.hpp" // pl::algo::destroy
+#include "assert.hpp" // PL_DBG_CHECK_PRE
 #include <ciso646> // not
 #include <cstddef> // std::size_t, std::ptrdiff_t
 #include <stdexcept> // std::out_of_range
@@ -65,6 +66,7 @@ public:
         : m_data{ static_cast<pointer>(rawMemory) },
           m_size{ byteCount / sizeof(value_type) }
     {
+        PL_DBG_CHECK_PRE(rawMemory != nullptr);
         std::uninitialized_fill(begin(), end(), initialValue);
     }
 
@@ -102,6 +104,8 @@ public:
         : m_data{ static_cast<pointer>(rawMemory) },
           m_size{ byteCount / sizeof(value_type) }
     {
+        PL_DBG_CHECK_PRE(rawMemory != nullptr);
+
         if (m_size != initList.size()) {
             throw ::pl::InvalidSizeException{
                 "m_size was not equal to initList.size() in RawMemoryArray ctor."
@@ -175,6 +179,7 @@ public:
     **/
     PL_NODISCARD constexpr reference operator[](size_type pos) noexcept
     {
+        PL_DBG_CHECK_PRE(pos < size());
         return m_data[pos];
     }
 
@@ -199,6 +204,7 @@ public:
     **/
     PL_NODISCARD reference front() noexcept
     {
+        PL_DBG_CHECK_PRE(not empty());
         return *begin();
     }
 
@@ -221,6 +227,7 @@ public:
     **/
     PL_NODISCARD reference back() noexcept
     {
+        PL_DBG_CHECK_PRE(not empty());
         return *rbegin();
     }
 

@@ -5,6 +5,7 @@
 #ifndef INCG_PL_ALGO_FOR_EACH_N_HPP
 #define INCG_PL_ALGO_FOR_EACH_N_HPP
 #include "../invoke.hpp" // pl::invoke
+#include "../assert.hpp" // PL_DBG_CHECK_PRE
 
 namespace pl
 {
@@ -40,6 +41,8 @@ InputIterator for_each_n(
     SizeType n,
     UnaryInvocable unaryInvocable)
 {
+    PL_DBG_CHECK_PRE(n >= 0);
+
     for (SizeType i{ }; i < n; ++first) {
         ::pl::invoke(unaryInvocable, *first);
         ++i;

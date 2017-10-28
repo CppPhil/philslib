@@ -7,6 +7,7 @@
 #define INCG_PL_ASSERT_HPP
 #include "begin_end_macro.hpp" // PL_BEGIN_MACRO, PL_END_MACRO
 #include "except.hpp" // pl::AssertionViolationException, pl::PreconditionViolationException, pl::PostconditionViolationException
+#include <ciso646> // not
 #include <cassert> // NDEBUG
 /*!
  * \def PL_DETAIL_ASSERTION_IMPLEMENTATION(condition, exceptionType, violationTypeString)
@@ -96,7 +97,7 @@
 
 #define PL_DETAIL_ASSERTION_IMPLEMENTATION(condition, exceptionType, violationTypeString) \
     PL_BEGIN_MACRO \
-        if (!(condition)) { \
+        if (not (condition)) { \
             PL_THROW_WITH_SOURCE_INFO(exceptionType, \
                 violationTypeString " VIOLATION:\n" \
                 PL_STRINGIFY(condition) \

@@ -28,7 +28,7 @@ namespace thd
  *        threads and the count of tasks still waiting to be executed can be
  *        queried.
 **/
-class ThreadPool final
+class ThreadPool
 {
 private:
     class ExecutorBase;

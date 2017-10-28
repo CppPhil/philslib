@@ -7,6 +7,7 @@
 #include "annotations.hpp" // PL_IN, PL_INOUT
 #include "restrict.hpp" // PL_RESTRICT
 #include "byte.hpp" // pl::Byte
+#include "assert.hpp" // PL_DBG_CHECK_PRE
 #include <cstddef> // std::size_t
 
 namespace pl
@@ -30,6 +31,9 @@ constexpr void *memxor(
     PL_IN const void * PL_RESTRICT source,
     std::size_t byteCount) noexcept
 {
+    PL_DBG_CHECK_PRE(destination != nullptr);
+    PL_DBG_CHECK_PRE(source != nullptr);
+
     auto dest = static_cast<Byte * PL_RESTRICT>(destination);
     auto src  = static_cast<const Byte * PL_RESTRICT>(source);
 

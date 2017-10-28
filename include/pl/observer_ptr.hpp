@@ -5,6 +5,7 @@
 #ifndef INCG_PL_OBSERVER_PTR_HPP
 #define INCG_PL_OBSERVER_PTR_HPP
 #include "annotations.hpp" // PL_IN_OPT, PL_INOUT, PL_NODISCARD
+#include "assert.hpp" // PL_DBG_CHECK_PRE
 #include <ciso646> // not
 #include <cstddef> // std::nullptr_t, std::size_t
 #include <utility> // std::swap
@@ -143,15 +144,18 @@ public:
     **/
     constexpr std::add_lvalue_reference_t<element_type> operator*() const
     {
+        PL_DBG_CHECK_PRE(this->operator bool());
         return *get();
     }
 
     /*!
      * \brief Provides access to the object watched by *this.
      * \return Returns a pointer to the object watched by *this, i.e. get().
+     * \warning Do not call this function if get() == nullptr.
     **/
     constexpr element_type *operator->() const noexcept
     {
+        PL_DBG_CHECK_PRE(this->operator bool());
         return get();
     }
 

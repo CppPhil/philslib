@@ -6,8 +6,7 @@
 **/
 #ifndef INCG_PL_CHECKED_DELETE_HPP
 #define INCG_PL_CHECKED_DELETE_HPP
-#include "annotations.hpp" // PL_IN, PL_INOUT
-#include "unused.hpp" // PL_UNUSED
+#include "annotations.hpp" // PL_IN_OPT, PL_INOUT
 #include <new> // operator delete, operator delete[]
 #include <cstddef> // std::nullptr_t
 
@@ -24,10 +23,10 @@ namespace pl
  *          object.
 **/
 template <typename Ty>
-inline void checkedDelete(PL_IN Ty *p) noexcept
+inline void checkedDelete(PL_IN_OPT Ty *p) noexcept
 {
     using incompleteTypeNotAllowed = unsigned char[sizeof(Ty) ? 1 : -1];
-    PL_UNUSED(sizeof(incompleteTypeNotAllowed));
+    (void)sizeof(incompleteTypeNotAllowed);
     delete p;
 }
 
@@ -42,10 +41,10 @@ inline void checkedDelete(PL_IN Ty *p) noexcept
  *          pointed to C-style array.
  */
 template <typename Ty>
-inline void checkedArrayDelete(PL_IN Ty *p) noexcept
+inline void checkedArrayDelete(PL_IN_OPT Ty *p) noexcept
 {
     using incompleteTypeNotAllowed = unsigned char[sizeof(Ty) ? 1 : -1];
-    PL_UNUSED(sizeof(incompleteTypeNotAllowed));
+    (void)sizeof(incompleteTypeNotAllowed);
     delete[] p;
 }
 

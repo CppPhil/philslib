@@ -2,6 +2,8 @@
 #define INCG_PL_CONCEPT_POLY_HPP
 #include "annotations.hpp" // PL_IN, PL_INOUT
 #include "meta/uncvref.hpp" // pl::meta::uncvref_t
+#include "assert.hpp" // PL_DBG_CHECK_PRE
+#include <cstddef> // std::nullptr_t
 #include <ciso646> // not, and
 #include <utility> // std::forward, std::swap
 #include <memory> // std::unique_ptr, std::make_unique
@@ -195,8 +197,10 @@ public:
      * \warning Precondition: other is not in the moved-from state.
     **/
     ConceptPoly(PL_IN const this_type &other)
-        : m_ptr{ other.m_ptr->clone() }
+        : m_ptr{ nullptr }
     {
+        PL_DBG_CHECK_PRE(static_cast<bool>(other));
+        m_ptr = other.m_ptr->clone();
     }
 
     /*!
@@ -225,6 +229,7 @@ public:
     **/
     this_type &operator=(PL_IN const this_type &other)
     {
+        PL_DBG_CHECK_PRE(static_cast<bool>(other));
         m_ptr = other.m_ptr->clone();
     }
 
@@ -278,6 +283,7 @@ public:
     **/
     Concept &operator*() noexcept
     {
+        PL_DBG_CHECK_PRE(this->operator bool());
         return *m_ptr;
     }
 
@@ -299,6 +305,7 @@ public:
     **/
     Concept *operator->() noexcept
     {
+        PL_DBG_CHECK_PRE(this->operator bool());
         return m_ptr.operator->();
     }
 

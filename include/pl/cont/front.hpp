@@ -6,6 +6,8 @@
 #ifndef INCG_PL_CONT_FRONT_HPP
 #define INCG_PL_CONT_FRONT_HPP
 #include "../annotations.hpp" // PL_IN
+#include "../assert.h" // PL_DBG_CHECK_PRE
+#include <ciso646> // not
 #include <cstddef> // std::size_t
 
 namespace pl
@@ -16,11 +18,13 @@ namespace cont
  * \brief Gets the first (index 0) element of a container.
  * \param cont The container to get the first (index 0) element of.
  * \return The first (index 0) element of the container.
- * \warning Undefined behavior occurs if the container passed is empty.
+ * \warning Undefined behavior occurs if the container passed in is empty.
 **/
 template <typename Cont>
 constexpr auto front(PL_IN Cont &cont) -> decltype(auto)
 {
+    PL_DBG_CHECK_PRE(not cont.empty());
+
     return cont.front();
 }
 

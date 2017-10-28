@@ -7,6 +7,7 @@
 #include "annotations.hpp" // PL_OUT
 #include "inline.hpp" // PL_ALWAYS_INLINE
 #include "byte.hpp" // pl::Byte
+#include "assert.hpp" // PL_DBG_CHECK_PRE
 #include <cstddef> // std::size_t
 
 namespace pl
@@ -36,6 +37,8 @@ PL_ALWAYS_INLINE void *zeroMemory(
     PL_OUT void *dest,
     std::size_t countBytes) noexcept
 {
+    PL_DBG_CHECK_PRE(dest != nullptr);
+
     Byte *ptr{ static_cast<Byte *>(dest) };
 
     for (; countBytes != 0U; ++ptr, --countBytes) {
@@ -72,6 +75,8 @@ PL_ALWAYS_INLINE void *secureZeroMemory(
     PL_OUT void *dest,
     std::size_t countBytes) noexcept
 {
+    PL_DBG_CHECK_PRE(dest != nullptr);
+
     volatile Byte *ptr{ static_cast<volatile Byte *>(dest) };
 
     for (; countBytes != 0U; ++ptr, --countBytes) {
