@@ -51,7 +51,8 @@ using ReturnType = std::array<typename ReturnTypeHelper<DesiredType, Types ...>:
  * \return The resulting std::array.
 **/
 template <typename DesiredType = void, typename ...Args>
-constexpr detail::ReturnType<DesiredType, Args ...> makeArray(Args &&...args)
+constexpr detail::ReturnType<DesiredType, Args ...> makeArray(
+    PL_IN Args &&...args)
 {
     return { std::forward<Args>(args)... };
 }

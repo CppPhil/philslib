@@ -4,6 +4,7 @@
 **/
 #ifndef INCG_PL_ALGO_CLAMP_HPP
 #define INCG_PL_ALGO_CLAMP_HPP
+#include "../annotations.hpp" // PL_IN
 #include <functional> // std::less
 
 namespace pl
@@ -41,9 +42,9 @@ namespace algo
 **/
 template <typename Ty, typename BinaryComparator>
 constexpr const Ty &clamp(
-    const Ty &value,
-    const Ty &lowerBound,
-    const Ty &upperBound,
+    PL_IN const Ty &value,
+    PL_IN const Ty &lowerBound,
+    PL_IN const Ty &upperBound,
     BinaryComparator comp)
 {
     return ((comp(value, lowerBound)) ? (lowerBound)
@@ -72,9 +73,9 @@ constexpr const Ty &clamp(
 **/
 template <typename Ty>
 constexpr const Ty &clamp(
-    const Ty &value,
-    const Ty &lowerBound,
-    const Ty &upperBound)
+    PL_IN const Ty &value,
+    PL_IN const Ty &lowerBound,
+    PL_IN const Ty &upperBound)
 {
     return ::pl::algo::clamp(value, lowerBound, upperBound, std::less<>{ });
 }

@@ -4,6 +4,7 @@
 **/
 #ifndef INCG_PL_FOR_EACH_ARGUMENT_HPP
 #define INCG_PL_FOR_EACH_ARGUMENT_HPP
+#include "annotations.hpp" // PL_IN
 #include "invoke.hpp" // pl::invoke
 #include <initializer_list> // std::initializer_list
 #include <utility> // std::forward
@@ -22,7 +23,7 @@ namespace pl
  *                              1, 2.1, "hello", .3F, 44U, std::string{ "world" });
 **/
 template <typename Callable, typename ...Args>
-void forEachArgument(Callable &&callable, Args &&...args)
+void forEachArgument(PL_IN Callable &&callable, PL_IN Args &&...args)
 {
     static_cast<void>(
         std::initializer_list<int>{

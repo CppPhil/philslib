@@ -21,7 +21,7 @@ namespace cont
  * \warning Do not dereference the pointer returned if 'container' is empty.
 **/
 template <typename Container>
-constexpr auto data(Container &container) -> decltype(container.data())
+constexpr auto data(PL_IN Container &container) -> decltype(container.data())
 {
     return container.data();
 }
@@ -36,7 +36,7 @@ constexpr auto data(Container &container) -> decltype(container.data())
  * \note This is the const overload.
 **/
 template <typename Container>
-constexpr auto data(const Container &container) -> decltype(container.data())
+constexpr auto data(PL_IN const Container &container) -> decltype(container.data())
 {
     return container.data();
 }
@@ -50,7 +50,7 @@ constexpr auto data(const Container &container) -> decltype(container.data())
  *         C-Style array.
 **/
 template <typename Ty, std::size_t Size>
-constexpr Ty *data(Ty (&array)[Size]) noexcept
+constexpr Ty *data(PL_IN Ty (&array)[Size]) noexcept
 {
     return array;
 }

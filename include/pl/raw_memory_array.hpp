@@ -506,8 +506,8 @@ private:
 **/
 template <typename Ty>
 bool operator==(
-    const ::pl::RawMemoryArray<Ty> &lhs,
-    const ::pl::RawMemoryArray<Ty> &rhs)
+    PL_IN const ::pl::RawMemoryArray<Ty> &lhs,
+    PL_IN const ::pl::RawMemoryArray<Ty> &rhs)
 {
     if (lhs.size() != rhs.size()) {
         return false;
@@ -528,8 +528,8 @@ bool operator==(
 **/
 template <typename Ty>
 bool operator!=(
-    const ::pl::RawMemoryArray<Ty> &lhs,
-    const ::pl::RawMemoryArray<Ty> &rhs)
+    PL_IN const ::pl::RawMemoryArray<Ty> &lhs,
+    PL_IN const ::pl::RawMemoryArray<Ty> &rhs)
 {
     return not (lhs == rhs);
 }
@@ -543,8 +543,8 @@ bool operator!=(
 **/
 template <typename Ty>
 bool operator<(
-    const ::pl::RawMemoryArray<Ty> &lhs,
-    const ::pl::RawMemoryArray<Ty> &rhs)
+    PL_IN const ::pl::RawMemoryArray<Ty> &lhs,
+    PL_IN const ::pl::RawMemoryArray<Ty> &rhs)
 {
     return std::lexicographical_compare(
         lhs.begin(), lhs.end(),
@@ -560,8 +560,8 @@ bool operator<(
 **/
 template <typename Ty>
 bool operator<=(
-    const ::pl::RawMemoryArray<Ty> &lhs,
-    const ::pl::RawMemoryArray<Ty> &rhs)
+    PL_IN const ::pl::RawMemoryArray<Ty> &lhs,
+    PL_IN const ::pl::RawMemoryArray<Ty> &rhs)
 {
     return not (rhs < lhs);
 }
@@ -575,8 +575,8 @@ bool operator<=(
 **/
 template <typename Ty>
 bool operator>(
-    const ::pl::RawMemoryArray<Ty> &lhs,
-    const ::pl::RawMemoryArray<Ty> &rhs)
+    PL_IN const ::pl::RawMemoryArray<Ty> &lhs,
+    PL_IN const ::pl::RawMemoryArray<Ty> &rhs)
 {
     return rhs < lhs;
 }
@@ -590,8 +590,8 @@ bool operator>(
 **/
 template <typename Ty>
 bool operator>=(
-    const ::pl::RawMemoryArray<Ty> &lhs,
-    const ::pl::RawMemoryArray<Ty> &rhs)
+    PL_IN const ::pl::RawMemoryArray<Ty> &lhs,
+    PL_IN const ::pl::RawMemoryArray<Ty> &rhs)
 {
     return not (lhs < rhs);
 }

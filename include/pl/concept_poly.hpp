@@ -1,5 +1,6 @@
 #ifndef INCG_PL_CONCEPT_POLY_HPP
 #define INCG_PL_CONCEPT_POLY_HPP
+#include "annotations.hpp" // PL_IN, PL_INOUT
 #include "meta/uncvref.hpp" // pl::meta::uncvref_t
 #include <ciso646> // not, and
 #include <utility> // std::forward, std::swap
@@ -180,7 +181,7 @@ public:
                   not std::is_same<meta::uncvref_t<Impl>, this_type>::value
                   and std::is_base_of<Concept, Model<meta::uncvref_t<Impl>>>::value,
                   void>>
-    explicit ConceptPoly(Impl &&impl)
+    explicit ConceptPoly(PL_IN Impl &&impl)
         : m_ptr{ std::make_unique<Model<meta::uncvref_t<Impl>>>(std::forward<Impl>(impl)) }
     {
     }
@@ -193,7 +194,7 @@ public:
      *       underlying Model<???> type.
      * \warning Precondition: other is not in the moved-from state.
     **/
-    ConceptPoly(const this_type &other)
+    ConceptPoly(PL_IN const this_type &other)
         : m_ptr{ other.m_ptr->clone() }
     {
     }
@@ -209,7 +210,7 @@ public:
      * Move constructs a ConceptPoly object from another one.
      * Performs a member by member move.
     **/
-    ConceptPoly(this_type &&) noexcept = default;
+    ConceptPoly(PL_IN this_type &&) noexcept = default;
 
     /*!
      * \brief Copy assignment operator. Copy assigns this object with 'other'.
@@ -222,7 +223,7 @@ public:
      *       type and return a clone as std::unique_ptr<Concept>.
      * \warning Precondition: other is not in the moved-from state.
     **/
-    this_type &operator=(const this_type &other)
+    this_type &operator=(PL_IN const this_type &other)
     {
         m_ptr = other.m_ptr->clone();
     }
@@ -236,14 +237,14 @@ public:
      *          to check if a ConceptPoly object is valid, that is, it isn't
      *          in the moved-from state.
     **/
-    this_type &operator=(this_type &&) noexcept = default;
+    this_type &operator=(PL_IN this_type &&) noexcept = default;
 
     /*!
      * \brief Swaps this object with the one passed into the parameter.
      * \param other The other object to swap with.
      * \note Just swaps the underlying std::unique_ptrs.
     **/
-    void swap(this_type &other) noexcept
+    void swap(PL_INOUT this_type &other) noexcept
     {
         std::swap(m_ptr, other.m_ptr);
     }
@@ -337,8 +338,8 @@ private:
 **/
 template <typename Concept, template <typename> class Model>
 void swap(
-    ConceptPoly<Concept, Model> &lhs,
-    ConceptPoly<Concept, Model> &rhs) noexcept
+    PL_INOUT ConceptPoly<Concept, Model> &lhs,
+    PL_INOUT ConceptPoly<Concept, Model> &rhs) noexcept
 {
     lhs.swap(rhs);
 }

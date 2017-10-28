@@ -116,8 +116,10 @@ private:
      * \brief Invokes the callable with ty and sets the result to the promise.
     **/
     template <typename Fut, typename Callable, typename Ty>
-    static void setValue(PL_OUT std::promise<Fut> &p, PL_IN Callable &callable,
-                         PL_INOUT Ty &ty)
+    static void setValue(
+        PL_OUT std::promise<Fut> &p,
+        PL_IN Callable &callable,
+        PL_INOUT Ty &ty)
     {
         p.set_value(invoke(callable, ty));
     }
@@ -128,8 +130,10 @@ private:
      *       a regular type.
     **/
     template <typename Callable, typename Ty>
-    static void setValue(PL_OUT std::promise<void> &p, PL_IN Callable &callable,
-                         PL_INOUT Ty &ty)
+    static void setValue(
+        PL_OUT std::promise<void> &p,
+        PL_IN Callable &callable,
+        PL_INOUT Ty &ty)
     {
         invoke(callable, ty);
         p.set_value();
