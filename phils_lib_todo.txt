@@ -2,7 +2,6 @@ rework phils libraries
  
 more examples in documentation
 
-make swappable what can be
 make noexcept what should be
 - default ctor
 - mctor

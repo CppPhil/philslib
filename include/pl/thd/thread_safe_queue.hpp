@@ -42,6 +42,16 @@ public:
     }
 
     /*!
+     * \brief This type is non-copyable.
+    **/
+    ThreadSafeQueue(const this_type &) = delete;
+
+    /*!
+     * \brief This type is non-copyable.
+    **/
+    this_type &operator=(const this_type &) = delete;
+
+    /*!
      * \brief Removes the first element and returns it.
      * \return The element that used to be at the front of the queue.
      *
