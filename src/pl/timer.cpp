@@ -2,7 +2,7 @@
 
 namespace pl
 {
-Timer::Timer()
+Timer::Timer() noexcept
     : m_timeStored{ std::chrono::steady_clock::now() }
 {
 }

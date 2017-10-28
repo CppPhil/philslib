@@ -37,6 +37,16 @@ public:
     }
 
     /*!
+     * \brief This type is non-copyable.
+    **/
+    Monitor(const this_type &) = delete;
+
+    /*!
+     * \brief This type is non-copyable.
+    **/
+    this_type &operator=(const this_type &) = delete;
+
+    /*!
      * \brief Receives a callable and invokes that callable by passing the
      *        shared data to it. The call itself is protected by a mutex.
      * \param callable The callable to be used to operate on the shared data.

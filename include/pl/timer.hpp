@@ -21,7 +21,7 @@ public:
      *        The time stored is initialized with the current time.
      *        Effectively 'starts' the Timer.
     **/
-    Timer();
+    Timer() noexcept;
 
     /*!
      * \brief Calculates the distance between the current time and the time

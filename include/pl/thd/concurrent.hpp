@@ -50,8 +50,14 @@ public:
     {
     }
 
+    /*!
+     * \brief This type is non-copyable.
+    **/
     Concurrent(const this_type &) = delete;
 
+    /*!
+     * \brief This type is non-copyable.
+    **/
     this_type &operator=(const this_type &) = delete;
 
     /*!

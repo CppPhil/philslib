@@ -2,7 +2,6 @@ rework phils libraries
  
 more examples in documentation
 
-make (noexcept) default constructible if possible
 make swappable what can be
 make noexcept what should be
 - default ctor
