@@ -19,17 +19,21 @@ namespace pl
  * \param args The arguments that callable will be called with. callable will
  *        be called with each and every element of this template type
  *        parameter pack individually one after the other.
+ * \return A copy of 'callable'.
+ * \note 'callable' should be cheap to copy.
  * \example pl::forEachArgument([](const auto &e) { std::cout << e << ' ';},
  *                              1, 2.1, "hello", .3F, 44U, std::string{ "world" });
 **/
 template <typename Callable, typename ...Args>
-void forEachArgument(PL_IN Callable &&callable, PL_IN Args &&...args)
+Callable forEachArgument(Callable callable, PL_IN Args &&...args)
 {
     static_cast<void>(
         std::initializer_list<int>{
             ((void)::pl::invoke(callable, std::forward<Args>(args)), 0)...
         }
     );
+
+    return callable;
 }
 } // namespace pl
 #endif // INCG_PL_FOR_EACH_ARGUMENT_HPP
