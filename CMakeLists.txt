@@ -1,4 +1,4 @@
-### GLOBAL SETTINGS ###
+### GLOBAL SETTINGS
 cmake_minimum_required(VERSION 3.1)
 
 set(CMAKE_CXX_STANDARD 14)
@@ -16,7 +16,7 @@ endif()
 
 find_package(Threads REQUIRED)
 
-### STATICALLY LINKED LIBRARY ###
+### STATICALLY LINKED LIBRARY
 set(LIBRARY_NAME philslib)
 
 set(LIB_HEADERS
@@ -124,15 +124,22 @@ add_library(${LIBRARY_NAME} STATIC "${LIB_HEADERS}" "${LIB_SOURCES}")
 
 target_link_libraries(${LIBRARY_NAME} Threads::Threads)
 
-### TEST ###
+### TEST
 enable_testing()
 
 set(UNIT_TEST_NAME unittest)
 
-set(TEST_SOURCES
-    test/src/test_main.cpp)
+set(TEST_HEADERS
+    test/doctest.h)
 
-add_executable(${UNIT_TEST_NAME} "${TEST_SOURCES}" "${LIB_HEADERS}") 
+set(TEST_SOURCES
+    test/src/test_main.cpp
+    test/src/algo/clamp_test.cpp)
+
+add_executable(${UNIT_TEST_NAME} 
+    "${TEST_HEADERS}" 
+    "${TEST_SOURCES}" 
+    "${LIB_HEADERS}") 
 
 target_link_libraries(${UNIT_TEST_NAME} Threads::Threads)
 target_link_libraries(${UNIT_TEST_NAME} ${LIBRARY_NAME})

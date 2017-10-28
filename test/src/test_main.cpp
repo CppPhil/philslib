@@ -1,9 +1,2 @@
-#include <iostream>
-
-int main()
-{
-    std::cout << "Test....\n";
-    return 0;
-}
-
-
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#include "../doctest.h"
