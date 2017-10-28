@@ -1,19 +1,10 @@
 rework phils libraries
- 
-more examples in documentation
-
+  
 add debug assertions for undefined behavior etc (but have it say it's UB)
 have assertion in header in inline function that calls an impl
 function defined in the .cpp
 ensure it functions properly with min and max macros defined
-(std::numeric_limits<int>::max)() for instance.
 
-minimize header dependencies
-use PIMPL whereever possible (non-template classes)
-always use source, destination style interfaces.
-always use haystack, needle style interfaces.
-remove code duplication
-document everything
 static analyzers
 test everything
 make it build with gcc, clang, msvc15, msvc17, MinGW
