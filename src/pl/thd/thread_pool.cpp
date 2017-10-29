@@ -100,7 +100,7 @@ ThreadPool::ExecutorBase::~ExecutorBase()
 {
 }
 
-PL_NODISCARD bool operator<(
+bool operator<(
     PL_IN const ThreadPool::ExecutorBase &a,
     PL_IN const ThreadPool::ExecutorBase &b)
 {

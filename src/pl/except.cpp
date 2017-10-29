@@ -36,7 +36,7 @@
 
 namespace pl
 {
-void handleExceptions() noexcept
+void handleExceptions()
 {
     static constexpr char functionName[] = "pl::handleExceptions";
 

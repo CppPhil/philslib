@@ -67,7 +67,7 @@ public:
      * \param b The second operand.
      * \return true if a's priority is less than b's priority; false otherwise.
     **/
-    friend PL_NODISCARD bool operator<(
+    friend bool operator<(
         PL_IN const ExecutorBase &a,
         PL_IN const ExecutorBase &b);
 
