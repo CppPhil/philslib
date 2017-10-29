@@ -16,9 +16,6 @@ addons:
       - g++-5
       
 script:
-  - cd ./test
-  - wget https://raw.githubusercontent.com/onqtam/doctest/master/doctest/doctest.h
-  - cd ./..
   - CXX=/usr/bin/g++-5 CC=/usr/bin/gcc-5 bash ./build.sh Debug 
   - cd ./Debug
   - ctest --verbose .

@@ -5,9 +5,7 @@ clone_folder: C:\philslib
 build_script:
 - cmd: >-
     cd C:\philslib
-    
-    bitsadmin.exe /transfer "doctest" "https://raw.githubusercontent.com/onqtam/doctest/master/doctest/doctest.h" "C:\philslib\test\doctest.h"
-        
+            
     build.bat "Visual Studio 14" Debug
     
 test: on
@@ -16,4 +14,6 @@ test_script:
       cd C:\philslib\Debug
   
       ctest --verbose .
+      
+      cd ..
 
