@@ -33,7 +33,7 @@ If "%2"=="Debug" (
     )
     
     cmake -G %1 -DCMAKE_BUILD_TYPE=Debug ..
-    msbuild philslib.sln /p:Configuration=Debug;Platform="%3" /maxcpucount
+    msbuild Project.sln /p:Configuration=Debug;Platform="%3" /maxcpucount
     cd ..
 )
 
@@ -51,7 +51,7 @@ If "%2"=="Release" (
     )
     
     cmake -G %1 -DCMAKE_BUILD_TYPE=Release ..
-    msbuild philslib.sln /p:Configuration=Release;Platform="%3" /maxcpucount
+    msbuild Project.sln /p:Configuration=Release;Platform="%3" /maxcpucount
     cd ..
 )
 
