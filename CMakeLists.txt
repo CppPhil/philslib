@@ -17,7 +17,7 @@ endif()
 
 # disable clang warnings for C++17 language features
 if(CMAKE_CXX_COMPILER MATCHES ".*clang")
-    string(REPLACE "-Wc++1z-extensions" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-c++1z-extensions")
 endif()
 
 # Optimization flags
