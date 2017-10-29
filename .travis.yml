@@ -99,29 +99,29 @@ matrix:
 script:
   # debug x64
   - echo "DEBUG x64"
-  - /usr/bin/$(COMPILER) --version
-  - CXX=/usr/bin/$(COMPILER) ./build.sh Debug x64
+  - /usr/bin/$(printenv COMPILER) --version
+  - CXX=/usr/bin/$(printenv COMPILER) ./build.sh Debug x64
   - cd ./Debug_x64
   - ctest --verbose .
   - echo ""
   # release x64
   - echo "RELEASE x64"
-  - /usr/bin/$(COMPILER) --version
-  - CXX=/usr/bin/$(COMPILER) ./build.sh Release x64
+  - /usr/bin/$(printenv COMPILER) --version
+  - CXX=/usr/bin/$(printenv COMPILER) ./build.sh Release x64
   - cd ./Release_x64
   - ctest --verbose .
   - echo ""
   # debug x86
   - echo "DEBUG x64"
-  - /usr/bin/$(COMPILER) --version
-  - CXX=/usr/bin/$(COMPILER) ./build.sh Debug x86
+  - /usr/bin/$(printenv COMPILER) --version
+  - CXX=/usr/bin/$(printenv COMPILER) ./build.sh Debug x86
   - cd ./Debug_x86
   - ctest --verbose .
   - echo ""
   # release x86
   - echo "RELEASE x64"
-  - /usr/bin/$(COMPILER) --version
-  - CXX=/usr/bin/$(COMPILER) ./build.sh Release x86
+  - /usr/bin/$(printenv COMPILER) --version
+  - CXX=/usr/bin/$(printenv COMPILER) ./build.sh Release x86
   - cd ./Release_x86
   - ctest --verbose .
   - echo ""
