@@ -17,9 +17,9 @@ elseif(CMAKE_CXX_COMPILER MATCHES ".*clang")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror -Weverything")
 endif()
 
-# disable clang warnings for C++17 language features
+# disable some clang warnings
 if(CMAKE_CXX_COMPILER MATCHES ".*clang")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-c++1z-extensions")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-c++1z-extensions -Wno-c++98-compat")
 endif()
 
 # Optimization flags
