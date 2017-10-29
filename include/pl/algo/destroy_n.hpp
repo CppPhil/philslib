@@ -57,6 +57,8 @@ ForwardIterator destroy_n(ForwardIterator first, SizeType n)
         ++first;
         --n;
     }
+
+    return first;
 }
 } // namespace algo
 } // namespace pl

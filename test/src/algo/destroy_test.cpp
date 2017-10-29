@@ -98,21 +98,22 @@ TEST_CASE("test_destroy_algorithms")
             CHECK_UNARY(b);
         }
     }
+
+    SUBCASE("test_destroy_at") {
+        for (std::size_t i{ 0U }; i < size; ++i) {
+            pl::algo::destroy_at(&begin[i]);
+        }
+
+        for (bool b : ary) {
+            CHECK_UNARY(b);
+        }
+    }
+
+    SUBCASE("test_destroy_n") {
+        pl::algo::destroy_n(begin, size);
+
+        for (bool b : ary) {
+            CHECK_UNARY(b);
+        }
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

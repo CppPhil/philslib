@@ -58,3 +58,4 @@ target_link_libraries(${UNIT_TEST_NAME} Threads::Threads)
 target_link_libraries(${UNIT_TEST_NAME} ${LIBRARY_NAME})
 
 add_test(Unittest ${UNIT_TEST_NAME})
+
