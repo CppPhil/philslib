@@ -61,13 +61,6 @@ matrix:
           packages: ["clang-3.6", "g++-6-multilib", "libc6-dbg", "libc6-dbg:i386", "linux-libc-dev", "linux-libc-dev:i386", "g++-6"]
           sources: *apt_sources
 
-    # Clang 3.7
-    - env: COMPILER=clang++-3.7
-      addons: &clang37
-        apt:
-          packages: ["clang-3.7", "g++-6-multilib", "libc6-dbg", "libc6-dbg:i386", "linux-libc-dev", "linux-libc-dev:i386", "g++-6"]
-          sources: *apt_sources
-
     # Clang 3.8
     - env: COMPILER=clang++-3.8
       addons: &clang38
