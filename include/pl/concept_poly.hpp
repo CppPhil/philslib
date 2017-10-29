@@ -176,7 +176,7 @@ public:
      * \brief Alias of the 'Model<???>' type.
      *        Used to be able to query the 'Model' type.
      * \note You can check the dynamic type by comparing the std::type_info
-     *       objects of different instantiatons of the 'Model' template type
+     *       objects of different instantiations of the 'Model' template type
      *       with the std::type_info object for the object returned by
      *       one of the accessor functions.
     **/
