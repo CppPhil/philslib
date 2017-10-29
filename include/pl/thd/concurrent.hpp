@@ -147,7 +147,7 @@ private:
         PL_IN Callable &callable,
         PL_INOUT Ty &ty)
     {
-        p.set_value(invoke(callable, ty));
+        p.set_value(::pl::invoke(callable, ty));
     }
 
     /*!
@@ -161,7 +161,7 @@ private:
         PL_IN Callable &callable,
         PL_INOUT Ty &ty)
     {
-        invoke(callable, ty);
+        ::pl::invoke(callable, ty);
         p.set_value();
     }
 
