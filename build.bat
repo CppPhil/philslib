@@ -1,13 +1,8 @@
 @echo off
 
-REM calculate the amount of command line parameters
-set argC=0
-for %%x in (%*) do Set /A argC+=1
+If "%~1"=="" goto ERROR
 
-If NOT %argC% EQU %playernum% (
-    echo "Invalid command line parameters. Pass Visual Studio 14 for instance and Debug or Release"
-    EXIT /B 1
-)
+If "%~2"=="" goto ERROR
 
 bitsadmin.exe /transfer "doctest" "https://raw.githubusercontent.com/onqtam/doctest/master/doctest/doctest.h" "%CD%\test\doctest.h"
 
@@ -26,4 +21,8 @@ If "%2"=="Release" (
 )
 
 EXIT /B 0
+
+:ERROR
+    echo "Invalid parameters. You must pass Visual Studio 15 for instance and Debug or Release"
+    EXIT /B 1
 
