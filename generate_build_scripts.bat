@@ -55,6 +55,6 @@ cd ..
 EXIT /B 0
 
 :ERROR
-    echo "Invalid parameters. You must pass Visual Studio 15 or Visual Studio 14 for the first parameter, Debug or Release for the second parameter and x86 or x64 for the third parameter."
+    echo "Invalid parameters. You must pass Visual Studio 15 Win32/64 or Visual Studio 14 Win32/64 for the first parameter, Debug or Release for the second parameter and x86 or x64 for the third parameter."
     EXIT /B 1
 
