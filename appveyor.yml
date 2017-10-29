@@ -6,12 +6,12 @@ build_script:
 - cmd: >-
     cd C:\philslib
             
-    build.bat "Visual Studio 14" Debug
+    build.bat "Visual Studio 14" Debug x64
     
 test: on
 test_script:
   - cmd: >-
-      cd C:\philslib\Debug
+      cd C:\philslib\Debug_x64
   
       ctest --verbose .
       

@@ -26,6 +26,15 @@ if (NOT CMAKE_BUILD_TYPE MATCHES Debug)
     add_definitions(-DNDEBUG)
 endif()
 
+# processor architecture
+if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
+    if(ARCH STREQUAL "x86")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32")
+    elseif(ARCH STREQUAL "x64")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m64")
+    endif()
+endif()
+
 find_package(Threads REQUIRED)
 
 ### STATICALLY LINKED LIBRARY

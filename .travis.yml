@@ -16,7 +16,7 @@ addons:
       - g++-5
       
 script:
-  - CXX=/usr/bin/g++-5 CC=/usr/bin/gcc-5 bash ./build.sh Debug 
-  - cd ./Debug
+  - CXX=/usr/bin/g++-5 CC=/usr/bin/gcc-5 bash ./build.sh Debug x64
+  - cd ./Debug_x64
   - ctest --verbose .
 
