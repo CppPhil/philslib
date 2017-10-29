@@ -35,6 +35,11 @@ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER MAT
     endif()
 endif()
 
+# have clang use libc++
+if(CMAKE_CXX_COMPILER MATCHES ".*clang")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -stdlib=libc++ -lc++abi")
+endif()
+
 find_package(Threads REQUIRED)
 
 ### STATICALLY LINKED LIBRARY
