@@ -10,17 +10,14 @@ bitsadmin.exe /transfer "doctest" "https://raw.githubusercontent.com/onqtam/doct
 
 set isx86=false
 set isx64=false
-set stringToUse=""
 set platformStr=""
 
 If "%3"=="x86" (
     set isx86=true
-    set stringToUse=""
     set platformStr="Win32"
 ) Else (
     If "%3"=="x64" (
         set isx64=true
-        set stringToUse=" Win64"
         set platformStr="x64"
     )
 )
@@ -38,7 +35,7 @@ If "%2"=="Debug" (
         )
     )
     
-    cmake -G "%1%stringToUse%" -DCMAKE_BUILD_TYPE=Debug ..
+    cmake -G %1 -DCMAKE_BUILD_TYPE=Debug ..
     msbuild Project.sln /p:Configuration=Debug;Platform="%platformStr%" /maxcpucount
     cd ..
 )
@@ -56,7 +53,7 @@ If "%2"=="Release" (
         )
     )
     
-    cmake -G "%1%stringToUse%" -DCMAKE_BUILD_TYPE=Release ..
+    cmake -G %1 -DCMAKE_BUILD_TYPE=Release ..
     msbuild Project.sln /p:Configuration=Release /p:Platform="%platformStr%" /maxcpucount
     cd ..
 )
@@ -64,6 +61,6 @@ If "%2"=="Release" (
 EXIT /B 0
 
 :ERROR
-    echo "Invalid parameters. You must pass Visual Studio 15 Win32/64 or Visual Studio 14 for the first parameter, Debug or Release for the second parameter and x86 or x64 for the third parameter."
+    echo "Invalid parameters. You must pass Visual Studio 15 [Win64] or Visual Studio 14 [Win64] for the first parameter, Debug or Release for the second parameter and x86 or x64 for the third parameter."
     EXIT /B 1
 
