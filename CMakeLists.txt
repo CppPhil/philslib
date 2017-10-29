@@ -38,6 +38,7 @@ endif()
 find_package(Threads REQUIRED)
 
 ### STATICALLY LINKED LIBRARY
+project(philslib)
 set(LIBRARY_NAME philslib)
 
 file(GLOB LIB_HEADERS
