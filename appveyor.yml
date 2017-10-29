@@ -6,7 +6,7 @@ build_script:
 - cmd: >-
     cd C:\philslib
             
-    build.bat "Visual Studio 14 Win64" Debug x64
+    build.bat "Visual Studio 14" Debug x64
     
 test: on
 test_script:
