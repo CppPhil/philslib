@@ -20,7 +20,7 @@ If "%3"=="x86" (
 ) Else (
     If "%3"=="x64" (
         set isx64=true
-        set stringToUse="Win64"
+        set stringToUse=" Win64"
         set platformStr="x64"
     )
 )
@@ -38,7 +38,7 @@ If "%2"=="Debug" (
         )
     )
     
-    cmake -G "%1 %stringToUse%" -DCMAKE_BUILD_TYPE=Debug ..
+    cmake -G "%1%stringToUse%" -DCMAKE_BUILD_TYPE=Debug ..
     msbuild Project.sln /p:Configuration=Debug;Platform="%platformStr%" /maxcpucount
     cd ..
 )
@@ -56,7 +56,7 @@ If "%2"=="Release" (
         )
     )
     
-    cmake -G "%1 %stringToUse%" -DCMAKE_BUILD_TYPE=Release ..
+    cmake -G "%1%stringToUse%" -DCMAKE_BUILD_TYPE=Release ..
     msbuild Project.sln /p:Configuration=Release /p:Platform="%platformStr%" /maxcpucount
     cd ..
 )

@@ -18,7 +18,7 @@ If "%3"=="x86" (
 ) Else (
     If "%3"=="x64" (
         set isx64=true
-        set stringToUse="Win64"
+        set stringToUse=" Win64"
     )
 )
 
@@ -35,7 +35,7 @@ If "%2"=="Debug" (
         )
     )
     
-    cmake -G "%1 %stringToUse%" -DCMAKE_BUILD_TYPE=Debug ..
+    cmake -G "%1%stringToUse%" -DCMAKE_BUILD_TYPE=Debug ..
 )
 
 If "%2"=="Release" (
@@ -51,13 +51,13 @@ If "%2"=="Release" (
         )
     )
     
-    cmake -G "%1 %stringtoUse%" -DCMAKE_BUILD_TYPE=Release ..
+    cmake -G "%1%stringtoUse%" -DCMAKE_BUILD_TYPE=Release ..
 )
 
 cd ..
 EXIT /B 0
 
 :ERROR
-    echo "Invalid parameters. You must pass Visual Studio 15 Win32/64 or Visual Studio 14 for the first parameter, Debug or Release for the second parameter and x86 or x64 for the third parameter."
+    echo "Invalid parameters. You must pass Visual Studio 15 or Visual Studio 14 for the first parameter, Debug or Release for the second parameter and x86 or x64 for the third parameter."
     EXIT /B 1
 
