@@ -60,7 +60,7 @@ ThreadPool::ThreadPool(std::size_t amtThreads)
     // start running the thread running the threadFunction which is a
     // non-static member function of ThreadPool.
     std::for_each(m_threadBegin, m_threadEnd,
-                  [self, this] (PL_OUT std::thread &t) {
+                  [self] (PL_OUT std::thread &t) {
         ::new(static_cast<void *>(std::addressof(t))) std::thread{ &ThreadPool::threadFunction, self };
     });
 }
