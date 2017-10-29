@@ -36,31 +36,6 @@
 
 namespace pl
 {
-namespace detail
-{
-/*!
- * \brief Prints the information from an exception's error code.
- * \param e An exception that has an error code of which the associated
- *        information shall be printed.
-**/
-template <typename Ty>
-inline void handleCodeException(PL_IN const Ty &e) noexcept
-{
-#if !((PL_COMPILER == PL_COMPILER_GCC) && (PL_COMPILER_VERSION < PL_COMPILER_VERSION_CHECK(6, 3, 0)))
-    auto code = e.code();
-
-    std::cerr << "- category:     " << code.category().name() << '\n'
-              << "- value:        " << code.value() << '\n'
-              << "- msg:          " << code.message() << '\n'
-              << "- def category: " << code.default_error_condition().category().name() << '\n'
-              << "- def value:    " << code.default_error_condition().value() << '\n'
-              << "- def msg:      " << code.default_error_condition().message() << std::endl;
-#else
-    (void)e;
-#endif
-}
-} // namespace detail
-
 void handleExceptions() noexcept
 {
     static constexpr char functionName[] = "pl::handleExceptions";
@@ -79,7 +54,6 @@ void handleExceptions() noexcept
         std::cerr << functionName
                   << " caught std::bad_ios_base::failure exception:\n"
                   << e.what() << '\n';
-        detail::handleCodeException(e);
     } catch (const std::system_error &e) {
         std::cerr << functionName
                   << " caught std::system_error exception:\n"
@@ -100,7 +74,6 @@ void handleExceptions() noexcept
         std::cerr << functionName
                   << " caught std::future_error exception:\n"
                   << e.what() << '\n';
-        detail::handleCodeException(e);
     } catch (const std::domain_error &e) {
         std::cerr << functionName
                   << " caught std::domain_error exception:\n"
