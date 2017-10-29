@@ -7,13 +7,11 @@ build_script:
     cd C:\philslib
     
     bitsadmin.exe /transfer "doctest" "https://raw.githubusercontent.com/onqtam/doctest/master/doctest/doctest.h" "C:\philslib\test\doctest.h"
-    
-    cmake -G "Visual Studio 14" C:\philslib
-    
-    cmake --build C:\philslib
+        
+    build.bat "Visual Studio 14" "Debug"
     
 test: on
 test_script:
   - cmd: >-
-      ctest --verbose C:\philslib
+      ctest --verbose C:\philslib\Debug
 
