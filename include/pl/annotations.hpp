@@ -160,12 +160,12 @@
 #   endif
 #   define PL_PRINTF_FUNCTION(formatStrPos, varArgsPos) __attribute__((format (printf, formatStrPos, varArgsPos)))
 #elif PL_COMPILER == PL_COMPILER_CLANG
-#   if __has_cpp_attribute(fallthrough)
-#       define PL_FALLTHROUGH [[fallthrough]];
+#   if PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(3, 5, 0)
+#       define PL_FALLTHROUGH [[clang::fallthrough]];
 #   else
 #       define PL_FALLTHROUGH /* nothing */
 #   endif
-#   if __has_cpp_attribute(nodiscard)
+#   if PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(3, 9, 0)
 #       define PL_NODISCARD [[nodiscard]]
 #   else
 #       define PL_NODISCARD /* nothing */

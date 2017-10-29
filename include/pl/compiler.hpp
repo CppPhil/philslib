@@ -133,7 +133,7 @@
 #else
     #define PL_COMPILER_MAJOR (0x00) /* 0 for unknown compiler */
     #define PL_COMPILER_MINOR (0x00) /* 0 for unknown compiler */
-    #define PL_COMPILER_PATCH_VERSION (0x00) /* 0 for unknown compiler */
+    #define PL_COMPILER_PATCH (0x00) /* 0 for unknown compiler */
 #endif
 
 #define PL_COMPILER_VERSION_CHECK(major, minor, patch) \
