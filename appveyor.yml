@@ -8,7 +8,7 @@ build_script:
     
     bitsadmin.exe /transfer "doctest" "https://raw.githubusercontent.com/onqtam/doctest/master/doctest/doctest.h" "C:\philslib\test\doctest.h"
         
-    build.bat "Visual Studio 14" "Debug"
+    build.bat "Visual Studio 14" Debug
     
 test: on
 test_script:

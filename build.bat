@@ -11,6 +11,7 @@ If "%2"=="Debug" (
     cd Debug
     cmake -G %1 -DCMAKE_BUILD_TYPE=Debug ..
     cmake --build . --config Debug
+    cd ..
 )
 
 If "%2"=="Release" (
@@ -18,6 +19,7 @@ If "%2"=="Release" (
     cd Release
     cmake -G %1 -DCMAKE_BUILD_TYPE=Release ..
     cmake --build . --config Release
+    cd ..
 )
 
 EXIT /B 0

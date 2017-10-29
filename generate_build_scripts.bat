@@ -18,6 +18,7 @@ If "%2"=="Release" (
     cmake -G %1 -DCMAKE_BUILD_TYPE=Release ..
 )
 
+cd ..
 EXIT /B 0
 
 :ERROR
