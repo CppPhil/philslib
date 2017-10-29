@@ -490,3 +490,9 @@ unittest
 
 ### TODO list ###
 phils_lib_todo.txt
+
+
+### Microsoft Visual Studio ###
+*.vcxproj
+*.vcxproj.filters
+*.sln
