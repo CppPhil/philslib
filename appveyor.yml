@@ -13,5 +13,7 @@ build_script:
 test: on
 test_script:
   - cmd: >-
-      ctest --verbose C:\philslib\Debug
+      cd C:\philslib\Debug
+  
+      ctest --verbose .
 
