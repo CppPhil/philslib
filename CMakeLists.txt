@@ -17,7 +17,7 @@ elseif(CMAKE_CXX_COMPILER MATCHES ".*clang")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror -Weverything")
 endif()
 
-# disable some clang warnings
+# disable undesirable clang warnings
 if(CMAKE_CXX_COMPILER MATCHES ".*clang")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-c++1z-extensions -Wno-c++98-compat -Wno-weak-vtables -Wno-documentation-unknown-command -Wno-padded -Wno-c++98-c++11-compat-pedantic")
 endif()
@@ -40,11 +40,6 @@ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER MAT
     elseif(ARCH STREQUAL "x64")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m64")
     endif()
-endif()
-
-# have clang use a modern libstdc++
-if(CMAKE_CXX_COMPILER MATCHES ".*clang")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --gcc-toolchain=/usr")
 endif()
 
 find_package(Threads REQUIRED)
