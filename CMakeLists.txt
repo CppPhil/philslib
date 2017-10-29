@@ -35,9 +35,9 @@ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER MAT
     endif()
 endif()
 
-# have clang use a modern libstdc++
+# have clang use libc++
 if(CMAKE_CXX_COMPILER MATCHES ".*clang")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --gcc-toolchain=/usr/lib/gcc/x86_64-linux-gnu/6")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
 endif()
 
 find_package(Threads REQUIRED)
