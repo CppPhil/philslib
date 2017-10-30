@@ -130,7 +130,7 @@ void ThreadPool::threadFunction()
         } else {
             // if there was no task.
             // set running to false if we're shutting down.
-            running = !m_isFinishedShared;
+            running = not m_isFinishedShared;
             // exit the loop if we're shutting down.
             // if running is still true it was just a spurious wake.
         }
