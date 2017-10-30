@@ -32,7 +32,7 @@
 #ifndef INCG_PL_CONCEPT_POLY_HPP
 #define INCG_PL_CONCEPT_POLY_HPP
 #include "annotations.hpp" // PL_IN, PL_INOUT
-#include "meta/uncvref.hpp" // pl::meta::uncvref_t
+#include "meta/remove_cvref.hpp" // pl::meta::remove_cvref_t
 #include "assert.hpp" // PL_DBG_CHECK_PRE
 #include <cstddef> // std::nullptr_t
 #include <ciso646> // not, and
@@ -211,11 +211,11 @@ public:
     **/
     template <typename Impl,
               typename = std::enable_if_t<
-                  not std::is_same<meta::uncvref_t<Impl>, this_type>::value
-                  and std::is_base_of<Concept, Model<meta::uncvref_t<Impl>>>::value,
+                  not std::is_same<meta::remove_cvref_t<Impl>, this_type>::value
+                  and std::is_base_of<Concept, Model<meta::remove_cvref_t<Impl>>>::value,
                   void>>
     explicit ConceptPoly(PL_IN Impl &&impl)
-        : m_ptr{ std::make_unique<Model<meta::uncvref_t<Impl>>>(std::forward<Impl>(impl)) }
+        : m_ptr{ std::make_unique<Model<meta::remove_cvref_t<Impl>>>(std::forward<Impl>(impl)) }
     {
     }
 

@@ -35,7 +35,7 @@
 #include "no_macro_substitution.hpp" // PL_NO_MACRO_SUBSTITUTION
 #include "meta/identity.hpp" // pl::meta::identity_t
 #include "meta/disable_if.hpp" // pl::meta::disable_if_t
-#include "meta/uncvref.hpp" // pl::meta::uncvref_t
+#include "meta/remove_cvref.hpp" // pl::meta::remove_cvref_t
 #include <cstddef> // std::size_t
 #include <limits> // std::numeric_limits
 #include <iterator> // std::begin, std::end
@@ -254,7 +254,7 @@ public:
             = std::numeric_limits<Numeric>::min PL_NO_MACRO_SUBSTITUTION(),
         meta::identity_t<Numeric> end
             = std::numeric_limits<Numeric>::max PL_NO_MACRO_SUBSTITUTION())
-    -> meta::disable_if_t<std::is_same<meta::uncvref_t<Numeric>, bool>::value, Numeric>
+    -> meta::disable_if_t<std::is_same<meta::remove_cvref_t<Numeric>, bool>::value, Numeric>
     {
         return generateImpl<Numeric>(
             begin,
@@ -269,7 +269,7 @@ public:
     **/
     template <typename Bool>
     auto generate(double trueChance = 0.5)
-    -> std::enable_if_t<std::is_same<meta::uncvref_t<Bool>, bool>::value, bool>
+    -> std::enable_if_t<std::is_same<meta::remove_cvref_t<Bool>, bool>::value, bool>
     {
         std::bernoulli_distribution dist{ trueChance };
         return dist(m_urbg.get());

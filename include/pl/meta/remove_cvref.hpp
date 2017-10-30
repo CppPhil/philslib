@@ -25,11 +25,11 @@
  */
 
 /*!
- * \file uncvref.hpp
- * \brief Exports the uncvref meta function.
+ * \file remove_cvref.hpp
+ * \brief Exports the remove_cvref meta function.
 **/
-#ifndef INCG_PL_META_UNCVREF_HPP
-#define INCG_PL_META_UNCVREF_HPP
+#ifndef INCG_PL_META_REMOVE_CVREF_HPP
+#define INCG_PL_META_REMOVE_CVREF_HPP
 #include <type_traits> // std::remove_cv, std::remove_reference_t
 
 namespace pl
@@ -43,18 +43,18 @@ namespace meta
  * and will have its const and volatile type qualifiers removed.
 **/
 template <typename Type>
-struct uncvref
+struct remove_cvref
     : public std::remove_cv<std::remove_reference_t<Type>>
 {
 };
 
 /*!
  * \brief C++14 style meta function helper that is an alias of the nested type
- *        type of pl::uncvref. Reduces the necessity of the typename keyword
+ *        type of pl::remove_cvref. Reduces the necessity of the typename keyword
  *        in application code.
 **/
 template <typename Type>
-using uncvref_t = typename uncvref<Type>::type;
+using remove_cvref_t = typename remove_cvref<Type>::type;
 } // namespace meta
 } // namespace pl
-#endif // INCG_PL_META_UNCVREF_HPP
+#endif // INCG_PL_META_REMOVE_CVREF_HPP
