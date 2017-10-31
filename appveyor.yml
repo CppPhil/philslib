@@ -25,6 +25,7 @@ build_script:
   - cd ..
   # x86 Release
   - build.bat "%gen%" Release x86
+  - cd Release_x86
   - ctest --verbose .
   - cd ..
 
