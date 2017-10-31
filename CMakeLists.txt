@@ -18,7 +18,7 @@ elseif(CMAKE_CXX_COMPILER MATCHES ".*clang")
 endif()
 
 # Use 'c++latest' to enable [[nodiscard]] and [[fallthrough]] if MSVC is new enough to support it.
-if(MSVC_VERSION GREATER_EQUAL "1900")
+if(MSVC_VERSION GREATER_EQUAL "1911")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++latest")
 endif()
 
