@@ -9,7 +9,7 @@ environment:
 
 build_script:
   # x64 Debug
-  - build bat "%gen% Win64" Debug x64
+  - build.bat "%gen% Win64" Debug x64
   - cd Debug_x64
   - ctest --verbose .
   - cd ..
