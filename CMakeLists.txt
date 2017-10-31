@@ -17,6 +17,15 @@ elseif(CMAKE_CXX_COMPILER MATCHES ".*clang")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror -Weverything")
 endif()
 
+# Use 'c++latest' to enable [[nodiscard]] and [[fallthrough]] if MSVC is new enough to support it.
+if(MSVC_VERSION GREATER_EQUAL "1900")
+    if(CMAKE_CXX_FLAGS MATCHES "/std:c\+\+[a-zA-Z0-9]+")
+        string(REGEX_REPLACE "/std:c\+\+[a-zA-Z0-9]+" "/std:c++latest" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+    else()
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++latest")
+    endif()
+endif()
+
 # disable undesirable clang warnings
 if(CMAKE_CXX_COMPILER MATCHES ".*clang")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-c++1z-extensions -Wno-c++98-compat -Wno-weak-vtables -Wno-documentation-unknown-command -Wno-padded -Wno-c++98-c++11-compat-pedantic")

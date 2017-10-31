@@ -172,8 +172,13 @@
 #   endif
 #   define PL_PRINTF_FUNCTION(formatStrPos, varArgsPos) __attribute__((format (printf, formatStrPos, varArgsPos)))
 #elif PL_COMPILER == PL_COMPILER_MSVC
-#   define PL_FALLTHROUGH /* nothing */
-#   define PL_NODISCARD /* nothing */
+#   if PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(11, 9, 0)
+#       define PL_FALLTHROUGH [[fallthrough]];
+#       define PL_NODISCARD [[nodiscard]]
+#   else
+#       define PL_FALLTHROUGH /* nothing */
+#       define PL_NODISCARD /* nothing */
+#   endif
 #   define PL_PRINTF_FUNCTION(formatStrPos, varArgsPos) /* nothing */
 #elif PL_COMPILER == PL_COMPILER_ICC
 #   define PL_FALLTHROUGH /* nothing */
