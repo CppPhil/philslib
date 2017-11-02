@@ -207,7 +207,7 @@ public:
      * \warning Causes undefined behavior if 'pos' is out of bounds.
      * \note Constant complexity.
     **/
-    PL_NODISCARD constexpr reference operator[](size_type pos) noexcept
+    PL_NODISCARD reference operator[](size_type pos) noexcept
     {
         PL_DBG_CHECK_PRE(pos < size());
         return m_data[pos];

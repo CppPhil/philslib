@@ -489,8 +489,7 @@ doctest.h
 unittest
 
 ### TODO list ###
-phils_lib_todo.txt
-
+todo_list.txt
 
 ### Microsoft Visual Studio ###
 *.vcxproj
