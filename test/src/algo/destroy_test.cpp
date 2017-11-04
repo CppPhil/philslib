@@ -44,6 +44,8 @@
 
 namespace test
 {
+namespace
+{
 class DestroyTestType
 {
 public:
@@ -77,6 +79,7 @@ public:
         std::free(toBeFreed);
     }
 };
+} // anonymous namespace
 } // namespace test
 
 TEST_CASE("test_destroy_algorithms")
