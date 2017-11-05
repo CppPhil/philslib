@@ -30,7 +30,6 @@
 **/
 #ifndef INCG_PL_ALGO_SLIDE_HPP
 #define INCG_PL_ALGO_SLIDE_HPP
-#include "../annotations.hpp" // PL_IN
 #include <utility> // std::pair
 #include <algorithm> // std::rotate
 
@@ -64,9 +63,9 @@ namespace algo
 **/
 template <typename RandomAccessIterator>
 auto slide(
-    PL_IN const RandomAccessIterator &first,
-    PL_IN const RandomAccessIterator &last,
-    PL_IN const RandomAccessIterator &place)
+    RandomAccessIterator first,
+    RandomAccessIterator last,
+    RandomAccessIterator place)
 -> std::pair<RandomAccessIterator, RandomAccessIterator>
 {
     if (place < first) {

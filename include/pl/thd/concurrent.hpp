@@ -57,6 +57,13 @@ public:
     using this_type = Concurrent;
 
     /*!
+     * \brief Type alias for the template type parameter of 'Concurrent'.
+     *        Can be accessed to query the template type paramater
+     *        that was used for a given 'Concurrent'.
+    **/
+    using element_type = Type;
+
+    /*!
      * \brief Starts the underlying thread. The thread will remove and execute
      *        callables stored in the ThreadSafeQueue continuously.
      * \param value The object that the callables passed in the call operator

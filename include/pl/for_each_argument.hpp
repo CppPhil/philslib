@@ -53,11 +53,9 @@ namespace pl
 template <typename Callable, typename ...Args>
 Callable forEachArgument(Callable callable, PL_IN Args &&...args)
 {
-    static_cast<void>(
-        std::initializer_list<int>{
-            ((void)::pl::invoke(callable, std::forward<Args>(args)), 0)...
-        }
-    );
+    (void)std::initializer_list<int>{
+        ((void)::pl::invoke(callable, std::forward<Args>(args)), 0)...
+    };
 
     return callable;
 }
