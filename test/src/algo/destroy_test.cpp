@@ -33,6 +33,8 @@
 #if PL_COMPILER == PL_COMPILER_GCC
 #   pragma GCC diagnostic pop
 #endif // CR_COMPILER == CR_COMPILER_GCC
+#include "../../include/destroy_test_type.hpp" // pl::test::DestroyTestType
+#include "../../include/freeer.hpp" // pl::test::Freer
 #include "../../../include/pl/algo/destroy.hpp"
 #include "../../../include/pl/algo/destroy_at.hpp"
 #include "../../../include/pl/algo/destroy_n.hpp"
@@ -42,64 +44,24 @@
 #include <array> // std::array
 #include <new> // ::operator new
 
-namespace test
-{
-namespace
-{
-class DestroyTestType
-{
-public:
-    using this_type = DestroyTestType;
-
-    explicit DestroyTestType(bool *p)
-        : m_p{ p }
-    {
-    }
-
-    DestroyTestType(const this_type &) = default;
-
-    this_type &operator=(const this_type &) = default;
-
-    ~DestroyTestType()
-    {
-        *m_p = true;
-    }
-
-private:
-    bool *m_p;
-};
-
-class Freeer
-{
-public:
-    using this_type = Freeer;
-
-    void operator()(void *toBeFreed)
-    {
-        std::free(toBeFreed);
-    }
-};
-} // anonymous namespace
-} // namespace test
-
 TEST_CASE("test_destroy_algorithms")
 {
     static constexpr std::size_t size = 10U;
 
-    std::unique_ptr<unsigned char, test::Freeer> up{
+    std::unique_ptr<unsigned char, pl::test::Freeer> up{
         static_cast<unsigned char *>(
-            std::malloc(size * sizeof(test::DestroyTestType))),
-        test::Freeer{ }
+            std::malloc(size * sizeof(pl::test::DestroyTestType))),
+        pl::test::Freeer{ }
     };
 
-    auto *begin = reinterpret_cast<test::DestroyTestType *>(up.get());
+    auto *begin = reinterpret_cast<pl::test::DestroyTestType *>(up.get());
     auto *end   = begin + size;
 
     std::array<bool, size> ary{ };
     ary.fill(false);
 
     for (std::size_t i{ 0U }; i < size; ++i) {
-        ::new(static_cast<void *>(&begin[i])) test::DestroyTestType{ &ary[i] };
+        ::new(static_cast<void *>(&begin[i])) pl::test::DestroyTestType{ &ary[i] };
     }
 
     SUBCASE("test_destroy") {
