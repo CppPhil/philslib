@@ -48,6 +48,8 @@ void destroy_at(PL_OUT Ty *ptr)
 {
     PL_DBG_CHECK_PRE(ptr != nullptr);
 
+    (void)ptr; // suppress msvc warning about parameter 'ptr' being 'unused'.
+
     ptr->~Ty();
 }
 } // namespace algo

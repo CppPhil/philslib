@@ -22,6 +22,9 @@ if(MSVC)
     if(MSVC_VERSION GREATER_EQUAL "1911")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++latest")
     endif()
+    
+    # Treat warnings as errors when using msvc.
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /WX")
 endif()
 
 # disable undesirable clang warnings
