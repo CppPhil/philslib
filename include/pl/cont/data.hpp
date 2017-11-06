@@ -32,12 +32,57 @@
 #define INCG_PL_CONT_DATA_HPP
 #include "../annotations.hpp" // PL_IN
 #include <cstddef> // std::size_t
+#include <string> // std::basic_string
 #include <initializer_list> // std::initializer_list
+#include <type_traits> // std::true_type, std::false_type
 
 namespace pl
 {
 namespace cont
 {
+namespace detail
+{
+/* Workaround to get a CharT * for a non const basic_string,
+ * rather than a const CharT * with pre C++17 implementations.
+**/
+
+template <typename CharT, typename Traits, typename Allocator>
+std::true_type isBasicString(
+    const std::basic_string<CharT, Traits, Allocator> &);
+
+std::false_type isBasicString(...);
+
+template <typename CharT, typename Traits, typename Allocator>
+constexpr CharT *dataImpl(
+    PL_IN std::basic_string<CharT, Traits, Allocator> &basicString,
+    std::true_type)
+{
+    return &basicString[0];
+}
+
+template <typename CharT, typename Traits, typename Allocator>
+constexpr const CharT *dataImpl(
+    PL_IN const std::basic_string<CharT, Traits, Allocator> &basicString,
+    std::true_type)
+{
+    return basicString.data();
+}
+
+template <typename Container>
+constexpr auto dataImpl(PL_IN Container &container, std::false_type)
+    -> decltype(container.data())
+{
+    return container.data();
+}
+
+template <typename Container>
+constexpr auto dataImpl(PL_IN const Container &container, std::false_type)
+    -> decltype(container.data())
+{
+    return container.data();
+}
+} // namespace detail
+
 /*!
  * \brief Returns a pointer to the block of memory containing the elements of
  *        the container.
@@ -47,24 +92,11 @@ namespace cont
  * \warning Do not dereference the pointer returned if 'container' is empty.
 **/
 template <typename Container>
-constexpr auto data(PL_IN Container &container) -> decltype(container.data())
+constexpr auto data(PL_IN Container &container) -> decltype(auto)
 {
-    return container.data();
-}
-
-/*!
- * \brief Returns a pointer to the block of memory containing the elements
- *        of the container.
- * \param container The container to call .data() on.
- * \return A pointer to the block of memory containing the elements
- *         of the container.
- * \warning Do not dereference the pointer returned if 'container' is empty.
- * \note This is the const overload.
-**/
-template <typename Container>
-constexpr auto data(PL_IN const Container &container) -> decltype(container.data())
-{
-    return container.data();
+    return ::pl::cont::detail::dataImpl(
+        container,
+        decltype(::pl::cont::detail::isBasicString(container)){ });
 }
 
 /*!
