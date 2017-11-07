@@ -29,16 +29,16 @@
 #include "../../include/pl/source_line.hpp" // PL_SOURCE_LINE
 
 /*!
- * \def PL_TEST_STATIC_ASSERT(condition)
+ * \def PL_TEST_STATIC_ASSERT(...)
  * \brief Test macro to be used in tests to check a condition at compile time.
  *        Will generate a compilation error including the file, line and
- *        expression where the condition 'condition' failed.
+ *        expression where the condition passed in failed.
  *        The error message will also include the expression used for
- *        'condition' as well.
+ *        the PL_TEST_STATIC_ASSERT macro as well.
 **/
 
-#define PL_TEST_STATIC_ASSERT(condition) \
-    static_assert((condition), "static_assert failed in file: " __FILE__ \
+#define PL_TEST_STATIC_ASSERT(...) \
+    static_assert((__VA_ARGS__), "static_assert failed in file: " __FILE__ \
                                ", line: " PL_SOURCE_LINE \
-                               ", expression: " #condition);
+                               ", expression: " #__VA_ARGS__);
 #endif // INCG_PL_TEST_STATIC_ASSERT_HPP

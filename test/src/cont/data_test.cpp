@@ -49,16 +49,10 @@ TEST_CASE("std_array_data_test")
     std::array<int, size> array1{ { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 } };
     const std::array<int, size> array2{ { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 } };
 
-    static constexpr bool val1{
-        std::is_same<decltype(pl::cont::data(array1)), int *>::value
-    };
-
-    static constexpr bool val2{
-        std::is_same<decltype(pl::cont::data(array2)), const int *>::value
-    };
-
-    PL_TEST_STATIC_ASSERT(val1);
-    PL_TEST_STATIC_ASSERT(val2);
+    PL_TEST_STATIC_ASSERT(
+        std::is_same<decltype(pl::cont::data(array1)), int *>::value);
+    PL_TEST_STATIC_ASSERT(
+        std::is_same<decltype(pl::cont::data(array2)), const int *>::value);
 
     CHECK(pl::cont::data(array1) == array1.data());
     CHECK(pl::cont::data(array2) == array2.data());
@@ -69,16 +63,10 @@ TEST_CASE("string_data_test")
     std::string string1{ "Hello" };
     const std::string string2{ "World" };
 
-    static constexpr bool val1{
-        std::is_same<decltype(pl::cont::data(string1)), char *>::value
-    };
-
-    static constexpr bool val2{
-        std::is_same<decltype(pl::cont::data(string2)), const char *>::value
-    };
-
-    PL_TEST_STATIC_ASSERT(val1);
-    PL_TEST_STATIC_ASSERT(val2);
+    PL_TEST_STATIC_ASSERT(
+        std::is_same<decltype(pl::cont::data(string1)), char *>::value);
+    PL_TEST_STATIC_ASSERT(
+        std::is_same<decltype(pl::cont::data(string2)), const char *>::value);
 
     CHECK(pl::cont::data(string1) == &string1[0]);
     CHECK(pl::cont::data(string2) == string2.data());
@@ -89,16 +77,10 @@ TEST_CASE("wstring_data_test")
     std::wstring wstring1{ L"Test" };
     const std::wstring wstring2{ L"another test" };
 
-    static constexpr bool val1{
-        std::is_same<decltype(pl::cont::data(wstring1)), wchar_t *>::value
-    };
-
-    static constexpr bool val2{
-        std::is_same<decltype(pl::cont::data(wstring2)), const wchar_t *>::value
-    };
-
-    PL_TEST_STATIC_ASSERT(val1);
-    PL_TEST_STATIC_ASSERT(val2);
+    PL_TEST_STATIC_ASSERT(
+        std::is_same<decltype(pl::cont::data(wstring1)), wchar_t *>::value);
+    PL_TEST_STATIC_ASSERT(
+        std::is_same<decltype(pl::cont::data(wstring2)), const wchar_t *>::value);
 
     CHECK(pl::cont::data(wstring1) == &wstring1[0]);
     CHECK(pl::cont::data(wstring2) == wstring2.data());
@@ -109,16 +91,10 @@ TEST_CASE("vector_data_test")
     std::vector<double> vector1{ 1.1, 1.2, 1.3 };
     const std::vector<double> vector2{ 5.4, 5.3 };
 
-    static constexpr bool val1{
-        std::is_same<decltype(pl::cont::data(vector1)), double *>::value
-    };
-
-    static constexpr bool val2{
-        std::is_same<decltype(pl::cont::data(vector2)), const double *>::value
-    };
-
-    PL_TEST_STATIC_ASSERT(val1);
-    PL_TEST_STATIC_ASSERT(val2);
+    PL_TEST_STATIC_ASSERT(
+        std::is_same<decltype(pl::cont::data(vector1)), double *>::value);
+    PL_TEST_STATIC_ASSERT(
+        std::is_same<decltype(pl::cont::data(vector2)), const double *>::value);
 
     CHECK(pl::cont::data(vector1) == vector1.data());
     CHECK(pl::cont::data(vector2) == vector2.data());
@@ -129,16 +105,10 @@ TEST_CASE("initializer_list_data_test")
     std::initializer_list<int> il1{ 1, 2, 3 };
     const std::initializer_list<int> il2{ 1, 2, 3 };
 
-    static constexpr bool val1{
-        std::is_same<decltype(pl::cont::data(il1)), const int *>::value
-    };
-
-    static constexpr bool val2{
-        std::is_same<decltype(pl::cont::data(il2)), const int *>::value
-    };
-
-    PL_TEST_STATIC_ASSERT(val1);
-    PL_TEST_STATIC_ASSERT(val2);
+    PL_TEST_STATIC_ASSERT(
+        std::is_same<decltype(pl::cont::data(il1)), const int *>::value);
+    PL_TEST_STATIC_ASSERT(
+        std::is_same<decltype(pl::cont::data(il2)), const int *>::value);
 
     CHECK(pl::cont::data(il1) == &*il1.begin());
     CHECK(pl::cont::data(il2) == &*il2.begin());
@@ -152,16 +122,10 @@ TEST_CASE("c_array_data_test")
         'W', 'o', 'r', 'l', 'd', '\0'
     };
 
-    static constexpr bool val1{
-        std::is_same<decltype(pl::cont::data(cArray1)), char *>::value
-    };
-
-    static constexpr bool val2{
-        std::is_same<decltype(pl::cont::data(cArray2)), const char *>::value
-    };
-
-    PL_TEST_STATIC_ASSERT(val1);
-    PL_TEST_STATIC_ASSERT(val2);
+    PL_TEST_STATIC_ASSERT(
+        std::is_same<decltype(pl::cont::data(cArray1)), char *>::value);
+    PL_TEST_STATIC_ASSERT(
+        std::is_same<decltype(pl::cont::data(cArray2)), const char *>::value);
 
     CHECK(pl::cont::data(cArray1) == &cArray1[0]);
     CHECK(pl::cont::data(cArray2) == &cArray2[0]);

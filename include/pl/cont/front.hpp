@@ -32,7 +32,7 @@
 #ifndef INCG_PL_CONT_FRONT_HPP
 #define INCG_PL_CONT_FRONT_HPP
 #include "../annotations.hpp" // PL_IN
-#include "../assert.h" // PL_DBG_CHECK_PRE
+#include "../assert.hpp" // PL_DBG_CHECK_PRE
 #include <ciso646> // not
 #include <cstddef> // std::size_t
 
