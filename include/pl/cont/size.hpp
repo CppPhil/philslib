@@ -45,7 +45,7 @@ namespace cont
  * \return The size of the container passed into the parameter.
 **/
 template <typename Cont>
-constexpr auto size(PL_IN Cont &cont) -> decltype(cont.size())
+constexpr auto size(PL_IN const Cont &cont) -> decltype(cont.size())
 {
     return cont.size();
 }
@@ -56,7 +56,7 @@ constexpr auto size(PL_IN Cont &cont) -> decltype(cont.size())
  * \return The size of the C-Array passed into the parameter is returned.
 **/
 template <typename Type, std::size_t Size>
-constexpr std::size_t size(PL_IN Type (&arr)[Size]) noexcept
+constexpr std::size_t size(PL_IN const Type (&arr)[Size]) noexcept
 {
     (void)arr;
     return Size;
