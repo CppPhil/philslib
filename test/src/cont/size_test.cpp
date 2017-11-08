@@ -269,7 +269,9 @@ TEST_CASE("initializer_list_size_test")
     const std::initializer_list<const char *> initList2{
         "This", "is", "some", "text."
     };
+    const std::initializer_list<void *> initList3{ };
 
     CHECK(pl::cont::size(initList1) == 2U);
     CHECK(pl::cont::size(initList2) == 4U);
+    CHECK(pl::cont::size(initList3) == 0U);
 }
