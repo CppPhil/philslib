@@ -80,7 +80,7 @@ template <typename DesiredType = void, typename ...Args>
 constexpr detail::ReturnType<DesiredType, Args ...> makeArray(
     PL_IN Args &&...args)
 {
-    return { std::forward<Args>(args)... };
+    return { { std::forward<Args>(args)... } };
 }
 } // namespace cont
 } // namespace pl
