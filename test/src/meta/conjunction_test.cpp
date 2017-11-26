@@ -49,17 +49,13 @@ template <typename Ty, typename ...Args>
 auto foo(Ty &&, Args &&...)
     -> std::enable_if_t<
         pl::meta::conjunction<std::is_same<Ty, Args> ...>::value,
-        std::true_type>
-{
-}
+        std::true_type>;
 
 template <typename Ty, typename ...Args>
 auto foo(Ty &&, Args &&...)
     -> std::enable_if_t<
         not pl::meta::conjunction<std::is_same<Ty, Args> ...>::value,
-        std::false_type>
-{
-}
+        std::false_type>;
 } // anonymous namespace
 } // namespace test
 } // namespace pl
