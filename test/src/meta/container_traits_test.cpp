@@ -119,4 +119,3 @@ TEST_CASE("container_traits_test")
 
     CHECK_UNARY(true);
 }
-
