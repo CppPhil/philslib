@@ -50,8 +50,8 @@ struct remove_cvref
 
 /*!
  * \brief C++14 style meta function helper that is an alias of the nested type
- *        type of pl::remove_cvref. Reduces the necessity of the typename keyword
- *        in application code.
+ *        type of pl::meta::remove_cvref. Reduces the necessity of the typename
+ *        keyword in application code.
 **/
 template <typename Type>
 using remove_cvref_t = typename remove_cvref<Type>::type;
