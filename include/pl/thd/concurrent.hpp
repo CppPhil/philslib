@@ -125,7 +125,8 @@ public:
     template <typename Callable>
     auto operator()(PL_IN Callable &&callable)
     {
-        auto p = std::make_shared<std::promise<decltype(callable(m_value))>>();
+        auto p = std::make_shared<
+            std::promise<decltype(::pl::invoke(callable, m_value))>>();
 
         auto ret = p->get_future();
 

@@ -94,6 +94,7 @@ file(GLOB TEST_SOURCES
      test/src/algo/*.cpp
      test/src/cont/*.cpp
      test/src/meta/*.cpp
+     test/src/thd/*.cpp
      test/src/*.cpp)
 
 add_executable(${UNIT_TEST_NAME} 
