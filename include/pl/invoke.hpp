@@ -31,6 +31,7 @@
 #ifndef INCG_PL_INVOKE_HPP
 #define INCG_PL_INVOKE_HPP
 #include "annotations.hpp" // PL_IN
+#include "compiler.hpp" // PL_COMPILER, PL_COMPILER_MSVC
 #include <ciso646> // not
 #include <type_traits> // std::is_member_pointer, std::decay_t, std::true_type, std::false_type
 #include <functional> // std::mem_fn
@@ -71,6 +72,10 @@ auto invokeImpl(
 }
 } // namespace detail
 
+#if PL_COMPILER == PL_COMPILER_MSVC
+#   pragma warning(push)
+#   pragma warning(disable:4505) // unreferenced local function has been removed
+#endif // PL_COMPILER == PL_COMPILER_MSVC
 /*!
  * \brief Calls 'callable' with 'args'.
  * \param callable The callable object to be invoked.
@@ -91,5 +96,8 @@ auto invoke(PL_IN Callable &&callable, PL_IN Args &&...args)
     return ::pl::detail::invokeImpl(typename std::is_member_pointer<std::decay_t<Callable>>::type{ },
                                     std::forward<Callable>(callable), std::forward<Args>(args) ...);
 }
+#if PL_COMPILER == PL_COMPILER_MSVC
+#   pragma warning(pop)
+#endif // PL_COMPILER == PL_COMPILER_MSVC
 } // namespace pl
 #endif // INCG_PL_INVOKE_HPP
