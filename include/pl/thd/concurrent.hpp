@@ -159,6 +159,10 @@ private:
         p.set_value(::pl::invoke(callable, ty));
     }
 
+#if PL_COMPILER == PL_COMPILER_MSVC
+#   pragma warning(push)
+#   pragma warning(disable:4702) // unreachable code
+#endif // PL_COMPILER == PL_COMPILER_MSVC
     /*!
      * \brief Invokes the callable with ty and sets the result to the promise.
      * \note This is the overload that handles the void case, as void is not
@@ -170,16 +174,12 @@ private:
         PL_IN Callable &callable,
         PL_INOUT Ty &ty)
     {
-#if PL_COMPILER == PL_COMPILER_MSVC
-#   pragma warning(push)
-#   pragma warning(disable:4702) // unreachable code
-#endif // PL_COMPILER == PL_COMPILER_MSVC
         ::pl::invoke(callable, ty);
         p.set_value();
+    }
 #if PL_COMPILER == PL_COMPILER_MSVC
 #   pragma warning(pop)
 #endif // PL_COMPILER == PL_COMPILER_MSVC
-    }
 
     Type m_value;
     concurrent_queue m_q;
