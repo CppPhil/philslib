@@ -33,6 +33,7 @@
 #ifndef INCG_PL_THD_CONCURRENT_HPP
 #define INCG_PL_THD_CONCURRENT_HPP
 #include "../annotations.hpp" // PL_IN, PL_OUT, PL_INOUT
+#include "../compiler.hpp" // PL_COMPILER, PL_COMPILER_MSVC
 #include "thread_safe_queue.hpp" // pl::ThreadSafeQueue
 #include "../invoke.hpp" // pl::invoke
 #include <functional> // std::function
@@ -169,8 +170,15 @@ private:
         PL_IN Callable &callable,
         PL_INOUT Ty &ty)
     {
+#if PL_COMPILER == PL_COMPILER_MSVC
+#   pragma warning(push)
+#   pragma warning(disable:4702) // unreachable code
+#endif // PL_COMPILER == PL_COMPILER_MSVC
         ::pl::invoke(callable, ty);
         p.set_value();
+#if PL_COMPILER == PL_COMPILER_MSVC
+#   pragma warning(pop)
+#endif // PL_COMPILER == PL_COMPILER_MSVC
     }
 
     Type m_value;
