@@ -60,10 +60,9 @@ TEST_CASE("concurrent_test")
         concurrent(&std::vector<int>::size)
     };
 
-    std::future<int> fut4{
+    std::future<void> fut4{
         concurrent([](std::vector<int> &) {
             throw std::logic_error{ "test error" };
-            return 0;
         })
     };
 
