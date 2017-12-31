@@ -34,6 +34,7 @@
 #include <cstddef> // std::size_t
 #include <string> // std::basic_string
 #include <initializer_list> // std::initializer_list
+#include <memory> // std::addressof
 #include <type_traits> // std::true_type, std::false_type
 
 namespace pl
@@ -57,7 +58,7 @@ constexpr CharT *dataImpl(
     PL_IN std::basic_string<CharT, Traits, Allocator> &basicString,
     std::true_type)
 {
-    return &basicString[0];
+    return std::addressof(basicString[0]);
 }
 
 template <typename CharT, typename Traits, typename Allocator>
