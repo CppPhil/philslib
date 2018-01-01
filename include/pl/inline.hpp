@@ -50,10 +50,10 @@
 #   define PL_ALWAYS_INLINE __attribute__((always_inline)) inline
 #   define PL_NEVER_INLINE __attribute__((noinline))
 #elif PL_COMPILER == PL_COMPILER_CLANG
-#   define PL_ALWAYS_INLINE __attribute__((always_inline))
+#   define PL_ALWAYS_INLINE __attribute__((always_inline)) inline
 #   define PL_NEVER_INLINE __attribute__((noinline))
 #elif PL_COMPILER == PL_COMPILER_ICC
-#   define PL_ALWAYS_INLINE __attribute__((always_inline))
+#   define PL_ALWAYS_INLINE __attribute__((always_inline)) inline
 #   define PL_NEVER_INLINE __attribute__((noinline))
 #elif PL_COMPILER == PL_COMPILER_MSVC
 #   define PL_ALWAYS_INLINE __forceinline
