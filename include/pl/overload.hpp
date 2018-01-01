@@ -32,8 +32,8 @@
 #ifndef INCG_PL_OVERLOAD_HPP
 #define INCG_PL_OVERLOAD_HPP
 #include "annotations.hpp" // PL_IN
+#include "meta/remove_cvref.hpp" // pl::meta::remove_cvref_t
 #include <utility> // std::forward
-#include <type_traits> // std::remove_reference_t
 
 namespace pl
 {
@@ -99,8 +99,9 @@ auto overload(PL_IN Lambdas &&...lambdas) -> decltype(auto)
     static_assert(sizeof...(Lambdas) > 0,
                   "You must supply at least one argument to pl::overload");
 
-    return Overloaded<std::remove_reference_t<Lambdas> ...>{
-               std::forward<Lambdas>(lambdas) ... };
+    return Overloaded<meta::remove_cvref_t<Lambdas> ...>{
+               std::forward<Lambdas>(lambdas) ...
+    };
 }
 } // namespace pl
 #endif // INCG_PL_OVERLOAD_HPP
