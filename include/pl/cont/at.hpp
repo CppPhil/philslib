@@ -26,8 +26,8 @@
 
 /*!
  * \file at.hpp
- * \brief Exports a bounds checked index based interface for containers,
- *        C-Arrays and std::initializer_lists.
+ * \brief Exports a bounds checked index based interface for accessing
+ *        containers, C-Arrays and std::initializer_lists.
 **/
 #ifndef INCG_PL_CONT_AT_HPP
 #define INCG_PL_CONT_AT_HPP
