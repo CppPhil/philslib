@@ -34,7 +34,6 @@
 #   pragma GCC diagnostic pop
 #endif // CR_COMPILER == CR_COMPILER_GCC
 #include "../../../include/pl/cont/empty.hpp" // pl::cont::empty
-#include <ciso646> // not
 #include <cstddef> // std::size_t
 #include <vector> // std::vector
 #include <array> // std::array
@@ -54,10 +53,7 @@ TEST_CASE("empty_test")
     const int ary[]{ 1, 2, 3, 4, 5 };
     const int ary2[]{ 1 };
 
-    const std::initializer_list<void *> il{
-        nullptr,
-        reinterpret_cast<void *>(0xDEADC0DE)
-    };
+    const std::initializer_list<void *> il{ nullptr };
 
     const std::initializer_list<int> il2{ };
 
