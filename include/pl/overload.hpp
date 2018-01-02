@@ -94,13 +94,14 @@ public:
  * \note The parameter list may not be empty.
 **/
 template <typename ...Lambdas>
-auto overload(PL_IN Lambdas &&...lambdas) -> decltype(auto)
+auto overload(PL_IN Lambdas &&...lambdas)
 {
-    static_assert(sizeof...(Lambdas) > 0,
-                  "You must supply at least one argument to pl::overload");
+    static_assert(
+        sizeof...(Lambdas) > 0,
+        "You must supply at least one argument to pl::overload");
 
     return Overloaded<meta::remove_cvref_t<Lambdas> ...>{
-               std::forward<Lambdas>(lambdas) ...
+        std::forward<Lambdas>(lambdas) ...
     };
 }
 } // namespace pl
