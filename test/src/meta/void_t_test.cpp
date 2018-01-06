@@ -69,7 +69,7 @@ struct PostfixIncrementable
 {
 };
 
-PostfixIncrementable operator++(PostfixIncrementable& a, int) noexcept
+PostfixIncrementable operator++(PostfixIncrementable &a, int) noexcept
 {
     return a;
 }
