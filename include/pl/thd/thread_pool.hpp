@@ -124,7 +124,7 @@ public:
     **/
     template <typename Callable, typename ...Args>
     PL_NODISCARD auto addTask(Callable task, Args ...args)
-    -> std::future<decltype(task(args...))>
+    -> std::future<decltype(std::bind(task, args ...)())>
     {
         // add the task using a priority of 0.
         return addTask(static_cast<std::uint8_t>(0U), task, args...);
@@ -141,7 +141,8 @@ public:
      *        the arguments (args) passed in. This task will be added to the
      *        underlying priority queue using the priority passed.
      * \param args The arguments to call the task with.
-     * \return Returns a std::future to the result of calling task(args...).
+     * \return Returns a std::future to the result of invoking the task with
+     *         the arguments supplied.
      *         The std::future can be joined and the result be extracted using
      *         .get(). The std::future returned may hold an exception if an
      *         exception occurred while running the task.
@@ -157,15 +158,18 @@ public:
     **/
     template <typename Callable, typename ...Args>
     PL_NODISCARD auto addTask(std::uint8_t prio, Callable task, Args ...args)
-    -> std::future<decltype(task(args...))>
+    -> std::future<decltype(std::bind(task, args ...)())>
     {
         // return type for the Executor template
-        using Ret = decltype(task(args...));
+        using Ret = decltype(std::bind(task, args ...)());
 
         // lock the mutex, shared data is going to be accessed
         std::unique_lock<std::mutex> lock{ m_mutex };
-        auto t = std::make_shared<Executor<decltype(std::bind(task, args...)), Ret>>
-            (std::bind(task, args...), prio);
+        auto t = std::make_shared<Executor<
+                    decltype(std::bind(task, args ...)), Ret>>(
+            std::bind(task, args...), 
+            prio);
+            
         m_tasksShared.push(t); // add the task to the queue.
         m_cv.notify_one(); // wake one thread
         return t->getResult().get_future(); // return the future back to caller.
