@@ -54,7 +54,7 @@ If "%2"=="Release" (
     )
     
     cmake -G %1 -DCMAKE_BUILD_TYPE=Release ..
-    msbuild Project.sln /p:Configuration=Release /p:Platform="%platformStr%" /maxcpucount
+    msbuild Project.sln /p:Configuration=Release;Platform="%platformStr%" /maxcpucount
     cd ..
 )
 
