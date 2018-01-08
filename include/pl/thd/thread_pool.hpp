@@ -32,16 +32,18 @@
 #define INCG_PL_THD_THREAD_POOL_HPP
 #include "../annotations.hpp" // PL_IN, PL_NODISCARD
 #include "../byte.hpp" // pl::Byte
+#include "../apply.hpp" // pl::apply
+#include <cstddef> // std::size_t
+#include <cstdint> // std::uint8_t
+#include <utility> // std::move
 #include <memory> // std::shared_ptr, std::unique_ptr
-#include <functional> // std::bind
 #include <thread> // std::thread
 #include <mutex> // std::mutex
 #include <vector> // std::vector
 #include <condition_variable> // std::condition_variable
 #include <future> // std::future, std::promise
 #include <queue> // std::priority_queue
-#include <cstddef> // std::size_t
-#include <cstdint> // std::uint8_t
+#include <tuple> // std::make_tuple
 
 namespace pl
 {
@@ -124,7 +126,6 @@ public:
     **/
     template <typename Callable, typename ...Args>
     PL_NODISCARD auto addTask(Callable task, Args ...args)
-    -> std::future<decltype(std::bind(task, args ...)())>
     {
         // add the task using a priority of 0.
         return addTask(static_cast<std::uint8_t>(0U), task, args...);
@@ -158,18 +159,21 @@ public:
     **/
     template <typename Callable, typename ...Args>
     PL_NODISCARD auto addTask(std::uint8_t prio, Callable task, Args ...args)
-    -> std::future<decltype(std::bind(task, args ...)())>
     {
+        auto invoker
+            = [t = std::move(task), tup = std::make_tuple(std::move(args) ...)] {
+            return ::pl::apply(std::move(t), std::move(tup));
+        };
+
         // return type for the Executor template
-        using Ret = decltype(std::bind(task, args ...)());
+        using Ret = decltype(invoker());
 
         // lock the mutex, shared data is going to be accessed
         std::unique_lock<std::mutex> lock{ m_mutex };
-        auto t = std::make_shared<Executor<
-                    decltype(std::bind(task, args ...)), Ret>>(
-            std::bind(task, args...), 
+        auto t = std::make_shared<Executor<decltype(invoker), Ret>>(
+            std::move(invoker),
             prio);
-            
+
         m_tasksShared.push(t); // add the task to the queue.
         m_cv.notify_one(); // wake one thread
         return t->getResult().get_future(); // return the future back to caller.
