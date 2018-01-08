@@ -30,6 +30,7 @@
 **/
 #ifndef INCG_PL_APPLY_HPP
 #define INCG_PL_APPLY_HPP
+#include "compiler.hpp" // PL_COMPILER, PL_COMPILER_MSVC
 #include "annotations.hpp" // PL_IN
 #include "invoke.hpp" // pl::invoke
 #include <cstddef> // std::size_t
@@ -37,6 +38,10 @@
 #include <tuple> // std::get, std::tuple_size
 #include <type_traits> // std::decay_t
 
+#if PL_COMPILER == PL_COMPILER_MSVC
+#   pragma warning(push)
+#   pragma warning(disable:4100) // unreferenced formal parameter
+#endif // PL_COMPILER == PL_COMPILER_MSVC
 namespace pl
 {
 namespace detail
@@ -76,4 +81,7 @@ constexpr auto apply(
         std::make_index_sequence<std::tuple_size<std::decay_t<TupleLike>>::value>{ });
 }
 } // namespace pl
+#if PL_COMPILER == PL_COMPILER_MSVC
+#   pragma warning(pop)
+#endif // PL_COMPILER == PL_COMPILER_MSVC
 #endif // INCG_PL_APPLY_HPP
