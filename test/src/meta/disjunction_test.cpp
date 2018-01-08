@@ -28,11 +28,11 @@
 #if PL_COMPILER == PL_COMPILER_GCC
 #   pragma GCC diagnostic push
 #   pragma GCC diagnostic ignored "-Wmissing-noreturn"
-#endif // CR_COMPILER == CR_COMPILER_GCC
+#endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
 #   pragma GCC diagnostic pop
-#endif // CR_COMPILER == CR_COMPILER_GCC
+#endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
 #include "../../../include/pl/meta/disjunction.hpp" // pl::meta::disjunction
 #include <ciso646> // not

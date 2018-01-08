@@ -28,11 +28,11 @@
 #if PL_COMPILER == PL_COMPILER_GCC
 #   pragma GCC diagnostic push
 #   pragma GCC diagnostic ignored "-Wmissing-noreturn"
-#endif // CR_COMPILER == CR_COMPILER_GCC
+#endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
 #   pragma GCC diagnostic pop
-#endif // CR_COMPILER == CR_COMPILER_GCC
+#endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
 #include "../../../include/pl/meta/nested_types.hpp" // pl::meta::value_type, pl::meta::allocator_type, pl::meta::difference_type, pl::meta::size_type, pl::meta::key_type, pl::meta::mapped_type, pl::meta::element_type, pl::meta::deleter_type, pl::meta::container_type
 #include <memory> // std::unique_ptr

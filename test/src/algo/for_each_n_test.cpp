@@ -28,11 +28,11 @@
 #if PL_COMPILER == PL_COMPILER_GCC
 #   pragma GCC diagnostic push
 #   pragma GCC diagnostic ignored "-Wmissing-noreturn"
-#endif // CR_COMPILER == CR_COMPILER_GCC
+#endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
 #   pragma GCC diagnostic pop
-#endif // CR_COMPILER == CR_COMPILER_GCC
+#endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../../include/pl/algo/for_each_n.hpp" // pl::algo::for_each_n
 #include <iterator> // std::begin, std::end
 #include <vector> // std::vector

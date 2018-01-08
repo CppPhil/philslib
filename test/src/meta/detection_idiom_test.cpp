@@ -28,11 +28,11 @@
 #if PL_COMPILER == PL_COMPILER_GCC
 #   pragma GCC diagnostic push
 #   pragma GCC diagnostic ignored "-Wmissing-noreturn"
-#endif // CR_COMPILER == CR_COMPILER_GCC
+#endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
 #   pragma GCC diagnostic pop
-#endif // CR_COMPILER == CR_COMPILER_GCC
+#endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
 #include "../../../include/pl/meta/detection_idiom.hpp" // pl::meta::nonesuch, pl::meta::is_detected, pl::meta::detected_t, pl::meta::detected_or, pl::meta::detected_or_t, pl::meta::is_detected_exact, pl::meta::is_detected_convertible
 #include <ciso646> // not
@@ -61,13 +61,13 @@ struct CopyAssignableWeirdReturnType
 #if PL_COMPILER == PL_COMPILER_GCC
 #   pragma GCC diagnostic push
 #   pragma GCC diagnostic ignored "-Weffc++"
-#endif // CR_COMPILER == CR_COMPILER_GCC
+#endif // PL_COMPILER == PL_COMPILER_GCC
     void operator=(const CopyAssignableWeirdReturnType &)
     {
     }
 #if PL_COMPILER == PL_COMPILER_GCC
 #   pragma GCC diagnostic pop
-#endif // CR_COMPILER == CR_COMPILER_GCC
+#endif // PL_COMPILER == PL_COMPILER_GCC
 };
 
 struct NotCopyAssignable

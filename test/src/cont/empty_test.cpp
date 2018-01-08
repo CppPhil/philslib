@@ -28,11 +28,11 @@
 #if PL_COMPILER == PL_COMPILER_GCC
 #   pragma GCC diagnostic push
 #   pragma GCC diagnostic ignored "-Wmissing-noreturn"
-#endif // CR_COMPILER == CR_COMPILER_GCC
+#endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
 #   pragma GCC diagnostic pop
-#endif // CR_COMPILER == CR_COMPILER_GCC
+#endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../../include/pl/cont/empty.hpp" // pl::cont::empty
 #include <cstddef> // std::size_t
 #include <vector> // std::vector
