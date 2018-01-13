@@ -35,7 +35,7 @@
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../include/pl/alloca.hpp" // PL_ALLOCA
 #include "../../include/pl/byte.hpp" // pl::Byte
-#include <cstddef> // std::size_t
+#include <cstddef> // std::size_t, std::ptrdiff_t
 #include <iterator> // std::distance
 #include <algorithm> // std::fill, std::all_of
 
@@ -55,7 +55,7 @@ TEST_CASE("alloca_test")
     auto *begin = static_cast<pl::Byte *>(memory);
     auto *end   = begin + byteCount;
 
-    REQUIRE(std::distance(begin, end) == byteCount);
+    REQUIRE(std::distance(begin, end) == static_cast<std::ptrdiff_t>(byteCount));
 
     std::fill(begin, end, fillByte);
 
