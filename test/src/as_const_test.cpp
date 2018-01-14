@@ -24,21 +24,52 @@
  * For more information, please refer to <http://unlicense.org/>
  */
 
-#ifndef INCG_PL_TEST_STATIC_ASSERT_HPP
-#define INCG_PL_TEST_STATIC_ASSERT_HPP
-#include "../../include/pl/source_line.hpp" // PL_SOURCE_LINE
+#include "../../include/pl/compiler.hpp"
+#if PL_COMPILER == PL_COMPILER_GCC
+#   pragma GCC diagnostic push
+#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#endif // PL_COMPILER == PL_COMPILER_GCC
+#include "../doctest.h"
+#if PL_COMPILER == PL_COMPILER_GCC
+#   pragma GCC diagnostic pop
+#endif // PL_COMPILER == PL_COMPILER_GCC
+#include "../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
+#include "../../include/pl/as_const.hpp" // pl::asConst
+#include <string> // std::string
+#include <type_traits> // std::remove_reference_t, std::is_const, std::is_same
 
-/*!
- * \def PL_TEST_STATIC_ASSERT(...)
- * \brief Test macro to be used in tests to check a condition at compile time.
- *        Will generate a compilation error including the file, line and
- *        expression where the condition passed in failed.
- *        The error message will also include the expression used for
- *        the PL_TEST_STATIC_ASSERT macro as well.
-**/
+namespace pl
+{
+namespace test
+{
+namespace
+{
+class TestType
+{
+public:
+    std::string f()
+    {
+        return "non-const";
+    }
 
-#define PL_TEST_STATIC_ASSERT(...) \
-    static_assert((__VA_ARGS__), "static_assert failed in file: " __FILE__ \
-                               ", line: " PL_SOURCE_LINE \
-                               ", expression: " #__VA_ARGS__)
-#endif // INCG_PL_TEST_STATIC_ASSERT_HPP
+    std::string f() const
+    {
+        return "const";
+    }
+};
+} // anonymous namespace
+} // namespace test
+} // namespace pl
+
+TEST_CASE("as_const_test")
+{
+    pl::test::TestType testObj{ };
+
+    PL_TEST_STATIC_ASSERT(std::is_const<
+        std::remove_reference_t<decltype(pl::asConst(testObj))>>::value);
+    PL_TEST_STATIC_ASSERT(std::is_same<
+        decltype(pl::asConst(testObj)), const pl::test::TestType &>::value);
+
+    CHECK(testObj.f() == "non-const");
+    CHECK(pl::asConst(testObj).f() == "const");
+}

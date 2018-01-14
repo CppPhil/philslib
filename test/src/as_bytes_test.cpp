@@ -57,6 +57,9 @@ TEST_CASE("as_bytes_buffer_test")
     const pl::Byte *p1{ pl::asBytes(buf1) };
     pl::Byte *p2{ pl::asBytes(buf2) };
 
+    REQUIRE(p1 != nullptr);
+    REQUIRE(p2 != nullptr);
+
     CHECK(p1[0U] == static_cast<pl::Byte>(0xAA));
     CHECK(p1[1U] == static_cast<pl::Byte>(0xBB));
     CHECK(p1[2U] == static_cast<pl::Byte>(0xCC));
@@ -80,6 +83,8 @@ TEST_CASE("as_bytes_int_test")
     std::memcpy(&v, "\xDE\xAD\xC0\xDE", byteSize);
 
     const pl::Byte *p{ pl::asBytes(v) };
+
+    REQUIRE(p != nullptr);
 
     CHECK(p[0U] == static_cast<pl::Byte>(0xDE));
     CHECK(p[1U] == static_cast<pl::Byte>(0xAD));

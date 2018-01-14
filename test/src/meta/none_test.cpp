@@ -46,7 +46,7 @@ TEST_CASE("none_positive_test")
 
     PL_TEST_STATIC_ASSERT(std::is_same<
         pl::meta::none<std::is_pod<std::vector<int>>>::type,
-        std::true_type>::value)
+        std::true_type>::value);
 
     PL_TEST_STATIC_ASSERT(std::is_same<
         pl::meta::none<std::is_array<void>, std::is_pointer<std::string>>::type,
