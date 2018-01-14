@@ -62,5 +62,11 @@ constexpr const Byte *asBytes(PL_IN const Type &object) noexcept
 {
     return ::pl::unrelated_pointer_cast<const Byte *>(std::addressof(object));
 }
+
+/*!
+ * \brief Rvalues are not allowed.
+**/
+template <typename Type>
+void asBytes(PL_IN const Type &&) noexcept = delete;
 } // namespace pl
 #endif // INCG_PL_AS_BYTES_HPP
