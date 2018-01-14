@@ -46,8 +46,8 @@ namespace pl
  * \param fmt A null-terminated byte character string to be used as the
  *            printf style format string. May not be nullptr!
  * \param ap The va_list that contains the arguments as specified by 'fmt'.
- * \return The number of bytes written on success or a negative number on
- *         error.
+ * \return The number of bytes written (not including the null-terminator)
+ *         on success or a negative number on error.
  * \warning Will cause undefined behavior if 'strp' or 'fmt' is nullptr.
  * \note In general you probably want to be using asprintf instead.
 **/
@@ -64,8 +64,8 @@ PL_NODISCARD int vasprintf(
  * \param fmt A null-terminated byte character string to be used as the
  *            printf style format string. May not be nullptr!
  * \param ap The va_list that contains the arguments as specified by 'fmt'.
- * \return The number of bytes written on success or a negative number on
- *         error.
+ * \return The number of bytes written (not including the null-terminator)
+ *         on success or a negative number on error.
  * \warning Will cause undefined behavior if 'strp' or 'fmt' is nullptr.
  * \note In general you probably want to be using asprintf instead.
 **/
@@ -82,7 +82,8 @@ PL_NODISCARD int vasprintf(
  *             May not be nullptr!
  * \param fmt A null-terminated byte character string to be used as the printf
  *            style format string. May not be nullptr!
- * \return The number of bytes written on success or a negative number on error.
+ * \return The number of bytes written (not including the null-terminator)
+ *         on success or a negative number on error.
  * \warning Will cause undefined behavior if 'strp' or 'fmt' is nullptr.
 **/
 PL_NODISCARD int asprintf(
@@ -97,7 +98,8 @@ PL_NODISCARD int asprintf(
  *             May not be nullptr!
  * \param fmt A null-terminated byte character string to be used as the printf
  *            style format string. May not be nullptr!
- * \return The number of bytes written on success or a negative number on error.
+ * \return The number of bytes written (not including the null-terminator)
+ *         on success or a negative number on error.
  * \warning Will cause undefined behavior if 'strp' or 'fmt' is nullptr.
 **/
 PL_NODISCARD int asprintf(
