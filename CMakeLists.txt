@@ -1,7 +1,16 @@
 ### GLOBAL SETTINGS
 cmake_minimum_required(VERSION 3.1)
 
-set(CMAKE_CXX_STANDARD 14)
+if(MSVC)
+    if(MSVC_VERSION GREATER_EQUAL "1911")
+        set(CMAKE_CXX_STANDARD 17)
+    else()
+        set(CMAKE_CXX_STANDARD 14)
+    endif()
+else()
+    set(CMAKE_CXX_STANDARD 14)
+endif()
+
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Warning flags
@@ -18,15 +27,6 @@ elseif(CMAKE_CXX_COMPILER MATCHES ".*clang")
 endif()
 
 if(MSVC)
-    # Use 'c++17' to enable [[nodiscard]] and [[fallthrough]] if MSVC is new enough to support it.
-    if(MSVC_VERSION GREATER_EQUAL "1911")
-        if(CMAKE_CXX_FLAGS MATCHES "/std:c++1[1-4]")
-            string(REGEX REPLACE "/std:c++1[1-4]" "/std:c++17" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
-        else()
-            set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17")
-        endif()       
-    endif()
-    
     # Treat warnings as errors when using msvc.
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /WX")
 endif()
