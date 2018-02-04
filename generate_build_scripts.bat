@@ -6,8 +6,6 @@ If "%~2"=="" goto ERROR
 
 If "%~3"=="" goto ERROR
 
-bitsadmin.exe /transfer "doctest" "https://raw.githubusercontent.com/onqtam/doctest/master/doctest/doctest.h" "%CD%\test\doctest.h"
-
 set isx86=false
 set isx64=false
 

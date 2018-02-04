@@ -485,7 +485,6 @@ __pycache__/
 ### Testing ###
 main.cpp
 catch.hpp
-doctest.h
 unittest
 
 ### TODO list ###
