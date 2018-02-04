@@ -48,8 +48,7 @@ constexpr std::uint8_t charToInt(unsigned char ch)
         (ch >= static_cast<unsigned char>('0'))
         and (ch <= static_cast<unsigned char>('9')));
 
-    constexpr unsigned char subtractThis = '0';
-    return static_cast<std::uint8_t>(ch - subtractThis);
+    return static_cast<std::uint8_t>(ch - static_cast<unsigned char>('0'));
 }
 } // namespace pl
 #endif // INCG_PL_CHAR_TO_INT_HPP
