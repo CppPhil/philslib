@@ -50,7 +50,7 @@ constexpr Numeric &setBit(PL_INOUT Numeric &numeric, Numeric bit) noexcept
                   "Numeric in pl::setBit should be an unsigned type.");
     constexpr Numeric activeBit = 1U;
 
-    numeric |= (activeBit << bit);
+    numeric |= static_cast<Numeric>(activeBit << bit);
     return numeric;
 }
 
@@ -69,7 +69,7 @@ constexpr Numeric &clearBit(PL_INOUT Numeric &numeric, Numeric bit) noexcept
                   "Numeric in pl::clearBit should be an unsigned type.");
     constexpr Numeric activeBit = 1U;
 
-    numeric &= ~(activeBit << bit);
+    numeric &= static_cast<Numeric>(~(activeBit << bit));
     return numeric;
 }
 
@@ -93,7 +93,7 @@ constexpr Numeric &toggleBit(PL_INOUT Numeric &numeric, Numeric bit) noexcept
                   "Numeric in pl::toggleBit should be an unsigned type.");
     constexpr Numeric activeBit = 1U;
 
-    numeric ^= (activeBit << bit);
+    numeric ^= static_cast<Numeric>(activeBit << bit);
     return numeric;
 }
 
