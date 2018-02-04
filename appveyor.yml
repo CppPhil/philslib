@@ -3,6 +3,7 @@ matrix:
   
 environment:
   matrix:
+    - gen: "Visual Studio 14 2015"
     - gen: "Visual Studio 15 2017"
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
 
