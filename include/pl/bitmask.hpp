@@ -119,35 +119,35 @@
         }
 #else
 #   define PL_ENABLE_BITMASK_OPERATORS(ScopedEnum) \
-        ScopedEnum operator|(ScopedEnum lhs, ScopedEnum rhs) \
+        constexpr ScopedEnum operator|(ScopedEnum lhs, ScopedEnum rhs) \
         { \
             using Underlying = std::underlying_type_t<ScopedEnum>; \
             return static_cast<ScopedEnum>( \
                 static_cast<Underlying>(lhs) | static_cast<Underlying>(rhs)); \
         } \
         \
-        ScopedEnum operator&(ScopedEnum lhs, ScopedEnum rhs) \
+        constexpr ScopedEnum operator&(ScopedEnum lhs, ScopedEnum rhs) \
         { \
             using Underlying = std::underlying_type_t<ScopedEnum>; \
             return static_cast<ScopedEnum>( \
                 static_cast<Underlying>(lhs) & static_cast<Underlying>(rhs)); \
         } \
         \
-        ScopedEnum operator^(ScopedEnum lhs, ScopedEnum rhs) \
+        constexpr ScopedEnum operator^(ScopedEnum lhs, ScopedEnum rhs) \
         { \
             using Underlying = std::underlying_type_t<ScopedEnum>; \
             return static_cast<ScopedEnum>( \
                 static_cast<Underlying>(lhs) ^ static_cast<Underlying>(rhs)); \
         } \
         \
-        ScopedEnum operator~(ScopedEnum lhs) \
+        constexpr ScopedEnum operator~(ScopedEnum lhs) \
         { \
             using Underlying = std::underlying_type_t<ScopedEnum>; \
             return static_cast<ScopedEnum>( \
                 ~static_cast<Underlying>(lhs)); \
         } \
         \
-        ScopedEnum &operator|=(PL_INOUT ScopedEnum &lhs, ScopedEnum rhs) \
+        inline ScopedEnum &operator|=(PL_INOUT ScopedEnum &lhs, ScopedEnum rhs) \
         { \
             using Underlying = std::underlying_type_t<ScopedEnum>; \
             lhs = static_cast<ScopedEnum>( \
@@ -155,7 +155,7 @@
             return lhs; \
         } \
         \
-        ScopedEnum &operator&=(PL_INOUT ScopedEnum &lhs, ScopedEnum rhs) \
+        inline ScopedEnum &operator&=(PL_INOUT ScopedEnum &lhs, ScopedEnum rhs) \
         { \
             using Underlying = std::underlying_type_t<ScopedEnum>; \
             lhs = static_cast<ScopedEnum>( \
@@ -163,7 +163,7 @@
             return lhs; \
         } \
         \
-        ScopedEnum &operator^=(PL_INOUT ScopedEnum &lhs, ScopedEnum rhs) \
+        inline ScopedEnum &operator^=(PL_INOUT ScopedEnum &lhs, ScopedEnum rhs) \
         { \
             using Underlying = std::underlying_type_t<ScopedEnum>; \
             lhs = static_cast<ScopedEnum>( \
