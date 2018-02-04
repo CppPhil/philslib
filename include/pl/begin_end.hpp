@@ -34,6 +34,7 @@
 #include "annotations.hpp" // PL_IN
 #include <cstddef> // std::size_t
 #include <iterator> // std::reverse_iterator
+#include <initializer_list> // std::initializer_list
 
 /*!
  * \def PL_BEGIN_END(cont)
@@ -198,13 +199,24 @@ constexpr auto cend(PL_IN const Type (&array)[Size]) noexcept -> decltype(auto)
 
 /*!
  * \brief Returns the begin reverse_iterator of a container.
- * \param container The container to get the the begin reverse_iterator for.
+ * \param container The container to get the begin reverse_iterator for.
  * \return The begin reverse_iterator of container.
 **/
 template <typename Container>
 constexpr auto rbegin(PL_IN Container &container) noexcept -> decltype(auto)
 {
     return container.rbegin();
+}
+
+/*!
+ * \brief Returns the begin reverse_iterator of an initializer_list.
+ * \param il The initializer_list to get the begin reverse_iterator for.
+ * \return The begin reverse_iterator of 'il'.
+**/
+template <typename Element>
+constexpr std::reverse_iterator<const Element *> rbegin(std::initializer_list<Element> il) noexcept
+{
+    return std::reverse_iterator<const Element *>{ il.end() };
 }
 
 /*!
@@ -271,6 +283,17 @@ template <typename Container>
 constexpr auto rend(PL_IN Container &container) noexcept -> decltype(auto)
 {
     return container.rend();
+}
+
+/*!
+ * \brief Returns the end reverse_iterator of an initializer_list.
+ * \param il The initializer_list to get the end reverse_iterator for.
+ * \return The end reverse_iterator of 'il'.
+**/
+template <typename Element>
+constexpr std::reverse_iterator<const Element *> rend(std::initializer_list<Element> il) noexcept
+{
+    return std::reverse_iterator<const Element *>{ il.begin() };
 }
 
 /*!
