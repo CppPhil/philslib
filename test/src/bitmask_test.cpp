@@ -50,7 +50,7 @@ enum class Flag : std::uint8_t
     d = 0b0000'0011,
     e = 0b1111'1111
 };
-PL_ENABLE_BITMASK_OPERATORS(Flag);
+PL_ENABLE_BITMASK_OPERATORS(Flag)
 } // anonymous namespace
 } // namespace test
 } // namespace pl

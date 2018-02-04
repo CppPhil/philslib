@@ -32,9 +32,9 @@
 #ifndef INCG_PL_BITMASK_HPP
 #define INCG_PL_BITMASK_HPP
 #include "annotations.hpp" // PL_INOUT
-#include <type_traits> // std::enable_if_t, std::underlying_type_t
+#include <type_traits> // std::underlying_type_t
 /*!
- * \def PL_ENABLE_BITMASK_OPERATORS(ScopedEnumType)
+ * \def PL_ENABLE_BITMASK_OPERATORS(ScopedEnum)
  * \brief Enables bitmask operators for the scoped enum type passed in.
  * \warning Must appear in the same namespace the scoped enum type passed in
  *          is defined in.
@@ -46,7 +46,7 @@
  *                  optionB = 0B10U, // 2
  *                  optionC = 0B100U // 4
  *              };
- *              PL_ENABLE_BITMASK_OPERATORS(ScopedEnum);
+ *              PL_ENABLE_BITMASK_OPERATORS(ScopedEnum)
  *          }
  *
  *          int main()
@@ -60,94 +60,57 @@
  *                        << std::endl;
  *          }
 **/
-namespace pl
-{
-namespace bitmask_detail
-{
-template <typename ScopedEnum>
-constexpr bool enableBitmaskOperators(ScopedEnum)
-{
-    return false;
-}
 
-template <typename ScopedEnum>
-constexpr std::enable_if_t<enableBitmaskOperators(ScopedEnum{ }), ScopedEnum>
-operator|(ScopedEnum lhs, ScopedEnum rhs)
-{
-    using Underlying = std::underlying_type_t<ScopedEnum>;
-    return static_cast<ScopedEnum>(
-        static_cast<Underlying>(lhs) | static_cast<Underlying>(rhs));
-}
-
-template <typename ScopedEnum>
-constexpr std::enable_if_t<enableBitmaskOperators(ScopedEnum{ }), ScopedEnum>
-operator&(ScopedEnum lhs, ScopedEnum rhs)
-{
-    using Underlying = std::underlying_type_t<ScopedEnum>;
-    return static_cast<ScopedEnum>(
-        static_cast<Underlying>(lhs) & static_cast<Underlying>(rhs));
-}
-
-template <typename ScopedEnum>
-constexpr std::enable_if_t<enableBitmaskOperators(ScopedEnum{ }), ScopedEnum>
-operator^(ScopedEnum lhs, ScopedEnum rhs)
-{
-    using Underlying = std::underlying_type_t<ScopedEnum>;
-    return static_cast<ScopedEnum>(
-        static_cast<Underlying>(lhs) ^ static_cast<Underlying>(rhs));
-}
-
-template <typename ScopedEnum>
-constexpr std::enable_if_t<enableBitmaskOperators(ScopedEnum{ }), ScopedEnum>
-operator~(ScopedEnum lhs)
-{
-    using Underlying = std::underlying_type_t<ScopedEnum>;
-    return static_cast<ScopedEnum>(
-        ~static_cast<Underlying>(lhs));
-}
-
-template <typename ScopedEnum>
-constexpr std::enable_if_t<enableBitmaskOperators(ScopedEnum{ }), ScopedEnum &>
-operator|=(PL_INOUT ScopedEnum &lhs, ScopedEnum rhs)
-{
-    using Underlying = std::underlying_type_t<ScopedEnum>;
-    lhs = static_cast<ScopedEnum>(
-        static_cast<Underlying>(lhs) | static_cast<Underlying>(rhs));
-    return lhs;
-}
-
-template <typename ScopedEnum>
-constexpr std::enable_if_t<enableBitmaskOperators(ScopedEnum{ }), ScopedEnum &>
-operator&=(PL_INOUT ScopedEnum &lhs, ScopedEnum rhs)
-{
-    using Underlying = std::underlying_type_t<ScopedEnum>;
-    lhs = static_cast<ScopedEnum>(
-        static_cast<Underlying>(lhs) & static_cast<Underlying>(rhs));
-    return lhs;
-}
-
-template <typename ScopedEnum>
-constexpr std::enable_if_t<enableBitmaskOperators(ScopedEnum{ }), ScopedEnum &>
-operator^=(PL_INOUT ScopedEnum &lhs, ScopedEnum rhs)
-{
-    using Underlying = std::underlying_type_t<ScopedEnum>;
-    lhs = static_cast<ScopedEnum>(
-        static_cast<Underlying>(lhs) ^ static_cast<Underlying>(rhs));
-    return lhs;
-}
-} // namespace bitmask_detail
-} // namespace pl
-
-#define PL_ENABLE_BITMASK_OPERATORS(ScopedEnumType) \
-    constexpr bool enableBitmaskOperators(ScopedEnumType) \
+#define PL_ENABLE_BITMASK_OPERATORS(ScopedEnum) \
+    constexpr ScopedEnum operator|(ScopedEnum lhs, ScopedEnum rhs) \
     { \
-        return true; \
+        using Underlying = std::underlying_type_t<ScopedEnum>; \
+        return static_cast<ScopedEnum>( \
+            static_cast<Underlying>(lhs) | static_cast<Underlying>(rhs)); \
     } \
-    using ::pl::bitmask_detail::operator|; \
-    using ::pl::bitmask_detail::operator|=; \
-    using ::pl::bitmask_detail::operator&=; \
-    using ::pl::bitmask_detail::operator&; \
-    using ::pl::bitmask_detail::operator^; \
-    using ::pl::bitmask_detail::operator^=; \
-    using ::pl::bitmask_detail::operator~
+    \
+    constexpr ScopedEnum operator&(ScopedEnum lhs, ScopedEnum rhs) \
+    { \
+        using Underlying = std::underlying_type_t<ScopedEnum>; \
+        return static_cast<ScopedEnum>( \
+            static_cast<Underlying>(lhs) & static_cast<Underlying>(rhs)); \
+    } \
+    \
+    constexpr ScopedEnum operator^(ScopedEnum lhs, ScopedEnum rhs) \
+    { \
+        using Underlying = std::underlying_type_t<ScopedEnum>; \
+        return static_cast<ScopedEnum>( \
+            static_cast<Underlying>(lhs) ^ static_cast<Underlying>(rhs)); \
+    } \
+    \
+    constexpr ScopedEnum operator~(ScopedEnum lhs) \
+    { \
+        using Underlying = std::underlying_type_t<ScopedEnum>; \
+        return static_cast<ScopedEnum>( \
+            ~static_cast<Underlying>(lhs)); \
+    } \
+    \
+    constexpr ScopedEnum &operator|=(PL_INOUT ScopedEnum &lhs, ScopedEnum rhs) \
+    { \
+        using Underlying = std::underlying_type_t<ScopedEnum>; \
+        lhs = static_cast<ScopedEnum>( \
+            static_cast<Underlying>(lhs) | static_cast<Underlying>(rhs)); \
+        return lhs; \
+    } \
+    \
+    constexpr ScopedEnum &operator&=(PL_INOUT ScopedEnum &lhs, ScopedEnum rhs) \
+    { \
+        using Underlying = std::underlying_type_t<ScopedEnum>; \
+        lhs = static_cast<ScopedEnum>( \
+            static_cast<Underlying>(lhs) & static_cast<Underlying>(rhs)); \
+        return lhs; \
+    } \
+    \
+    constexpr ScopedEnum &operator^=(PL_INOUT ScopedEnum &lhs, ScopedEnum rhs) \
+    { \
+        using Underlying = std::underlying_type_t<ScopedEnum>; \
+        lhs = static_cast<ScopedEnum>( \
+            static_cast<Underlying>(lhs) ^ static_cast<Underlying>(rhs)); \
+        return lhs; \
+    }
 #endif // INCG_PL_BITMASK_HPP
