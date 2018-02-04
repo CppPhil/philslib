@@ -30,7 +30,6 @@
 **/
 #ifndef INCG_PL_CHAR_TO_INT_HPP
 #define INCG_PL_CHAR_TO_INT_HPP
-#include "assert.hpp" // PL_DBG_CHECK_PRE
 #include <ciso646> // and
 #include <cstdint> // std::uint8_t
 
@@ -44,10 +43,6 @@ namespace pl
 **/
 constexpr std::uint8_t charToInt(unsigned char ch)
 {
-    PL_DBG_CHECK_PRE(
-        (ch >= static_cast<unsigned char>('0'))
-        and (ch <= static_cast<unsigned char>('9')));
-
     return static_cast<std::uint8_t>(ch - static_cast<unsigned char>('0'));
 }
 } // namespace pl
