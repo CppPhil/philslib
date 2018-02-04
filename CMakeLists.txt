@@ -20,7 +20,11 @@ endif()
 if(MSVC)
     # Use 'c++17' to enable [[nodiscard]] and [[fallthrough]] if MSVC is new enough to support it.
     if(MSVC_VERSION GREATER_EQUAL "1911")
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17")
+        if(CMAKE_CXX_FLAGS MATCHES "/std:c++14")
+            string(REGEX REPLACE "/std:c++14" "/std:c++17" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+        else()
+            set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17)
+        endif()
     endif()
     
     # Treat warnings as errors when using msvc.
