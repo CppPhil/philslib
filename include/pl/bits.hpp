@@ -31,6 +31,7 @@
 #ifndef INCG_PL_BITS_HPP
 #define INCG_PL_BITS_HPP
 #include "annotations.hpp" // PL_INOUT
+#include "compiler.hpp" // PL_COMPILER, PL_COMPILER_MSVC, PL_COMPILER_VERSION, PL_COMPILER_VERSION_CHECK
 #include <type_traits> // std::is_unsigned
 
 namespace pl
@@ -42,15 +43,19 @@ namespace pl
  * \return A reference to 'numeric'.
  * \warning Do not pass a value in bit that is larger than the amount
  *          of bits in Numeric - 1.
+ * \note When using MSVC the function is only constexpr enabled with msvc17
+ *       and newer.
 **/
 template <typename Numeric>
-constexpr Numeric &setBit(PL_INOUT Numeric &numeric, Numeric bit) noexcept
+#if (PL_COMPILER != PL_COMPILER_MSVC) || ((PL_COMPILER == PL_COMPILER_MSVC) && (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0)))
+constexpr
+#endif
+Numeric &setBit(PL_INOUT Numeric &numeric, Numeric bit) noexcept
 {
     static_assert(std::is_unsigned<Numeric>::value,
                   "Numeric in pl::setBit should be an unsigned type.");
-    constexpr Numeric activeBit = 1U;
 
-    numeric |= static_cast<Numeric>(activeBit << bit);
+    numeric |= static_cast<Numeric>(static_cast<Numeric>(1U) << bit);
     return numeric;
 }
 
@@ -61,15 +66,19 @@ constexpr Numeric &setBit(PL_INOUT Numeric &numeric, Numeric bit) noexcept
  * \return A reference to 'numeric'.
  * \warning The value in bit must not be larger than the amount of bits in
  *          Numeric - 1.
+ * \note When using MSVC the function is only constexpr enabled with msvc17
+ *       and newer.
 **/
 template <typename Numeric>
-constexpr Numeric &clearBit(PL_INOUT Numeric &numeric, Numeric bit) noexcept
+#if (PL_COMPILER != PL_COMPILER_MSVC) || ((PL_COMPILER == PL_COMPILER_MSVC) && (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0)))
+constexpr
+#endif
+Numeric &clearBit(PL_INOUT Numeric &numeric, Numeric bit) noexcept
 {
     static_assert(std::is_unsigned<Numeric>::value,
                   "Numeric in pl::clearBit should be an unsigned type.");
-    constexpr Numeric activeBit = 1U;
 
-    numeric &= static_cast<Numeric>(~(activeBit << bit));
+    numeric &= static_cast<Numeric>(~(static_cast<Numeric>(1U) << bit));
     return numeric;
 }
 
@@ -80,6 +89,8 @@ constexpr Numeric &clearBit(PL_INOUT Numeric &numeric, Numeric bit) noexcept
  * \return A reference to 'numeric'.
  * \warning Do not pass a value in bit that is larger than
  *          the number of bits in Numeric - 1.
+ * \note When using MSVC the function is only constexpr enabled with msvc17
+ *       and newer.
  *
  * Toggles the bit that was passed into the parameter bit in the
  * numeric (first parameter). If the bit bit in numeric is 1 it will be
@@ -87,13 +98,15 @@ constexpr Numeric &clearBit(PL_INOUT Numeric &numeric, Numeric bit) noexcept
  * will be 1 after having executed this function.
 **/
 template <typename Numeric>
-constexpr Numeric &toggleBit(PL_INOUT Numeric &numeric, Numeric bit) noexcept
+#if (PL_COMPILER != PL_COMPILER_MSVC) || ((PL_COMPILER == PL_COMPILER_MSVC) && (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0)))
+constexpr
+#endif
+Numeric &toggleBit(PL_INOUT Numeric &numeric, Numeric bit) noexcept
 {
     static_assert(std::is_unsigned<Numeric>::value,
                   "Numeric in pl::toggleBit should be an unsigned type.");
-    constexpr Numeric activeBit = 1U;
 
-    numeric ^= static_cast<Numeric>(activeBit << bit);
+    numeric ^= static_cast<Numeric>(static_cast<Numeric>(1U) << bit);
     return numeric;
 }
 
@@ -110,9 +123,8 @@ constexpr bool isBitSet(Numeric numeric, Numeric bit) noexcept
 {
     static_assert(std::is_unsigned<Numeric>::value,
                   "Numeric in pl::isBitSet should be an unsigned type.");
-    constexpr Numeric activeBit = 1U;
 
-    return ((numeric & (activeBit << bit)) != 0);
+    return ((numeric & (static_cast<Numeric>(1U) << bit)) != 0);
 }
 } // namespace pl
 #endif // INCG_PL_BITS_HPP
