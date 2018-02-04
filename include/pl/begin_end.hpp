@@ -32,9 +32,14 @@
 #ifndef INCG_PL_BEGIN_END_HPP
 #define INCG_PL_BEGIN_END_HPP
 #include "annotations.hpp" // PL_IN
+#include "meta/is_initializer_list.hpp" // pl::meta::is_initializer_list
+#include "meta/disable_if.hpp" // pl::meta::disable_if_t
+#include "meta/remove_cvref.hpp" // pl::meta::remove_cvref_t
+#include <ciso646> // or
 #include <cstddef> // std::size_t
 #include <iterator> // std::reverse_iterator
 #include <initializer_list> // std::initializer_list
+#include <type_traits> // std::is_array
 
 /*!
  * \def PL_BEGIN_END(cont)
@@ -69,19 +74,10 @@ namespace pl
  * \return An iterator to the beginning of container.
 **/
 template <typename Container>
-constexpr auto begin(PL_IN Container &container) noexcept -> decltype(auto)
-{
-    return container.begin();
-}
-
-/*!
- * \brief Returns a const_iterator to the beginning of the container.
- * \param container The container for which to get a const_iterator to its
- *        beginning.
- * \return A const_iterator to the beginning of container.
-**/
-template <typename Container>
-constexpr auto begin(PL_IN const Container &container) noexcept -> decltype(auto)
+constexpr auto begin(PL_IN Container &container) noexcept
+    -> meta::disable_if_t<
+        std::is_array<meta::remove_cvref_t<Container>>::value,
+        decltype(container.begin())>
 {
     return container.begin();
 }
@@ -93,17 +89,6 @@ constexpr auto begin(PL_IN const Container &container) noexcept -> decltype(auto
 **/
 template <typename Type, std::size_t Size>
 constexpr Type *begin(PL_IN Type (&array)[Size]) noexcept
-{
-    return array;
-}
-
-/*!
- * \brief Returns a const_iterator to the beginning of the array.
- * \param array The array for which to get a const_iterator to its beginning.
- * \return A const_iterator to the beginning of the array.
-**/
-template <typename Type, std::size_t Size>
-constexpr const Type *begin(PL_IN const Type (&array)[Size]) noexcept
 {
     return array;
 }
@@ -121,34 +106,15 @@ constexpr auto cbegin(PL_IN const Container &container) noexcept -> decltype(aut
 }
 
 /*!
- * \brief Returns a const_iterator to the beginning of the array
- * \param array The array for which to get a const_iterator to its beginning.
- * \return A const_iterator to the beginning of the array.
-**/
-template <typename Type, std::size_t Size>
-constexpr auto cbegin(PL_IN const Type (&array)[Size]) noexcept -> decltype(auto)
-{
-    return ::pl::begin(array);
-}
-
-/*!
  * \brief Returns the end iterator of a container.
  * \param container The container to get the end iterator for.
  * \return The end iterator of container.
 **/
 template <typename Container>
-constexpr auto end(PL_IN Container &container) noexcept -> decltype(auto)
-{
-    return container.end();
-}
-
-/*!
- * \brief Returns the end const_iterator of a container.
- * \param container The container to get the end const_iterator for.
- * \return The end cont_iterator of container.
-**/
-template <typename Container>
-constexpr auto end(PL_IN const Container &container) noexcept -> decltype(auto)
+constexpr auto end(PL_IN Container &container) noexcept
+    -> meta::disable_if_t<
+        std::is_array<meta::remove_cvref_t<Container>>::value,
+        decltype(container.end())>
 {
     return container.end();
 }
@@ -165,17 +131,6 @@ constexpr Type *end(PL_IN Type (&array)[Size]) noexcept
 }
 
 /*!
- * \brief Returns the end const_iterator of an array.
- * \param array The array to get the end const_iterator for.
- * \return The end const_iterator of array.
-**/
-template <typename Type, std::size_t Size>
-constexpr const Type *end(PL_IN const Type (&array)[Size]) noexcept
-{
-    return ::pl::begin(array) + Size;
-}
-
-/*!
  * \brief Returns the end const_iterator of a container.
  * \param container The container to get the end const_iterator for.
  * \return The end const_iterator of container.
@@ -187,23 +142,16 @@ constexpr auto cend(PL_IN const Container &container) noexcept -> decltype(auto)
 }
 
 /*!
- * \brief Returns the end const_iterator of an array.
- * \param array The array to get the end const_iterator for.
- * \return The end const_iterator of array.
-**/
-template <typename Type, std::size_t Size>
-constexpr auto cend(PL_IN const Type (&array)[Size]) noexcept -> decltype(auto)
-{
-    return ::pl::end(array);
-}
-
-/*!
  * \brief Returns the begin reverse_iterator of a container.
  * \param container The container to get the begin reverse_iterator for.
  * \return The begin reverse_iterator of container.
 **/
 template <typename Container>
-constexpr auto rbegin(PL_IN Container &container) noexcept -> decltype(auto)
+constexpr auto rbegin(PL_IN Container &container) noexcept
+    -> meta::disable_if_t<
+        std::is_array<meta::remove_cvref_t<Container>>::value
+        or meta::is_initializer_list<meta::remove_cvref_t<Container>>::value,
+        decltype(container.rbegin())>
 {
     return container.rbegin();
 }
@@ -220,17 +168,6 @@ constexpr std::reverse_iterator<const Element *> rbegin(std::initializer_list<El
 }
 
 /*!
- * \brief Returns the begin const_reverse_iterator of a container.
- * \param container The containere to get the begin const_reverse_iterator for.
- * \return The begin const_reverse_iterator of container.
-**/
-template <typename Container>
-constexpr auto rbegin(PL_IN const Container &container) noexcept -> decltype(auto)
-{
-    return container.rbegin();
-}
-
-/*!
  * \brief Returns the begin reverse_iterator of an array.
  * \param array The array to get the begin reverse_iterator for.
  * \return The begin reverse_iterator of array.
@@ -239,17 +176,6 @@ template <typename Type, std::size_t Size>
 constexpr std::reverse_iterator<Type *> rbegin(PL_IN Type (&array)[Size]) noexcept
 {
     return std::reverse_iterator<Type *>{ array + Size };
-}
-
-/*!
- * \brief Returns the begin const_reverse_iterator of an array.
- * \param array The array to get the begin const_reverse_iterator for.
- * \return The begin const_reverse_iterator of array.
-**/
-template <typename Type, std::size_t Size>
-constexpr std::reverse_iterator<const Type *> rbegin(PL_IN const Type (&array)[Size]) noexcept
-{
-    return std::reverse_iterator<const Type *>{ array + Size };
 }
 
 /*!
@@ -264,23 +190,16 @@ constexpr auto crbegin(PL_IN const Container &container) noexcept -> decltype(au
 }
 
 /*!
- * \brief Returns the begin const_reverse_iterator of an array.
- * \param array The array to get the begin const_reverse_iterator for.
- * \return The begin const_reverse_iterator of array.
-**/
-template <typename Type, std::size_t Size>
-constexpr auto crbegin(PL_IN const Type (&array)[Size]) noexcept
-{
-    return ::pl::rbegin(array);
-}
-
-/*!
  * \brief Returns the end reverse_iterator of a container.
  * \param container The container to get the end reverse_iterator for.
  * \return The end reverse_iterator of container.
 **/
 template <typename Container>
-constexpr auto rend(PL_IN Container &container) noexcept -> decltype(auto)
+constexpr auto rend(PL_IN Container &container) noexcept
+    -> meta::disable_if_t<
+        std::is_array<meta::remove_cvref_t<Container>>::value
+        or meta::is_initializer_list<meta::remove_cvref_t<Container>>::value,
+        decltype(container.rend())>
 {
     return container.rend();
 }
@@ -297,17 +216,6 @@ constexpr std::reverse_iterator<const Element *> rend(std::initializer_list<Elem
 }
 
 /*!
- * \brief Returns the end const_reverse_iterator of a container.
- * \param container The container to get the end const_reverse_iterator for.
- * \return The end const_reverse_iterator of container.
-**/
-template <typename Container>
-constexpr auto rend(PL_IN const Container &container) noexcept -> decltype(auto)
-{
-    return container.rend();
-}
-
-/*!
  * \brief Returns the end reverse_iterator of an array.
  * \param array The array to get the end reverse_iterator for.
  * \return The end reverse_iterator of array.
@@ -319,17 +227,6 @@ constexpr std::reverse_iterator<Type *> rend(PL_IN Type (&array)[Size]) noexcept
 }
 
 /*!
- * \brief Returns the end const_reverse_iterator of an array.
- * \param array The array to get the end const_reverse_iterator for.
- * \return The end const_reverse_iterator of array.
-**/
-template <typename Type, std::size_t Size>
-constexpr std::reverse_iterator<const Type *> rend(PL_IN const Type (&array)[Size]) noexcept
-{
-    return std::reverse_iterator<const Type *>{ array };
-}
-
-/*!
  * \brief Returns the end const_reverse_iterator of a container.
  * \param container The container to get the end const_reverse_iterator for.
  * \return The end const_reverse_iterator of container.
@@ -338,17 +235,6 @@ template <typename Container>
 constexpr auto crend(PL_IN const Container &container) noexcept -> decltype(auto)
 {
     return ::pl::rend(container);
-}
-
-/*!
- * \brief Returns the end const_reverse_iterator of an array.
- * \param array The array to get the end const_reverse_iterator for.
- * \return The end const_reverse_iterator of array.
-**/
-template <typename Type, std::size_t Size>
-constexpr auto crend(PL_IN const Type (&array)[Size]) noexcept -> decltype(auto)
-{
-    return ::pl::rend(array);
 }
 } // namespace pl
 

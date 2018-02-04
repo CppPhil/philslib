@@ -25,52 +25,43 @@
  */
 
 /*!
- * \file is_reference_wrapper.hpp
- * \brief Exports the is_reference_wrapper meta function to check whether
- *        or not a type is a std::reference_wrapper type.
- *        Also exports is_not_reference_wrapper.
+ * \file is_initializer_list.hpp
+ * \brief Exports the is_initializer_list meta function.
 **/
-#ifndef INCG_PL_META_IS_REFERENCE_WRAPPER_HPP
-#define INCG_PL_META_IS_REFERENCE_WRAPPER_HPP
-#include "negation.hpp" // pl::meta::negation
-#include <functional> // std::reference_wrapper
-#include <type_traits> // std::false_type, std::true_type, std::decay_t
+#ifndef INCG_PL_META_IS_INITIALIZER_LIST_HPP
+#define INCG_PL_META_IS_INITIALIZER_LIST_HPP
+#include <initializer_list> // std::initializer_list
+#include <type_traits> // std::false_type, std::true_type
 
 namespace pl
 {
 namespace meta
 {
 /*!
- * \brief Detects whether Ty is a std::reference_wrapper type.
+ * \brief Detects whether Ty is a std::initializer_list type.
  * \note This is the false case.
  *
- * Detects whether Ty is a std::reference_wrapper type.
+ * Detects whether Ty is a std::initializer_list type.
  * Is derived from std::false_type.
 **/
 template <typename Ty>
-struct is_reference_wrapper
+struct is_initializer_list
     : public std::false_type
 {
 };
 
 /*!
- * \brief Detects whether Ty is a std::reference_wrapper type.
+ * \brief Detects whether Ty is a std::initializer_list type.
  * \note This is the true case.
  *
- * Detects whether Ty is a std::reference_wrapper type.
+ * Detects whether Ty is a std::initializer_list type.
  * Is derived from std::true_type.
 **/
 template <typename Ty>
-struct is_reference_wrapper<std::reference_wrapper<Ty>>
+struct is_initializer_list<std::initializer_list<Ty>>
     : public std::true_type
 {
 };
-
-/*!
- * \brief Negation of is_reference_wrapper.
-**/
-template <typename Type>
-using is_not_reference_wrapper = negation<is_reference_wrapper<std::decay_t<Type>>>;
 } // namespace meta
 } // namespace pl
-#endif // INCG_PL_META_IS_REFERENCE_WRAPPER_HPP
+#endif // INCG_PL_META_IS_INITIALIZER_LIST_HPP
