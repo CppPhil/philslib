@@ -31,15 +31,12 @@
 #ifndef INCG_PL_RAW_MEMORY_ARRAY_HPP
 #define INCG_PL_RAW_MEMORY_ARRAY_HPP
 #include "annotations.hpp" // PL_NODISCARD, PL_OUT, PL_IN
-#include "except.hpp" // pl::InvalidSizeException
-#include "algo/uninitialized_move.hpp" // pl::algo::uninitialized_move
 #include "algo/destroy.hpp" // pl::algo::destroy
 #include "assert.hpp" // PL_DBG_CHECK_PRE
 #include <ciso646> // not
 #include <cstddef> // std::size_t, std::ptrdiff_t
 #include <stdexcept> // std::out_of_range
 #include <iterator> // std::reverse_iterator
-#include <initializer_list> // std::initializer_list
 #include <memory> // std::uninitialized_fill
 #include <algorithm> // std::fill, std::equal, std::lexicographical_compare
 
@@ -98,51 +95,6 @@ public:
     {
         PL_DBG_CHECK_PRE(rawMemory != nullptr);
         std::uninitialized_fill(begin(), end(), initialValue);
-    }
-
-    /*!
-     * \brief Creates a RawMemoryArray by placement new'ing copies of
-     *        the values in the 'initList' into the raw memory passed in.
-     * \param rawMemory Pointer to the first (0th) byte of the raw memory
-     *                  that shall be treated as an array.
-     * \param byteCount The size of the raw memory pointed to by 'rawMemory'
-     *                  in bytes. May not be incorrect!
-     * \param initList The initializer_list that holds the values that the
-     *                 raw memory shall be initialized with. Must have a size
-     *                 of exactly 'byteCount' / sizeof('Ty') (integer division).
-     * \throws pl::InvalidSizeException if the size of the initializer_list is
-     *         incorrect.
-     * \warning The raw memory may not be deallocated within the lifetime
-     *          of this object.
-     *          The raw memory must have been (statically or dynamically)
-     *          allocated as a contiguous sequence in memory (such as an array)
-     *          of either char, signed char, unsigned char,
-     *          std::byte (since C++17), or an alias of one of these types.
-     *          Or alternatively by some raw memory allocating function such as
-     *          std::malloc or a version of alloca (non-standard).
-     *          Specifically there must be no aliasing violation by
-     *          reinterpreting the raw memory supplied as 'Ty' through a Ty *
-     *          pointer type. Note that using an array of std::uint8_t or
-     *          std::int8_t is not legal as these types are not required to
-     *          be aliases of the above mentioned types, which are exempt
-     *          from the strict aliasing rules.
-    **/
-    RawMemoryArray(
-        PL_OUT void *rawMemory,
-        size_type byteCount,
-        std::initializer_list<value_type> initList)
-        : m_data{ static_cast<pointer>(rawMemory) },
-          m_size{ byteCount / sizeof(value_type) }
-    {
-        PL_DBG_CHECK_PRE(rawMemory != nullptr);
-
-        if (m_size != initList.size()) {
-            throw ::pl::InvalidSizeException{
-                "m_size was not equal to initList.size() in RawMemoryArray ctor."
-            };
-        }
-
-        ::pl::algo::uninitialized_move(initList.begin(), initList.end(), begin());
     }
 
     /*!
