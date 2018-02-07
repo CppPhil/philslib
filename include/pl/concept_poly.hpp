@@ -118,7 +118,7 @@ public:
      * \warning Do not replace the second template type parameter of this
      *          constructor!
     **/
-    template <typename Impl,
+    template <typename Impl/*,*/
               /*typename = std::enable_if_t<
                   not std::is_same<meta::remove_cvref_t<Impl>, this_type>::value
                   and std::is_base_of<Concept, Model<meta::remove_cvref_t<Impl>>>::value,
