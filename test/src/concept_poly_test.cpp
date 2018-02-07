@@ -58,15 +58,19 @@ public:
     friend std::ostream &drawIt(
         const Implementation &impl,
         std::ostream &os,
-        std::size_t position)
-    {
-        return os << std::string(position, ' ') << impl.m_string;
-    }
+        std::size_t position);
 
 private:
     std::string m_string;
 };
 
+std::ostream &drawIt(
+    const Implementation &impl,
+    std::ostream &os,
+    std::size_t position)
+{
+    return os << std::string(position, ' ') << impl.m_string;
+}
 
 std::ostream &drawIt(int integer, std::ostream &os, std::size_t position)
 {
@@ -104,7 +108,7 @@ public:
         std::ostream &os,
         std::size_t position) const override
     {
-        return drawIt(m_impl, os, position);
+        return ::pl::test::drawIt(m_impl, os, position);
     }
 
 private:
