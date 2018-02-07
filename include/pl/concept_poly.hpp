@@ -53,12 +53,12 @@ namespace pl
  *              }
  *
  *              // Function to 'draw' an 'Implementation' object.
- *              friend void drawIt(
+ *              friend std::ostream &drawIt(
  *                  const Implementation &impl,
  *                  std::ostream &os,
  *                  std::size_t position)
  *              {
- *                  os << std::string(position, ' ') << impl.m_string << '\n';
+ *                  return os << std::string(position, ' ') << impl.m_string;
  *              }
  *
  *          private:
@@ -66,9 +66,9 @@ namespace pl
  *          };
  *
  *          // Function to draw an int.
- *          void drawIt(int integer, std::ostream &os, std::size_t position)
+ *          std::ostream &drawIt(int integer, std::ostream &os, std::size_t position)
  *          {
- *              os << std::string(position, '?') << ' ' << integer << '\n';
+ *              return os << std::string(position, '?') << ' ' << integer;
  *          }
  *
  *          class DrawConcept
@@ -85,7 +85,7 @@ namespace pl
  *              virtual std::unique_ptr<DrawConcept> clone() const = 0;
  *
  *              // Pure virtual member functions for the interface ...
- *              virtual void draw(std::ostream &os, std::size_t position) const = 0;
+ *              virtual std::ostream &draw(std::ostream &os, std::size_t position) const = 0;
  *
  *              // Pure abstract base classes like this should be non-copyable.
  *              DrawConcept(const DrawConcept &) = delete;
@@ -110,12 +110,12 @@ namespace pl
  *                  return std::make_unique<DrawModel>(m_impl);
  *              }
  *
- *              virtual void draw(std::ostream &os, std::size_t position) const override
+ *              virtual std::ostream &draw(std::ostream &os, std::size_t position) const override
  *              {
  *                  // Implementation code...
  *                  // Do whatever 'draw'ing should do with an 'Impl'.
  *                  // You may want to specialize the DrawModel template type.
- *                  drawIt(m_impl, os, position);
+ *                  return drawIt(m_impl, os, position);
  *              }
  *
  *          private:
@@ -262,6 +262,7 @@ public:
     {
         PL_DBG_CHECK_PRE(static_cast<bool>(other));
         m_ptr = other.m_ptr->clone();
+        return *this;
     }
 
     /*!
