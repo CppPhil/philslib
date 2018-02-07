@@ -32,13 +32,13 @@
 #ifndef INCG_PL_CONCEPT_POLY_HPP
 #define INCG_PL_CONCEPT_POLY_HPP
 #include "annotations.hpp" // PL_IN, PL_INOUT
+#include "meta/disable_if.hpp" // pl::meta::disable_if_t
 #include "meta/remove_cvref.hpp" // pl::meta::remove_cvref_t
 #include "assert.hpp" // PL_DBG_CHECK_PRE
 #include <cstddef> // std::nullptr_t
-#include <ciso646> // not, and
 #include <utility> // std::forward, std::swap
 #include <memory> // std::unique_ptr, std::make_unique
-#include <type_traits> // std::is_base_of, std::enable_if_t, std::is_same
+#include <type_traits> //  std::is_same
 
 namespace pl
 {
@@ -118,18 +118,12 @@ public:
      * \warning Do not replace the second template type parameter of this
      *          constructor!
     **/
-    template <typename Impl/*,*/
-              /*typename = std::enable_if_t<
-                  not std::is_same<meta::remove_cvref_t<Impl>, this_type>::value
-                  and std::is_base_of<Concept, Model<meta::remove_cvref_t<Impl>>>::value,
-                  void>*/>
+    template <typename Impl,
+              typename = meta::disable_if_t<
+                  std::is_same<meta::remove_cvref_t<Impl>, this_type>::value,
+                  void>>
     explicit ConceptPoly(PL_IN Impl &&impl)
         : m_ptr{ std::make_unique<Model<meta::remove_cvref_t<Impl>>>(std::forward<Impl>(impl)) }
-    {
-    }
-
-    ConceptPoly(PL_IN this_type &other)
-        : ConceptPoly{ static_cast<const this_type &>(other) }
     {
     }
 
@@ -160,11 +154,6 @@ public:
      * Performs a member by member move.
     **/
     ConceptPoly(PL_IN this_type &&) noexcept = default;
-
-    ConceptPoly(PL_IN const this_type &&other)
-        : ConceptPoly{ other }
-    {
-    }
 
     /*!
      * \brief Copy assignment operator. Copy assigns this object with 'other'.
