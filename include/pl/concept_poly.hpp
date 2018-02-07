@@ -119,12 +119,17 @@ public:
      *          constructor!
     **/
     template <typename Impl,
-              typename = std::enable_if_t<
+              /*typename = std::enable_if_t<
                   not std::is_same<meta::remove_cvref_t<Impl>, this_type>::value
                   and std::is_base_of<Concept, Model<meta::remove_cvref_t<Impl>>>::value,
-                  void>>
+                  void>*/>
     explicit ConceptPoly(PL_IN Impl &&impl)
         : m_ptr{ std::make_unique<Model<meta::remove_cvref_t<Impl>>>(std::forward<Impl>(impl)) }
+    {
+    }
+
+    ConceptPoly(PL_IN this_type &other)
+        : ConceptPoly{ static_cast<const this_type &>(other) }
     {
     }
 
@@ -155,6 +160,11 @@ public:
      * Performs a member by member move.
     **/
     ConceptPoly(PL_IN this_type &&) noexcept = default;
+
+    ConceptPoly(PL_IN const this_type &&other)
+        : ConceptPoly{ other }
+    {
+    }
 
     /*!
      * \brief Copy assignment operator. Copy assigns this object with 'other'.
