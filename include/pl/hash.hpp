@@ -54,7 +54,7 @@ void addHash(PL_INOUT std::size_t &hashSeed, PL_IN const Hashable &hashable) noe
     static constexpr auto shiftLeft = 0x6;
     static constexpr auto goldenRatio = 0x9E3779B9;
 
-    auto hasher = std::hash<Hashable>{ };
+    std::hash<Hashable> hasher{ };
     hashSeed ^= hasher(hashable) + goldenRatio
                 + (hashSeed << shiftLeft) + (hashSeed >> shiftRight);
 }

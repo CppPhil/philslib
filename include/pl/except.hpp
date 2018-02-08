@@ -113,7 +113,7 @@
     } \
     PL_END_MACRO
 
-#define PL_NOT_YET_IMPLEMENTED \
+#define PL_NOT_YET_IMPLEMENTED() \
     PL_THROW_WITH_SOURCE_INFO(pl::NotYetImplementedException, \
         "function has not yet been implemented!")
 
