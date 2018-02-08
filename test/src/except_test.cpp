@@ -37,6 +37,7 @@
 #include "../../include/pl/except.hpp" // PL_DEFINE_EXCEPTION_TYPE, PL_THROW_WITH_SOURCE_INFO, PL_THROW_IF_NULL, PL_NOT_YET_IMPLEMENTED
 #include <cstring> // std::strcmp, std::strstr
 #include <cstddef> // std::nullptr_t
+#include <cstdint> // std::uintptr_t
 #include <stdexcept> // std::runtime_error
 #include <string> // std::string, std::literals::string_literals::operator""s
 #include <memory> // std::unique_ptr, std::make_unique
@@ -92,7 +93,7 @@ TEST_CASE("throw_with_source_info_test")
 
         CHECK(std::strstr(msg, "test1") != nullptr);
         CHECK(std::strstr(msg, "except_test.cpp") != nullptr);
-        CHECK(std::strstr(msg, "line: 55") != nullptr);
+        CHECK(std::strstr(msg, "line: 56") != nullptr);
         CHECK(std::strstr(msg, "throwWithSourceInfo")
             != nullptr);
     }
@@ -101,7 +102,9 @@ TEST_CASE("throw_with_source_info_test")
 TEST_CASE("throw_if_null_test")
 {
     const void * const p1{ nullptr };
-    const void * const p2{ reinterpret_cast<const void *>(0xDEADC0DE) };
+    const void * const p2{
+        reinterpret_cast<const void *>(static_cast<std::uintptr_t>(0xDEADC0DE))
+    };
     const std::nullptr_t null{ nullptr };
     const std::unique_ptr<const int> up1{ nullptr };
     const std::unique_ptr<const int> up2{ std::make_unique<int>(3) };
