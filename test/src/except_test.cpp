@@ -116,9 +116,10 @@ TEST_CASE("throw_if_null_test")
     CHECK_NOTHROW(PL_THROW_IF_NULL(up2));
 
     try {
-        PL_THROW_IF_NULL(nullptr);
+        int *p{ nullptr };
+        PL_THROW_IF_NULL(p);
     } catch (const pl::NullPointerException &ex) {
-        CHECK(std::strstr(ex.what(), "nullptr was null!"));
+        CHECK(std::strstr(ex.what(), "p was null!"));
     }
 }
 
