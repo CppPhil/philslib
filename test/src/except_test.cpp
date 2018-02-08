@@ -99,6 +99,10 @@ TEST_CASE("throw_with_source_info_test")
     }
 }
 
+#if PL_COMPILER == PL_COMPILER_MSVC
+#   pragma warning(push)
+#   pragma warning(disable:4127) // conditional expression is constant
+#endif // PL_COMPILER == PL_COMPILER_MSVC
 TEST_CASE("throw_if_null_test")
 {
     const void * const p1{ nullptr };
@@ -122,6 +126,9 @@ TEST_CASE("throw_if_null_test")
         CHECK(std::strstr(ex.what(), "p was null!"));
     }
 }
+#if PL_COMPILER == PL_COMPILER_MSVC
+#   pragma warning(pop)
+#endif // PL_COMPILER == PL_COMPILER_MSVC
 
 TEST_CASE("not_yet_implemented_test")
 {
