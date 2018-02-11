@@ -35,37 +35,6 @@
 #include "except.hpp" // pl::AssertionViolationException, pl::PreconditionViolationException, pl::PostconditionViolationException
 #include <ciso646> // not
 #include <cassert> // NDEBUG
-/*!
- * \def PL_DETAIL_ASSERTION_IMPLEMENTATION(condition, exceptionType, violationTypeString)
- * \brief Implementation macro not to be used directly.
- *
- * Implementation macro used in PL_CHECK_PRE, PL_CHECK_POST, PL_ASSERT, PL_DBG_CHECK_PRE,
- * PL_DBG_CHECK_POST and PL_DBG_ASSERT.
-**/
-
-/*!
- * \def PL_CHECK_PRE(precondition)
- * \brief Macro to check a precondition.
- *
- * Throws pl::PreconditionViolationException with an appropriate message if
- * precondition evaluates to false.
-**/
-
-/*!
- * \def PL_CHECK_POST(postcondition)
- * \brief Macro to check a postcondition.
- *
- * Throws pl::PostconditionViolationException with an appropriate message if
- * postcondition evaluates to false.
-**/
-
-/*!
- * \def PL_ASSERT(condition)
- * \brief Macro to check a condition.
- *
- * Throws pl::AssertionViolationException with an appropriate message if
- * postcondition evaluates to false.
-**/
 
 /*!
  * \def PL_DBG_CHECK_PRE(precondition)
@@ -121,6 +90,14 @@
  * If NDEBUG is defined does nothing.
 **/
 
+
+/*!
+ * \def PL_DETAIL_ASSERTION_IMPLEMENTATION(condition, exceptionType, violationTypeString)
+ * \brief Implementation macro not to be used directly.
+ *
+ * Implementation macro used in PL_CHECK_PRE, PL_CHECK_POST, PL_ASSERT, PL_DBG_CHECK_PRE,
+ * PL_DBG_CHECK_POST and PL_DBG_ASSERT.
+**/
 #define PL_DETAIL_ASSERTION_IMPLEMENTATION(condition, exceptionType, violationTypeString) \
     PL_BEGIN_MACRO \
         if (not (condition)) { \
@@ -132,31 +109,88 @@
         } \
     PL_END_MACRO
 
+/*!
+ * \def PL_DETAIL_ASSERTION_IMPLEMENTATION_MSG(condition, exceptionType, violationTypeString, message)
+ * \brief Implementation macro not to be used directly.
+ *
+ * Implementation macro used in PL_ASSERT_MSG and PL_DBG_ASSERT_MSG.
+**/
+#define PL_DETAIL_ASSERTION_IMPLEMENTATION_MSG(condition, exceptionType, violationTypeString, message) \
+    PL_BEGIN_MACRO \
+        if (not (condition)) { \
+            PL_THROW_WITH_SOURCE_INFO(exceptionType, \
+                violationTypeString " VIOLATION:\n" \
+                 message "\n" \
+                PL_STRINGIFY(condition) \
+                "\nevaluated to false!" \
+            ); \
+        } \
+    PL_END_MACRO
+
+/*!
+ * \def PL_CHECK_PRE(precondition)
+ * \brief Macro to check a precondition.
+ *
+ * Throws pl::PreconditionViolationException with an appropriate message if
+ * precondition evaluates to false.
+**/
 #define PL_CHECK_PRE(precondition) \
     PL_DETAIL_ASSERTION_IMPLEMENTATION(precondition, \
         ::pl::PreconditionViolationException, \
         "PRECONDITION" \
     )
 
+/*!
+ * \def PL_CHECK_POST(postcondition)
+ * \brief Macro to check a postcondition.
+ *
+ * Throws pl::PostconditionViolationException with an appropriate message if
+ * postcondition evaluates to false.
+**/
 #define PL_CHECK_POST(postcondition) \
     PL_DETAIL_ASSERTION_IMPLEMENTATION(postcondition, \
         ::pl::PostconditionViolationException, \
         "POSTCONDITION" \
     )
 
+/*!
+ * \def PL_ASSERT(condition)
+ * \brief Macro to check a condition.
+ *
+ * Throws pl::AssertionViolationException with an appropriate message if
+ * postcondition evaluates to false.
+**/
 #define PL_ASSERT(condition) \
     PL_DETAIL_ASSERTION_IMPLEMENTATION(condition, \
         ::pl::AssertionViolationException, \
         "ASSERTION" \
     )
 
+/*!
+ * \def PL_ASSERT_MSG(condition, message)
+ * \brief Macro to check a condition and display a custom message in case
+ *        that the condition eventuated to false.
+ *
+ * Throws pl::AssertionViolationException with an appropriate message if
+ * postcondition evaluates to false.
+**/
+#define PL_ASSERT_MSG(condition, message) \
+    PL_DETAIL_ASSERTION_IMPLEMENTATION(condition, \
+        ::pl::AssertionViolationException, \
+        "ASSERTION", \
+        message \
+    )
+
 #ifdef NDEBUG
 #   define PL_DBG_CHECK_PRE(precondition) PL_BEGIN_MACRO PL_END_MACRO /* do nothing */
 #   define PL_DBG_CHECK_POST(postcondition) PL_BEGIN_MACRO PL_END_MACRO  /* do nothing */
 #   define PL_DBG_ASSERT(condition) PL_BEGIN_MACRO PL_END_MACRO  /* do nothing */
+#   define PL_DBG_ASSERT_MSG(condition, message) PL_BEGIN_MACRO PL_END_MACRO /* do nothing */
 #else
 #   define PL_DBG_CHECK_PRE(precondition) PL_CHECK_PRE(precondition)
 #   define PL_DBG_CHECK_POST(postcondition) PL_CHECK_POST(postcondition)
 #   define PL_DBG_ASSERT(condition) PL_ASSERT(condition)
+#   define PL_DBG_ASSERT_MSG(condition, message) PL_ASSERT_MSG(condition, message)
 #endif
+
 #endif // INCG_PL_ASSERT_HPP
