@@ -34,7 +34,7 @@ namespace pl
 PL_NODISCARD int vasprintf(
     PL_OUT std::unique_ptr<char[]> *strp,
     PL_IN PL_FMT_STR(const char *)fmt,
-    std::va_list ap) noexcept
+    const std::va_list ap) noexcept
 {
     std::va_list args2{ };
     va_copy(args2, ap);
@@ -58,7 +58,7 @@ PL_NODISCARD int vasprintf(
 PL_NODISCARD int vasprintf(
     PL_OUT std::string *strp,
     PL_IN PL_FMT_STR(const char *)fmt,
-    std::va_list ap) noexcept
+    const std::va_list ap) noexcept
 {
     std::va_list args2{ };
     va_copy(args2, ap);

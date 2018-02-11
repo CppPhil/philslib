@@ -49,7 +49,7 @@ namespace algo
  * \param comp Comparison function object (i.e. an object that satisfies the
  *             requirements of Compare,
  *             see: http://en.cppreference.com/w/cpp/concept/Compare) which
- *             returns ​true if the first argument is "less" than the second.
+ *             returns true if the first argument is "less" than the second.
  *             The signature of the comparison function should be equivalent to
  *             the following:
  *             bool cmp(const Type1 &a, const Type2 &b);

@@ -41,30 +41,6 @@
 #include <initializer_list> // std::initializer_list
 #include <type_traits> // std::is_array
 
-/*!
- * \def PL_BEGIN_END(cont)
- * \brief Macro that can be used to call a function that expects begin and
- *        end iterators to cont.
-**/
-
-/*!
- * \def PL_CBEGIN_CEND(cont)
- * \brief Macro that can be used to call a function that expects cbegin and
- *        cend iterators to cont.
-**/
-
-/*!
- * \def PL_RBEGIN_REND(cont)
- * \brief Macro that can be used to call a function that expects rbegin and
- *        rend iterators to cont.
-**/
-
-/*!
- * \def PL_CRBEGIN_CREND(cont)
- * \brief Macro that can be used to call a function that expects crbegin and
- *        crend iterators to cont.
-**/
-
 namespace pl
 {
 /*!
@@ -238,8 +214,31 @@ constexpr auto crend(PL_IN const Container &container) noexcept -> decltype(auto
 }
 } // namespace pl
 
+/*!
+ * \def PL_BEGIN_END(cont)
+ * \brief Macro that can be used to call a function that expects begin and
+ *        end iterators to cont.
+**/
 #define PL_BEGIN_END(cont) ::pl::begin(cont), ::pl::end(cont)
+
+/*!
+ * \def PL_CBEGIN_CEND(cont)
+ * \brief Macro that can be used to call a function that expects cbegin and
+ *        cend iterators to cont.
+**/
 #define PL_CBEGIN_CEND(cont) ::pl::cbegin(cont), ::pl::cend(cont)
+
+/*!
+ * \def PL_RBEGIN_REND(cont)
+ * \brief Macro that can be used to call a function that expects rbegin and
+ *        rend iterators to cont.
+**/
 #define PL_RBEGIN_REND(cont) ::pl::rbegin(cont), ::pl::rend(cont)
+
+/*!
+ * \def PL_CRBEGIN_CREND(cont)
+ * \brief Macro that can be used to call a function that expects crbegin and
+ *        crend iterators to cont.
+**/
 #define PL_CRBEGIN_CREND(cont) ::pl::crbegin(cont), ::pl::crend(cont)
 #endif // INCG_PL_BEGIN_END_HPP

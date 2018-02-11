@@ -1,0 +1,715 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="Project"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="philslib">
+				<Option output="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/libphilslib.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DNDEBUG"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/5.3.0/include/c++"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/5.3.0/include/c++/mingw32"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/5.3.0/include/c++/backward"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/5.3.0/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/5.3.0/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/5.3.0/include-fixed"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/5.3.0/../../../../mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/Makefile&quot;  VERBOSE=1 philslib"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="philslib/fast">
+				<Option output="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/libphilslib.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DNDEBUG"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/5.3.0/include/c++"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/5.3.0/include/c++/mingw32"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/5.3.0/include/c++/backward"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/5.3.0/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/5.3.0/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/5.3.0/include-fixed"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/5.3.0/../../../../mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/Makefile&quot;  VERBOSE=1 philslib/fast"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="unittest">
+				<Option output="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/unittest.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DNDEBUG"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/5.3.0/include/c++"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/5.3.0/include/c++/mingw32"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/5.3.0/include/c++/backward"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/5.3.0/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/5.3.0/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/5.3.0/include-fixed"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/5.3.0/../../../../mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/Makefile&quot;  VERBOSE=1 unittest"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="unittest/fast">
+				<Option output="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/unittest.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DNDEBUG"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/5.3.0/include/c++"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/5.3.0/include/c++/mingw32"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/5.3.0/include/c++/backward"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/5.3.0/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/5.3.0/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/5.3.0/include-fixed"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/5.3.0/../../../../mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/Makefile&quot;  VERBOSE=1 unittest/fast"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="test">
+				<Option working_dir="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/Makefile&quot;  VERBOSE=1 test"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/algo/clamp.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/algo/destroy.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/algo/destroy_at.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/algo/destroy_n.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/algo/erase.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/algo/for_each_n.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/algo/ranged_algorithms.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/algo/slide.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/algo/uninitialized_default_construct.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/algo/uninitialized_default_construct_n.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/algo/uninitialized_move.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/algo/uninitialized_move_n.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/algo/uninitialized_value_construct.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/algo/uninitialized_value_construct_n.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/alloca.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/annotations.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/apply.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/as_bytes.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/as_const.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/asprintf.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/assert.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/begin_end.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/begin_end_macro.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/bitmask.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/bits.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/bswap.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/byte.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/char_to_int.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/checked_delete.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/compiler.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/concept_poly.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/cont/at.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/cont/back.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/cont/data.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/cont/empty.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/cont/front.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/cont/make_array.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/cont/size.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/cont/to_array.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/current_function.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/eprintf.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/except.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/for_each_argument.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/glue.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/hash.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/inline.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/integer.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/invoke.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/iterate_reversed.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/make_from_tuple.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/memxor.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/meta/bool_constant.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/meta/conjunction.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/meta/container_traits.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/meta/detection_idiom.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/meta/disable_if.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/meta/disjunction.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/meta/identity.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/meta/is_initializer_list.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/meta/is_reference_wrapper.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/meta/iterator_traits.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/meta/negation.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/meta/nested_types.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/meta/none.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/meta/remove_cvref.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/meta/void_t.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/named_operator.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/negate_predicate.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/no_macro_substitution.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/noncopyable.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/numeric.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/observer_ptr.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/os.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/overload.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/packed.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/print_bytes_as_hex.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/random_number_generator.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/raw_memory_array.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/raw_storage.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/restrict.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/source_line.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/strdup.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/stringify.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/thd/concurrent.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/thd/monitor.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/thd/then.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/thd/thread_pool.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/thd/thread_safe_queue.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/timer.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/toggle_bool.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/unrelated_pointer_cast.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/unused.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/vla.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/include/pl/zero_memory.hpp">
+			<Option target="philslib"/>
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/src/pl/asprintf.cpp">
+			<Option target="philslib"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/src/pl/eprintf.cpp">
+			<Option target="philslib"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/src/pl/except.cpp">
+			<Option target="philslib"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/src/pl/print_bytes_as_hex.cpp">
+			<Option target="philslib"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/src/pl/strdup.cpp">
+			<Option target="philslib"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/src/pl/thd/thread_pool.cpp">
+			<Option target="philslib"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/src/pl/timer.cpp">
+			<Option target="philslib"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/doctest.h">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/include/destroy_test_type.hpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/include/freeer.hpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/include/static_assert.hpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/algo/clamp_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/algo/destroy_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/algo/erase_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/algo/for_each_n_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/algo/slide_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/algo/uninitialized_construction_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/alloca_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/apply_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/as_bytes_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/as_const_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/asprintf_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/assert_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/begin_end_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/bitmask_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/bits_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/bswap_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/char_to_int_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/checked_delete_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/concept_poly_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/cont/at_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/cont/back_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/cont/data_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/cont/empty_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/cont/front_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/cont/make_array_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/cont/size_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/cont/to_array_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/current_function_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/destroy_test_type.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/eprintf_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/except_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/freeer.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/meta/bool_constant_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/meta/conjunction_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/meta/container_traits_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/meta/detection_idiom_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/meta/disable_if_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/meta/disjunction_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/meta/identity_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/meta/is_initializer_list_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/meta/is_reference_wrapper_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/meta/iterator_traits_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/meta/negation_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/meta/nested_types_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/meta/none_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/meta/remove_cvref_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/meta/void_t_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/test_main.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/thd/concurrent_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/thd/monitor_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/thd/then_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/thd/thread_pool_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/test/src/thd/thread_safe_queue_test.cpp">
+			<Option target="unittest"/>
+		</Unit>
+		<Unit filename="C:/Users/Andre/Desktop/Dokumente/C++/GitHub/philslib/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

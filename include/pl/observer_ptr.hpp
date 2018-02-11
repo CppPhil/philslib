@@ -30,7 +30,7 @@
 **/
 #ifndef INCG_PL_OBSERVER_PTR_HPP
 #define INCG_PL_OBSERVER_PTR_HPP
-#include "annotations.hpp" // PL_IN_OPT, PL_INOUT, PL_NODISCARD
+#include "annotations.hpp" // PL_IN_OPT, PL_INOUT, PL_NODISCARD, PL_IMPLICIT
 #include "assert.hpp" // PL_DBG_CHECK_PRE
 #include <ciso646> // not
 #include <cstddef> // std::nullptr_t, std::size_t
@@ -77,7 +77,7 @@ public:
     /*!
      * \brief Constructs an ObserverPtr that has no corresponding watched object.
     **/
-    constexpr ObserverPtr(std::nullptr_t) noexcept
+    PL_IMPLICIT constexpr ObserverPtr(std::nullptr_t) noexcept
         : m_p{ nullptr }
     {
     }
@@ -99,7 +99,7 @@ public:
     **/
     template <typename WatchedType2,
               typename = std::enable_if_t<std::is_convertible<WatchedType2 *, element_type *>::value>>
-    ObserverPtr(ObserverPtr<WatchedType2> other) noexcept
+    PL_IMPLICIT ObserverPtr(ObserverPtr<WatchedType2> other) noexcept
         : m_p{ other.get() }
     {
     }

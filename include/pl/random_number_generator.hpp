@@ -59,7 +59,7 @@ public:
 
     // assume isLarge == true
 
-    explicit UrbgStorageImpl(std::random_device::result_type seed)
+    explicit UrbgStorageImpl(const std::random_device::result_type seed)
         : m_urbg{ std::make_unique<element_type>(seed) }
     {
     }
@@ -268,7 +268,7 @@ public:
      * \return the boolean value generated.
     **/
     template <typename Bool>
-    auto generate(double trueChance = 0.5)
+    auto generate(const double trueChance = 0.5)
     -> std::enable_if_t<std::is_same<meta::remove_cvref_t<Bool>, bool>::value, bool>
     {
         std::bernoulli_distribution dist{ trueChance };
