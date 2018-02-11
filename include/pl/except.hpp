@@ -36,6 +36,7 @@
 #include "stringify.hpp" // PL_STRINGIFY
 #include <string> // std::string
 #include <stdexcept> // std::runtime_error
+
 /*!
  * \def PL_DEFINE_EXCEPTION_TYPE(exceptionTypeIdentifier, baseClass)
  * \brief Defines an exception type. Its name will be exceptionTypeIdentifier
@@ -43,37 +44,6 @@
  *        in the current namespace. This macro makes defining new exception
  *        types a lot more convenient by generating a lot of boilerplate code.
 **/
-
-/*!
- * \def PL_THROW_WITH_SOURCE_INFO(exceptionType, message)
- * \brief Throws an exception of type exceptionType with the message message
- *        including information regarding where the exception was thrown.
- * \note Note that the line number may have been manipulated using #line.
- *
- * Includes the file, line and function from where the exception was thrown
- * in the message of the exception object of type exceptionType that can be
- * accessed via the .what() member function. The first parameter of this macro
- * must be an exception type, that type will be the type of the exception
- * thrown by the macro. The second parameter of the macro is the message
- * of the user to include in the exception object's message, std::string must
- * be constructible from message.
-**/
-
-/*!
- * \def PL_THROW_IF_NULL(pointer)
- * \brief Throws pl::NullPointerException if the pointer passed in is null.
- * \note Uses PL_THROW_WITH_SOURCE_INFO internally.
- * \see PL_THROW_WITH_SOURCE_INFO
-**/
-
-/*!
- * \def PL_NOT_YET_IMPLEMENTED
- * \brief Throws pl::NotYetImplementedException. Can be used to 'implement'
- *        functions that are net yet implmented so that they throw when called.
- * \note Uses PL_THROW_WITH_SOURCE_INFO internally.
- * \see PL_THROW_WITH_SOURCE_INFO
-**/
-
 #define PL_DEFINE_EXCEPTION_TYPE(exceptionTypeIdentifier, baseClass) \
     class exceptionTypeIdentifier \
         : public baseClass \
@@ -94,6 +64,20 @@
         \
     }
 
+/*!
+ * \def PL_THROW_WITH_SOURCE_INFO(exceptionType, message)
+ * \brief Throws an exception of type exceptionType with the message message
+ *        including information regarding where the exception was thrown.
+ * \note Note that the line number may have been manipulated using #line.
+ *
+ * Includes the file, line and function from where the exception was thrown
+ * in the message of the exception object of type exceptionType that can be
+ * accessed via the .what() member function. The first parameter of this macro
+ * must be an exception type, that type will be the type of the exception
+ * thrown by the macro. The second parameter of the macro is the message
+ * of the user to include in the exception object's message, std::string must
+ * be constructible from message.
+**/
 #define PL_THROW_WITH_SOURCE_INFO(exceptionType, message) \
     throw exceptionType{ \
         "Message: " \
@@ -105,6 +89,12 @@
         + std::string{ PL_CURRENT_FUNCTION } \
     }
 
+/*!
+ * \def PL_THROW_IF_NULL(pointer)
+ * \brief Throws pl::NullPointerException if the pointer passed in is null.
+ * \note Uses PL_THROW_WITH_SOURCE_INFO internally.
+ * \see PL_THROW_WITH_SOURCE_INFO
+**/
 #define PL_THROW_IF_NULL(pointer) \
     PL_BEGIN_MACRO \
     if ((pointer) == nullptr) { \
@@ -113,6 +103,13 @@
     } \
     PL_END_MACRO
 
+/*!
+ * \def PL_NOT_YET_IMPLEMENTED
+ * \brief Throws pl::NotYetImplementedException. Can be used to 'implement'
+ *        functions that are net yet implemented so that they throw when called.
+ * \note Uses PL_THROW_WITH_SOURCE_INFO internally.
+ * \see PL_THROW_WITH_SOURCE_INFO
+**/
 #define PL_NOT_YET_IMPLEMENTED() \
     PL_THROW_WITH_SOURCE_INFO(pl::NotYetImplementedException, \
         "function has not yet been implemented!")
