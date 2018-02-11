@@ -31,7 +31,7 @@
 **/
 #ifndef INCG_PL_OVERLOAD_HPP
 #define INCG_PL_OVERLOAD_HPP
-#include "annotations.hpp" // PL_IN, PL_IMPLICIT
+#include "annotations.hpp" // PL_IN
 #include "meta/remove_cvref.hpp" // pl::meta::remove_cvref_t
 #include <utility> // std::forward
 
@@ -78,7 +78,7 @@ public:
      * \param lambda1 The first lambda to construct.
     **/
     template <typename FirstLambda>
-    PL_IMPLICIT Overloaded(PL_IN FirstLambda &&lambda1)
+    explicit Overloaded(PL_IN FirstLambda &&lambda1)
         : Lambda1{ std::forward<FirstLambda>(lambda1) }
     {
     }

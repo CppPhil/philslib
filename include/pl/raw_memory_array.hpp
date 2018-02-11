@@ -88,7 +88,7 @@ public:
     **/
     RawMemoryArray(
         PL_OUT void *rawMemory,
-        const size_type byteCount,
+        size_type byteCount,
         PL_IN const_reference initialValue = value_type())
         : m_data{ static_cast<pointer>(rawMemory) },
           m_size{ byteCount / sizeof(value_type) }
@@ -126,7 +126,7 @@ public:
      *         the RawMemoryArray.
      * \note Constant complexity.
     **/
-    PL_NODISCARD reference at(const size_type pos)
+    PL_NODISCARD reference at(size_type pos)
     {
         if (not (pos < size())) {
             throw std::out_of_range{
@@ -146,7 +146,7 @@ public:
      *         the RawMemoryArray.
      * \note Constant complexity.
     **/
-    PL_NODISCARD const_reference at(const size_type pos) const
+    PL_NODISCARD const_reference at(size_type pos) const
     {
         return const_cast<this_type *>(this)->at(pos);
     }
@@ -159,7 +159,7 @@ public:
      * \warning Causes undefined behavior if 'pos' is out of bounds.
      * \note Constant complexity.
     **/
-    PL_NODISCARD reference operator[](const size_type pos) noexcept
+    PL_NODISCARD reference operator[](size_type pos) noexcept
     {
         PL_DBG_CHECK_PRE(pos < size());
         return m_data[pos];
@@ -173,7 +173,7 @@ public:
      * \warning Causes undefined behavior if 'pos' is out of bounds.
      * \note Constant complexity.
     **/
-    PL_NODISCARD const_reference operator[](const size_type pos) const noexcept
+    PL_NODISCARD const_reference operator[](size_type pos) const noexcept
     {
         return const_cast<this_type *>(this)->operator[](pos);
     }

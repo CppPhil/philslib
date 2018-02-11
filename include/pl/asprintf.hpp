@@ -54,7 +54,7 @@ namespace pl
 PL_NODISCARD int vasprintf(
     PL_OUT std::unique_ptr<char[]> *strp,
     PL_IN PL_FMT_STR(const char *)fmt,
-    const std::va_list ap) noexcept PL_PRINTF_FUNCTION(2, 0);
+    std::va_list ap) noexcept PL_PRINTF_FUNCTION(2, 0);
 
 /*!
  * \brief Creates a string and prints to it in a printf style.
@@ -72,7 +72,7 @@ PL_NODISCARD int vasprintf(
 PL_NODISCARD int vasprintf(
     PL_OUT std::string *strp,
     PL_IN PL_FMT_STR(const char *)fmt,
-    const std::va_list ap) noexcept PL_PRINTF_FUNCTION(2, 0);
+    std::va_list ap) noexcept PL_PRINTF_FUNCTION(2, 0);
 
 /*!
  * \brief Allocates a string and prints to it in a printf style.

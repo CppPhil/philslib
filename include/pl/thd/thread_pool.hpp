@@ -84,7 +84,7 @@ public:
      * of threads to be used. However, note that
      * std::thread::hardware_concurrency() may return 0 on error.
     **/
-    explicit ThreadPool(const std::size_t amtThreads);
+    explicit ThreadPool(std::size_t amtThreads);
 
     /*!
      * \brief This type is non-copyable.
@@ -255,7 +255,7 @@ private:
          * \param priority The priority with which the task is to be run.
          *        The Executors will remain sorted by this criterion.
         **/
-        Executor(PL_IN const Task &task, const std::uint8_t priority)
+        Executor(PL_IN const Task &task, std::uint8_t priority)
             : ExecutorBase{ priority },
               m_task{ task },
               m_result{ }
@@ -314,7 +314,7 @@ private:
          * \note The function that is run by the threads will always take the
          *       'greatest' task, that is the one with the highest priority.
         **/
-        Executor(PL_IN const Task &task, const std::uint8_t priority)
+        Executor(PL_IN const Task &task, std::uint8_t priority)
             : ExecutorBase{ priority },
               m_task{ task },
               m_result{ }
