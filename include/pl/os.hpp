@@ -100,12 +100,12 @@
 #   define PL_OS PL_OS_MAC
 #   define PL_OS_NAME "MacOS"
 #elif defined(__unix__)
-#   if defined(__linux__)
-#       define PL_OS PL_OS_LINUX
-#       define PL_OS_NAME "Linux"
-#   elif defined(__ANDROID__)
+#   if defined(__ANDROID__)
 #       define PL_OS PL_OS_ANDROID
 #       define PL_OS_NAME "Android"
+#   elif defined(__linux__)
+#       define PL_OS PL_OS_LINUX
+#       define PL_OS_NAME "Linux"
 #   elif defined(__FreeBSD__)
 #       define PL_OS PL_OS_FREEBSD
 #       define PL_OS_NAME "FreeBSD"
