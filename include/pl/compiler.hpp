@@ -120,7 +120,7 @@
 #   define PL_COMPILER_MAJOR _MSC_FULL_VER / 10000000
 #   define PL_COMPILER_MINOR _MSC_FULL_VER % 10000000 / 100000
 #   define PL_COMPILER_PATCH _MSC_FULL_VER % 100000
-#   define PL_COMPILER_NAME "Microsoft Visual Studio"
+#   define PL_COMPILER_NAME "Microsoft Visual C++ Compiler"
 #elif PL_COMPILER == PL_COMPILER_GCC
 #   define PL_COMPILER_MAJOR __GNUC__
 #   define PL_COMPILER_MINOR __GNUC_MINOR__
