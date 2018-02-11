@@ -33,11 +33,45 @@
 #if PL_COMPILER == PL_COMPILER_GCC
 #   pragma GCC diagnostic pop
 #endif // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/pl/assert.hpp" // PL_CHECK_PRE, PL_CHECK_POST, PL_ASSERT
+#include <cstring> // std::strstr
+#include <string> // std::string
+#include "../../include/pl/assert.hpp" // PL_CHECK_PRE, PL_CHECK_POST, PL_ASSERT, PL_ASSERT_MSG
 
 TEST_CASE("assert_test")
 {
+    static constexpr char str1[]{ "test" };
+    const char * const str2{ "test" };
+    const std::string str3{ "test" };
+
     CHECK_THROWS_AS(PL_CHECK_PRE(false), pl::PreconditionViolationException);
     CHECK_THROWS_AS(PL_CHECK_POST(false), pl::PostconditionViolationException);
     CHECK_THROWS_AS(PL_ASSERT(false), pl::AssertionViolationException);
+    CHECK_THROWS_AS(PL_ASSERT_MSG(false, "test"), pl::AssertionViolationException);
+    CHECK_THROWS_AS(PL_ASSERT_MSG(false, str1), pl::AssertionViolationException);
+    CHECK_THROWS_AS(PL_ASSERT_MSG(false, str2), pl::AssertionViolationException);
+    CHECK_THROWS_AS(PL_ASSERT_MSG(false, str3), pl::AssertionViolationException);
+
+    try {
+        PL_ASSERT_MSG(false, "test");
+    } catch (const pl::AssertionViolationException &ex) {
+        CHECK(std::strstr(ex.what(), "assertion message: test") != nullptr);
+    }
+
+    try {
+        PL_ASSERT_MSG(false, str1);
+    } catch (const pl::AssertionViolationException &ex) {
+        CHECK(std::strstr(ex.what(), "assertion message: test") != nullptr);
+    }
+
+    try {
+        PL_ASSERT_MSG(false, str2);
+    } catch (const pl::AssertionViolationException &ex) {
+        CHECK(std::strstr(ex.what(), "assertion message: test") != nullptr);
+    }
+
+    try {
+        PL_ASSERT_MSG(false, str3);
+    } catch (const pl::AssertionViolationException &ex) {
+        CHECK(std::strstr(ex.what(), "assertion message: test") != nullptr);
+    }
 }

@@ -122,5 +122,4 @@
 #   define PL_OS_NAME "Unknown"
 #   warning "Operating system could not be detected"
 #endif
-
 #endif // INCG_PL_OS_HPP

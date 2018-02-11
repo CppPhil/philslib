@@ -123,7 +123,7 @@ TEST_CASE("throw_if_null_test")
         int *p{ nullptr };
         PL_THROW_IF_NULL(p);
     } catch (const pl::NullPointerException &ex) {
-        CHECK(std::strstr(ex.what(), "p was null!"));
+        CHECK(std::strstr(ex.what(), "p was null!") != nullptr);
     }
 }
 #if PL_COMPILER == PL_COMPILER_MSVC

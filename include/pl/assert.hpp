@@ -35,6 +35,7 @@
 #include "except.hpp" // pl::AssertionViolationException, pl::PreconditionViolationException, pl::PostconditionViolationException
 #include <ciso646> // not
 #include <cassert> // NDEBUG
+#include <string> // std::string
 
 /*!
  * \def PL_DBG_CHECK_PRE(precondition)
@@ -120,7 +121,7 @@
         if (not (condition)) { \
             PL_THROW_WITH_SOURCE_INFO(exceptionType, \
                 violationTypeString " VIOLATION:\n" \
-                 message "\n" \
+                "assertion message: " + std::string{ message } + "\n" \
                 PL_STRINGIFY(condition) \
                 "\nevaluated to false!" \
             ); \
@@ -169,13 +170,13 @@
 /*!
  * \def PL_ASSERT_MSG(condition, message)
  * \brief Macro to check a condition and display a custom message in case
- *        that the condition eventuated to false.
+ *        that the condition evaluated to false.
  *
  * Throws pl::AssertionViolationException with an appropriate message if
- * postcondition evaluates to false.
+ * condition evaluates to false.
 **/
 #define PL_ASSERT_MSG(condition, message) \
-    PL_DETAIL_ASSERTION_IMPLEMENTATION(condition, \
+    PL_DETAIL_ASSERTION_IMPLEMENTATION_MSG(condition, \
         ::pl::AssertionViolationException, \
         "ASSERTION", \
         message \
@@ -192,5 +193,4 @@
 #   define PL_DBG_ASSERT(condition) PL_ASSERT(condition)
 #   define PL_DBG_ASSERT_MSG(condition, message) PL_ASSERT_MSG(condition, message)
 #endif
-
 #endif // INCG_PL_ASSERT_HPP
