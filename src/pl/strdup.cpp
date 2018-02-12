@@ -40,7 +40,7 @@ namespace
 **/
 std::size_t strnlen(
     PL_IN PL_NULL_TERMINATED(const char *)string,
-    const std::size_t maximumLength) noexcept
+    std::size_t maximumLength) noexcept
 {
     std::size_t pos{ 0U };
 
@@ -65,7 +65,7 @@ PL_NODISCARD std::unique_ptr<char[]> strdup(
 
 PL_NODISCARD std::unique_ptr<char[]> strndup(
     PL_IN PL_NULL_TERMINATED(const char *)str,
-    const std::size_t size) noexcept
+    std::size_t size) noexcept
 {
     const auto stringLength = strnlen(str, size);
     auto returnValue = std::make_unique<char[]>(stringLength + 1U);

@@ -47,7 +47,8 @@
  * \def PL_OS_LINUX
  * \brief PL_OS will be defined as this if the operating system used is
  *        GNU/Linux.
- * \note Everything running a Linux kernel will be considered Linux.
+ * \note Everything running a Linux kernel except for Android systems
+ *       will be considered Linux.
 **/
 
 /*!

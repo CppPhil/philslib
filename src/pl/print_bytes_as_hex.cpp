@@ -36,7 +36,7 @@ namespace pl
 {
 PrintBytesAsHex::PrintBytesAsHex(
     PL_IN const void *dataToPrint,
-    const std::size_t countBytes,
+    std::size_t countBytes,
     std::string delim)
     : m_dataToPrint{ dataToPrint },
       m_countBytes{ countBytes },

@@ -36,7 +36,7 @@ namespace pl
 {
 namespace thd
 {
-ThreadPool::ThreadPool(const std::size_t amtThreads)
+ThreadPool::ThreadPool(std::size_t amtThreads)
     : m_tasksShared{ },
       m_mutex{ },
       m_cv{ },
