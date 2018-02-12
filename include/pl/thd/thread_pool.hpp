@@ -356,14 +356,14 @@ private:
         Task m_task; //!< The task to be called in the call operator.
         std::promise<void> m_result; /*!< The result of calling the Task.
                                       *   Will be void or if an exception
-                                      *   occured, it will be that exception.
+                                      *   occurred, it will be that exception.
                                      **/
     };
 
     /*!
      * \brief Comparator class used in the priority queue.
      *        Helper to keep the tasks sorted according to their priority.
-     *        Derefences two objects passed in and compares the results using
+     *        Dereferences two objects passed in and compares the results using
      *        std::less.
     **/
     class DerefLess final

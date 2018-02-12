@@ -58,7 +58,7 @@ namespace algo
  * and last will now begin at place. Returns the new first and last iterators
  * of the range that was slid within the container.
  * Note that all iterators must point into the same container
- * Also note the the last iterator is not considered part of the range as
+ * Also note the last iterator is not considered part of the range as
  * ranges are typically half open in C++.
 **/
 template <typename RandomAccessIterator>

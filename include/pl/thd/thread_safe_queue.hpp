@@ -98,7 +98,7 @@ public:
     /*!
      * \brief Pushes the object passed into the parameter to the back of the
      *        queue.
-     * \param data The object to push the the back of the queue.
+     * \param data The object to push to the back of the queue.
      * \return A reference to this object.
      *
      * Will notify threads waiting for the queue to no longer be empty that
@@ -153,6 +153,6 @@ private:
     mutable std::mutex m_mutex;
     std::condition_variable m_cvHasElements;
 };
-} // namespace pl
 } // namespace thd
+} // namespace pl
 #endif // INCG_PL_THD_THREAD_SAFE_QUEUE_HPP

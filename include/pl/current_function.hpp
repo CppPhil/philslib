@@ -25,7 +25,7 @@
  */
 
 /*!
- * \file current_function
+ * \file current_function.hpp
  * \brief Exports an object like macro to get the name of the current function.
 **/
 #ifndef INCG_PL_CURRENT_FUNCTION_HPP

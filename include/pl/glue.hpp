@@ -39,6 +39,7 @@
  * \warning Do not use.
  * \see PL_GLUE
 **/
+#define PL_DETAIL_GLUE(a, b) a##b
 
 /*!
  * \def PL_GLUE(a, b)
@@ -46,8 +47,5 @@
  * \example PL_GLUE(hello, world) results in:
  *          helloworld
 **/
-
-#define PL_DETAIL_GLUE(a, b) a##b
-
 #define PL_GLUE(a, b) PL_DETAIL_GLUE(a, b)
 #endif // INCG_PL_GLUE_HPP

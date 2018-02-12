@@ -51,7 +51,7 @@ namespace pl
  *          with this function. Two pointers may never refer to the same object
  *          if they have different types, unless at least one of the pointers
  *          is cv void *, cv char *, cv unsigned char *, cv std::byte * (since C++17),
- *          or there there is a based/derived relation between the pointed to types
+ *          or there is a based/derived relation between the pointed to types
  *          or there merely is an unsigned/signed mismatch between the pointed to types.
  *          Note that std::uint8_t and std::int8_t are not required to be exceptions!
  *          This also makes common code like
@@ -91,7 +91,7 @@ constexpr CastTo unrelated_pointer_cast(PL_IN_OPT void *p) noexcept
  *          with this function. Two pointers may never refer to the same object
  *          if they have different types, unless at least one of the pointers
  *          is cv void *, cv char *, cv unsigned char *, cv std::byte * (since C++17),
- *          or there there is a based/derived relation between the pointed to types
+ *          or there is a based/derived relation between the pointed to types
  *          or there merely is an unsigned/signed mismatch between the pointed to types.
  *          Note that std::uint8_t and std::int8_t are not required to be exceptions!
  *          This also makes common code like

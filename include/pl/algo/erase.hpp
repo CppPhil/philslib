@@ -43,9 +43,9 @@ namespace algo
 namespace detail
 {
 /*!
- * \brief Helper function used by pl::erase. Removes all occurences that
+ * \brief Helper function used by pl::erase. Removes all occurrences that
  *        compare equal to elementToRemove from a vectorlike container.
- * \param container The container to remove all occurences of elementToRemove from.
+ * \param container The container to remove all occurrences of elementToRemove from.
  * \param elementToRemove The element to remove. All elements of the container that
  *        compare equal to this will be removed from the container.
 **/
@@ -55,7 +55,8 @@ inline void eraseHelper(
     PL_IN const Type &elementToRemove,
     meta::vectorlike_tag)
 {
-    container.erase(std::remove(container.begin(), container.end(),
+    container.erase(std::remove(container.begin(),
+                                container.end(),
                                 elementToRemove),
                     container.end());
 }
@@ -75,16 +76,17 @@ inline void eraseIfHelper(
     meta::vectorlike_tag)
 {
     container.erase(
-        std::remove_if(container.begin(), container.end(),
+        std::remove_if(container.begin(),
+                       container.end(),
                        std::forward<UnaryPredicate>(unaryPredicate)),
         container.end()
     );
 }
 
 /*!
- * \brief Helper function used by pl::erase. Removes all occurences that
+ * \brief Helper function used by pl::erase. Removes all occurrences that
  *        compare equal to elementToRemove from a listlike container.
- * \param container The container to remove all occurences of elementToRemove from.
+ * \param container The container to remove all occurrences of elementToRemove from.
  * \param elementToRemove The element to remove. All elements of the container that
  *        compare equal to this will be removed from the container.
 **/
@@ -115,11 +117,11 @@ inline void eraseIfHelper(
 }
 
 /*!
- * \brief Helper function used by pl::erase. Removes all occurences that
+ * \brief Helper function used by pl::erase. Removes all occurrences that
  *        compare equivalent (for ordered containers)
- *        or equal (for unorderede containers)
+ *        or equal (for unordered containers)
  *        to elementToRemove from an associative container.
- * \param container The container to remove all occurences equivalent/equal to elementToRemove from.
+ * \param container The container to remove all occurrences equivalent/equal to elementToRemove from.
  * \param elementToRemove The element to remove. All elements of the container that
  *        compare equivalent/equal to this will be removed from the container.
 **/

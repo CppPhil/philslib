@@ -78,7 +78,7 @@ public:
      * \param lambda1 The first lambda to construct.
     **/
     template <typename FirstLambda>
-    Overloaded(PL_IN FirstLambda &&lambda1)
+    explicit Overloaded(PL_IN FirstLambda &&lambda1)
         : Lambda1{ std::forward<FirstLambda>(lambda1) }
     {
     }

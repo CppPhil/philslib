@@ -59,7 +59,7 @@ public:
 
     /*!
      * \brief Type alias for the template type parameter of 'Concurrent'.
-     *        Can be accessed to query the template type paramater
+     *        Can be accessed to query the template type parameter
      *        that was used for a given 'Concurrent'.
     **/
     using element_type = Type;

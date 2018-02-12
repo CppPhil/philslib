@@ -38,6 +38,7 @@
  *        require a semicolon when used.
  * \see PL_END_MACRO
 **/
+#define PL_BEGIN_MACRO do {
 
 /*!
  * \def PL_END_MACRO
@@ -45,8 +46,5 @@
  *        require a semicolon when used.
  * \see PL_BEGIN_MACRO
 **/
-
-#define PL_BEGIN_MACRO do {
-
 #define PL_END_MACRO } while ((void)0, 0) /* avoid warnings */
 #endif // INCG_PL_BEGIN_END_MACRO_HPP
