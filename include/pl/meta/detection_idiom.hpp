@@ -45,8 +45,8 @@ struct nonesuch
 {
     nonesuch() = delete;
     ~nonesuch() = delete;
-    nonesuch(nonesuch const &) = delete;
-    void operator=(nonesuch const &) = delete;
+    nonesuch(const nonesuch &) = delete;
+    void operator=(const nonesuch &) = delete;
 };
 
 namespace detail

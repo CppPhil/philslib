@@ -24,10 +24,10 @@
  * For more information, please refer to <http://unlicense.org/>
  */
 
- /*!
-  * \file annotations.hpp
-  * \brief Exports various macros to annotate the source code.
- **/
+/*!
+ * \file annotations.hpp
+ * \brief Exports various macros to annotate the source code.
+**/
 #ifndef INCG_PL_ANNOTATIONS_HPP
 #define INCG_PL_ANNOTATIONS_HPP
 #include "compiler.hpp" // PL_COMPILER, PL_COMPILER_GCC, PL_COMPILER_CLANG, PL_COMPILER_ICC, PL_COMPILER_MSVC, PL_COMPILER_UNKNOWN
