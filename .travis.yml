@@ -92,14 +92,14 @@ script:
   - cd ..
   - echo "******************************************"
   # debug x86
-  - echo "DEBUG x64"
+  - echo "DEBUG x86"
   - CXX=/usr/bin/$(printenv COMPILER) ./build.sh Debug x86
   - cd ./Debug_x86
   - ctest --verbose .
   - cd ..
   - echo "******************************************"
   # release x86
-  - echo "RELEASE x64"
+  - echo "RELEASE x86"
   - CXX=/usr/bin/$(printenv COMPILER) ./build.sh Release x86
   - cd ./Release_x86
   - ctest --verbose .
