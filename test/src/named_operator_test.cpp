@@ -63,5 +63,4 @@ TEST_CASE("named_operator_test")
     const std::vector<int> v{ 1, 2, 3, 4, 5 };
     CHECK_UNARY(v <contains> 3);
     CHECK_UNARY_FALSE(v <contains> 0);
-
 }

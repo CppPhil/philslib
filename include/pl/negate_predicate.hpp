@@ -31,9 +31,11 @@
 #ifndef INCG_PL_NEGATE_PREDICATE_HPP
 #define INCG_PL_NEGATE_PREDICATE_HPP
 #include "annotations.hpp" // PL_IN
+#include "meta/remove_cvref.hpp" // pl::meta::remove_cvref_t
+#include "invoke.hpp" // pl::invoke
 #include <ciso646> // not
 #include <utility> // std::move, std::forward
-#include <type_traits> // std::is_nothrow_move_constructible, std::remove_reference_t
+#include <type_traits> // std::is_nothrow_move_constructible
 
 namespace pl
 {
@@ -70,7 +72,7 @@ public:
     template <typename ...Args>
     return_type operator()(PL_IN Args &&...args)
     {
-        return not m_predicate(std::forward<Args>(args)...);
+        return not ::pl::invoke(m_predicate, std::forward<Args>(args) ...);
     }
 
 private:
@@ -86,10 +88,10 @@ private:
  *         passed into the parameter.
 **/
 template <typename Predicate>
-detail::NegatedPredicate<std::remove_reference_t<Predicate>> negatePredicate(
+detail::NegatedPredicate<meta::remove_cvref_t<Predicate>> negatePredicate(
     PL_IN Predicate &&predicate)
 {
-    return detail::NegatedPredicate<std::remove_reference_t<Predicate>>{
+    return detail::NegatedPredicate<meta::remove_cvref_t<Predicate>>{
         std::forward<Predicate>(predicate)
     };
 }
