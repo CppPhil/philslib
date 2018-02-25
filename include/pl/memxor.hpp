@@ -52,7 +52,7 @@ namespace pl
  * \return 'destination' is returned.
  * \warning Make sure 'byteCount' is correct!
 **/
-constexpr void *memxor(
+inline void *memxor(
     PL_INOUT void * PL_RESTRICT destination,
     PL_IN const void * PL_RESTRICT source,
     std::size_t byteCount)
