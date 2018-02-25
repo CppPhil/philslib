@@ -31,7 +31,6 @@
 #ifndef INCG_PL_NUMERIC_HPP
 #define INCG_PL_NUMERIC_HPP
 #include <ciso646> // not, and
-#include <stdexcept> // std::invalid_argument
 #include <cstddef> // std::size_t
 
 namespace pl
@@ -45,9 +44,7 @@ namespace pl
 template <typename Numeric>
 constexpr bool isEven(Numeric numeric)
 {
-    constexpr Numeric zero = 0;
-    constexpr Numeric one = 1;
-    return ((numeric & one) == zero);
+    return ((numeric & Numeric{ 1 }) == Numeric{ });
 }
 
 /*!
@@ -64,25 +61,16 @@ constexpr bool isOdd(Numeric numeric)
 
 /*!
  * \brief Checks if checkMe is within lowerBound and upperBound.
- *        May throw if bounds are invalid.
  * \param checkMe The number to check.
  * \param lowerBound The lower bound.
  * \param upperBound The upper bound.
  * \return true if checkMe is >= lowerBound and checkMe is also <= upperBound;
  *         false otherwise.
- * \throws std::invalid_argument if lowerBound > upperBound.
- * \note lowerBound must be <= upperBound; otherwise this function throws.
+ * \warning lowerBound must be <= upperBound
 **/
 template <typename Numeric>
 constexpr bool isBetween(Numeric checkMe, Numeric lowerBound, Numeric upperBound)
 {
-    if (lowerBound > upperBound) {
-        throw std::invalid_argument{
-            "lowerBound was larger than upperBound "
-            "in pl::isBetween"
-        };
-    }
-
     return ((checkMe >= lowerBound) and (checkMe <= upperBound));
 }
 } // namespace pl
