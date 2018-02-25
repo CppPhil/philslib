@@ -34,13 +34,8 @@
 #   pragma GCC diagnostic pop
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../include/pl/no_macro_substitution.hpp" // PL_NO_MACRO_SUBSTITUTION
-#include "../../include/pl/os.hpp" // PL_OS, PL_OS_WINDOWS
 #include <cstdint> // std::uint32_t
 #include <limits> // std::numeric_limits
-#if PL_OS == PL_OS_WINDOWS
-#   include <vfw.h> // min
-#   include <Windef.h> // max
-#endif // PL_OS == PL_OS_WINDOWS
 
 #if !defined(min)
 #   define min(a, b)  (((a) < (b)) ? (a) : (b))
