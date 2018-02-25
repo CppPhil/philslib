@@ -54,4 +54,9 @@ TEST_CASE("no_macro_substitution_test")
 
     CHECK(minValue == 0U);
     CHECK(maxValue == 0xFFFFFFFFU);
+
+    int i{ 5 };
+    int j{ 7 };
+    CHECK(min(i, j) == i);
+    CHECK(max(i, j) == j);
 }
