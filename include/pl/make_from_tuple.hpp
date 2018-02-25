@@ -59,8 +59,8 @@ constexpr Ty makeFromTupleImpl(
  * \param tupleLike tuple whose elements to be used as arguments to the constructor of 'Ty'
  * \return The constructed 'Ty' object.
  * \note The tuple need not be std::tuple, and instead may be anything that
- *        supports std::get and std::tuple_size;
- *        in particular, std::array and std::pair may be used.
+ *       supports std::get and std::tuple_size;
+ *       in particular, std::array and std::pair may be used.
 **/
 template <typename Ty, typename TupleLike>
 constexpr Ty makeFromTuple(PL_IN TupleLike &&tupleLike)
