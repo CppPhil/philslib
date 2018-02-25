@@ -36,7 +36,6 @@
 #include "../../include/pl/negate_predicate.hpp" // pl::negatePredicate
 #include "../../include/pl/algo/ranged_algorithms.hpp" // pl::all_of
 #include <cstring> // std::strchr
-#include <iterator> // std::begin, std::end
 #include <vector> // std::vector
 
 namespace pl
