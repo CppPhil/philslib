@@ -148,7 +148,7 @@ public:
     **/
     constexpr void swap(PL_INOUT ObserverPtr &other) noexcept
     {
-        std::swap(m_p, other.m_p);
+        ::std::swap(m_p, other.m_p);
     }
 
     /*!
@@ -367,8 +367,8 @@ inline bool operator>=(
 **/
 template <typename WatchedType>
 inline void swap(
-    PL_INOUT ObserverPtr<WatchedType> &lhs,
-    PL_INOUT ObserverPtr<WatchedType> &rhs) noexcept
+    PL_INOUT ::pl::ObserverPtr<WatchedType> &lhs,
+    PL_INOUT ::pl::ObserverPtr<WatchedType> &rhs) noexcept
 {
     lhs.swap(rhs);
 }

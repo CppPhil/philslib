@@ -47,7 +47,7 @@ TEST_CASE("observer_ptr_test")
     std::string s{ "sample text" };
 
     pl::ObserverPtr<void> nullPtr{ nullptr };
-    pl::ObserverPtr<int> p{ &i };
+    pl::ObserverPtr<int> pointer{ &i };
     pl::ObserverPtr<std::string> sPtr{ &s };
 
     SUBCASE("nullptr_init") {
@@ -64,55 +64,55 @@ TEST_CASE("observer_ptr_test")
     }
 
     SUBCASE("converting_ctor") {
-        const pl::ObserverPtr<void> ptr{ p };
-        CHECK(ptr == p);
+        const pl::ObserverPtr<void> ptr{ pointer };
+        CHECK(ptr == pointer);
     }
 
     SUBCASE("release") {
-        CHECK(p.get() == &i);
-        int * const intPtr{ p.release() };
+        CHECK(pointer.get() == &i);
+        int * const intPtr{ pointer.release() };
         CHECK(intPtr == &i);
-        CHECK(intPtr != p.get());
-        CHECK(p == nullptr);
+        CHECK(intPtr != pointer.get());
+        CHECK(pointer == nullptr);
     }
 
     SUBCASE("reset") {
-        p.reset();
-        CHECK(p == nullptr);
-        p.reset(&i);
-        CHECK(p.get() == &i);
+        pointer.reset();
+        CHECK(pointer == nullptr);
+        pointer.reset(&i);
+        CHECK(pointer.get() == &i);
     }
 
     SUBCASE("swap_member") {
         pl::ObserverPtr<int> ptr{ };
-        ptr.swap(p);
+        ptr.swap(pointer);
 
-        CHECK(p == nullptr);
+        CHECK(pointer == nullptr);
         CHECK(ptr.get() == &i);
     }
 
     SUBCASE("swap_non_member") {
         pl::ObserverPtr<int> ptr{ };
-        swap(ptr, p);
+        ::pl::swap(ptr, pointer);
 
-        CHECK(p == nullptr);
+        CHECK(pointer == nullptr);
         CHECK(ptr.get() == &i);
     }
 
     SUBCASE("get") {
         CHECK(nullPtr.get() == nullptr);
-        CHECK(p.get() == &i);
+        CHECK(pointer.get() == &i);
     }
 
     SUBCASE("operator_bool") {
         CHECK_UNARY_FALSE(static_cast<bool>(nullPtr));
-        CHECK_UNARY(static_cast<bool>(p));
-        CHECK_UNARY(not nullPtr);
-        CHECK_UNARY_FALSE(not p);
+        CHECK_UNARY(static_cast<bool>(pointer));
+        CHECK_UNARY(not static_cast<bool>(nullPtr));
+        CHECK_UNARY_FALSE(not static_cast<bool>(pointer));
     }
 
     SUBCASE("indirection_operator") {
-        CHECK(*p == i);
+        CHECK(*pointer == i);
         CHECK(std::strcmp((*sPtr).data(), "sample text") == 0);
     }
 
@@ -154,6 +154,6 @@ TEST_CASE("observer_ptr_test")
             decltype(constObserverPtr.operator const int *()), const int *>::value);
 
         CHECK(constObserverPtr.get() == &i);
-        CHECK(constObserverPtr == p);
+        CHECK(constObserverPtr == pointer);
     }
 }
