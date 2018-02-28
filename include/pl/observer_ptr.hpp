@@ -146,7 +146,7 @@ public:
      * Swaps the watched object of *this and another ObserverPtr,
      * by invoking swap on the stored pointers of *this and other.
     **/
-    constexpr void swap(PL_INOUT ObserverPtr &other) noexcept
+    constexpr void swap(PL_INOUT ::pl::ObserverPtr<element_type> &other) noexcept
     {
         ::std::swap(m_p, other.m_p);
     }

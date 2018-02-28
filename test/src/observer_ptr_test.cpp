@@ -84,11 +84,11 @@ TEST_CASE("observer_ptr_test")
     }
 
     SUBCASE("swap_member") {
-        pl::ObserverPtr<int> ptr{ };
-        ptr.swap(pointer);
+        pl::ObserverPtr<int> localPointer{ nullptr };
+        localPointer.swap(pointer);
 
         CHECK(pointer == nullptr);
-        CHECK(ptr.get() == &i);
+        CHECK(localPointer.get() == &i);
     }
 
     SUBCASE("swap_non_member") {
