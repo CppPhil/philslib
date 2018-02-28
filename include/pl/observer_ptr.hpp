@@ -133,8 +133,12 @@ public:
      * \brief Set *this to watch the object pointed to by p.
      * \note .get() returns p after the call.
      * \param p Pointer to a new abject to watch.
+     * \note Not a constexpr function on msvc15.
     **/
-    constexpr void reset(PL_IN_OPT element_type *p = nullptr) noexcept
+#if (PL_COMPILER != PL_COMPILER_MSVC) || ((PL_COMPILER == PL_COMPILER_MSVC) && (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0)))
+    constexpr
+#endif
+    void reset(PL_IN_OPT element_type *p = nullptr) noexcept
     {
         m_p = p;
     }
