@@ -30,6 +30,7 @@
 **/
 #ifndef INCG_PL_OBSERVER_PTR_HPP
 #define INCG_PL_OBSERVER_PTR_HPP
+#include "compiler.hpp" // PL_COMPILER, PL_COMPILER_MSVC
 #include "annotations.hpp" // PL_IN_OPT, PL_INOUT, PL_NODISCARD, PL_IMPLICIT
 #include "assert.hpp" // PL_DBG_CHECK_PRE
 #include <ciso646> // not
@@ -38,6 +39,10 @@
 #include <functional> // std::hash
 #include <type_traits> // std::enable_if_t, std::is_convertible, std::add_lvalue_reference_t
 
+#if PL_COMPILER == PL_COMPILER_MSVC
+#   pragma warning(push)
+#   pragma warning(disable:4814) // in C++14 'constexpr' will not imply 'const'; consider explicitly specifying 'const'
+#endif // PL_COMPILER == PL_COMPILER_MSVC
 namespace pl
 {
 /*!
@@ -381,4 +386,7 @@ struct hash<::pl::ObserverPtr<Ty>>
     }
 };
 } // namespace std
+#if PL_COMPILER == PL_COMPILER_MSVC
+#   pragma warning(pop)
+#endif // PL_COMPILER == PL_COMPILER_MSVC
 #endif // INCG_PL_OBSERVER_PTR_HPP
