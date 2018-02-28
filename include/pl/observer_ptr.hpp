@@ -142,11 +142,15 @@ public:
     /*!
      * \brief Swaps the watched object of *this and another ObserverPtr.
      * \param other Another ObserverPtr boject to swap the watched object with.
+     * \note Not a constexpr function on msvc15.
      *
      * Swaps the watched object of *this and another ObserverPtr,
      * by invoking swap on the stored pointers of *this and other.
     **/
-    constexpr void swap(PL_INOUT ::pl::ObserverPtr<element_type> &other) noexcept
+#if (PL_COMPILER != PL_COMPILER_MSVC) || ((PL_COMPILER == PL_COMPILER_MSVC) && (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0)))
+    constexpr
+#endif
+    void swap(PL_INOUT ::pl::ObserverPtr<element_type> &other) noexcept
     {
         ::std::swap(m_p, other.m_p);
     }
