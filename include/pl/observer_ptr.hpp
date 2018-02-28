@@ -30,7 +30,7 @@
 **/
 #ifndef INCG_PL_OBSERVER_PTR_HPP
 #define INCG_PL_OBSERVER_PTR_HPP
-#include "compiler.hpp" // PL_COMPILER, PL_COMPILER_MSVC
+#include "compiler.hpp" // PL_COMPILER, PL_COMPILER_MSVC, ...
 #include "annotations.hpp" // PL_IN_OPT, PL_INOUT, PL_NODISCARD, PL_IMPLICIT
 #include "assert.hpp" // PL_DBG_CHECK_PRE
 #include <ciso646> // not
@@ -115,8 +115,13 @@ public:
      * \return A pointer to the previously watched object,
      *         or nullptr if there was no watched object,
      *         i.e. the value which would be returned by get() before the call.
+     * \note Not a constexpr function on msvc15.
     **/
-    PL_NODISCARD constexpr element_type *release() noexcept
+    PL_NODISCARD
+#if (PL_COMPILER != PL_COMPILER_MSVC) || ((PL_COMPILER == PL_COMPILER_MSVC) && (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0)))
+    constexpr
+#endif
+    element_type *release() noexcept
     {
         auto *returnValue = m_p;
         m_p = nullptr;
