@@ -85,6 +85,8 @@ public:
      *          std::int8_t is not legal as these types are not required to
      *          be aliases of the above mentioned types, which are exempt
      *          from the strict aliasing rules.
+     *          Additionally the raw memory must be suitably aligned for the
+     *          value_type objects that are to be placed into it.
     **/
     RawMemoryArray(
         PL_OUT void *rawMemory,
@@ -93,7 +95,6 @@ public:
         : m_data{ static_cast<pointer>(rawMemory) },
           m_size{ byteCount / sizeof(value_type) }
     {
-        PL_DBG_CHECK_PRE(rawMemory != nullptr);
         std::uninitialized_fill(begin(), end(), initialValue);
     }
 
@@ -161,7 +162,6 @@ public:
     **/
     PL_NODISCARD reference operator[](size_type pos) noexcept
     {
-        PL_DBG_CHECK_PRE(pos < size());
         return m_data[pos];
     }
 
@@ -353,7 +353,7 @@ public:
     **/
     PL_NODISCARD reverse_iterator rbegin() noexcept
     {
-        return end();
+        return reverse_iterator{ end() };
     }
 
     /*!
@@ -391,7 +391,7 @@ public:
     **/
     PL_NODISCARD reverse_iterator rend() noexcept
     {
-        return begin();
+        return reverse_iterator{ begin() };
     }
 
     /*!

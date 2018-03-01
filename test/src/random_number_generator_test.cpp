@@ -36,7 +36,6 @@
 #include "../../include/pl/random_number_generator.hpp" // pl::RandomNumberGenerator
 #include "../../include/pl/named_operator.hpp" // pl::makeNamedOperator
 #include "../../include/pl/numeric.hpp" // pl::isBetween
-#include <ciso646> // or, not
 #include <cstdint> // std::uint16_t, std::int16_t, std::uint32_t, std::int32_t, std::uint64_t, std::int64_t, ...
 #include <iterator> // std::begin, std::end
 #include <vector> // std::vector

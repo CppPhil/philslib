@@ -34,4 +34,3 @@
 #if PL_COMPILER == PL_COMPILER_GCC
 #   pragma GCC diagnostic pop
 #endif // PL_COMPILER == PL_COMPILER_GCC
-

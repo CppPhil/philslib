@@ -45,7 +45,7 @@ public:
      *        or std::calloc.
      * \param toBeFreed Pointer to the data to free.
     **/
-    void operator()(void *toBeFreed);
+    void operator()(void *toBeFreed) const noexcept;
 };
 } // namespace test
 } // namespace pl
