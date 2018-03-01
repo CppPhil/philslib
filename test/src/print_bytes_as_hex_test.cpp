@@ -38,6 +38,7 @@
 #include "../../include/pl/print_bytes_as_hex.hpp" // pl::PrintBytesAsHex
 #include <cstdint> // std::uint32_t
 #include <cstring> // std::memcpy
+#include <climits> // CHAR_BIT
 #include <string> // std::string, std::literals::string_literals::operator""s
 #include <sstream> // std::ostringstream
 #include <iterator> // std::cbegin, std::cend
@@ -49,6 +50,8 @@ TEST_CASE("print_bytes_as_hex_test")
 
     const char array[] = "\xDE\xAD\xC0\xDE";
     std::ostringstream oss{ };
+
+    PL_TEST_STATIC_ASSERT(CHAR_BIT == 8);
 
     SUBCASE("default_delimiter") {
         oss << pl::PrintBytesAsHex{ array, sizeof(array) };
@@ -66,7 +69,17 @@ TEST_CASE("print_bytes_as_hex_test")
     SUBCASE("custom_delimiter") {
         std::uint32_t i{ };
         PL_TEST_STATIC_ASSERT(sizeof(i) <= sizeof(array));
-        std::reverse_copy(std::cbegin(array), std::cend(array) - 1, pl::asBytes(i));
+#if PL_COMPILER == PL_COMPILER_MSVC
+#   pragma warning(push)
+#   pragma warning(disable:4996) // Call to 'std::reverse_copy' with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct.
+#endif // PL_COMPILER == PL_COMPILER_MSVC
+        std::reverse_copy(
+            std::cbegin(array),
+            std::cend(array) - 1,
+            pl::asBytes(i));
+#if PL_COMPILER == PL_COMPILER_MSVC
+#   pragma warning(pop)
+#endif // PL_COMPILER == PL_COMPILER_MSVC
         oss << pl::PrintBytesAsHex{ &i, sizeof(i), "-" };
         CHECK(oss.str() == "DE-C0-AD-DE");
     }
