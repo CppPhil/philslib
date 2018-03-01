@@ -42,13 +42,39 @@
 #include <string> // std::string, std::literals::string_literals::operator""s
 #include <sstream> // std::ostringstream
 #include <iterator> // std::cbegin, std::cend
-#include <algorithm> // std::reverse_copy
+
+namespace pl
+{
+namespace test
+{
+namespace
+{
+template <typename BidirectionalIterator, typename OutputIterator>
+OutputIterator reverse_copy(
+    BidirectionalIterator first,
+    BidirectionalIterator last,
+    OutputIterator destination)
+{
+    while (first != last) {
+        *(destination++) = *(--last);
+    }
+
+    return destination;
+}
+} // anonymous namespace
+} // namespace test
+} // namespace pl
 
 TEST_CASE("print_bytes_as_hex_test")
 {
     using namespace std::literals::string_literals;
 
-    const char array[] = "\xDE\xAD\xC0\xDE";
+    static constexpr pl::Byte array[]{
+        static_cast<pl::Byte>('\xDE'), static_cast<pl::Byte>('\xAD'),
+        static_cast<pl::Byte>('\xC0'), static_cast<pl::Byte>('\xDE'),
+        static_cast<pl::Byte>('\x00')
+    };
+
     std::ostringstream oss{ };
 
     PL_TEST_STATIC_ASSERT(CHAR_BIT == 8);
@@ -69,17 +95,10 @@ TEST_CASE("print_bytes_as_hex_test")
     SUBCASE("custom_delimiter") {
         std::uint32_t i{ };
         PL_TEST_STATIC_ASSERT(sizeof(i) <= sizeof(array));
-#if PL_COMPILER == PL_COMPILER_MSVC
-#   pragma warning(push)
-#   pragma warning(disable:4996) // Call to 'std::reverse_copy' with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct.
-#endif // PL_COMPILER == PL_COMPILER_MSVC
-        std::reverse_copy(
+        pl::test::reverse_copy(
             std::cbegin(array),
             std::cend(array) - 1,
             pl::asBytes(i));
-#if PL_COMPILER == PL_COMPILER_MSVC
-#   pragma warning(pop)
-#endif // PL_COMPILER == PL_COMPILER_MSVC
         oss << pl::PrintBytesAsHex{ &i, sizeof(i), "-" };
         CHECK(oss.str() == "DE-C0-AD-DE");
     }

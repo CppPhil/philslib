@@ -119,23 +119,17 @@ TEST_CASE("random_number_generator_test")
     CHECK_UNARY(useMt19937_64(dLower, dUpper));
     CHECK_UNARY(useMt19937_64(ldLower, ldUpper));
 
-    const bool boolResult1{ mt19937.generate<bool>() } ;
-    CHECK_UNARY(boolResult1 or not boolResult1);
+    const bool boolResult1{ mt19937.generate<bool>(1.0) };
+    CHECK_UNARY(boolResult1);
 
-    const bool boolResult2{ mt19937_64.generate<bool>() };
-    CHECK_UNARY(boolResult2 or not boolResult2);
+    const bool boolResult2{ mt19937_64.generate<bool>(1.0) };
+    CHECK_UNARY(boolResult2);
 
-    const bool boolResult3{ mt19937.generate<bool>(1.0) };
-    CHECK_UNARY(boolResult3);
+    const bool boolResult3{ mt19937.generate<bool>(0.0) };
+    CHECK_UNARY_FALSE(boolResult3);
 
-    const bool boolResult4{ mt19937_64.generate<bool>(1.0) };
-    CHECK_UNARY(boolResult4);
-
-    const bool boolResult5{ mt19937.generate<bool>(0.0) };
-    CHECK_UNARY_FALSE(boolResult5);
-
-    const bool boolResult6{ mt19937_64.generate<bool>(0.0) };
-    CHECK_UNARY_FALSE(boolResult6);
+    const bool boolResult4{ mt19937_64.generate<bool>(0.0) };
+    CHECK_UNARY_FALSE(boolResult4);
 
     const std::vector<int> vector1{ 1, 2, 3, 4, 5, 6 };
     std::vector<int> copy{ vector1 };
@@ -168,4 +162,3 @@ TEST_CASE("random_number_generator_test")
         }
     }
 }
-
