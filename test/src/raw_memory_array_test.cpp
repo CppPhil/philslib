@@ -89,9 +89,9 @@ TEST_CASE("raw_memory_array_test")
             CHECK(ary1.at(i) == r.at(i));
         }
 
-        CHECK_THROWS_AS(ary1.at(ary1.size()), std::out_of_range);
-        CHECK_THROWS_AS(r.at(r.size()), std::out_of_range);
-        CHECK_THROWS_AS(empty.at(0U), std::out_of_range);
+        CHECK_THROWS_AS((void)ary1.at(ary1.size()), std::out_of_range);
+        CHECK_THROWS_AS((void)r.at(r.size()), std::out_of_range);
+        CHECK_THROWS_AS((void)empty.at(0U), std::out_of_range);
     }
 
     SUBCASE("front") {
