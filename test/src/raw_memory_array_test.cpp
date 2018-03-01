@@ -163,7 +163,7 @@ TEST_CASE("raw_memory_array_test")
     }
 
     SUBCASE("fill") {
-        const auto &retVal{ ary1.fill("sample text"s) };
+        const auto &retVal = ary1.fill("sample text"s);
         CHECK(retVal == ary1);
 
         CHECK_UNARY(pl::algo::all_of(ary1, [](const std::string &s) {
