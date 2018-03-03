@@ -49,6 +49,8 @@ namespace pl
 template <typename Numeric>
 #if (PL_COMPILER != PL_COMPILER_MSVC) || ((PL_COMPILER == PL_COMPILER_MSVC) && (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0)))
 constexpr
+#else
+inline
 #endif
 Numeric &setBit(PL_INOUT Numeric &numeric, Numeric bit) noexcept
 {
@@ -72,6 +74,8 @@ Numeric &setBit(PL_INOUT Numeric &numeric, Numeric bit) noexcept
 template <typename Numeric>
 #if (PL_COMPILER != PL_COMPILER_MSVC) || ((PL_COMPILER == PL_COMPILER_MSVC) && (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0)))
 constexpr
+#else
+inline
 #endif
 Numeric &clearBit(PL_INOUT Numeric &numeric, Numeric bit) noexcept
 {
@@ -100,6 +104,8 @@ Numeric &clearBit(PL_INOUT Numeric &numeric, Numeric bit) noexcept
 template <typename Numeric>
 #if (PL_COMPILER != PL_COMPILER_MSVC) || ((PL_COMPILER == PL_COMPILER_MSVC) && (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0)))
 constexpr
+#else
+inline
 #endif
 Numeric &toggleBit(PL_INOUT Numeric &numeric, Numeric bit) noexcept
 {

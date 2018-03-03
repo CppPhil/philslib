@@ -50,7 +50,7 @@ namespace cont
  * \throws std::out_of_range if 'index' is out of bounds.
 **/
 template <typename Ty, std::size_t Size>
-inline constexpr Ty &at(PL_IN Ty (&arr)[Size], std::size_t index)
+constexpr Ty &at(PL_IN Ty (&arr)[Size], std::size_t index)
 {
     if (not (index < Size)) {
         throw std::out_of_range{
@@ -70,7 +70,7 @@ inline constexpr Ty &at(PL_IN Ty (&arr)[Size], std::size_t index)
  * \throws std::out_of_range if 'index' is out of bounds.
 **/
 template <typename Container>
-inline constexpr auto at(PL_IN Container &container, std::size_t index)
+constexpr auto at(PL_IN Container &container, std::size_t index)
     -> decltype(container[container.size()])
 {
     if (not (index < container.size())) {
@@ -91,7 +91,7 @@ inline constexpr auto at(PL_IN Container &container, std::size_t index)
  * \throws std::out_of_range if 'index' is out of bounds.
 **/
 template <typename Ty>
-inline constexpr Ty at(std::initializer_list<Ty> il, std::size_t index)
+constexpr Ty at(std::initializer_list<Ty> il, std::size_t index)
 {
     if (not (index < il.size())) {
         throw std::out_of_range{
