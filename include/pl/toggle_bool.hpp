@@ -30,6 +30,7 @@
 **/
 #ifndef INCG_PL_TOGGLE_BOOL_HPP
 #define INCG_PL_TOGGLE_BOOL_HPP
+#include "compiler.hpp" // PL_COMPILER, PL_COMPILER_MSVC, PL_COMPILER_VERSION, PL_COMPILER_VERSION_CHECK
 #include "annotations.hpp" // PL_INOUT
 #include <ciso646> // not
 
@@ -39,13 +40,19 @@ namespace pl
  * \brief Toggles the boolean passed in.
  * \param b The boolean to be toggled.
  * \return The new value of the the boolean passed in.
+ * \note Not a constexpr function on msvc15.
  *
  * If the boolean passed in is true it will be assigned false and the
  * value returned will be false.
  * If the boolean passed in is false it will be assigned true and the
  * value return will be true.
 **/
-constexpr bool toggleBool(PL_INOUT bool &b) noexcept
+#if (PL_COMPILER != PL_COMPILER_MSVC) || ((PL_COMPILER == PL_COMPILER_MSVC) && (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0)))
+constexpr
+#else
+inline
+#endif
+bool toggleBool(PL_INOUT bool &b) noexcept
 {
     b = not b;
     return b;
