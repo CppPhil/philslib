@@ -252,7 +252,7 @@ public:
  * handle it, by printing the information associated with that exception to
  * std::cerr. May be used for debugging purposes.
 **/
-static void handleExceptions()
+inline void handleExceptions()
 {
     static constexpr char functionName[] = "pl::handleExceptions";
 
