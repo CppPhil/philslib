@@ -9,22 +9,22 @@ environment:
 
 build_script:
   # x64 Debug
-  - build.bat "%gen% Win64" Debug x64
+  - build_tests.bat "%gen% Win64" Debug x64
   - cd Debug_x64
   - ctest --verbose .
   - cd ..
   # x64 Release
-  - build.bat "%gen% Win64" Release x64
+  - build_tests.bat "%gen% Win64" Release x64
   - cd Release_x64
   - ctest --verbose .
   - cd ..
   # x86 Debug
-  - build.bat "%gen%" Debug x86
+  - build_tests.bat "%gen%" Debug x86
   - cd Debug_x86
   - ctest --verbose .
   - cd ..
   # x86 Release
-  - build.bat "%gen%" Release x86
+  - build_tests.bat "%gen%" Release x86
   - cd Release_x86
   - ctest --verbose .
   - cd ..

@@ -33,9 +33,39 @@
 #define INCG_PL_STRDUP_HPP
 #include "annotations.hpp" // PL_NODISCARD, PL_IN, PL_NULL_TERMINATED
 #include <cstddef> // std::size_t
+#include <cstring> // std::memcpy, std::strlen
 #include <memory> // std::unique_ptr
 
 namespace pl
+{
+namespace detail
+{
+namespace
+{
+/*!
+ * \brief Returns std::strlen(string) or maximumLength, whichever is less.
+ * \param string The null-terminated byte string to check. May not be nullptr!
+ * \param maximumLength The 'maximum length'.
+ * \return std::strlen(string) or maximumLength, whichever is less.
+**/
+std::size_t strnlen(
+    PL_IN PL_NULL_TERMINATED(const char *)string,
+    std::size_t maximumLength) noexcept
+{
+    std::size_t pos{ 0U };
+
+    for (; pos < maximumLength; ++pos) {
+        if (string[pos] == '\0') {
+            break;
+        }
+    }
+
+    return pos;
+}
+} // anonymous namespace
+} // namespace detail
+
+namespace
 {
 /*!
  * \brief Creates a copy of a null-terminated string.
@@ -44,7 +74,13 @@ namespace pl
  * \return The copy.
 **/
 PL_NODISCARD std::unique_ptr<char[]> strdup(
-    PL_IN PL_NULL_TERMINATED(const char *)str) noexcept;
+    PL_IN PL_NULL_TERMINATED(const char *)str) noexcept
+{
+      const auto bytesNeeded = std::strlen(str) + static_cast<std::size_t>(1U);
+      auto returnValue = std::make_unique<char[]>(bytesNeeded);
+      std::memcpy(returnValue.get(), str, bytesNeeded);
+      return returnValue;
+}
 
 /*!
  * \brief Creates a unique_ptr that holds a null-terminated byte string.
@@ -60,6 +96,14 @@ PL_NODISCARD std::unique_ptr<char[]> strdup(
 **/
 PL_NODISCARD std::unique_ptr<char[]> strndup(
     PL_IN PL_NULL_TERMINATED(const char *)str,
-    std::size_t size) noexcept;
+    std::size_t size) noexcept
+{
+    const auto stringLength = ::pl::detail::strnlen(str, size);
+    auto returnValue = std::make_unique<char[]>(stringLength + 1U);
+    std::memcpy(returnValue.get(), str, stringLength);
+    returnValue[stringLength] = '\0';
+    return returnValue;
+}
+} // anonymous namespace
 } // namespace pl
 #endif // INCG_PL_STRDUP_HPP

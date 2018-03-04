@@ -31,8 +31,12 @@
 #ifndef INCG_PL_EPRINTF_HPP
 #define INCG_PL_EPRINTF_HPP
 #include "annotations.hpp" // PL_IN, PL_FMT_STR, PL_PRINTF_FUNCTION
+#include <cstdarg> // std::va_list, va_start, va_end
+#include <cstdio> // std::vfprintf
 
 namespace pl
+{
+namespace
 {
 /*!
  * \brief printf-style function that prints to stderr, rather than stdout.
@@ -44,6 +48,15 @@ namespace pl
  * \warning Be careful not to use incorrect format specifiers or an incorrect
  *          amount of arguments for the printf-style string.
 **/
-int eprintf(PL_IN PL_FMT_STR(const char *)formatString, ...) noexcept PL_PRINTF_FUNCTION(1, 2);
+PL_PRINTF_FUNCTION(1, 2) int eprintf(PL_IN PL_FMT_STR(const char *)formatString, ...) noexcept
+{
+    std::va_list args{ };
+    va_start(args, formatString);
+    const auto retVal = std::vfprintf(stderr, formatString, args);
+    va_end(args);
+
+    return retVal;
+}
+} // anonymous namespace
 } // namespace pl
 #endif // INCG_PL_EPRINTF_HPP

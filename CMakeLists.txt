@@ -75,10 +75,10 @@ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER MAT
     endif()
 endif()
 
-find_package(Threads REQUIRED)
+### TEST
+enable_testing()
 
-### STATICALLY LINKED LIBRARY
-set(LIBRARY_NAME philslib)
+find_package(Threads REQUIRED)
 
 file(GLOB LIB_HEADERS
      include/pl/algo/*.hpp
@@ -86,20 +86,6 @@ file(GLOB LIB_HEADERS
      include/pl/meta/*.hpp
      include/pl/thd/*.hpp
      include/pl/*.hpp)
-
-file(GLOB LIB_SOURCES
-     src/pl/algo/*.cpp
-     src/pl/cont/*.cpp
-     src/pl/meta/*.cpp
-     src/pl/thd/*.cpp
-     src/pl/*.cpp)
-
-add_library(${LIBRARY_NAME} STATIC "${LIB_HEADERS}" "${LIB_SOURCES}")
-
-target_link_libraries(${LIBRARY_NAME} Threads::Threads)
-
-### TEST
-enable_testing()
 
 set(UNIT_TEST_NAME unittest)
 
@@ -120,7 +106,6 @@ add_executable(${UNIT_TEST_NAME}
     "${LIB_HEADERS}") 
 
 target_link_libraries(${UNIT_TEST_NAME} Threads::Threads)
-target_link_libraries(${UNIT_TEST_NAME} ${LIBRARY_NAME})
 
 add_test(Unittest ${UNIT_TEST_NAME})
 
