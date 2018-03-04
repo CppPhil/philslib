@@ -42,7 +42,7 @@ TEST_CASE("zero_memory_test")
 {
     auto ary = pl::cont::makeArray(
         static_cast<pl::Byte>(0xAB), static_cast<pl::Byte>(0xCD),
-        static_cast<pl::Byte>(0xEF));
+        static_cast<pl::Byte>(0xEF), static_cast<pl::Byte>(0x10));
 
     std::uint64_t i{ UINT64_C(0x1A1BAABBCCDDEEFF) };
 
