@@ -30,6 +30,7 @@
 **/
 #ifndef INCG_PL_EXCEPT_HPP
 #define INCG_PL_EXCEPT_HPP
+#include "compiler.hpp" // PL_COMPILER, PL_COMPILER_MSVC
 #include "source_line.hpp" // PL_SOURCE_LINE
 #include "current_function.hpp" // PL_CURRENT_FUNCTION
 #include "begin_end_macro.hpp" // PL_BEGIN_MACRO, PL_END_MACRO
@@ -228,6 +229,10 @@ public:
     using std::runtime_error::runtime_error;
 };
 
+#if PL_COMPILER == PL_COMPILER_MSVC
+#   pragma warning(push)
+#   pragma warning(disable:4505) // unreferenced local function has been removed
+#endif // PL_COMPILER == PL_COMPILER_MSVC
 /*!
  * \brief Function to handle uncaught exceptions.
  * \warning Only call this function in a catch block!
@@ -334,5 +339,8 @@ static void handleExceptions()
                   << " caught unknown exception!\n";
     }
 }
+#if PL_COMPILER == PL_COMPILER_MSVC
+#   pragma warning(pop)
+#endif // PL_COMPILER == PL_COMPILER_MSVC
 } // namespace pl
 #endif // INCG_PL_EXCEPT_HPP
