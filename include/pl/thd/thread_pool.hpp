@@ -476,12 +476,12 @@ inline ThreadPool::~ThreadPool()
     algo::destroy(m_threadBegin, m_threadEnd);
 }
 
-inline PL_NODISCARD std::size_t ThreadPool::getThreadCount() const
+PL_NODISCARD inline std::size_t ThreadPool::getThreadCount() const
 {
     return m_threadCount; // return the requested constant.
 }
 
-inline PL_NODISCARD std::size_t ThreadPool::tasksWaitingForExecution() const
+PL_NODISCARD inline std::size_t ThreadPool::tasksWaitingForExecution() const
 {
     // lock the mutex,
     // the queue of tasks is shared data
