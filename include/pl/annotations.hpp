@@ -119,7 +119,7 @@
 #define PL_INOUT_OPT /* nothing */
 
 #if PL_COMPILER == PL_COMPILER_GCC
-#   if __GNUC__ >= 7
+#   if (__GNUC__ >= 7) && !defined(PL_NO_CPP17)
 #       define PL_FALLTHROUGH [[fallthrough]];
 #       define PL_NODISCARD [[nodiscard]]
 #   else
@@ -133,14 +133,14 @@
 #   else
 #       define PL_FALLTHROUGH /* nothing */
 #   endif
-#   if PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(3, 9, 0)
+#   if (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(3, 9, 0)) && !defined(PL_NO_CPP17)
 #       define PL_NODISCARD [[nodiscard]]
 #   else
 #       define PL_NODISCARD /* nothing */
 #   endif
 #   define PL_PRINTF_FUNCTION(formatStrPos, varArgsPos) __attribute__((format (printf, formatStrPos, varArgsPos)))
 #elif PL_COMPILER == PL_COMPILER_MSVC
-#   if PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0)
+#   if (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0)) && !defined(PL_NO_CPP17)
 #       define PL_FALLTHROUGH [[fallthrough]];
 #       define PL_NODISCARD [[nodiscard]]
 #   else
