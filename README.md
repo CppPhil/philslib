@@ -28,7 +28,7 @@ include path.
 
 
 ## Disabling optional C++17 features
-The library optionally uses some C++17 features such as`[[nodiscard]]` and `[[fallthrough]]` if the compiler being used is new enough to support them.  
+The library optionally uses some C++17 features such as `[[nodiscard]]` and `[[fallthrough]]` if the compiler being used is new enough to support them.  
 You can disable C++17 features, even if your compiler supports them, by defining the `PL_NO_CPP17` preprocessor symbol.  
 It is recommended to define the `PL_NO_CPP17` globally through your build system, rather than in the source directly.  
 
