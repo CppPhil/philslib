@@ -495,3 +495,6 @@ todo_list.txt
 *.vcxproj.filters
 *.sln
 
+### generated documentation ###
+doc/
+
