@@ -27,7 +27,7 @@
 /*!
  * \file front.hpp
  * \brief Exports the front function that returns the first (index 0)
- *        element of container or a C-style array.
+ *        element of container, a C-style array or an initializer_list.
 **/
 #ifndef INCG_PL_CONT_FRONT_HPP
 #define INCG_PL_CONT_FRONT_HPP
@@ -35,6 +35,7 @@
 #include "../assert.hpp" // PL_DBG_CHECK_PRE
 #include <ciso646> // not
 #include <cstddef> // std::size_t
+#include <initializer_list> // std::initializer_list
 
 namespace pl
 {
@@ -63,6 +64,19 @@ template <typename Type, std::size_t Size>
 constexpr auto front(PL_IN Type (&arr)[Size]) noexcept -> decltype(auto)
 {
     return arr[static_cast<std::size_t>(0U)];
+}
+
+/*!
+ * \brief Gets the first (index 0) element of an initializer_list.
+ * \param initList The initializer_list to get the first (index 0) element of.
+ * \return The first (index 0) element of the initializer_list.
+ * \warning Undefined behavior occurs if the initializer_list passed in is empty.
+**/
+template <typename Ty>
+constexpr auto front(std::initializer_list<Ty> initList) noexcept
+    -> decltype(auto)
+{
+    return *(initList.begin());
 }
 } // namespace cont
 } // namespace pl

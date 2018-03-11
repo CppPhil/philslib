@@ -43,6 +43,7 @@
 #include <string> // std::string
 #include <vector> // std::vector
 #include <forward_list> // std::forward_list
+#include <initializer_list> // std::initializer_list
 #include <type_traits> // std::is_same
 
 TEST_CASE("list_front_test")
@@ -162,4 +163,20 @@ TEST_CASE("c_array_front_test")
 
     CHECK(pl::cont::front(array1) == 1U);
     CHECK(pl::cont::front(array2) == 7U);
+}
+
+TEST_CASE("initializer_list_front_test")
+{
+    using namespace std::literals::string_literals;
+
+    std::initializer_list<int> il{ 1, 2, 3, 4, 5 };
+    const std::initializer_list<std::string> il2{ "text"s };
+
+    PL_TEST_STATIC_ASSERT(
+        std::is_same<decltype(pl::cont::front(il)), const int &>::value);
+    PL_TEST_STATIC_ASSERT(
+        std::is_same<decltype(pl::cont::front(il2)), const std::string &>::value);
+
+    CHECK(pl::cont::front(il)  == 1);
+    CHECK(pl::cont::front(il2) == "text"s);
 }

@@ -27,7 +27,7 @@
 /*!
  * \file back.hpp
  * \brief Exports the back function that returns the last element
- *        of a container or C-style array.
+ *        of a container, a C-style array or an initializer_list.
 **/
 #ifndef INCG_PL_CONT_BACK_HPP
 #define INCG_PL_CONT_BACK_HPP
@@ -35,6 +35,7 @@
 #include "../assert.hpp" // PL_DBG_CHECK_PRE
 #include <ciso646> // not
 #include <cstddef> // std::size_t
+#include <initializer_list> // std::initializer_list
 
 namespace pl
 {
@@ -63,6 +64,19 @@ template <typename Type, std::size_t Size>
 constexpr auto back(PL_IN Type (&arr)[Size]) noexcept -> decltype(auto)
 {
     return arr[Size - static_cast<std::size_t>(1U)];
+}
+
+/*!
+ * \brief Gets the last element of an initializer_list.
+ * \param initList The initializer_list to get the last element of.
+ * \return The last element of the initializer_list.
+ * \warning Undefined behavior occurs if the intializer_list passed in is empty.
+**/
+template <typename Ty>
+constexpr auto back(std::initializer_list<Ty> initList) noexcept
+    -> decltype(auto)
+{
+    return *(initList.end() - 1U);
 }
 } // namespace cont
 } // namespace pl

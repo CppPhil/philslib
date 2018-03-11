@@ -120,10 +120,10 @@ include/pl/algo/uninitialized_move_n.hpp: The uninitialized_move_n algorithm fro
 include/pl/algo/uninitialized_value_construct.hpp: The uninitialized_value_construct algorithm from C++17.  
 include/pl/algo/uninitialized_value_construct_n.hpp: The uninitialized_value_construct_n algorithm from C++17.  
 include/pl/cont/at.hpp: Bounds checked index based access to containers, built-in arrays and initializer_lists.  
-include/pl/cont/back.hpp: Non-member back function that also works for built-in arrays.  
+include/pl/cont/back.hpp: Non-member back function that also works for built-in arrays and initializer_lists.  
 include/pl/cont/data.hpp: The data function from C++17.  
 include/pl/cont/empty.hpp: The empty function from C++17.  
-include/pl/cont/front.hpp: Non-member front function that also works for built-in arrays.  
+include/pl/cont/front.hpp: Non-member front function that also works for built-in arrays and initializer_lists.  
 include/pl/cont/make_array.hpp: Function to conveniently create a std::array, like the one from library fundamentals TS v2.  
 include/pl/cont/size.hpp: The size function from C++17.  
 include/pl/cont/to_array.hpp: Function to create a std::array from a built-in array, like the one from library fundamentals TS v2.  
