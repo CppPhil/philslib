@@ -113,8 +113,7 @@ public:
      * \brief Constructs a ConceptPoly object from the object passed in.
      * \param impl The implementation object to use.
      * \note This constructor will only be enabled if 'Impl' is not
-     *       of type ConceptPoly<Concept, Model> and 'Concept' is a base of
-     *       Model<Impl>.
+     *       of type ConceptPoly<Concept, Model>.
      * \warning Do not replace the second template type parameter of this
      *          constructor!
     **/
