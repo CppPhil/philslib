@@ -145,7 +145,7 @@ include/pl/thd/concurrent.hpp: Thread safe concurrency adaptor to 'run' an objec
 include/pl/thd/monitor.hpp: A monitor providing thread-safe access to an object by using locks.  
 include/pl/thd/then.hpp: Then continuations for futures, similar to the ones from concurrency TS.  
 include/pl/thd/thread_pool.hpp: A thread pool.  
-include/pl/thd/thrad_safe_queue: A thread safe queue using locks.  
+include/pl/thd/thread_safe_queue.hpp: A thread safe queue using locks.  
 include/pl/alloca.hpp: Macro for a portable alloca.  
 include/pl/annotations.hpp: Macros serving as source code annotations.  
 include/pl/apply.hpp The apply function from C++17. Can be used to call something with a tuple.  
