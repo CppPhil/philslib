@@ -189,6 +189,7 @@ include/pl/random_number_generator.hpp: A random number generator type.
 include/pl/raw_memory_array.hpp: Class template to treat a memory region as an array.  
 include/pl/raw_storage.hpp: Convenience wrapper for aligned_storage.  
 include/pl/restrict.hpp: Portable macro to define a restrict pointer.  
+include/pl/size_t.hpp: User defined literal to create std::size_t objects.  
 include/pl/source_line.hpp: Macro that expands to a string literal of the current line in the current source file.  
 include/pl/strdup.hpp: strdup and strndup functions similar to the ones known from POSIX or the C dynamic memory TR.  
 include/pl/stringify.hpp: The classic stringification macro.  

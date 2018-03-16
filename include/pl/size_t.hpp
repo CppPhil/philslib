@@ -25,45 +25,41 @@
  */
 
 /*!
- * \file byte.hpp
- * \brief Exports the Byte type and an associated user defined literal.
+ * \file size_t.hpp
+ * \brief Exports a user defined literal (UDL) to create an object of type
+ *        std::size_t.
 **/
-#ifndef INCG_PL_BYTE_HPP
-#define INCG_PL_BYTE_HPP
+#ifndef INCG_PL_SIZE_T_HPP
+#define INCG_PL_SIZE_T_HPP
+#include "no_macro_substitution.hpp" // PL_NO_MACRO_SUBSTITUTION
 #include <ciso646> // and
 #include <cassert> // assert
-#include <climits> // UCHAR_MAX
+#include <cstddef> // std::size_t
+#include <limits> // std::numeric_limits
 
 namespace pl
 {
-/*!
- * \brief The Byte type. To be used when viewing something as raw bytes.
- *        An alias for unsigned char. This type is effectively a 1 byte large
- *        unsigned integer.
-**/
-using Byte = unsigned char;
-
 inline namespace literals
 {
 inline namespace integer_literals
 {
 /*!
- * \brief User defined literal (UDL) to create a pl::Byte object.
- * \param value The value to use to create the pl::Byte object,
- *              must be in the range [0,UCHAR_MAX].
- * \return The resulting pl::Byte object.
- * \warning If the value passed in is larger than UCHAR_MAX the program
- *          is ill-formed.
+ * \brief User defined literal (UDL) to create an object of type std::size_t.
+ * \param value The value to create the std::size_t object. Must be within
+ *              the range [0,std::numeric_limits<std::size_t>::max()].
+ * \return The resulting std::size_t object.
+ * \warning If the value passed in is larger than
+ *          std::numeric_limits<std::size_t>::max()
+ *          the program is ill-formed.
 **/
-constexpr ::pl::Byte operator""_byte(unsigned long long value)
+constexpr std::size_t operator""_zu(unsigned long long value)
 {
     assert(
-        (value <= UCHAR_MAX)
-        and "value was too large in "
-        "pl::literals::integer_literals::operator\"\"_byte");
-    return static_cast<::pl::Byte>(value);
+        (value <= std::numeric_limits<std::size_t>::max PL_NO_MACRO_SUBSTITUTION())
+        and "value was too large in pl::literals::integer_literals::operator\"\"_zu");
+    return static_cast<std::size_t>(value);
 }
 } // inline namespace integer_literals
 } // inline namespace literals
 } // namespace pl
-#endif // INCG_PL_BYTE_HPP
+#endif // INCG_PL_SIZE_T_HPP
