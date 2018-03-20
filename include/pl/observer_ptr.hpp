@@ -118,7 +118,7 @@ public:
      * \note Not a constexpr function on msvc15.
     **/
     PL_NODISCARD
-#if (PL_COMPILER != PL_COMPILER_MSVC) || ((PL_COMPILER == PL_COMPILER_MSVC) && (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0)))
+#if (PL_COMPILER != PL_COMPILER_MSVC) || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
     constexpr
 #endif
     element_type *release() noexcept
@@ -135,7 +135,7 @@ public:
      * \param p Pointer to a new abject to watch.
      * \note Not a constexpr function on msvc15.
     **/
-#if (PL_COMPILER != PL_COMPILER_MSVC) || ((PL_COMPILER == PL_COMPILER_MSVC) && (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0)))
+#if (PL_COMPILER != PL_COMPILER_MSVC) || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
     constexpr
 #endif
     void reset(PL_IN_OPT element_type *p = nullptr) noexcept
@@ -151,7 +151,7 @@ public:
      * Swaps the watched object of *this and another ObserverPtr,
      * by invoking swap on the stored pointers of *this and other.
     **/
-#if (PL_COMPILER != PL_COMPILER_MSVC) || ((PL_COMPILER == PL_COMPILER_MSVC) && (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0)))
+#if (PL_COMPILER != PL_COMPILER_MSVC) || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
     constexpr
 #endif
     void swap(PL_INOUT ::pl::ObserverPtr<element_type> &other) noexcept

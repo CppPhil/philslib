@@ -64,7 +64,7 @@
  *          }
 **/
 
-#if (PL_COMPILER != PL_COMPILER_MSVC) || ((PL_COMPILER == PL_COMPILER_MSVC) && (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0)))
+#if (PL_COMPILER != PL_COMPILER_MSVC) || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
 #   define PL_ENABLE_BITMASK_OPERATORS(ScopedEnum) \
         constexpr ScopedEnum operator|(ScopedEnum lhs, ScopedEnum rhs) \
         { \
