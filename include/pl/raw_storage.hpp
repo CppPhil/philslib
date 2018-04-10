@@ -45,6 +45,15 @@ namespace pl
  *        Offers an interface to create and destroy the object of type 'Ty'.
  *        Useful for implementing higher level abstractions like optional.
  * \note Ty may not be a reference type as references are not objects.
+ * \warning Beware of using const qualified objects or references or objects
+ *          containing subobjects which are const qualified or references
+ *          in RawStorages. The compiler may assume that 'constant's
+ *          like const qualified objects or references may not be modified
+ *          including when they, or the the object containing them, are 
+ *          destroyed and the memory region they had occupied is reused
+ *          to construct a new object into. A possible solution is to access
+ *          the newly constructed object only through 
+ *          std::launder (since C++17).
 **/
 template <typename Ty>
 class RawStorage
