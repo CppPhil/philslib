@@ -151,6 +151,7 @@ include/pl/annotations.hpp: Macros serving as source code annotations.
 include/pl/apply.hpp The apply function from C++17. Can be used to call something with a tuple.  
 include/pl/as_bytes.hpp: Function to interpret an object as just raw bytes.  
 include/pl/as_const.hpp: Function to view an object as const. Like as_const from C++17.  
+include/pl/as_ptr_const.hpp: Function to get a low level const qualified pointer from another pointer.  
 include/pl/asprintf.hpp: asprintf implementation similar to the one known from POSIX or the C dynamic memory TR.  
 include/pl/assert.hpp: Assertion macros for pre- and postconditions to ease contract based programming until contracts are available in standard C++.  
 include/pl/begin_end.hpp: An implementation of the non-member functions to fetch iterators. Also provides convenience macros to call iterator based algorithms with 'containers'.  
