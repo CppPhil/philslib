@@ -108,6 +108,7 @@ public:
     {
         std::unique_lock<std::mutex> lock{ m_mutex };
         m_cont.push(data);
+        lock.unlock();
         m_cvHasElements.notify_all();
         return *this;
     }
@@ -124,6 +125,7 @@ public:
     {
         std::unique_lock<std::mutex> lock{ m_mutex };
         m_cont.push(std::move(data));
+        lock.unlock();
         m_cvHasElements.notify_all();
         return *this;
     }
