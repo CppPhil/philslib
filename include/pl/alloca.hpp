@@ -32,9 +32,9 @@
 #define INCG_PL_ALLOCA_HPP
 #include "os.hpp" // PL_OS, PL_OS_LINUX, PL_OS_MAC, PL_OS_WINDOWS
 #if PL_OS == PL_OS_LINUX || PL_OS == PL_OS_MAC
-#   include <alloca.h> // alloca
+#include <alloca.h> // alloca
 #elif PL_OS == PL_OS_WINDOWS
-#   include <malloc.h> // _alloca
+#include <malloc.h> // _alloca
 #endif
 
 /*!
@@ -57,14 +57,14 @@
 **/
 
 #if PL_OS == PL_OS_LINUX || PL_OS == PL_OS_MAC
-#   define PL_ALLOCA(countBytes) alloca(countBytes)
+#define PL_ALLOCA(countBytes) alloca(countBytes)
 #elif PL_OS == PL_OS_WINDOWS
-#   define PL_ALLOCA(countBytes) _alloca(countBytes)
+#define PL_ALLOCA(countBytes) _alloca(countBytes)
 #elif PL_OS == PL_OS_OTHER
-#   ifdef MY_ALLOCA
-#       define PL_ALLOCA(countBytes) MY_ALLOCA(countBytes)
-#   else
-#       warning "Unknown OS. Please define MY_ALLOCA(countBytes) to use PL_ALLOCA"
-#   endif
+#ifdef MY_ALLOCA
+#define PL_ALLOCA(countBytes) MY_ALLOCA(countBytes)
+#else
+#warning "Unknown OS. Please define MY_ALLOCA(countBytes) to use PL_ALLOCA"
+#endif
 #endif
 #endif // INCG_PL_ALLOCA_HPP

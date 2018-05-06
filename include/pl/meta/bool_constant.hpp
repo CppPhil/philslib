@@ -33,10 +33,8 @@
 #define INCG_PL_META_BOOL_CONSTANT_HPP
 #include <type_traits> // std::integral_constant
 
-namespace pl
-{
-namespace meta
-{
+namespace pl {
+namespace meta {
 /*!
  * \brief The C++17 bool_constant alias template.
  *

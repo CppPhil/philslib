@@ -26,58 +26,36 @@
 
 #include "../../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
-#endif // PL_COMPILER == PL_COMPILER_GCC
+#pragma GCC diagnostic pop
+#endif                                      // PL_COMPILER == PL_COMPILER_GCC
 #include "../../../include/pl/thd/then.hpp" // pl::thd::then
+#include <future>  // std::async, std::launch::async, std::future
+#include <string>  // std::string
 #include <utility> // std::move
-#include <string> // std::string
-#include <future> // std::async, std::launch::async, std::future
 
 TEST_CASE("then_test")
 {
-    std::future<int> fut1{
+    std::future<int> fut1{pl::thd::then(
         pl::thd::then(
-            pl::thd::then(
-                std::async(
-                    std::launch::async,
-                    [](int i) {
-                        return i * 2;
-                    },
-                    3
-                ),
-                [](int j) {
-                    return j + 2;
-                }
-            ),
-            [](int k) {
-                return k / 2;
-            }
-        )
-    };
+            std::async(std::launch::async, [](int i) { return i * 2; }, 3),
+            [](int j) { return j + 2; }),
+        [](int k) { return k / 2; })};
 
     CHECK(fut1.get() == 4);
 
-    std::string string1{ };
-    std::string string2{ };
+    std::string string1{};
+    std::string string2{};
 
-    std::future<void> fut2{ std::async(
-        std::launch::async,
-        [&string1] {
-            string1 = "async task completed";
-        })
-    };
+    std::future<void> fut2{std::async(
+        std::launch::async, [&string1] { string1 = "async task completed"; })};
 
-    std::future<void> fut3{ pl::thd::then(
-        std::move(fut2),
-        [&string2] {
-            string2 = "continuation completed";
-        })
-    };
+    std::future<void> fut3{pl::thd::then(
+        std::move(fut2), [&string2] { string2 = "continuation completed"; })};
 
     fut3.wait();
 

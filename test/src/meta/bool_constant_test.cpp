@@ -26,16 +26,16 @@
 
 #include "../../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
+#pragma GCC diagnostic pop
 #endif // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
 #include "../../../include/pl/meta/bool_constant.hpp" // pl::meta::bool_constant
-#include <ciso646> // not
+#include "../../include/static_assert.hpp"            // PL_TEST_STATIC_ASSERT
+#include <ciso646>                                    // not
 #include <type_traits> // std::true_type, std::false_type, std::is_same
 
 TEST_CASE("bool_constant_type_test")
@@ -44,12 +44,12 @@ TEST_CASE("bool_constant_type_test")
         std::is_same<pl::meta::bool_constant<true>, std::true_type>::value);
     PL_TEST_STATIC_ASSERT(
         std::is_same<pl::meta::bool_constant<false>, std::false_type>::value);
-    PL_TEST_STATIC_ASSERT(std::is_same<
-        pl::meta::bool_constant<true>::type,
-        std::true_type>::value);
-    PL_TEST_STATIC_ASSERT(std::is_same<
-        pl::meta::bool_constant<false>::type,
-        std::false_type>::value);
+    PL_TEST_STATIC_ASSERT(
+        std::is_same<pl::meta::bool_constant<true>::type,
+                     std::true_type>::value);
+    PL_TEST_STATIC_ASSERT(
+        std::is_same<pl::meta::bool_constant<false>::type,
+                     std::false_type>::value);
 
     CHECK_UNARY(true);
 }
@@ -74,12 +74,12 @@ TEST_CASE("bool_constant_value_test")
 
 TEST_CASE("bool_constant_operator_test")
 {
-    PL_TEST_STATIC_ASSERT(static_cast<bool>(pl::meta::bool_constant<true>{ }));
+    PL_TEST_STATIC_ASSERT(static_cast<bool>(pl::meta::bool_constant<true>{}));
     PL_TEST_STATIC_ASSERT(
-        not static_cast<bool>(pl::meta::bool_constant<false>{ }));
+        not static_cast<bool>(pl::meta::bool_constant<false>{}));
 
-    PL_TEST_STATIC_ASSERT(pl::meta::bool_constant<true>{ }());
-    PL_TEST_STATIC_ASSERT(not pl::meta::bool_constant<false>{ }());
+    PL_TEST_STATIC_ASSERT(pl::meta::bool_constant<true>{}());
+    PL_TEST_STATIC_ASSERT(not pl::meta::bool_constant<false>{}());
 
     CHECK_UNARY(true);
 }

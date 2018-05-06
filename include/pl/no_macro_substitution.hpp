@@ -39,4 +39,5 @@
 **/
 
 #define PL_NO_MACRO_SUBSTITUTION /* nothing */
+
 #endif // INCG_PL_NO_MACRO_SUBSTITUTION_HPP

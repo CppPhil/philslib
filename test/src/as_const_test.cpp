@@ -26,36 +26,25 @@
 
 #include "../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
-#endif // PL_COMPILER == PL_COMPILER_GCC
-#include "../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
+#pragma GCC diagnostic pop
+#endif                                   // PL_COMPILER == PL_COMPILER_GCC
 #include "../../include/pl/as_const.hpp" // pl::asConst
-#include <string> // std::string
+#include "../include/static_assert.hpp"  // PL_TEST_STATIC_ASSERT
+#include <string>                        // std::string
 #include <type_traits> // std::remove_reference_t, std::is_const, std::is_same
 
-namespace pl
-{
-namespace test
-{
-namespace
-{
-class TestType
-{
+namespace pl {
+namespace test {
+namespace {
+class TestType {
 public:
-    std::string f()
-    {
-        return "non-const";
-    }
-
-    std::string f() const
-    {
-        return "const";
-    }
+    std::string f() { return "non-const"; }
+    std::string f() const { return "const"; }
 };
 } // anonymous namespace
 } // namespace test
@@ -63,12 +52,14 @@ public:
 
 TEST_CASE("as_const_test")
 {
-    pl::test::TestType testObj{ };
+    pl::test::TestType testObj{};
 
-    PL_TEST_STATIC_ASSERT(std::is_const<
-        std::remove_reference_t<decltype(pl::asConst(testObj))>>::value);
-    PL_TEST_STATIC_ASSERT(std::is_same<
-        decltype(pl::asConst(testObj)), const pl::test::TestType &>::value);
+    PL_TEST_STATIC_ASSERT(
+        std::is_const<std::remove_reference_t<decltype(
+            pl::asConst(testObj))>>::value);
+    PL_TEST_STATIC_ASSERT(
+        std::is_same<decltype(pl::asConst(testObj)),
+                     const pl::test::TestType&>::value);
 
     CHECK(testObj.f() == "non-const");
     CHECK(pl::asConst(testObj).f() == "const");

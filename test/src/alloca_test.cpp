@@ -26,42 +26,44 @@
 
 #include "../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
-#endif // PL_COMPILER == PL_COMPILER_GCC
+#pragma GCC diagnostic pop
+#endif                                 // PL_COMPILER == PL_COMPILER_GCC
 #include "../../include/pl/alloca.hpp" // PL_ALLOCA
-#include "../../include/pl/byte.hpp" // pl::Byte
-#include <cstddef> // std::size_t, std::ptrdiff_t
-#include <iterator> // std::distance
-#include <algorithm> // std::fill, std::all_of
+#include "../../include/pl/byte.hpp"   // pl::Byte
+#include <algorithm>                   // std::fill, std::all_of
+#include <cstddef>                     // std::size_t, std::ptrdiff_t
+#include <iterator>                    // std::distance
 
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wstack-protector"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wstack-protector"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 TEST_CASE("alloca_test")
 {
-    static constexpr std::size_t byteCount{ 20U };
-    static constexpr pl::Byte    fillByte{ 0xAB };
+    static constexpr std::size_t byteCount{20U};
+    static constexpr pl::Byte    fillByte{0xAB};
 
-    void *memory = PL_ALLOCA(byteCount);
+    void* memory = PL_ALLOCA(byteCount);
 
     REQUIRE(memory != nullptr);
 
-    auto *begin = static_cast<pl::Byte *>(memory);
-    auto *end   = begin + byteCount;
+    auto* begin = static_cast<pl::Byte*>(memory);
+    auto* end   = begin + byteCount;
 
-    REQUIRE(std::distance(begin, end) == static_cast<std::ptrdiff_t>(byteCount));
+    REQUIRE(
+        std::distance(begin, end) == static_cast<std::ptrdiff_t>(byteCount));
 
     std::fill(begin, end, fillByte);
 
-    CHECK_UNARY(std::all_of(
-        begin, end, [](pl::Byte byte) { return byte == fillByte; }));
+    CHECK_UNARY(std::all_of(begin, end, [](pl::Byte byte) {
+        return byte == fillByte;
+    }));
 }
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
+#pragma GCC diagnostic pop
 #endif // PL_COMPILER == PL_COMPILER_GCC

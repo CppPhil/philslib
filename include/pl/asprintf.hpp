@@ -31,16 +31,14 @@
 #ifndef INCG_PL_ASPRINTF_HPP
 #define INCG_PL_ASPRINTF_HPP
 #include "annotations.hpp" // PL_OUT, PL_IN, PL_FMT_STR, PL_NODISCARD, ...
-#include <cstdarg> // std::va_list
-#include <cstddef> // std::size_t
-#include <cstdio> // std::vsnprintf
-#include <string> // std::string
-#include <memory> // std::unique_ptr, std::addressof
+#include <cstdarg>         // std::va_list
+#include <cstddef>         // std::size_t
+#include <cstdio>          // std::vsnprintf
+#include <memory>          // std::unique_ptr, std::addressof
+#include <string>          // std::string
 
-namespace pl
-{
-namespace
-{
+namespace pl {
+namespace {
 /*!
  * \brief Allocates a string and prints to it in a printf style.
  * \param strp Pointer to a unique_ptr<char[]>. The unique_ptr<char[]> pointed
@@ -56,9 +54,9 @@ namespace
  * \note In general you probably want to be using asprintf instead.
 **/
 PL_NODISCARD int vasprintf(
-    PL_OUT std::unique_ptr<char[]> *strp,
-    PL_IN PL_FMT_STR(const char *)fmt,
-    std::va_list ap) noexcept PL_PRINTF_FUNCTION(2, 0);
+    PL_OUT std::unique_ptr<char[]>* strp,
+    PL_IN                           PL_FMT_STR(const char*) fmt,
+    std::va_list                    ap) noexcept PL_PRINTF_FUNCTION(2, 0);
 
 /*!
  * \brief Creates a string and prints to it in a printf style.
@@ -74,9 +72,9 @@ PL_NODISCARD int vasprintf(
  * \note In general you probably want to be using asprintf instead.
 **/
 PL_NODISCARD int vasprintf(
-    PL_OUT std::string *strp,
-    PL_IN PL_FMT_STR(const char *)fmt,
-    std::va_list ap) noexcept PL_PRINTF_FUNCTION(2, 0);
+    PL_OUT std::string* strp,
+    PL_IN               PL_FMT_STR(const char*) fmt,
+    std::va_list        ap) noexcept PL_PRINTF_FUNCTION(2, 0);
 
 /*!
  * \brief Allocates a string and prints to it in a printf style.
@@ -91,8 +89,8 @@ PL_NODISCARD int vasprintf(
  * \warning Will cause undefined behavior if 'strp' or 'fmt' is nullptr.
 **/
 PL_NODISCARD int asprintf(
-    PL_OUT std::unique_ptr<char[]> *strp,
-    PL_IN PL_FMT_STR(const char *)fmt,
+    PL_OUT std::unique_ptr<char[]>* strp,
+    PL_IN                           PL_FMT_STR(const char*) fmt,
     ...) noexcept PL_PRINTF_FUNCTION(2, 3);
 
 /*!
@@ -107,16 +105,16 @@ PL_NODISCARD int asprintf(
  * \warning Will cause undefined behavior if 'strp' or 'fmt' is nullptr.
 **/
 PL_NODISCARD int asprintf(
-    PL_OUT std::string *strp,
-    PL_IN PL_FMT_STR(const char *)fmt,
+    PL_OUT std::string* strp,
+    PL_IN               PL_FMT_STR(const char*) fmt,
     ...) noexcept PL_PRINTF_FUNCTION(2, 3);
 
 PL_NODISCARD int vasprintf(
-    PL_OUT std::unique_ptr<char[]> *strp,
-    PL_IN PL_FMT_STR(const char *)fmt,
-    std::va_list ap) noexcept
+    PL_OUT std::unique_ptr<char[]>* strp,
+    PL_IN                           PL_FMT_STR(const char*) fmt,
+    std::va_list                    ap) noexcept
 {
-    std::va_list args2{ };
+    std::va_list args2{};
     va_copy(args2, ap);
 
     const auto errCode = std::vsnprintf(nullptr, 0, fmt, ap);
@@ -128,19 +126,19 @@ PL_NODISCARD int vasprintf(
     const auto bytesToAllocate = 1U + static_cast<std::size_t>(errCode);
 
     *strp = std::make_unique<char[]>(bytesToAllocate);
-    const auto retVal = std::vsnprintf(strp->get(), bytesToAllocate,
-                                       fmt, args2);
+    const auto retVal
+        = std::vsnprintf(strp->get(), bytesToAllocate, fmt, args2);
     va_end(args2);
 
     return retVal;
 }
 
 PL_NODISCARD int vasprintf(
-    PL_OUT std::string *strp,
-    PL_IN PL_FMT_STR(const char *)fmt,
-    std::va_list ap) noexcept
+    PL_OUT std::string* strp,
+    PL_IN               PL_FMT_STR(const char*) fmt,
+    std::va_list        ap) noexcept
 {
-    std::va_list args2{ };
+    std::va_list args2{};
     va_copy(args2, ap);
 
     const auto errCode = std::vsnprintf(nullptr, 0, fmt, ap);
@@ -152,12 +150,8 @@ PL_NODISCARD int vasprintf(
     const auto bytesToAllocate = 1U + static_cast<std::size_t>(errCode);
 
     strp->resize(bytesToAllocate);
-    const auto retVal
-        = std::vsnprintf(
-            std::addressof((*strp)[0]),
-            bytesToAllocate,
-            fmt,
-            args2);
+    const auto retVal = std::vsnprintf(
+        std::addressof((*strp)[0]), bytesToAllocate, fmt, args2);
 
     va_end(args2);
     strp->resize(bytesToAllocate - 1);
@@ -166,11 +160,11 @@ PL_NODISCARD int vasprintf(
 }
 
 PL_NODISCARD int asprintf(
-    PL_OUT std::unique_ptr<char[]> *strp,
-    PL_IN PL_FMT_STR(const char *)fmt,
+    PL_OUT std::unique_ptr<char[]>* strp,
+    PL_IN                           PL_FMT_STR(const char*) fmt,
     ...) noexcept
 {
-    std::va_list args1{ };
+    std::va_list args1{};
     va_start(args1, fmt);
 
     const auto retVal = ::pl::vasprintf(strp, fmt, args1);
@@ -180,11 +174,11 @@ PL_NODISCARD int asprintf(
 }
 
 PL_NODISCARD int asprintf(
-    PL_OUT std::string *strp,
-    PL_IN PL_FMT_STR(const char *)fmt,
+    PL_OUT std::string* strp,
+    PL_IN               PL_FMT_STR(const char*) fmt,
     ...) noexcept
 {
-    std::va_list args1{ };
+    std::va_list args1{};
     va_start(args1, fmt);
 
     const auto retVal = ::pl::vasprintf(strp, fmt, args1);

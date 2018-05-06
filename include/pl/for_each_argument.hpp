@@ -30,13 +30,12 @@
 **/
 #ifndef INCG_PL_FOR_EACH_ARGUMENT_HPP
 #define INCG_PL_FOR_EACH_ARGUMENT_HPP
-#include "annotations.hpp" // PL_IN
-#include "invoke.hpp" // pl::invoke
+#include "annotations.hpp"  // PL_IN
+#include "invoke.hpp"       // pl::invoke
 #include <initializer_list> // std::initializer_list
-#include <utility> // std::forward
+#include <utility>          // std::forward
 
-namespace pl
-{
+namespace pl {
 /*!
  * \brief Calls a unary callable with every argument in the template type
  *        parameter pack individually.
@@ -48,14 +47,14 @@ namespace pl
  * \return A copy of 'callable'.
  * \note 'callable' should be cheap to copy.
  * \example pl::forEachArgument([](const auto &e) { std::cout << e << ' ';},
- *                              1, 2.1, "hello", .3F, 44U, std::string{ "world" });
+ *                              1, 2.1, "hello", .3F, 44U, std::string{ "world"
+ *                              });
 **/
-template <typename Callable, typename ...Args>
-Callable forEachArgument(Callable callable, PL_IN Args &&...args)
+template <typename Callable, typename... Args>
+Callable forEachArgument(Callable callable, PL_IN Args&&... args)
 {
     (void)std::initializer_list<int>{
-        ((void)::pl::invoke(callable, std::forward<Args>(args)), 0)...
-    };
+        ((void)::pl::invoke(callable, std::forward<Args>(args)), 0)...};
 
     return callable;
 }

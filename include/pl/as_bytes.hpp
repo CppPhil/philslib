@@ -30,13 +30,12 @@
 **/
 #ifndef INCG_PL_AS_BYTES_HPP
 #define INCG_PL_AS_BYTES_HPP
-#include "annotations.hpp" // PL_IN
+#include "annotations.hpp"            // PL_IN
+#include "byte.hpp"                   // pl::Byte
 #include "unrelated_pointer_cast.hpp" // pl::unrelated_pointer_cast
-#include "byte.hpp" // pl::Byte
-#include <memory> // std::addressof
+#include <memory>                     // std::addressof
 
-namespace pl
-{
+namespace pl {
 /*!
  * \brief Allows the user to view an object as just raw bytes.
  * \param object The object to be viewed as raw bytes.
@@ -45,9 +44,9 @@ namespace pl
  * \note The pointer returned will never be nullptr.
 **/
 template <typename Type>
-constexpr Byte *asBytes(PL_IN Type &object) noexcept
+constexpr Byte* asBytes(PL_IN Type& object) noexcept
 {
-    return ::pl::unrelated_pointer_cast<Byte *>(std::addressof(object));
+    return ::pl::unrelated_pointer_cast<Byte*>(std::addressof(object));
 }
 
 /*!
@@ -58,15 +57,15 @@ constexpr Byte *asBytes(PL_IN Type &object) noexcept
  * \note The pointer returned will never be nullptr.
 **/
 template <typename Type>
-constexpr const Byte *asBytes(PL_IN const Type &object) noexcept
+constexpr const Byte* asBytes(PL_IN const Type& object) noexcept
 {
-    return ::pl::unrelated_pointer_cast<const Byte *>(std::addressof(object));
+    return ::pl::unrelated_pointer_cast<const Byte*>(std::addressof(object));
 }
 
 /*!
  * \brief Rvalues are not allowed.
 **/
 template <typename Type>
-void asBytes(PL_IN const Type &&) noexcept = delete;
+void asBytes(PL_IN const Type&&) noexcept = delete;
 } // namespace pl
 #endif // INCG_PL_AS_BYTES_HPP

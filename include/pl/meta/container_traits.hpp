@@ -29,30 +29,26 @@
  * \brief Exports container trait meta functions in order to discern
  *        different containers into container categories.
 **/
-
 #ifndef INCG_PL_META_CONTAINER_TRAITS_HPP
 #define INCG_PL_META_CONTAINER_TRAITS_HPP
-#include <deque> // std::deque
-#include <forward_list> // std::forward_list
-#include <list> // std::list
-#include <map> // std::map, std::multimap
-#include <set> // std::set, std::multiset
+#include <deque>         // std::deque
+#include <forward_list>  // std::forward_list
+#include <list>          // std::list
+#include <map>           // std::map, std::multimap
+#include <set>           // std::set, std::multiset
+#include <string>        // std::basic_string
 #include <unordered_map> // std::unordered_map, std::unordered_multimap
 #include <unordered_set> // std::unordered_set, std::unordered_multiset
-#include <vector> // std::vector
-#include <string> // std::basic_string
+#include <vector>        // std::vector
 
-namespace pl
-{
-namespace meta
-{
+namespace pl {
+namespace meta {
 /*!
  * \brief Tag for vector-like containers.
  *
  * Tag used for std::vector and std::deque.
 **/
-struct vectorlike_tag
-{
+struct vectorlike_tag {
 };
 
 /*!
@@ -60,18 +56,17 @@ struct vectorlike_tag
  *
  * Tag used for std::list and std::forward_list.
 **/
-struct listlike_tag
-{
+struct listlike_tag {
 };
 
 /*!
  * \brief Tag for associative containers.
  *
- * Tag used for std::set, std::multiset, std::unordered_set, std::unordered_multiset,
- * std::map, std::multimap, std::unordered_map and std::unordered_multimap.
+ * Tag used for std::set, std::multiset, std::unordered_set,
+ * std::unordered_multiset, std::map, std::multimap, std::unordered_map and
+ * std::unordered_multimap.
 **/
-struct associative_tag
-{
+struct associative_tag {
 };
 
 /*!
@@ -88,8 +83,7 @@ struct container_traits;
  *        category is defined as vectorlike_tag.
 **/
 template <typename Type, typename Allocator>
-struct container_traits<std::vector<Type, Allocator>>
-{
+struct container_traits<std::vector<Type, Allocator>> {
     using category = vectorlike_tag;
 };
 
@@ -98,8 +92,7 @@ struct container_traits<std::vector<Type, Allocator>>
  *        category is defined as vectorlike_tag.
 **/
 template <typename Type, typename Allocator>
-struct container_traits<std::deque<Type, Allocator>>
-{
+struct container_traits<std::deque<Type, Allocator>> {
     using category = vectorlike_tag;
 };
 
@@ -108,8 +101,7 @@ struct container_traits<std::deque<Type, Allocator>>
  *        category is defined as vectorlike_tag.
 **/
 template <typename CharT, typename CharTraits, typename Allocator>
-struct container_traits<std::basic_string<CharT, CharTraits, Allocator>>
-{
+struct container_traits<std::basic_string<CharT, CharTraits, Allocator>> {
     using category = vectorlike_tag;
 };
 
@@ -118,8 +110,7 @@ struct container_traits<std::basic_string<CharT, CharTraits, Allocator>>
  *        category is defined as listlike_tag.
 **/
 template <typename Type, typename Allocator>
-struct container_traits<std::list<Type, Allocator>>
-{
+struct container_traits<std::list<Type, Allocator>> {
     using category = listlike_tag;
 };
 
@@ -128,8 +119,7 @@ struct container_traits<std::list<Type, Allocator>>
  *        category is defined as listlike_tag.
 **/
 template <typename Type, typename Allocator>
-struct container_traits<std::forward_list<Type, Allocator>>
-{
+struct container_traits<std::forward_list<Type, Allocator>> {
     using category = listlike_tag;
 };
 
@@ -138,8 +128,7 @@ struct container_traits<std::forward_list<Type, Allocator>>
  *        category is defined as associative_tag.
 **/
 template <typename Type, typename Comparator, typename Allocator>
-struct container_traits<std::set<Type, Comparator, Allocator>>
-{
+struct container_traits<std::set<Type, Comparator, Allocator>> {
     using category = associative_tag;
 };
 
@@ -148,8 +137,7 @@ struct container_traits<std::set<Type, Comparator, Allocator>>
  *        category is defined as associative_tag.
 **/
 template <typename Type, typename Comparator, typename Allocator>
-struct container_traits<std::multiset<Type, Comparator, Allocator>>
-{
+struct container_traits<std::multiset<Type, Comparator, Allocator>> {
     using category = associative_tag;
 };
 
@@ -158,8 +146,7 @@ struct container_traits<std::multiset<Type, Comparator, Allocator>>
  *        category is defined as associative_tag.
 **/
 template <typename Type, typename Comparator, typename Allocator>
-struct container_traits<std::unordered_set<Type, Comparator, Allocator>>
-{
+struct container_traits<std::unordered_set<Type, Comparator, Allocator>> {
     using category = associative_tag;
 };
 
@@ -168,8 +155,7 @@ struct container_traits<std::unordered_set<Type, Comparator, Allocator>>
  *        category is defined as associative_tag.
 **/
 template <typename Type, typename Comparator, typename Allocator>
-struct container_traits<std::unordered_multiset<Type, Comparator, Allocator>>
-{
+struct container_traits<std::unordered_multiset<Type, Comparator, Allocator>> {
     using category = associative_tag;
 };
 
@@ -178,8 +164,7 @@ struct container_traits<std::unordered_multiset<Type, Comparator, Allocator>>
  *        category is defined as associative_tag.
 **/
 template <typename Type, typename Comparator, typename Allocator>
-struct container_traits<std::map<Type, Comparator, Allocator>>
-{
+struct container_traits<std::map<Type, Comparator, Allocator>> {
     using category = associative_tag;
 };
 
@@ -188,8 +173,7 @@ struct container_traits<std::map<Type, Comparator, Allocator>>
  *        category is defined as associative_tag.
 **/
 template <typename Type, typename Comparator, typename Allocator>
-struct container_traits<std::multimap<Type, Comparator, Allocator>>
-{
+struct container_traits<std::multimap<Type, Comparator, Allocator>> {
     using category = associative_tag;
 };
 
@@ -198,8 +182,7 @@ struct container_traits<std::multimap<Type, Comparator, Allocator>>
  *        category is defined as associative_tag.
 **/
 template <typename Type, typename Comparator, typename Allocator>
-struct container_traits<std::unordered_map<Type, Comparator, Allocator>>
-{
+struct container_traits<std::unordered_map<Type, Comparator, Allocator>> {
     using category = associative_tag;
 };
 
@@ -208,18 +191,18 @@ struct container_traits<std::unordered_map<Type, Comparator, Allocator>>
  *        category is defined as associative_tag.
 **/
 template <typename Type, typename Comparator, typename Allocator>
-struct container_traits<std::unordered_multimap<Type, Comparator, Allocator>>
-{
+struct container_traits<std::unordered_multimap<Type, Comparator, Allocator>> {
     using category = associative_tag;
 };
 
 /*!
- * \brief C++14 style template type alias for the nested type of container_traits
- *        called category. Makes usage simpler as it doesn't require the typename
- *        keyword.
+ * \brief C++14 style template type alias for the nested type of
+ *        container_traits called category. Makes usage simpler as it doesn't
+ *        require the typename keyword.
 **/
 template <typename Container>
-using container_traits_category = typename container_traits<Container>::category;
+using container_traits_category =
+    typename container_traits<Container>::category;
 } // namespace meta
 } // namespace pl
 #endif // INCG_PL_META_CONTAINER_TRAITS_HPP

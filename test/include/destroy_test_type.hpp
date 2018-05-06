@@ -27,15 +27,12 @@
 #ifndef INCG_PL_TEST_DESTROY_TEST_TYPE_HPP
 #define INCG_PL_TEST_DESTROY_TEST_TYPE_HPP
 
-namespace pl
-{
-namespace test
-{
+namespace pl {
+namespace test {
 /*!
  * \brief Type to test destroying algorithms that call destructors.
 **/
-class DestroyTestType
-{
+class DestroyTestType {
 public:
     using this_type = DestroyTestType;
 
@@ -45,17 +42,17 @@ public:
      * \warning Causes undefined behaviour if 'p' does not point to a bool.
      * \note Initializes the 'm_p' data member with 'p'.
     **/
-    explicit DestroyTestType(bool *p);
+    explicit DestroyTestType(bool* p);
 
     /*!
      * \brief Defaulted copy constructor.
     **/
-    DestroyTestType(const this_type &);
+    DestroyTestType(const this_type&);
 
     /*!
      * \brief Defaulted copy assignment operator.
     **/
-    this_type &operator=(const this_type &);
+    this_type& operator=(const this_type&);
 
     /*!
      * \brief Sets the bool pointed to by 'm_p' to true.
@@ -63,7 +60,7 @@ public:
     ~DestroyTestType();
 
 private:
-    bool *m_p; /*!< Pointer to the bool passed into the constructor */
+    bool* m_p; /*!< Pointer to the bool passed into the constructor */
 };
 } // namespace test
 } // namespace pl

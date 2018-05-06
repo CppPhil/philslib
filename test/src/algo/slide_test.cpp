@@ -26,30 +26,29 @@
 
 #include "../../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
-#endif // PL_COMPILER == PL_COMPILER_GCC
+#pragma GCC diagnostic pop
+#endif                                        // PL_COMPILER == PL_COMPILER_GCC
 #include "../../../include/pl/algo/slide.hpp" // pl::algo::slide
-#include <cstddef> // std::size_t
-#include <iterator> // std::distance
-#include <array> // std::array
+#include <array>                              // std::array
+#include <cstddef>                            // std::size_t
+#include <iterator>                           // std::distance
 
 TEST_CASE("slide_test")
 {
-    static constexpr std::size_t size{ 7U };
+    static constexpr std::size_t size{7U};
 
-    std::array<int, size> array{ {
-        1, 2, 3, 4, 5, 6, 7
-    } };
+    std::array<int, size> array{{1, 2, 3, 4, 5, 6, 7}};
 
     const auto begin = std::begin(array);
     const auto end   = std::end(array);
 
-    SUBCASE("slide_3_last_to_front") {
+    SUBCASE("slide_3_last_to_front")
+    {
         const auto slideFromBegin = end - 3;
         const auto slideFromEnd   = end;
         const auto slideTo        = begin;
@@ -62,7 +61,8 @@ TEST_CASE("slide_test")
         REQUIRE(slideTo >= begin);
         REQUIRE(slideTo <= end);
 
-        const auto pair = pl::algo::slide(slideFromBegin, slideFromEnd, slideTo);
+        const auto pair
+            = pl::algo::slide(slideFromBegin, slideFromEnd, slideTo);
 
         CHECK(array.at(0U) == 5);
         CHECK(array.at(1U) == 6);
@@ -76,7 +76,8 @@ TEST_CASE("slide_test")
         CHECK(pair.second == (slideTo + 3));
     }
 
-    SUBCASE("slide_2_first_to_back") {
+    SUBCASE("slide_2_first_to_back")
+    {
         const auto slideFromBegin = begin;
         const auto slideFromEnd   = begin + 2;
         const auto slideTo        = end;
@@ -89,7 +90,8 @@ TEST_CASE("slide_test")
         REQUIRE(slideTo >= begin);
         REQUIRE(slideTo <= end);
 
-        const auto pair = pl::algo::slide(slideFromBegin, slideFromEnd, slideTo);
+        const auto pair
+            = pl::algo::slide(slideFromBegin, slideFromEnd, slideTo);
 
         CHECK(array.at(0U) == 3);
         CHECK(array.at(1U) == 4);
@@ -99,11 +101,14 @@ TEST_CASE("slide_test")
         CHECK(array.at(5U) == 1);
         CHECK(array.at(6U) == 2);
 
-        CHECK(pair.first  == (slideTo - (std::distance(slideFromBegin, slideFromEnd))));
+        CHECK(
+            pair.first
+            == (slideTo - (std::distance(slideFromBegin, slideFromEnd))));
         CHECK(pair.second == slideTo);
     }
 
-    SUBCASE("slide_to_center") {
+    SUBCASE("slide_to_center")
+    {
         const auto slideFromBegin = begin;
         const auto slideFromEnd   = slideFromBegin + 2;
         const auto slideTo        = begin + (size / 2U);
@@ -116,7 +121,8 @@ TEST_CASE("slide_test")
         REQUIRE(slideTo >= begin);
         REQUIRE(slideTo <= end);
 
-        const auto pair = pl::algo::slide(slideFromBegin, slideFromEnd, slideTo);
+        const auto pair
+            = pl::algo::slide(slideFromBegin, slideFromEnd, slideTo);
 
         CHECK(array.at(0U) == 3);
         CHECK(array.at(1U) == 1);
@@ -126,11 +132,14 @@ TEST_CASE("slide_test")
         CHECK(array.at(5U) == 6);
         CHECK(array.at(6U) == 7);
 
-        CHECK(pair.first == (slideTo - (std::distance(slideFromBegin, slideFromEnd))));
+        CHECK(
+            pair.first
+            == (slideTo - (std::distance(slideFromBegin, slideFromEnd))));
         CHECK(pair.second == slideTo);
     }
 
-    SUBCASE("slide_empty_range") {
+    SUBCASE("slide_empty_range")
+    {
         const auto slideFromBegin = begin + 1;
         const auto slideFromEnd   = slideFromBegin;
         const auto slideTo        = end;
@@ -143,7 +152,8 @@ TEST_CASE("slide_test")
         REQUIRE(slideTo >= begin);
         REQUIRE(slideTo <= end);
 
-        const auto pair = pl::algo::slide(slideFromBegin, slideFromEnd, slideTo);
+        const auto pair
+            = pl::algo::slide(slideFromBegin, slideFromEnd, slideTo);
 
         CHECK(array.at(0U) == 1);
         CHECK(array.at(1U) == 2);
@@ -153,11 +163,12 @@ TEST_CASE("slide_test")
         CHECK(array.at(5U) == 6);
         CHECK(array.at(6U) == 7);
 
-        CHECK(pair.first  == end);
+        CHECK(pair.first == end);
         CHECK(pair.second == end);
     }
 
-    SUBCASE("slide_entire_range") {
+    SUBCASE("slide_entire_range")
+    {
         const auto slideFromBegin = begin;
         const auto slideFromEnd   = end;
         const auto slideTo        = begin + 3;
@@ -170,7 +181,8 @@ TEST_CASE("slide_test")
         REQUIRE(slideTo >= begin);
         REQUIRE(slideTo <= end);
 
-        const auto pair = pl::algo::slide(slideFromBegin, slideFromEnd, slideTo);
+        const auto pair
+            = pl::algo::slide(slideFromBegin, slideFromEnd, slideTo);
 
         CHECK(array.at(0U) == 1);
         CHECK(array.at(1U) == 2);
@@ -180,7 +192,7 @@ TEST_CASE("slide_test")
         CHECK(array.at(5U) == 6);
         CHECK(array.at(6U) == 7);
 
-        CHECK(pair.first  == begin);
+        CHECK(pair.first == begin);
         CHECK(pair.second == end);
     }
 }

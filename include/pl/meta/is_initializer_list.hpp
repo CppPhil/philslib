@@ -31,12 +31,10 @@
 #ifndef INCG_PL_META_IS_INITIALIZER_LIST_HPP
 #define INCG_PL_META_IS_INITIALIZER_LIST_HPP
 #include <initializer_list> // std::initializer_list
-#include <type_traits> // std::false_type, std::true_type
+#include <type_traits>      // std::false_type, std::true_type
 
-namespace pl
-{
-namespace meta
-{
+namespace pl {
+namespace meta {
 /*!
  * \brief Detects whether Ty is a std::initializer_list type.
  * \note This is the false case.
@@ -45,9 +43,7 @@ namespace meta
  * Is derived from std::false_type.
 **/
 template <typename Ty>
-struct is_initializer_list
-    : public std::false_type
-{
+struct is_initializer_list : public std::false_type {
 };
 
 /*!
@@ -58,9 +54,7 @@ struct is_initializer_list
  * Is derived from std::true_type.
 **/
 template <typename Ty>
-struct is_initializer_list<std::initializer_list<Ty>>
-    : public std::true_type
-{
+struct is_initializer_list<std::initializer_list<Ty>> : public std::true_type {
 };
 } // namespace meta
 } // namespace pl

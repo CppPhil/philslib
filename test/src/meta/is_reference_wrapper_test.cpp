@@ -26,17 +26,17 @@
 
 #include "../../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
+#pragma GCC diagnostic pop
 #endif // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
 #include "../../../include/pl/meta/is_reference_wrapper.hpp" // pl::meta::is_reference_wrapper, pl::meta::is_not_reference_wrapper
-#include <ciso646> // not
-#include <unordered_map> // std::unordered_map
+#include "../../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
+#include <ciso646>                         // not
+#include <unordered_map>                   // std::unordered_map
 
 TEST_CASE("is_reference_wrapper_positive_test")
 {
@@ -65,7 +65,7 @@ TEST_CASE("is_reference_wrapper_negative_test")
     using Ty1 = unsigned long long;
     using Ty2 = wchar_t;
     using Ty3 = short;
-    using Ty4 = std::unordered_map<int, const char *>;
+    using Ty4 = std::unordered_map<int, const char*>;
 
     PL_TEST_STATIC_ASSERT(not pl::meta::is_reference_wrapper<Ty1>::value);
     PL_TEST_STATIC_ASSERT(pl::meta::is_not_reference_wrapper<Ty1>::value);

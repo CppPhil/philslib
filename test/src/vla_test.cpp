@@ -26,50 +26,33 @@
 
 #include "../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
-#endif // PL_COMPILER == PL_COMPILER_GCC
+#pragma GCC diagnostic pop
+#endif                              // PL_COMPILER == PL_COMPILER_GCC
 #include "../../include/pl/vla.hpp" // PL_VLA
-#include <ciso646> // and, not
-#include <cstddef> // std::size_t
+#include <ciso646>                  // and, not
+#include <cstddef>                  // std::size_t
+#include <string>  // std::string, std::literals::string_literals::operator""s
 #include <utility> // std::move
-#include <string> // std::string, std::literals::string_literals::operator""s
 
-namespace pl
-{
-namespace test
-{
-namespace
-{
-class VlaTestType
-{
+namespace pl {
+namespace test {
+namespace {
+class VlaTestType {
 public:
-    VlaTestType(std::string s, int i)
-        : m_s{ std::move(s) },
-          m_i{ i }
-    {
-    }
-
-    const std::string &s() const noexcept
-    {
-        return m_s;
-    }
-
-    int i() const noexcept
-    {
-        return m_i;
-    }
-
+    VlaTestType(std::string s, int i) : m_s{std::move(s)}, m_i{i} {}
+    const std::string& s() const noexcept { return m_s; }
+    int                i() const noexcept { return m_i; }
 private:
     std::string m_s;
-    int m_i;
+    int         m_i;
 };
 
-bool operator==(const VlaTestType &a, const VlaTestType &b)
+bool operator==(const VlaTestType& a, const VlaTestType& b)
 {
     return (a.s() == b.s()) and (a.i() == b.i());
 }
@@ -78,41 +61,37 @@ bool operator==(const VlaTestType &a, const VlaTestType &b)
 } // namespace pl
 
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wstack-protector"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wstack-protector"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 TEST_CASE("vla_test")
 {
     using namespace std::literals::string_literals;
 
-    static constexpr std::size_t amount{ 5U };
+    static constexpr std::size_t amount{5U};
 
     PL_VLA(
-        pl::test::VlaTestType,
-        vla,
-        amount,
-        pl::test::VlaTestType{ "Text"s, 5 }
-    );
+        pl::test::VlaTestType, vla, amount, pl::test::VlaTestType{"Text"s, 5});
 
-    for (const pl::test::VlaTestType &e : vla) {
-        CHECK(e == pl::test::VlaTestType{ "Text"s, 5 });
+    for (const pl::test::VlaTestType& e : vla) {
+        CHECK(e == pl::test::VlaTestType{"Text"s, 5});
     }
 
-    vla.at(0U) = pl::test::VlaTestType{ "Test"s, 5 };
-    CHECK(vla.at(0U) == pl::test::VlaTestType{ "Test"s, 5 });
+    vla.at(0U) = pl::test::VlaTestType{"Test"s, 5};
+    CHECK(vla.at(0U) == pl::test::VlaTestType{"Test"s, 5});
 
-    vla.at(1U) = pl::test::VlaTestType{ "Test"s, 6 };
-    CHECK(vla.at(1U) == pl::test::VlaTestType{ "Test"s, 6 });
+    vla.at(1U) = pl::test::VlaTestType{"Test"s, 6};
+    CHECK(vla.at(1U) == pl::test::VlaTestType{"Test"s, 6});
 
-    vla.at(2U) = pl::test::VlaTestType{ "Test"s, 7 };
-    CHECK(vla.at(2U) == pl::test::VlaTestType{ "Test"s, 7 });
+    vla.at(2U) = pl::test::VlaTestType{"Test"s, 7};
+    CHECK(vla.at(2U) == pl::test::VlaTestType{"Test"s, 7});
 
-    vla.at(3U) = pl::test::VlaTestType{ "Test"s, 8 };
-    CHECK(vla.at(3U) == pl::test::VlaTestType{ "Test"s, 8 });
+    vla.at(3U) = pl::test::VlaTestType{"Test"s, 8};
+    CHECK(vla.at(3U) == pl::test::VlaTestType{"Test"s, 8});
 
-    vla.at(4U) = pl::test::VlaTestType{ "Test"s, 9 };
-    CHECK(vla.at(4U) == pl::test::VlaTestType{ "Test"s, 9 });
+    vla.at(4U) = pl::test::VlaTestType{"Test"s, 9};
+    CHECK(vla.at(4U) == pl::test::VlaTestType{"Test"s, 9});
 }
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
+#pragma GCC diagnostic pop
 #endif // PL_COMPILER == PL_COMPILER_GCC

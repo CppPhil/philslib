@@ -26,16 +26,16 @@
 
 #include "../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
-#endif // PL_COMPILER == PL_COMPILER_GCC
-#include <cstring> // std::strcmp
-#include "../../include/pl/glue.hpp" // PL_GLUE
+#pragma GCC diagnostic pop
+#endif                                    // PL_COMPILER == PL_COMPILER_GCC
+#include "../../include/pl/glue.hpp"      // PL_GLUE
 #include "../../include/pl/stringify.hpp" // PL_STRINGIFY
+#include <cstring>                        // std::strcmp
 
 TEST_CASE("glue_test")
 {

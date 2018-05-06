@@ -31,13 +31,11 @@
 #ifndef INCG_PL_CONT_EMPTY_HPP
 #define INCG_PL_CONT_EMPTY_HPP
 #include "../annotations.hpp" // PL_IN, PL_NODISCARD
-#include <cstddef> // std::size_t
-#include <initializer_list> // std::initializer_list
+#include <cstddef>            // std::size_t
+#include <initializer_list>   // std::initializer_list
 
-namespace pl
-{
-namespace cont
-{
+namespace pl {
+namespace cont {
 /*!
  * \brief Returns whether the given 'container' is empty.
  * \param container A container with an empty member function.
@@ -46,7 +44,7 @@ namespace cont
  *       any element, otherwise it will be false.
 **/
 template <typename Container>
-PL_NODISCARD constexpr auto empty(PL_IN const Container &container)
+PL_NODISCARD constexpr auto empty(PL_IN const Container& container)
     -> decltype(container.empty())
 {
     return container.empty();

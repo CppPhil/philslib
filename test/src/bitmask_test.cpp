@@ -26,24 +26,20 @@
 
 #include "../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
-#endif // PL_COMPILER == PL_COMPILER_GCC
+#pragma GCC diagnostic pop
+#endif                                  // PL_COMPILER == PL_COMPILER_GCC
 #include "../../include/pl/bitmask.hpp" // PL_ENABLE_BITMASK_OPERATORS
-#include <cstdint> // std::uint8_t
+#include <cstdint>                      // std::uint8_t
 
-namespace pl
-{
-namespace test
-{
-namespace
-{
-enum class Flag : std::uint8_t
-{
+namespace pl {
+namespace test {
+namespace {
+enum class Flag : std::uint8_t {
     a = 0b0000'0000,
     b = 0b0000'0001,
     c = 0b0000'0010,
@@ -63,7 +59,7 @@ TEST_CASE("bit_or_test")
     CHECK((pl::test::Flag::d | pl::test::Flag::b) == pl::test::Flag::d);
     CHECK((pl::test::Flag::d | pl::test::Flag::c) == pl::test::Flag::d);
 
-    pl::test::Flag flag{ pl::test::Flag::b };
+    pl::test::Flag flag{pl::test::Flag::b};
     flag |= pl::test::Flag::c;
 
     CHECK(flag == pl::test::Flag::d);
@@ -78,7 +74,7 @@ TEST_CASE("bit_and_test")
     CHECK((pl::test::Flag::a & pl::test::Flag::d) == pl::test::Flag::a);
     CHECK((pl::test::Flag::a & pl::test::Flag::e) == pl::test::Flag::a);
 
-    pl::test::Flag flag{ pl::test::Flag::d };
+    pl::test::Flag flag{pl::test::Flag::d};
     flag &= pl::test::Flag::b;
 
     CHECK(flag == pl::test::Flag::b);
@@ -90,7 +86,7 @@ TEST_CASE("xor_test")
     CHECK((pl::test::Flag::c ^ pl::test::Flag::d) == pl::test::Flag::b);
     CHECK((pl::test::Flag::b ^ pl::test::Flag::d) == pl::test::Flag::c);
 
-    pl::test::Flag flag{ pl::test::Flag::b };
+    pl::test::Flag flag{pl::test::Flag::b};
     flag ^= pl::test::Flag::c;
 
     CHECK(flag == pl::test::Flag::d);

@@ -26,52 +26,67 @@
 
 #include "../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
-#endif // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/pl/memxor.hpp" // pl::memxor
+#pragma GCC diagnostic pop
+#endif                               // PL_COMPILER == PL_COMPILER_GCC
 #include "../../include/pl/byte.hpp" // pl::Byte
 #include "../../include/pl/cont/make_array.hpp" // pl::makeArray
-#include <cstddef> // std::size_t
-#include <cstring> // std::memcmp
+#include "../../include/pl/memxor.hpp"          // pl::memxor
+#include <cstddef>                              // std::size_t
+#include <cstring>                              // std::memcmp
 
 TEST_CASE("memxor_test")
 {
     constexpr auto expectedArray = pl::cont::makeArray(
-        static_cast<pl::Byte>('\x17'), static_cast<pl::Byte>('\x0A'),
-        static_cast<pl::Byte>('\x1C'), static_cast<pl::Byte>('\x1F'),
-        static_cast<pl::Byte>('\x49'), static_cast<pl::Byte>('\x11'),
-        static_cast<pl::Byte>('\x16'), static_cast<pl::Byte>('\x59'),
-        static_cast<pl::Byte>('\x55'), static_cast<pl::Byte>('\x00'));
+        static_cast<pl::Byte>('\x17'),
+        static_cast<pl::Byte>('\x0A'),
+        static_cast<pl::Byte>('\x1C'),
+        static_cast<pl::Byte>('\x1F'),
+        static_cast<pl::Byte>('\x49'),
+        static_cast<pl::Byte>('\x11'),
+        static_cast<pl::Byte>('\x16'),
+        static_cast<pl::Byte>('\x59'),
+        static_cast<pl::Byte>('\x55'),
+        static_cast<pl::Byte>('\x00'));
 
     constexpr auto srcArray = pl::cont::makeArray(
-        static_cast<pl::Byte>('\x63'), static_cast<pl::Byte>('\x6F'),
-        static_cast<pl::Byte>('\x6F'), static_cast<pl::Byte>('\x6B'),
-        static_cast<pl::Byte>('\x69'), static_cast<pl::Byte>('\x65'),
-        static_cast<pl::Byte>('\x73'), static_cast<pl::Byte>('\x21'),
-        static_cast<pl::Byte>('\x21'), static_cast<pl::Byte>('\x00'));
+        static_cast<pl::Byte>('\x63'),
+        static_cast<pl::Byte>('\x6F'),
+        static_cast<pl::Byte>('\x6F'),
+        static_cast<pl::Byte>('\x6B'),
+        static_cast<pl::Byte>('\x69'),
+        static_cast<pl::Byte>('\x65'),
+        static_cast<pl::Byte>('\x73'),
+        static_cast<pl::Byte>('\x21'),
+        static_cast<pl::Byte>('\x21'),
+        static_cast<pl::Byte>('\x00'));
 
     auto destArray = pl::cont::makeArray(
-        static_cast<pl::Byte>('\x74'), static_cast<pl::Byte>('\x65'),
-        static_cast<pl::Byte>('\x73'), static_cast<pl::Byte>('\x74'),
-        static_cast<pl::Byte>('\x20'), static_cast<pl::Byte>('\x74'),
-        static_cast<pl::Byte>('\x65'), static_cast<pl::Byte>('\x78'),
-        static_cast<pl::Byte>('\x74'), static_cast<pl::Byte>('\x00'));
+        static_cast<pl::Byte>('\x74'),
+        static_cast<pl::Byte>('\x65'),
+        static_cast<pl::Byte>('\x73'),
+        static_cast<pl::Byte>('\x74'),
+        static_cast<pl::Byte>('\x20'),
+        static_cast<pl::Byte>('\x74'),
+        static_cast<pl::Byte>('\x65'),
+        static_cast<pl::Byte>('\x78'),
+        static_cast<pl::Byte>('\x74'),
+        static_cast<pl::Byte>('\x00'));
 
     REQUIRE(destArray.size() == srcArray.size());
     REQUIRE(destArray.size() == expectedArray.size());
 
-    void * const dest{ destArray.data() };
-    const void * const src{ srcArray.data() };
-    const void * const expected{ expectedArray.data() };
+    void* const       dest{destArray.data()};
+    const void* const src{srcArray.data()};
+    const void* const expected{expectedArray.data()};
 
-    const std::size_t size{ destArray.size() };
+    const std::size_t size{destArray.size()};
 
-    void * const retVal{ pl::memxor(dest, src, size) };
+    void* const retVal{pl::memxor(dest, src, size)};
 
     CHECK(retVal == dest);
 

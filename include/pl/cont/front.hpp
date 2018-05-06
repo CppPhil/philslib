@@ -32,15 +32,13 @@
 #ifndef INCG_PL_CONT_FRONT_HPP
 #define INCG_PL_CONT_FRONT_HPP
 #include "../annotations.hpp" // PL_IN
-#include "../assert.hpp" // PL_DBG_CHECK_PRE
-#include <ciso646> // not
-#include <cstddef> // std::size_t
-#include <initializer_list> // std::initializer_list
+#include "../assert.hpp"      // PL_DBG_CHECK_PRE
+#include <ciso646>            // not
+#include <cstddef>            // std::size_t
+#include <initializer_list>   // std::initializer_list
 
-namespace pl
-{
-namespace cont
-{
+namespace pl {
+namespace cont {
 /*!
  * \brief Gets the first (index 0) element of a container.
  * \param cont The container to get the first (index 0) element of.
@@ -48,7 +46,7 @@ namespace cont
  * \warning Undefined behavior occurs if the container passed in is empty.
 **/
 template <typename Cont>
-constexpr auto front(PL_IN Cont &cont) -> decltype(auto)
+constexpr auto front(PL_IN Cont& cont) -> decltype(auto)
 {
     PL_DBG_CHECK_PRE(not cont.empty());
 
@@ -70,7 +68,8 @@ constexpr auto front(PL_IN Type (&arr)[Size]) noexcept -> decltype(auto)
  * \brief Gets the first (index 0) element of an initializer_list.
  * \param initList The initializer_list to get the first (index 0) element of.
  * \return The first (index 0) element of the initializer_list.
- * \warning Undefined behavior occurs if the initializer_list passed in is empty.
+ * \warning Undefined behavior occurs if the initializer_list passed in is
+ *          empty.
 **/
 template <typename Ty>
 constexpr auto front(std::initializer_list<Ty> initList) noexcept

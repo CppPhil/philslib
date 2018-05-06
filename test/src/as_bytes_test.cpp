@@ -26,36 +26,36 @@
 
 #include "../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
-#endif // PL_COMPILER == PL_COMPILER_GCC
-#include "../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
+#pragma GCC diagnostic pop
+#endif                                   // PL_COMPILER == PL_COMPILER_GCC
 #include "../../include/pl/as_bytes.hpp" // pl::asBytes
-#include <cstddef> // std::size_t
-#include <cstring> // std::memcpy
-#include <cstdint> // std::uint32_t
-#include <type_traits> // std::is_same
+#include "../include/static_assert.hpp"  // PL_TEST_STATIC_ASSERT
+#include <cstddef>                       // std::size_t
+#include <cstdint>                       // std::uint32_t
+#include <cstring>                       // std::memcpy
+#include <type_traits>                   // std::is_same
 
 TEST_CASE("as_bytes_buffer_test")
 {
-    static constexpr std::size_t byteSize{ 5U };
-    static constexpr char buf1[]{ "\xAA\xBB\xCC\xDD" };
-    char buf2[]{ "\xDE\xAD\xC0\xDE" };
+    static constexpr std::size_t byteSize{5U};
+    static constexpr char        buf1[]{"\xAA\xBB\xCC\xDD"};
+    char                         buf2[]{"\xDE\xAD\xC0\xDE"};
 
     PL_TEST_STATIC_ASSERT(sizeof(buf1) == byteSize);
     PL_TEST_STATIC_ASSERT(sizeof(buf2) == byteSize);
 
-    PL_TEST_STATIC_ASSERT(std::is_same<
-        decltype(pl::asBytes(buf1)), const pl::Byte *>::value);
-    PL_TEST_STATIC_ASSERT(std::is_same<
-        decltype(pl::asBytes(buf2)), pl::Byte *>::value);
+    PL_TEST_STATIC_ASSERT(
+        std::is_same<decltype(pl::asBytes(buf1)), const pl::Byte*>::value);
+    PL_TEST_STATIC_ASSERT(
+        std::is_same<decltype(pl::asBytes(buf2)), pl::Byte*>::value);
 
-    const pl::Byte *p1{ pl::asBytes(buf1) };
-    pl::Byte *p2{ pl::asBytes(buf2) };
+    const pl::Byte* p1{pl::asBytes(buf1)};
+    pl::Byte*       p2{pl::asBytes(buf2)};
 
     REQUIRE(p1 != nullptr);
     REQUIRE(p2 != nullptr);
@@ -75,14 +75,14 @@ TEST_CASE("as_bytes_buffer_test")
 
 TEST_CASE("as_bytes_int_test")
 {
-    static constexpr std::size_t byteSize{ 4U };
+    static constexpr std::size_t byteSize{4U};
 
-    std::uint32_t v{ };
+    std::uint32_t v{};
     PL_TEST_STATIC_ASSERT(sizeof(v) == byteSize);
 
     std::memcpy(&v, "\xDE\xAD\xC0\xDE", byteSize);
 
-    const pl::Byte *p{ pl::asBytes(v) };
+    const pl::Byte* p{pl::asBytes(v)};
 
     REQUIRE(p != nullptr);
 

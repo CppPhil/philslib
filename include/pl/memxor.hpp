@@ -31,13 +31,12 @@
 #ifndef INCG_PL_MEMXOR_HPP
 #define INCG_PL_MEMXOR_HPP
 #include "annotations.hpp" // PL_IN, PL_INOUT
-#include "restrict.hpp" // PL_RESTRICT
-#include "byte.hpp" // pl::Byte
-#include "assert.hpp" // PL_DBG_CHECK_PRE
-#include <cstddef> // std::size_t
+#include "assert.hpp"      // PL_DBG_CHECK_PRE
+#include "byte.hpp"        // pl::Byte
+#include "restrict.hpp"    // PL_RESTRICT
+#include <cstddef>         // std::size_t
 
-namespace pl
-{
+namespace pl {
 /*!
  * \brief Bytewise xor-assigns the memory pointed to by 'destination'
  *        with the memory pointed to by 'source'.
@@ -52,10 +51,10 @@ namespace pl
  * \return 'destination' is returned.
  * \warning Make sure 'byteCount' is correct!
 **/
-inline void *memxor(
-    PL_INOUT void * PL_RESTRICT destination,
-    PL_IN const void * PL_RESTRICT source,
-    std::size_t byteCount)
+inline void* memxor(
+    PL_INOUT void* PL_RESTRICT destination,
+    PL_IN const void* PL_RESTRICT source,
+    std::size_t                   byteCount)
 {
     PL_DBG_CHECK_PRE(destination != nullptr);
     PL_DBG_CHECK_PRE(source != nullptr);

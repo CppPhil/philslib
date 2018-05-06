@@ -31,69 +31,72 @@
 **/
 #ifndef INCG_PL_ALGO_ERASE_HPP
 #define INCG_PL_ALGO_ERASE_HPP
-#include "../annotations.hpp" // PL_IN, PL_INOUT
+#include "../annotations.hpp"           // PL_IN, PL_INOUT
 #include "../meta/container_traits.hpp" // pl::meta::vectorlike_tag, pl::meta::listlike_tag, pl::meta::associative_tag, pl::meta::container_traits_category
-#include <utility> // std::forward
-#include <algorithm> // std::remove, std::remove_if
+#include <algorithm>                    // std::remove, std::remove_if
+#include <utility>                      // std::forward
 
-namespace pl
-{
-namespace algo
-{
-namespace detail
-{
+namespace pl {
+namespace algo {
+namespace detail {
 /*!
  * \brief Helper function used by pl::erase. Removes all occurrences that
  *        compare equal to elementToRemove from a vectorlike container.
- * \param container The container to remove all occurrences of elementToRemove from.
- * \param elementToRemove The element to remove. All elements of the container that
- *        compare equal to this will be removed from the container.
+ * \param container The container to remove all occurrences of elementToRemove
+ *                  from.
+ * \param elementToRemove The element to remove. All elements of the container
+ *                        that compare equal to this will be removed from
+ *                        the container.
 **/
 template <typename Container, typename Type>
 inline void eraseHelper(
-    PL_INOUT Container &container,
-    PL_IN const Type &elementToRemove,
+    PL_INOUT Container& container,
+    PL_IN const Type& elementToRemove,
     meta::vectorlike_tag)
 {
-    container.erase(std::remove(container.begin(),
-                                container.end(),
-                                elementToRemove),
-                    container.end());
+    container.erase(
+        std::remove(container.begin(), container.end(), elementToRemove),
+        container.end());
 }
 
 /*!
  * \brief helper function used by pl::eraseIf. Removes all elements for which
- *        unaryPredicate's call operator returns true from a vectorlike container.
- * \param container The container to remove all elements that satisfy unaryPredicate from.
- * \param unaryPredicate The unary predicate used to determine which elements to remove.
- *        All elements for which this object's call operator returns true will be removed
- *        from the container.
+ *        unaryPredicate's call operator returns true from a vectorlike
+ *        container.
+ * \param container The container to remove all elements that satisfy
+ *                  unaryPredicate from.
+ * \param unaryPredicate The unary predicate used to determine which elements to
+ *                       remove. All elements for which this object's call
+ *                       operator returns true will be removed from
+ *                       the container.
 **/
 template <typename Container, typename UnaryPredicate>
 inline void eraseIfHelper(
-    PL_INOUT Container &container,
-    PL_IN UnaryPredicate &&unaryPredicate,
+    PL_INOUT Container& container,
+    PL_IN UnaryPredicate&& unaryPredicate,
     meta::vectorlike_tag)
 {
     container.erase(
-        std::remove_if(container.begin(),
-                       container.end(),
-                       std::forward<UnaryPredicate>(unaryPredicate)),
-        container.end()
-    );
+        std::remove_if(
+            container.begin(),
+            container.end(),
+            std::forward<UnaryPredicate>(unaryPredicate)),
+        container.end());
 }
 
 /*!
  * \brief Helper function used by pl::erase. Removes all occurrences that
  *        compare equal to elementToRemove from a listlike container.
- * \param container The container to remove all occurrences of elementToRemove from.
- * \param elementToRemove The element to remove. All elements of the container that
- *        compare equal to this will be removed from the container.
+ * \param container The container to remove all occurrences of elementToRemove
+ *                  from.
+ * \param elementToRemove The element to remove. All elements of the container
+ *                        that compare equal to this will be removed from
+ *                        the container.
 **/
 template <typename Container, typename Type>
 inline void eraseHelper(
-    PL_INOUT Container &container,
-    PL_IN const Type &elementToRemove,
+    PL_INOUT Container& container,
+    PL_IN const Type& elementToRemove,
     meta::listlike_tag)
 {
     container.remove(elementToRemove);
@@ -102,15 +105,17 @@ inline void eraseHelper(
 /*!
  * \brief helper function used by pl::eraseIf. Removes all elements for which
  *        unaryPredicate's call operator returns true from a listlike container.
- * \param container The container to remove all elements that satisfy unaryPredicate from.
- * \param unaryPredicate The unary predicate used to determine which elements to remove.
- *        All elements for which this object's call operator returns true will be removed
- *        from the container.
+ * \param container The container to remove all elements that satisfy
+ *                  unaryPredicate from.
+ * \param unaryPredicate The unary predicate used to determine which elements to
+ *                       remove. All elements for which this object's
+ *                       call operator returns true will be removed
+ *                       from the container.
 **/
 template <typename Container, typename UnaryPredicate>
 inline void eraseIfHelper(
-    PL_INOUT Container &container,
-    PL_IN UnaryPredicate &&unaryPredicate,
+    PL_INOUT Container& container,
+    PL_IN UnaryPredicate&& unaryPredicate,
     meta::listlike_tag)
 {
     container.remove_if(std::forward<UnaryPredicate>(unaryPredicate));
@@ -121,14 +126,16 @@ inline void eraseIfHelper(
  *        compare equivalent (for ordered containers)
  *        or equal (for unordered containers)
  *        to elementToRemove from an associative container.
- * \param container The container to remove all occurrences equivalent/equal to elementToRemove from.
- * \param elementToRemove The element to remove. All elements of the container that
- *        compare equivalent/equal to this will be removed from the container.
+ * \param container The container to remove all occurrences equivalent/equal to
+ *                  elementToRemove from.
+ * \param elementToRemove The element to remove. All elements of the container
+ *                        that compare equivalent/equal to this will be
+ *                        removed from the container.
 **/
 template <typename Container, typename Type>
 inline void eraseHelper(
-    PL_INOUT Container &container,
-    PL_IN const Type &elementToRemove,
+    PL_INOUT Container& container,
+    PL_IN const Type& elementToRemove,
     meta::associative_tag)
 {
     container.erase(elementToRemove);
@@ -136,23 +143,27 @@ inline void eraseHelper(
 
 /*!
  * \brief helper function used by pl::eraseIf. Removes all elements for which
- *        unaryPredicate's call operator returns true from a associative container.
- * \param container The container to remove all elements that satisfy unaryPredicate from.
- * \param unaryPredicate The unary predicate used to determine which elements to remove.
- *        All elements for which this object's call operator returns true will be removed
- *        from the container.
+ *        unaryPredicate's call operator returns true from a associative
+ *        container.
+ * \param container The container to remove all elements that satisfy
+ *                  unaryPredicate from.
+ * \param unaryPredicate The unary predicate used to determine which elements to
+ *                       remove. All elements for which this object's call
+ *                       operator returns true will be removed from
+ *                       the container.
 **/
 template <typename Container, typename UnaryPredicate>
 inline void eraseIfHelper(
-    PL_INOUT Container &container,
-    UnaryPredicate unaryPredicate,
+    PL_INOUT Container& container,
+    UnaryPredicate      unaryPredicate,
     meta::associative_tag)
 {
     const auto endIter = container.end();
     for (auto iterator = container.begin(); iterator != endIter;) {
         if (unaryPredicate(*iterator)) {
             container.erase(iterator++);
-        } else {
+        }
+        else {
             ++iterator;
         }
     }
@@ -166,12 +177,15 @@ inline void eraseIfHelper(
  *                        If 'container' is a map-like type 'elementToRemove'
  *                        must be the 'key' to remove.
  * \note If the container is a std::vector, std::deque, std::forward_list,
- *       std::list, std::unordered_set, std::unordered_map, std::unordered_multiset or a
- *       std::unordered_multimap all elements that compare equal
- *       (using operator==) will be removed from the container.
- * \note If the container is a std::set, std::map, std::multiset, or a std::multimap
+ *       std::list, std::unordered_set, std::unordered_map,
+ *       std::unordered_multiset or a std::unordered_multimap all elements
+ *       that compare equal (using operator==) will be removed from
+ *       the container.
+ * \note If the container is a std::set, std::map, std::multiset, or a
+ *       std::multimap
  *       all pairs whose keys compare equivalent
- *       (using !((elementFromContainer < elementToRemove) || (elementFromContainer < elementToRemove)))
+ *       (using !((elementFromContainer < elementToRemove) ||
+ *                (elementFromContainer < elementToRemove)))
  *       will be removed from the container.
  * \note For std::set, std::map, std::multiset, std::multimap,
  *       std::unordered_set, std::unordered_map, std::unordered_multiset and
@@ -181,17 +195,20 @@ inline void eraseIfHelper(
 **/
 template <typename Container, typename Type>
 inline void erase(
-    PL_INOUT Container &container,
-    PL_IN const Type &elementToRemove)
+    PL_INOUT Container& container,
+    PL_IN const Type& elementToRemove)
 {
-    detail::eraseHelper(container, elementToRemove,
-                        meta::container_traits_category<Container>{ });
+    detail::eraseHelper(
+        container,
+        elementToRemove,
+        meta::container_traits_category<Container>{});
 }
 
 /*!
  * \brief Removes all elements from container that satisfy unaryPredicate.
  * \param container The container to remove elements from.
- * \param unaryPredicate The unary predicate that will select elements for removal.
+ * \param unaryPredicate The unary predicate that will select elements for
+ *                       removal.
  *
  * All elements from container for which the call operator of unaryPredicate
  * returns true will be removed from the container. The call operator
@@ -200,14 +217,13 @@ inline void erase(
 **/
 template <typename Container, typename UnaryPredicate>
 inline void eraseIf(
-    PL_INOUT Container &container,
-    PL_IN UnaryPredicate &&unaryPredicate)
+    PL_INOUT Container& container,
+    PL_IN UnaryPredicate&& unaryPredicate)
 {
     detail::eraseIfHelper(
         container,
         std::forward<UnaryPredicate>(unaryPredicate),
-        meta::container_traits_category<Container>{ }
-    );
+        meta::container_traits_category<Container>{});
 }
 } // namespace algo
 } // namespace pl

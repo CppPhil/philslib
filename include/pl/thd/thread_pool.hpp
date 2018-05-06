@@ -30,29 +30,27 @@
 **/
 #ifndef INCG_PL_THD_THREAD_POOL_HPP
 #define INCG_PL_THD_THREAD_POOL_HPP
-#include "../annotations.hpp" // PL_IN, PL_NODISCARD
-#include "../byte.hpp" // pl::Byte
-#include "../apply.hpp" // pl::apply
 #include "../algo/destroy.hpp" // pl::algo::destroy
-#include <ciso646> // not, or
-#include <cstddef> // std::size_t
-#include <cstdint> // std::uint8_t
+#include "../annotations.hpp"  // PL_IN, PL_NODISCARD
+#include "../apply.hpp"        // pl::apply
+#include "../byte.hpp"         // pl::Byte
+#include <algorithm>           // std::for_each
+#include <ciso646>             // not, or
+#include <condition_variable>  // std::condition_variable
+#include <cstddef>             // std::size_t
+#include <cstdint>             // std::uint8_t
+#include <future>              // std::future, std::promise
+#include <memory>  // std::shared_ptr, std::unique_ptr, std::addressof
+#include <mutex>   // std::mutex
+#include <new>     // new
+#include <queue>   // std::priority_queue
+#include <thread>  // std::thread
+#include <tuple>   // std::make_tuple
 #include <utility> // std::move
-#include <new> // new
-#include <memory> // std::shared_ptr, std::unique_ptr, std::addressof
-#include <thread> // std::thread
-#include <mutex> // std::mutex
-#include <vector> // std::vector
-#include <condition_variable> // std::condition_variable
-#include <future> // std::future, std::promise
-#include <queue> // std::priority_queue
-#include <tuple> // std::make_tuple
-#include <algorithm> // std::for_each
+#include <vector>  // std::vector
 
-namespace pl
-{
-namespace thd
-{
+namespace pl {
+namespace thd {
 /*!
  * \brief A thread pool. Can be created with a count of threads. Will manage
  *        that many threads. Tasks can be added with a priority. The threads
@@ -60,10 +58,10 @@ namespace thd
  *        threads and the count of tasks still waiting to be executed can be
  *        queried.
 **/
-class ThreadPool
-{
+class ThreadPool {
 private:
     class ExecutorBase;
+
 public:
     using this_type = ThreadPool;
 
@@ -74,8 +72,8 @@ public:
      * \return true if a's priority is less than b's priority; false otherwise.
     **/
     friend bool operator<(
-        PL_IN const ExecutorBase &a,
-        PL_IN const ExecutorBase &b);
+        PL_IN const ExecutorBase& a,
+        PL_IN const ExecutorBase& b);
 
     /*!
      * \brief Constructs a ThreadPool.
@@ -93,12 +91,12 @@ public:
     /*!
      * \brief This type is non-copyable.
     **/
-    ThreadPool(const this_type &) = delete;
+    ThreadPool(const this_type&) = delete;
 
     /*!
      * \brief This type is non-copyable.
     **/
-    this_type &operator=(const this_type &) = delete;
+    this_type& operator=(const this_type&) = delete;
 
     /*!
      * \brief Destroys the ThreadPool by joining all of the threads
@@ -128,8 +126,8 @@ public:
      * priority. Will wake up one thread waiting for something to be added
      * to the queue of tasks.
     **/
-    template <typename Callable, typename ...Args>
-    PL_NODISCARD auto addTask(Callable task, Args ...args)
+    template <typename Callable, typename... Args>
+    PL_NODISCARD auto addTask(Callable task, Args... args)
     {
         // add the task using a priority of 0.
         return addTask(static_cast<std::uint8_t>(0U), task, args...);
@@ -161,11 +159,12 @@ public:
      * std::future to the result of invoking the task with the arguments passed.
      * That std::future can be joined using .get() for instance.
     **/
-    template <typename Callable, typename ...Args>
-    PL_NODISCARD auto addTask(std::uint8_t prio, Callable task, Args ...args)
+    template <typename Callable, typename... Args>
+    PL_NODISCARD auto addTask(std::uint8_t prio, Callable task, Args... args)
     {
-        auto invoker
-            = [t = std::move(task), tup = std::make_tuple(std::move(args) ...)] {
+        auto invoker =
+            [ t = std::move(task), tup = std::make_tuple(std::move(args)...) ]
+        {
             return ::pl::apply(std::move(t), std::move(tup));
         };
 
@@ -173,14 +172,15 @@ public:
         using Ret = decltype(invoker());
 
         // lock the mutex, shared data is going to be accessed
-        std::unique_lock<std::mutex> lock{ m_mutex };
+        std::unique_lock<std::mutex> lock{m_mutex};
         auto t = std::make_shared<Executor<decltype(invoker), Ret>>(
-            std::move(invoker),
-            prio);
+            std::move(invoker), prio);
 
         m_tasksShared.push(t); // add the task to the queue.
+        auto fut = t->getResult().get_future();
+        lock.unlock();
         m_cv.notify_one(); // wake one thread
-        return t->getResult().get_future(); // return the future back to caller.
+        return fut;
     }
 
     /*!
@@ -206,8 +206,7 @@ private:
      *        that represents the priority of the task to be run.
      *        Can be compared by that priority.
     **/
-    class ExecutorBase
-    {
+    class ExecutorBase {
     public:
         /*!
          * \brief Constructor for ExecutorBase.
@@ -225,11 +224,12 @@ private:
          * \brief Compares two ExecutorBase's priorities.
          * \param a The first operand.
          * \param b The second operand.
-         * \return true if a's priority is less than b's priority; false otherwise.
+         * \return true if a's priority is less than b's priority; false
+         *         otherwise.
         **/
         friend bool operator<(
-            PL_IN const ExecutorBase &a,
-            PL_IN const ExecutorBase &b);
+            PL_IN const ExecutorBase& a,
+            PL_IN const ExecutorBase& b);
 
         /*!
          * \brief pure virtual member function to be implemented by deriving
@@ -249,9 +249,7 @@ private:
      * Runs the task in its call operator and sets the result to its promise.
     **/
     template <typename Task, typename Ret>
-    class Executor final
-        : public ExecutorBase
-    {
+    class Executor final : public ExecutorBase {
     public:
         /*!
          * \brief Constructs an Executor from a task and a priority.
@@ -259,10 +257,8 @@ private:
          * \param priority The priority with which the task is to be run.
          *        The Executors will remain sorted by this criterion.
         **/
-        Executor(PL_IN const Task &task, std::uint8_t priority)
-            : ExecutorBase{ priority },
-              m_task{ task },
-              m_result{ }
+        Executor(PL_IN const Task& task, std::uint8_t priority)
+            : ExecutorBase{priority}, m_task{task}, m_result{}
         {
         }
 
@@ -276,7 +272,8 @@ private:
         {
             try {
                 m_result.set_value(m_task());
-            } catch (...) {
+            }
+            catch (...) {
                 m_result.set_exception(std::current_exception());
             }
         }
@@ -287,13 +284,9 @@ private:
          * \note Used by ThreadPool::addTask to access the promise and get its
          *       associated future.
         **/
-        PL_NODISCARD std::promise<Ret> &getResult()
-        {
-            return m_result;
-        }
-
+        PL_NODISCARD std::promise<Ret>& getResult() { return m_result; }
     private:
-        Task m_task; //!< The task to be run.
+        Task              m_task;   //!< The task to be run.
         std::promise<Ret> m_result; //!< the result of running the task.
     };
 
@@ -304,9 +297,7 @@ private:
      * and sets the result to its underlying promise.
     **/
     template <typename Task>
-    class Executor<Task, void> final
-        : public ExecutorBase
-    {
+    class Executor<Task, void> final : public ExecutorBase {
     public:
         /*!
          * \brief Constructs an Executor.
@@ -318,10 +309,8 @@ private:
          * \note The function that is run by the threads will always take the
          *       'greatest' task, that is the one with the highest priority.
         **/
-        Executor(PL_IN const Task &task, std::uint8_t priority)
-            : ExecutorBase{ priority },
-              m_task{ task },
-              m_result{ }
+        Executor(PL_IN const Task& task, std::uint8_t priority)
+            : ExecutorBase{priority}, m_task{task}, m_result{}
         {
         }
 
@@ -339,7 +328,8 @@ private:
             try {
                 m_task();
                 m_result.set_value();
-            } catch (...) {
+            }
+            catch (...) {
                 m_result.set_exception(std::current_exception());
             }
         }
@@ -351,11 +341,7 @@ private:
          *       the future associated with this promise can be gotten and be
          *       returned back to the user.
         **/
-        PL_NODISCARD std::promise<void> &getResult()
-        {
-            return m_result;
-        }
-
+        PL_NODISCARD std::promise<void>& getResult() { return m_result; }
     private:
         Task m_task; //!< The task to be called in the call operator.
         std::promise<void> m_result; /*!< The result of calling the Task.
@@ -370,8 +356,7 @@ private:
      *        Dereferences two objects passed in and compares the results using
      *        std::less.
     **/
-    class DerefLess final
-    {
+    class DerefLess final {
     public:
         /*!
          * \brief Compares *p1 with *p2 using std::less.
@@ -382,10 +367,10 @@ private:
         **/
         template <typename Pointer>
         PL_NODISCARD bool operator()(
-            PL_IN Pointer const &p1,
-            PL_IN Pointer const &p2)
+            PL_IN Pointer const& p1,
+            PL_IN Pointer const& p2)
         {
-            std::less<decltype(*p1)> lessComparator{ };
+            std::less<decltype(*p1)> lessComparator{};
             return lessComparator(*p1, *p2);
         }
     };
@@ -416,23 +401,22 @@ private:
     **/
     void join();
 
-    std::priority_queue<
-        std::shared_ptr<ExecutorBase>,
-        std::vector<std::shared_ptr<ExecutorBase>>,
-        DerefLess
-    > m_tasksShared; //!< the queue of tasks still to be run
-    mutable std::mutex m_mutex; //!< mutex to protect the shared data
+    std::priority_queue<std::shared_ptr<ExecutorBase>,
+                        std::vector<std::shared_ptr<ExecutorBase>>,
+                        DerefLess>
+                            m_tasksShared; //!< the queue of tasks still to be run
+    mutable std::mutex      m_mutex;       //!< mutex to protect the shared data
     std::condition_variable m_cv; /*!< condvar to wake threads waiting for the
                                    *   queue to no longer be empty. And to
                                    *   shutdown the threads in the join function
                                   **/
     bool m_isFinishedShared; //!< flag that will be set to true on shutdown.
-    const std::size_t m_threadCount; //!< the amount of threads.
-    std::unique_ptr<pl::Byte[]> m_threads; /*!< raw memory that the threads
-                                            *   live in.
-                                           **/
-    std::thread *m_threadBegin; //!< iterator to the first thread.
-    std::thread *m_threadEnd; //!< end iterator of the range of threads.
+    const std::size_t           m_threadCount; //!< the amount of threads.
+    std::unique_ptr<pl::Byte[]> m_threads;     /*!< raw memory that the threads
+                                                *   live in.
+                                               **/
+    std::thread* m_threadBegin; //!< iterator to the first thread.
+    std::thread* m_threadEnd;   //!< end iterator of the range of threads.
 };
 
 inline ThreadPool::ThreadPool(std::size_t amtThreads)
@@ -448,8 +432,9 @@ inline ThreadPool::ThreadPool(std::size_t amtThreads)
       m_threadBegin{ // begin iterator to the range of threads
           reinterpret_cast<std::thread *>(m_threads.get())
       },
-      m_threadEnd{ m_threadBegin + m_threadCount } // end iterator.
-                                                   // is out of bounds.
+      m_threadEnd{ m_threadBegin + m_threadCount } /* end iterator.
+                                                    * is out of bounds.
+                                                    */
 {
     // pointer to the ThreadPool
     // used in the lambda below.
@@ -458,9 +443,9 @@ inline ThreadPool::ThreadPool(std::size_t amtThreads)
     // construct the threads into the raw memory.
     // start running the thread running the threadFunction which is a
     // non-static member function of ThreadPool.
-    std::for_each(m_threadBegin, m_threadEnd,
-                  [self] (PL_OUT std::thread &t) {
-        ::new(static_cast<void *>(std::addressof(t))) std::thread{ &ThreadPool::threadFunction, self };
+    std::for_each(m_threadBegin, m_threadEnd, [self](PL_OUT std::thread& t) {
+        ::new (static_cast<void*>(std::addressof(t)))
+            std::thread{&ThreadPool::threadFunction, self};
     });
 }
 
@@ -486,22 +471,19 @@ PL_NODISCARD inline std::size_t ThreadPool::tasksWaitingForExecution() const
     // lock the mutex,
     // the queue of tasks is shared data
     // the threads of the thread pool remove tasks from it.
-    std::unique_lock<std::mutex> lock{ m_mutex };
+    std::unique_lock<std::mutex> lock{m_mutex};
     return m_tasksShared.size(); // return the number of tasks still to be run.
 }
 
 inline ThreadPool::ExecutorBase::ExecutorBase(std::uint8_t p)
-    : m_priority{ p } // just set the priority
+    : m_priority{p} // just set the priority
 {
 }
 
-inline ThreadPool::ExecutorBase::~ExecutorBase()
-{
-}
-
+inline ThreadPool::ExecutorBase::~ExecutorBase() {}
 inline bool operator<(
-    PL_IN const ThreadPool::ExecutorBase &a,
-    PL_IN const ThreadPool::ExecutorBase &b)
+    PL_IN const ThreadPool::ExecutorBase& a,
+    PL_IN const ThreadPool::ExecutorBase& b)
 {
     return a.m_priority < b.m_priority; // compare the priorities stored.
 }
@@ -512,21 +494,20 @@ inline void ThreadPool::threadFunction()
     auto running = true;
 
     while (running) {
-        std::unique_lock<std::mutex> lock{ m_mutex };
-        m_cv.wait(lock, // wait until shutdown or got task to run.
-                  [this] {
-                       return m_isFinishedShared
-                              or not m_tasksShared.empty();
-                   });
+        std::unique_lock<std::mutex> lock{m_mutex};
+        m_cv.wait(
+            lock, // wait until shutdown or got task to run.
+            [this] { return m_isFinishedShared or not m_tasksShared.empty(); });
 
         // if we woke up because there's a task to run.
         if (not m_tasksShared.empty()) {
             auto task = m_tasksShared.top(); // get the highest priority task.
-            m_tasksShared.pop(); // remove it from the queue
+            m_tasksShared.pop();             // remove it from the queue
             lock.unlock(); // unlock the mutex, we're not accessing shared data
                            // any more, the task is local to this thread.
-            (*task)(); // run your task.
-        } else {
+            (*task)();     // run your task.
+        }
+        else {
             // if there was no task.
             // set running to false if we're shutting down.
             running = not m_isFinishedShared;
@@ -540,7 +521,7 @@ inline void ThreadPool::join()
 {
     {
         // lock the mutex, the boolean flag is shared data.
-        std::unique_lock<std::mutex> lock{ m_mutex };
+        std::unique_lock<std::mutex> lock{m_mutex};
         m_isFinishedShared = true;
     }
 
@@ -549,12 +530,7 @@ inline void ThreadPool::join()
 
     // join every thread.
     std::for_each(
-        m_threadBegin,
-        m_threadEnd,
-        [] (PL_INOUT std::thread &t) {
-            t.join();
-        }
-    );
+        m_threadBegin, m_threadEnd, [](PL_INOUT std::thread& t) { t.join(); });
 }
 } // namespace thd
 } // namespace pl

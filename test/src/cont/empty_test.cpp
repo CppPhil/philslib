@@ -26,38 +26,39 @@
 
 #include "../../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
-#endif // PL_COMPILER == PL_COMPILER_GCC
+#pragma GCC diagnostic pop
+#endif                                        // PL_COMPILER == PL_COMPILER_GCC
 #include "../../../include/pl/cont/empty.hpp" // pl::cont::empty
-#include <cstddef> // std::size_t
-#include <vector> // std::vector
-#include <array> // std::array
-#include <deque> // std::deque
-#include <initializer_list> // std::initializer_list
+#include <array>                              // std::array
+#include <cstddef>                            // std::size_t
+#include <deque>                              // std::deque
+#include <initializer_list>                   // std::initializer_list
+#include <vector>                             // std::vector
 
 TEST_CASE("empty_test")
 {
-    std::vector<int> vec1{ 1, 2, 3 };
-    std::vector<double> vec2{ };
+    std::vector<int>    vec1{1, 2, 3};
+    std::vector<double> vec2{};
 
-    static constexpr std::size_t arraySize{ 3U };
-    constexpr std::array<int, arraySize> a{ { 1, 2, 3 } };
+    static constexpr std::size_t arraySize{3U};
+    constexpr std::array<int, arraySize> a{{1, 2, 3}};
 
-    std::deque<long long> deque{ 1LL };
+    std::deque<long long> deque{1LL};
 
-    const int ary[]{ 1, 2, 3, 4, 5 };
-    const int ary2[]{ 1 };
+    const int ary[]{1, 2, 3, 4, 5};
+    const int ary2[]{1};
 
-    const std::initializer_list<void *> il{ nullptr };
+    const std::initializer_list<void*> il{nullptr};
 
-    const std::initializer_list<int> il2{ };
+    const std::initializer_list<int> il2{};
 
-    SUBCASE("empty_tests") {
+    SUBCASE("empty_tests")
+    {
         vec1.clear();
 
         CHECK_UNARY(pl::cont::empty(vec1));
@@ -69,7 +70,8 @@ TEST_CASE("empty_test")
         CHECK_UNARY(pl::cont::empty(il2));
     }
 
-    SUBCASE("non_empty_tests") {
+    SUBCASE("non_empty_tests")
+    {
         CHECK_UNARY_FALSE(pl::cont::empty(vec1));
 
         vec2.push_back(1.0);

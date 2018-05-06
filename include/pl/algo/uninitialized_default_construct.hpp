@@ -30,14 +30,12 @@
 **/
 #ifndef INCG_PL_ALGO_UNINITIALIZED_DEFAULT_CONSTRUCT_HPP
 #define INCG_PL_ALGO_UNINITIALIZED_DEFAULT_CONSTRUCT_HPP
-#include <new> // ::operator new
 #include <iterator> // std::iterator_traits
-#include <memory> // std::addressof
+#include <memory>   // std::addressof
+#include <new>      // ::operator new
 
-namespace pl
-{
-namespace algo
-{
+namespace pl {
+namespace algo {
 /*!
  * \brief Constructs objects of type
  *        typename iterator_traits<'ForwardIterator'>::value_type in the
@@ -52,19 +50,22 @@ namespace algo
  *       The complexity is linear in the distance between 'first' and 'last'.
 **/
 template <typename ForwardIterator>
-void uninitialized_default_construct(ForwardIterator first, ForwardIterator last)
+void uninitialized_default_construct(
+    ForwardIterator first,
+    ForwardIterator last)
 {
-    using value_type = typename std::iterator_traits<ForwardIterator>::value_type;
+    using value_type =
+        typename std::iterator_traits<ForwardIterator>::value_type;
 
-    ForwardIterator cur{ first };
+    ForwardIterator cur{first};
 
     try {
         while (cur != last) {
-            ::new(static_cast<void *>(std::addressof(*cur))) value_type;
+            ::new (static_cast<void*>(std::addressof(*cur))) value_type;
             ++cur;
         }
-
-    } catch (...) {
+    }
+    catch (...) {
         while (first != cur) {
             first->~value_type();
             ++first;

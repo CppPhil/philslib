@@ -26,13 +26,13 @@
 
 #include "../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
-#endif // PL_COMPILER == PL_COMPILER_GCC
+#pragma GCC diagnostic pop
+#endif                                  // PL_COMPILER == PL_COMPILER_GCC
 #include "../../include/pl/numeric.hpp" // pl::isEven, pl::isOdd, pl::isBetween
 
 TEST_CASE("is_even_test")
@@ -53,14 +53,14 @@ TEST_CASE("is_odd_test")
 
 TEST_CASE("is_between_test")
 {
-    CHECK_UNARY(pl::isBetween(5,  5, 5));
-    CHECK_UNARY(pl::isBetween(5,  4, 5));
-    CHECK_UNARY(pl::isBetween(5,  5, 6));
-    CHECK_UNARY(pl::isBetween(5,  4, 6));
+    CHECK_UNARY(pl::isBetween(5, 5, 5));
+    CHECK_UNARY(pl::isBetween(5, 4, 5));
+    CHECK_UNARY(pl::isBetween(5, 5, 6));
+    CHECK_UNARY(pl::isBetween(5, 4, 6));
 
-    CHECK_UNARY(pl::isBetween(0,  0, 0));
+    CHECK_UNARY(pl::isBetween(0, 0, 0));
     CHECK_UNARY(pl::isBetween(0, -1, 0));
-    CHECK_UNARY(pl::isBetween(0,  0, 1));
+    CHECK_UNARY(pl::isBetween(0, 0, 1));
     CHECK_UNARY(pl::isBetween(0, -1, 1));
 
     CHECK_UNARY_FALSE(pl::isBetween(5, 6, 6));

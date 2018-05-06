@@ -32,13 +32,11 @@
 #define INCG_PL_TIMER_HPP
 #include <chrono> // std::chrono::steady_clock, std::chrono::time_point
 
-namespace pl
-{
+namespace pl {
 /*!
  * \brief A timer that can be used to measure durations of time.
 **/
-class Timer
-{
+class Timer {
 public:
     using this_type = Timer;
 
@@ -63,14 +61,14 @@ public:
      *        replaced with the current time (when this function is invoked)
      * \return A reference to this Timer object.
     **/
-    this_type &reset() noexcept;
+    this_type& reset() noexcept;
 
 private:
-    std::chrono::time_point<std::chrono::steady_clock> m_timeStored; /*!< The time stored */
+    std::chrono::time_point<std::chrono::steady_clock>
+        m_timeStored; /*!< The time stored */
 };
 
-inline Timer::Timer() noexcept
-    : m_timeStored{ std::chrono::steady_clock::now() }
+inline Timer::Timer() noexcept : m_timeStored{std::chrono::steady_clock::now()}
 {
 }
 
@@ -79,7 +77,7 @@ inline std::chrono::steady_clock::duration Timer::elapsedTime() const noexcept
     return std::chrono::steady_clock::now() - m_timeStored;
 }
 
-inline Timer &Timer::reset() noexcept
+inline Timer& Timer::reset() noexcept
 {
     // replace the time stored with the current time.
     m_timeStored = std::chrono::steady_clock::now();

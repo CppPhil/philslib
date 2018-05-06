@@ -30,27 +30,27 @@
 **/
 #ifndef INCG_PL_VLA_HPP
 #define INCG_PL_VLA_HPP
-#include "alloca.hpp" // PL_ALLOCA
+#include "alloca.hpp"           // PL_ALLOCA
 #include "raw_memory_array.hpp" // pl::RawMemoryArray
 
 /*!
  * \def PL_VLA(type, identifier, size, initialValue)
  * \brief Creates a VLA. 'type' is the type of the elements that the VLA
  *        will store. 'identifier' is the identifier of the VLA.
- *        'size' is the amount of objects of type 'type' that the VLA will store.
+ *        'size' is the amount of objects of type 'type' that the VLA will
+ *        store.
  *        Pass an object with which to initialize the objects in the
  *        VLA by copy construction into the macro varargs.
  * \warning Internally uses PL_ALLOCA. Beware of stack overflow. See the
  *          documentation of PL_ALLOCA.
  * \see PL_ALLOCA
- * \note If the type contains a comma such as std::unordered_map<int, std::string>
+ * \note If the type contains a comma such as
+ *       std::unordered_map<int, std::string>
  *       you have to use a type alias for that type, rather than using the type
  *       directly so that the comma effectively disappears.
 **/
 
 #define PL_VLA(type, identifier, size, ...) \
-    ::pl::RawMemoryArray<type> identifier( \
-        PL_ALLOCA(sizeof(type) * size), \
-        sizeof(type) * size, \
-        __VA_ARGS__)
+    ::pl::RawMemoryArray<type> identifier(  \
+        PL_ALLOCA(sizeof(type) * size), sizeof(type) * size, __VA_ARGS__)
 #endif // INCG_PL_VLA_HPP

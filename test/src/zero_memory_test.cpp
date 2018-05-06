@@ -26,25 +26,27 @@
 
 #include "../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
-#endif // PL_COMPILER == PL_COMPILER_GCC
+#pragma GCC diagnostic pop
+#endif                               // PL_COMPILER == PL_COMPILER_GCC
 #include "../../include/pl/byte.hpp" // pl::Byte
 #include "../../include/pl/cont/make_array.hpp" // pl::makeArray
 #include "../../include/pl/zero_memory.hpp" // pl::zeroMemory, pl::secureZeroMemory
-#include <cstdint> // std::uint64_t, UINT64_C
+#include <cstdint>                          // std::uint64_t, UINT64_C
 
 TEST_CASE("zero_memory_test")
 {
     auto ary = pl::cont::makeArray(
-        static_cast<pl::Byte>(0xAB), static_cast<pl::Byte>(0xCD),
-        static_cast<pl::Byte>(0xEF), static_cast<pl::Byte>(0x10));
+        static_cast<pl::Byte>(0xAB),
+        static_cast<pl::Byte>(0xCD),
+        static_cast<pl::Byte>(0xEF),
+        static_cast<pl::Byte>(0x10));
 
-    std::uint64_t i{ UINT64_C(0x1A1BAABBCCDDEEFF) };
+    std::uint64_t i{UINT64_C(0x1A1BAABBCCDDEEFF)};
 
     for (pl::Byte byte : ary) {
         REQUIRE(byte != static_cast<pl::Byte>(0x00));
@@ -52,7 +54,8 @@ TEST_CASE("zero_memory_test")
 
     REQUIRE(i != UINT64_C(0));
 
-    SUBCASE("zero_memory") {
+    SUBCASE("zero_memory")
+    {
         pl::zeroMemory(ary.data(), ary.size());
 
         for (pl::Byte byte : ary) {
@@ -63,7 +66,8 @@ TEST_CASE("zero_memory_test")
         CHECK(i == UINT64_C(0));
     }
 
-    SUBCASE("secure_zero_memory") {
+    SUBCASE("secure_zero_memory")
+    {
         pl::secureZeroMemory(ary.data(), ary.size());
 
         for (pl::Byte byte : ary) {

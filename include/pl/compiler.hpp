@@ -67,23 +67,23 @@
  *        depending on which compiler is being used.
 **/
 
-#define PL_COMPILER_CLANG (0x0000) /* meaningless number */
-#define PL_COMPILER_ICC (0x0001) /* meaningless number */
-#define PL_COMPILER_MSVC (0x0002) /* meaningless number */
-#define PL_COMPILER_GCC (0x0003) /* meaningless number */
+#define PL_COMPILER_CLANG (0x0000)   /* meaningless number */
+#define PL_COMPILER_ICC (0x0001)     /* meaningless number */
+#define PL_COMPILER_MSVC (0x0002)    /* meaningless number */
+#define PL_COMPILER_GCC (0x0003)     /* meaningless number */
 #define PL_COMPILER_UNKNOWN (0xFFFF) /* meaningless number */
 
 #if defined(__clang__)
-#   define PL_COMPILER PL_COMPILER_CLANG
+#define PL_COMPILER PL_COMPILER_CLANG
 #elif defined(__INTEL_COMPILER) || defined(__ICL) || defined(__ICC)
-#   define PL_COMPILER PL_COMPILER_ICC
+#define PL_COMPILER PL_COMPILER_ICC
 #elif defined(_MSC_VER)
-#   define PL_COMPILER PL_COMPILER_MSVC
+#define PL_COMPILER PL_COMPILER_MSVC
 #elif defined(__GNUC__) || defined(__GNUG__)
-#   define PL_COMPILER PL_COMPILER_GCC
+#define PL_COMPILER PL_COMPILER_GCC
 #else
-#   define PL_COMPILER PL_COMPILER_UNKNOWN
-#   warning "Compiler could not be detected"
+#define PL_COMPILER PL_COMPILER_UNKNOWN
+#warning "Compiler could not be detected"
 #endif
 
 /*!
@@ -107,30 +107,30 @@
 **/
 
 #if PL_COMPILER == PL_COMPILER_CLANG
-#   define PL_COMPILER_MAJOR __clang_major__
-#   define PL_COMPILER_MINOR __clang_minor__
-#   define PL_COMPILER_PATCH __clang_patchlevel__
-#   define PL_COMPILER_NAME "Clang"
+#define PL_COMPILER_MAJOR __clang_major__
+#define PL_COMPILER_MINOR __clang_minor__
+#define PL_COMPILER_PATCH __clang_patchlevel__
+#define PL_COMPILER_NAME "Clang"
 #elif PL_COMPILER == PL_COMPILER_ICC
-#   define PL_COMPILER_MAJOR __INTEL_COMPILER / 100
-#   define PL_COMPILER_MINOR __INTEL_COMPILER % 100 / 10
-#   define PL_COMPILER_PATCH __INTEL_COMPILER % 10
-#   define PL_COMPILER_NAME "Intel ICC"
+#define PL_COMPILER_MAJOR __INTEL_COMPILER / 100
+#define PL_COMPILER_MINOR __INTEL_COMPILER % 100 / 10
+#define PL_COMPILER_PATCH __INTEL_COMPILER % 10
+#define PL_COMPILER_NAME "Intel ICC"
 #elif PL_COMPILER == PL_COMPILER_MSVC
-#   define PL_COMPILER_MAJOR _MSC_FULL_VER / 10000000
-#   define PL_COMPILER_MINOR _MSC_FULL_VER % 10000000 / 100000
-#   define PL_COMPILER_PATCH _MSC_FULL_VER % 100000
-#   define PL_COMPILER_NAME "Microsoft Visual C++ Compiler"
+#define PL_COMPILER_MAJOR _MSC_FULL_VER / 10000000
+#define PL_COMPILER_MINOR _MSC_FULL_VER % 10000000 / 100000
+#define PL_COMPILER_PATCH _MSC_FULL_VER % 100000
+#define PL_COMPILER_NAME "Microsoft Visual C++ Compiler"
 #elif PL_COMPILER == PL_COMPILER_GCC
-#   define PL_COMPILER_MAJOR __GNUC__
-#   define PL_COMPILER_MINOR __GNUC_MINOR__
-#   define PL_COMPILER_PATCH __GNUC_PATCHLEVEL__
-#   define PL_COMPILER_NAME "GCC"
+#define PL_COMPILER_MAJOR __GNUC__
+#define PL_COMPILER_MINOR __GNUC_MINOR__
+#define PL_COMPILER_PATCH __GNUC_PATCHLEVEL__
+#define PL_COMPILER_NAME "GCC"
 #else
-#   define PL_COMPILER_MAJOR (0x00) /* 0 for unknown compiler */
-#   define PL_COMPILER_MINOR (0x00) /* 0 for unknown compiler */
-#   define PL_COMPILER_PATCH (0x00) /* 0 for unknown compiler */
-#   define PL_COMPILER_NAME "Unknown"
+#define PL_COMPILER_MAJOR (0x00) /* 0 for unknown compiler */
+#define PL_COMPILER_MINOR (0x00) /* 0 for unknown compiler */
+#define PL_COMPILER_PATCH (0x00) /* 0 for unknown compiler */
+#define PL_COMPILER_NAME "Unknown"
 #endif
 
 /*!
@@ -140,14 +140,16 @@
  *        to a specific version.
 **/
 #define PL_COMPILER_VERSION_CHECK(major, minor, patch) \
-    (((major) * 16777216) + ((minor) * 65536) + (patch)) /* multipliers to 'push' the numbers leftward */
+    (((major)*16777216) + ((minor)*65536)              \
+     + (patch)) /* multipliers to 'push' the numbers leftward */
 
 /*!
  * \def PL_COMPILER_VERSION
  * \brief The current compiler version, may be compared to a number generated
  *        with PL_COMPILER_VERSION_CHECK
 **/
-#define PL_COMPILER_VERSION \
-    PL_COMPILER_VERSION_CHECK(PL_COMPILER_MAJOR, PL_COMPILER_MINOR, PL_COMPILER_PATCH)
+#define PL_COMPILER_VERSION    \
+    PL_COMPILER_VERSION_CHECK( \
+        PL_COMPILER_MAJOR, PL_COMPILER_MINOR, PL_COMPILER_PATCH)
 
 #endif // INCG_PL_COMPILER_HPP

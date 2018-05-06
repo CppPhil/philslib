@@ -30,37 +30,34 @@
 **/
 #ifndef INCG_PL_NEGATE_PREDICATE_HPP
 #define INCG_PL_NEGATE_PREDICATE_HPP
-#include "annotations.hpp" // PL_IN
+#include "annotations.hpp"       // PL_IN
+#include "invoke.hpp"            // pl::invoke
 #include "meta/remove_cvref.hpp" // pl::meta::remove_cvref_t
-#include "invoke.hpp" // pl::invoke
-#include <ciso646> // not
-#include <utility> // std::move, std::forward
-#include <type_traits> // std::is_nothrow_move_constructible
+#include <ciso646>               // not
+#include <type_traits>           // std::is_nothrow_move_constructible
+#include <utility>               // std::move, std::forward
 
-namespace pl
-{
-namespace detail
-{
+namespace pl {
+namespace detail {
 /*!
  * \brief A NegatedPredicate. Type returned by negatePredicate function.
  *        Stores the predicate passed. Will call the predicate in its call
  *        operator and negate the result.
 **/
 template <typename Predicate>
-class NegatedPredicate final
-{
+class NegatedPredicate final {
 public:
-    using this_type = NegatedPredicate;
+    using this_type   = NegatedPredicate;
     using return_type = bool;
-    using value_type = Predicate;
+    using value_type  = Predicate;
 
     /*!
      * \brief Constructs a NegatedPredicate.
      * \param predicate The predicate callable that is to be stored and negated.
     **/
-    explicit NegatedPredicate(value_type predicate)
-    noexcept(std::is_nothrow_move_constructible<value_type>::value)
-        : m_predicate{ std::move(predicate) }
+    explicit NegatedPredicate(value_type predicate) noexcept(
+        std::is_nothrow_move_constructible<value_type>::value)
+        : m_predicate{std::move(predicate)}
     {
     }
 
@@ -69,10 +66,10 @@ public:
      * \param args The arguments to call the stored predicate callable with.
      * \return The negation of the result of calling m_predicate with args.
     **/
-    template <typename ...Args>
-    return_type operator()(PL_IN Args &&...args)
+    template <typename... Args>
+    return_type operator()(PL_IN Args&&... args)
     {
-        return not ::pl::invoke(m_predicate, std::forward<Args>(args) ...);
+        return not::pl::invoke(m_predicate, std::forward<Args>(args)...);
     }
 
 private:
@@ -89,11 +86,10 @@ private:
 **/
 template <typename Predicate>
 detail::NegatedPredicate<meta::remove_cvref_t<Predicate>> negatePredicate(
-    PL_IN Predicate &&predicate)
+    PL_IN Predicate&& predicate)
 {
     return detail::NegatedPredicate<meta::remove_cvref_t<Predicate>>{
-        std::forward<Predicate>(predicate)
-    };
+        std::forward<Predicate>(predicate)};
 }
 } // namespace pl
 #endif // INCG_PL_NEGATE_PREDICATE_HPP

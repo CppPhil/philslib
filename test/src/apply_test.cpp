@@ -26,57 +26,33 @@
 
 #include "../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
-#endif // PL_COMPILER == PL_COMPILER_GCC
+#pragma GCC diagnostic pop
+#endif                                // PL_COMPILER == PL_COMPILER_GCC
 #include "../../include/pl/apply.hpp" // pl::apply
-#include <string> // std::string
-#include <tuple> // std::make_tuple
+#include <string>                     // std::string
+#include <tuple>                      // std::make_tuple
 
-namespace pl
-{
-namespace test
-{
-namespace
-{
-int nullaryFunction() noexcept
-{
-    return 5;
-}
-
-int unaryFunction(int i) noexcept
-{
-    return i * 2;
-}
-
+namespace pl {
+namespace test {
+namespace {
+int nullaryFunction() noexcept { return 5; }
+int unaryFunction(int i) noexcept { return i * 2; }
 template <typename Ty>
 Ty unaryFunctionTemplate(Ty ty)
 {
     return ty;
 }
 
-class Type
-{
+class Type {
 public:
-    explicit Type(int i) noexcept
-        : data{ i }
-    {
-    }
-
-    int nullaryMemFun() const noexcept
-    {
-        return 5;
-    }
-
-    int unaryMemFun(int i) const noexcept
-    {
-        return 7 + i;
-    }
-
+    explicit Type(int i) noexcept : data{i} {}
+    int               nullaryMemFun() const noexcept { return 5; }
+    int unaryMemFun(int i) const noexcept { return 7 + i; }
     template <typename Ty>
     Ty unaryMemFunTemplate(Ty ty) const
     {
@@ -86,24 +62,15 @@ public:
     int data;
 };
 
-struct NullaryFunctor
-{
-    int operator()() const noexcept
-    {
-        return 27;
-    }
+struct NullaryFunctor {
+    int operator()() const noexcept { return 27; }
 };
 
-struct UnaryFunctor
-{
-    int operator()(int i) const noexcept
-    {
-        return i / 2;
-    }
+struct UnaryFunctor {
+    int operator()(int i) const noexcept { return i / 2; }
 };
 
-struct GenericFunctor
-{
+struct GenericFunctor {
     template <typename Ty>
     Ty operator()(Ty ty) const
     {
@@ -116,62 +83,67 @@ struct GenericFunctor
 
 TEST_CASE("apply_test")
 {
-    const pl::test::Type obj{ 20 };
-    const pl::test::Type * const ptr{ &obj };
+    const pl::test::Type        obj{20};
+    const pl::test::Type* const ptr{&obj};
 
     auto nullaryLambda = [] { return 50; };
     auto unaryLambda   = [](int i) { return i * i; };
     auto genericLambda = [](auto val) { return val * 5; };
 
-    SUBCASE("function_pointers") {
+    SUBCASE("function_pointers")
+    {
         CHECK(pl::apply(&pl::test::nullaryFunction, std::make_tuple()) == 5);
         CHECK(pl::apply(&pl::test::unaryFunction, std::make_tuple(3)) == 6);
-        CHECK(pl::apply(
-            &pl::test::unaryFunctionTemplate<int>,
-            std::make_tuple(4)) == 4);
+        CHECK(
+            pl::apply(&pl::test::unaryFunctionTemplate<int>, std::make_tuple(4))
+            == 4);
     }
 
-    SUBCASE("member_function_pointers") {
-        CHECK(pl::apply(
-            &pl::test::Type::nullaryMemFun,
-            std::make_tuple(obj)) == 5);
-        CHECK(pl::apply(
-            &pl::test::Type::nullaryMemFun,
-            std::make_tuple(ptr)) == 5);
-        CHECK(pl::apply(
-            &pl::test::Type::unaryMemFun,
-            std::make_tuple(obj, 3)) == 10);
-        CHECK(pl::apply(
-            &pl::test::Type::unaryMemFun,
-            std::make_tuple(ptr, 3)) == 10);
-        CHECK(pl::apply(
-            &pl::test::Type::unaryMemFunTemplate<int>,
-            std::make_tuple(obj, 4)) == 4);
-        CHECK(pl::apply(
-            &pl::test::Type::unaryMemFunTemplate<int>,
-            std::make_tuple(ptr, 4)) == 4);
+    SUBCASE("member_function_pointers")
+    {
+        CHECK(
+            pl::apply(&pl::test::Type::nullaryMemFun, std::make_tuple(obj))
+            == 5);
+        CHECK(
+            pl::apply(&pl::test::Type::nullaryMemFun, std::make_tuple(ptr))
+            == 5);
+        CHECK(
+            pl::apply(&pl::test::Type::unaryMemFun, std::make_tuple(obj, 3))
+            == 10);
+        CHECK(
+            pl::apply(&pl::test::Type::unaryMemFun, std::make_tuple(ptr, 3))
+            == 10);
+        CHECK(
+            pl::apply(
+                &pl::test::Type::unaryMemFunTemplate<int>,
+                std::make_tuple(obj, 4))
+            == 4);
+        CHECK(
+            pl::apply(
+                &pl::test::Type::unaryMemFunTemplate<int>,
+                std::make_tuple(ptr, 4))
+            == 4);
     }
 
-    SUBCASE("member_object_pointer") {
-        CHECK(pl::apply(
-            &pl::test::Type::data,
-            std::make_tuple(obj)) == 20);
-        CHECK(pl::apply(
-            &pl::test::Type::data,
-            std::make_tuple(ptr)) == 20);
+    SUBCASE("member_object_pointer")
+    {
+        CHECK(pl::apply(&pl::test::Type::data, std::make_tuple(obj)) == 20);
+        CHECK(pl::apply(&pl::test::Type::data, std::make_tuple(ptr)) == 20);
     }
 
-    SUBCASE("functors") {
-        CHECK(pl::apply(pl::test::NullaryFunctor{ }, std::make_tuple()) == 27);
-        CHECK(pl::apply(
-            pl::test::UnaryFunctor{ },
-            std::make_tuple(4)) == 2);
-        CHECK(pl::apply(
-            pl::test::GenericFunctor{ },
-            std::make_tuple(std::string{ "text" })) == "text");
+    SUBCASE("functors")
+    {
+        CHECK(pl::apply(pl::test::NullaryFunctor{}, std::make_tuple()) == 27);
+        CHECK(pl::apply(pl::test::UnaryFunctor{}, std::make_tuple(4)) == 2);
+        CHECK(
+            pl::apply(
+                pl::test::GenericFunctor{},
+                std::make_tuple(std::string{"text"}))
+            == "text");
     }
 
-    SUBCASE("lambdas") {
+    SUBCASE("lambdas")
+    {
         CHECK(pl::apply(nullaryLambda, std::make_tuple()) == 50);
         CHECK(pl::apply(unaryLambda, std::make_tuple(5)) == 25);
         CHECK(pl::apply(genericLambda, std::make_tuple(20)) == 100);

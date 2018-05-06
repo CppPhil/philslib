@@ -31,13 +31,12 @@
 #ifndef INCG_PL_ZERO_MEMORY_HPP
 #define INCG_PL_ZERO_MEMORY_HPP
 #include "annotations.hpp" // PL_OUT
-#include "inline.hpp" // PL_ALWAYS_INLINE
-#include "byte.hpp" // pl::Byte
-#include "assert.hpp" // PL_DBG_CHECK_PRE
-#include <cstddef> // std::size_t
+#include "assert.hpp"      // PL_DBG_CHECK_PRE
+#include "byte.hpp"        // pl::Byte
+#include "inline.hpp"      // PL_ALWAYS_INLINE
+#include <cstddef>         // std::size_t
 
-namespace pl
-{
+namespace pl {
 /*!
  * \brief Copies a zero byte into each of the first countBytes
  *        characters of the object pointed to by dest.
@@ -59,13 +58,11 @@ namespace pl
  * \warning dest may not be a null pointer.
  * \see secureZeroMemory
 **/
-PL_ALWAYS_INLINE void *zeroMemory(
-    PL_OUT void *dest,
-    std::size_t countBytes)
+PL_ALWAYS_INLINE void* zeroMemory(PL_OUT void* dest, std::size_t countBytes)
 {
     PL_DBG_CHECK_PRE(dest != nullptr);
 
-    Byte *ptr{ static_cast<Byte *>(dest) };
+    Byte* ptr{static_cast<Byte*>(dest)};
 
     for (; countBytes != 0U; ++ptr, --countBytes) {
         *ptr = 0U;
@@ -97,13 +94,13 @@ PL_ALWAYS_INLINE void *zeroMemory(
  * even if the object pointed to by dest will not be referenced after
  * a call to this function.
 **/
-PL_ALWAYS_INLINE void *secureZeroMemory(
-    PL_OUT void *dest,
-    std::size_t countBytes)
+PL_ALWAYS_INLINE void* secureZeroMemory(
+    PL_OUT void* dest,
+    std::size_t  countBytes)
 {
     PL_DBG_CHECK_PRE(dest != nullptr);
 
-    volatile Byte *ptr{ static_cast<volatile Byte *>(dest) };
+    volatile Byte* ptr{static_cast<volatile Byte*>(dest)};
 
     for (; countBytes != 0U; ++ptr, --countBytes) {
         *ptr = 0U;

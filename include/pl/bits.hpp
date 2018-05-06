@@ -34,8 +34,7 @@
 #include "compiler.hpp" // PL_COMPILER, PL_COMPILER_MSVC, PL_COMPILER_VERSION, PL_COMPILER_VERSION_CHECK
 #include <type_traits> // std::is_unsigned
 
-namespace pl
-{
+namespace pl {
 /*!
  * \brief Sets the bit at position bit of numeric.
  * \param numeric The number to have its bit bit set.
@@ -47,15 +46,18 @@ namespace pl
  *       and newer.
 **/
 template <typename Numeric>
-#if (PL_COMPILER != PL_COMPILER_MSVC) || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
+#if (PL_COMPILER != PL_COMPILER_MSVC) \
+    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
 constexpr
 #else
 inline
 #endif
-Numeric &setBit(PL_INOUT Numeric &numeric, Numeric bit) noexcept
+    Numeric&
+    setBit(PL_INOUT Numeric& numeric, Numeric bit) noexcept
 {
-    static_assert(std::is_unsigned<Numeric>::value,
-                  "Numeric in pl::setBit should be an unsigned type.");
+    static_assert(
+        std::is_unsigned<Numeric>::value,
+        "Numeric in pl::setBit should be an unsigned type.");
 
     numeric |= static_cast<Numeric>(static_cast<Numeric>(1U) << bit);
     return numeric;
@@ -72,15 +74,18 @@ Numeric &setBit(PL_INOUT Numeric &numeric, Numeric bit) noexcept
  *       and newer.
 **/
 template <typename Numeric>
-#if (PL_COMPILER != PL_COMPILER_MSVC) || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
+#if (PL_COMPILER != PL_COMPILER_MSVC) \
+    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
 constexpr
 #else
 inline
 #endif
-Numeric &clearBit(PL_INOUT Numeric &numeric, Numeric bit) noexcept
+    Numeric&
+    clearBit(PL_INOUT Numeric& numeric, Numeric bit) noexcept
 {
-    static_assert(std::is_unsigned<Numeric>::value,
-                  "Numeric in pl::clearBit should be an unsigned type.");
+    static_assert(
+        std::is_unsigned<Numeric>::value,
+        "Numeric in pl::clearBit should be an unsigned type.");
 
     numeric &= static_cast<Numeric>(~(static_cast<Numeric>(1U) << bit));
     return numeric;
@@ -102,15 +107,18 @@ Numeric &clearBit(PL_INOUT Numeric &numeric, Numeric bit) noexcept
  * will be 1 after having executed this function.
 **/
 template <typename Numeric>
-#if (PL_COMPILER != PL_COMPILER_MSVC) || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
+#if (PL_COMPILER != PL_COMPILER_MSVC) \
+    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
 constexpr
 #else
 inline
 #endif
-Numeric &toggleBit(PL_INOUT Numeric &numeric, Numeric bit) noexcept
+    Numeric&
+    toggleBit(PL_INOUT Numeric& numeric, Numeric bit) noexcept
 {
-    static_assert(std::is_unsigned<Numeric>::value,
-                  "Numeric in pl::toggleBit should be an unsigned type.");
+    static_assert(
+        std::is_unsigned<Numeric>::value,
+        "Numeric in pl::toggleBit should be an unsigned type.");
 
     numeric ^= static_cast<Numeric>(static_cast<Numeric>(1U) << bit);
     return numeric;
@@ -127,8 +135,9 @@ Numeric &toggleBit(PL_INOUT Numeric &numeric, Numeric bit) noexcept
 template <typename Numeric>
 constexpr bool isBitSet(Numeric numeric, Numeric bit) noexcept
 {
-    static_assert(std::is_unsigned<Numeric>::value,
-                  "Numeric in pl::isBitSet should be an unsigned type.");
+    static_assert(
+        std::is_unsigned<Numeric>::value,
+        "Numeric in pl::isBitSet should be an unsigned type.");
 
     return ((numeric & (static_cast<Numeric>(1U) << bit)) != 0);
 }

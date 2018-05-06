@@ -26,18 +26,18 @@
 
 #include "../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
-#endif // PL_COMPILER == PL_COMPILER_GCC
-#include "../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
+#pragma GCC diagnostic pop
+#endif                               // PL_COMPILER == PL_COMPILER_GCC
 #include "../../include/pl/byte.hpp" // pl::Byte, pl::literals::integer_literals::operator""_byte
-#include <climits> // CHAR_BIT
-#include <cstring> // std::memcmp
-#include <type_traits> // std::is_same
+#include "../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
+#include <climits>                      // CHAR_BIT
+#include <cstring>                      // std::memcmp
+#include <type_traits>                  // std::is_same
 
 TEST_CASE("byte_test")
 {
@@ -48,13 +48,15 @@ TEST_CASE("byte_test")
     static constexpr auto minVal = 0x00_byte;
     static constexpr auto maxVal = 0xFF_byte;
 
-    PL_TEST_STATIC_ASSERT(std::is_same<decltype(minVal), const pl::Byte>::value);
-    PL_TEST_STATIC_ASSERT(std::is_same<decltype(maxVal), const pl::Byte>::value);
+    PL_TEST_STATIC_ASSERT(
+        std::is_same<decltype(minVal), const pl::Byte>::value);
+    PL_TEST_STATIC_ASSERT(
+        std::is_same<decltype(maxVal), const pl::Byte>::value);
 
     PL_TEST_STATIC_ASSERT(sizeof(pl::Byte) == sizeof(unsigned char));
 
-    const unsigned char a{ static_cast<unsigned char>('\x0') };
-    const unsigned char b{ static_cast<unsigned char>('\xFF') };
+    const unsigned char a{static_cast<unsigned char>('\x0')};
+    const unsigned char b{static_cast<unsigned char>('\xFF')};
 
     CHECK(std::memcmp(&minVal, &a, sizeof(pl::Byte)) == 0);
     CHECK(std::memcmp(&maxVal, &b, sizeof(pl::Byte)) == 0);

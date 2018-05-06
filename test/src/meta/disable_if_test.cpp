@@ -26,24 +26,21 @@
 
 #include "../../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
+#pragma GCC diagnostic pop
 #endif // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
 #include "../../../include/pl/meta/disable_if.hpp" // pl::meta::disable_if_t
-#include <ciso646> // not
+#include "../../include/static_assert.hpp"         // PL_TEST_STATIC_ASSERT
+#include <ciso646>                                 // not
 #include <type_traits> // std::true_type, std::false_type, std::is_same
 
-namespace pl
-{
-namespace test
-{
-namespace
-{
+namespace pl {
+namespace test {
+namespace {
 template <typename Ty>
 auto foo(Ty &&)
     -> pl::meta::disable_if_t<not std::is_same<Ty, int>::value, std::true_type>;
@@ -58,21 +55,16 @@ auto foo(Ty &&)
 TEST_CASE("disable_if_positive_test")
 {
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::test::foo(true)), std::false_type>::value
-    );
+        std::is_same<decltype(pl::test::foo(true)), std::false_type>::value);
 
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::test::foo('a')), std::false_type>::value
-    );
+        std::is_same<decltype(pl::test::foo('a')), std::false_type>::value);
 
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::test::foo(4U)), std::false_type>::value
-    );
+        std::is_same<decltype(pl::test::foo(4U)), std::false_type>::value);
 
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::test::foo("text")), std::false_type>::value
-    );
-
+        std::is_same<decltype(pl::test::foo("text")), std::false_type>::value);
 
     CHECK_UNARY(true);
 }
@@ -80,8 +72,7 @@ TEST_CASE("disable_if_positive_test")
 TEST_CASE("disable_if_negative_test")
 {
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::test::foo(1)), std::true_type>::value
-    );
+        std::is_same<decltype(pl::test::foo(1)), std::true_type>::value);
 
     CHECK_UNARY(true);
 }

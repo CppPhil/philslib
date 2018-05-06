@@ -31,10 +31,9 @@
 #ifndef INCG_PL_AS_PTR_CONST_HPP
 #define INCG_PL_AS_PTR_CONST_HPP
 #include "annotations.hpp" // PL_IN_OPT
-#include <type_traits> // std::add_const_t
+#include <type_traits>     // std::add_const_t
 
-namespace pl
-{
+namespace pl {
 /*!
  * \brief Returns a low level const qualified pointer to the object
  *        that is pointed to by 'p'.
@@ -43,7 +42,7 @@ namespace pl
  *         to by 'p'.
 **/
 template <typename Ty>
-constexpr std::add_const_t<Ty> *asPtrConst(PL_IN_OPT Ty *p) noexcept
+constexpr std::add_const_t<Ty>* asPtrConst(PL_IN_OPT Ty* p) noexcept
 {
     return p;
 }

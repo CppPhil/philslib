@@ -32,12 +32,10 @@
 #ifndef INCG_PL_CONT_SIZE_HPP
 #define INCG_PL_CONT_SIZE_HPP
 #include "../annotations.hpp" // PL_IN
-#include <cstddef> // std::size_t
+#include <cstddef>            // std::size_t
 
-namespace pl
-{
-namespace cont
-{
+namespace pl {
+namespace cont {
 /*!
  * \brief Gets the size of a container, which is the amount of elements
  *        currently stored in that container.
@@ -45,7 +43,7 @@ namespace cont
  * \return The size of the container passed into the parameter.
 **/
 template <typename Cont>
-constexpr auto size(PL_IN const Cont &cont) -> decltype(cont.size())
+constexpr auto size(PL_IN const Cont& cont) -> decltype(cont.size())
 {
     return cont.size();
 }

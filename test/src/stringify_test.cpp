@@ -26,20 +26,20 @@
 
 #include "../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
-#endif // PL_COMPILER == PL_COMPILER_GCC
+#pragma GCC diagnostic pop
+#endif                                    // PL_COMPILER == PL_COMPILER_GCC
 #include "../../include/pl/stringify.hpp" // PL_STRINGIFY
-#include <cstring> // std::strlen, std::strcmp
+#include <cstring>                        // std::strlen, std::strcmp
 
 TEST_CASE("stringify_test")
 {
-    static constexpr char str1[]{ PL_STRINGIFY(a) };
-    static constexpr char str2[]{ PL_STRINGIFY(text) };
+    static constexpr char str1[]{PL_STRINGIFY(a)};
+    static constexpr char str2[]{PL_STRINGIFY(text)};
 
     REQUIRE(std::strlen(str1) == 1U);
     CHECK(str1[0U] == 'a');

@@ -26,45 +26,46 @@
 
 #include "../../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
-#endif // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
+#pragma GCC diagnostic pop
+#endif                                     // PL_COMPILER == PL_COMPILER_GCC
 #include "../../../include/pl/cont/at.hpp" // pl::cont::at
-#include <initializer_list> // std::intializer_list
-#include <string> // std::string
-#include <vector> // std::vector
-#include <type_traits> // std::is_same
+#include "../../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
+#include <initializer_list>                // std::intializer_list
+#include <string>                          // std::string
+#include <type_traits>                     // std::is_same
+#include <vector>                          // std::vector
 
 TEST_CASE("at_test")
 {
-    int a1[]{ 1, 2, 3 };
-    const int a2[]{ 4, 5, 6 };
+    int       a1[]{1, 2, 3};
+    const int a2[]{4, 5, 6};
 
-    std::vector<int> vec1{ 1, 2, 3, 4 };
-    const std::vector<int> vec2{ 5, 6, 7, 8 };
-    const std::vector<int> emptyVector{ };
+    std::vector<int>       vec1{1, 2, 3, 4};
+    const std::vector<int> vec2{5, 6, 7, 8};
+    const std::vector<int> emptyVector{};
 
-    std::initializer_list<std::string> il1{ "test", "text" };
-    const std::initializer_list<std::string> il2{ "Hello", "World" };
-    std::initializer_list<std::string> emptyInitList{ };
+    std::initializer_list<std::string>       il1{"test", "text"};
+    const std::initializer_list<std::string> il2{"Hello", "World"};
+    std::initializer_list<std::string>       emptyInitList{};
 
-    SUBCASE("type_test") {
+    SUBCASE("type_test")
+    {
         PL_TEST_STATIC_ASSERT(
-            std::is_same<decltype(pl::cont::at(a1, 0U)), int &>::value);
-
-        PL_TEST_STATIC_ASSERT(
-            std::is_same<decltype(pl::cont::at(a2, 0U)), const int &>::value);
+            std::is_same<decltype(pl::cont::at(a1, 0U)), int&>::value);
 
         PL_TEST_STATIC_ASSERT(
-            std::is_same<decltype(pl::cont::at(vec1, 0U)), int &>::value);
+            std::is_same<decltype(pl::cont::at(a2, 0U)), const int&>::value);
 
         PL_TEST_STATIC_ASSERT(
-            std::is_same<decltype(pl::cont::at(vec2, 0U)), const int &>::value);
+            std::is_same<decltype(pl::cont::at(vec1, 0U)), int&>::value);
+
+        PL_TEST_STATIC_ASSERT(
+            std::is_same<decltype(pl::cont::at(vec2, 0U)), const int&>::value);
 
         PL_TEST_STATIC_ASSERT(
             std::is_same<decltype(pl::cont::at(il1, 0U)), std::string>::value);
@@ -75,7 +76,8 @@ TEST_CASE("at_test")
         CHECK_UNARY(true);
     }
 
-    SUBCASE("positive_tests") {
+    SUBCASE("positive_tests")
+    {
         CHECK(pl::cont::at(a1, 0U) == 1);
         CHECK(pl::cont::at(a1, 1U) == 2);
         CHECK(pl::cont::at(a1, 2U) == 3);
@@ -101,7 +103,8 @@ TEST_CASE("at_test")
         CHECK(pl::cont::at(il2, 1U) == "World");
     }
 
-    SUBCASE("negative_tests") {
+    SUBCASE("negative_tests")
+    {
         CHECK_THROWS_AS(pl::cont::at(a1, 3U), std::out_of_range);
         CHECK_THROWS_AS(pl::cont::at(a2, 3U), std::out_of_range);
 
@@ -114,11 +117,9 @@ TEST_CASE("at_test")
         CHECK_THROWS_AS(pl::cont::at(emptyInitList, 0U), std::out_of_range);
 
         CHECK_THROWS_AS(
-            pl::cont::at(a1, static_cast<std::size_t>(-1)),
-            std::out_of_range);
+            pl::cont::at(a1, static_cast<std::size_t>(-1)), std::out_of_range);
         CHECK_THROWS_AS(
-            pl::cont::at(a2, static_cast<std::size_t>(-1)),
-            std::out_of_range);
+            pl::cont::at(a2, static_cast<std::size_t>(-1)), std::out_of_range);
         CHECK_THROWS_AS(
             pl::cont::at(vec1, static_cast<std::size_t>(-1)),
             std::out_of_range);
@@ -129,11 +130,9 @@ TEST_CASE("at_test")
             pl::cont::at(emptyVector, static_cast<std::size_t>(-1)),
             std::out_of_range);
         CHECK_THROWS_AS(
-            pl::cont::at(il1, static_cast<std::size_t>(-1)),
-            std::out_of_range);
+            pl::cont::at(il1, static_cast<std::size_t>(-1)), std::out_of_range);
         CHECK_THROWS_AS(
-            pl::cont::at(il2, static_cast<std::size_t>(-1)),
-            std::out_of_range);
+            pl::cont::at(il2, static_cast<std::size_t>(-1)), std::out_of_range);
         CHECK_THROWS_AS(
             pl::cont::at(emptyInitList, static_cast<std::size_t>(-1)),
             std::out_of_range);

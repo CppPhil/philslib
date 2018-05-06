@@ -26,37 +26,37 @@
 
 #include "../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
+#pragma GCC diagnostic pop
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../include/pl/no_macro_substitution.hpp" // PL_NO_MACRO_SUBSTITUTION
-#include <cstdint> // std::uint32_t
-#include <limits> // std::numeric_limits
+#include <cstdint>                                    // std::uint32_t
+#include <limits>                                     // std::numeric_limits
 
 #if !defined(min)
-#   define min(a, b)  (((a) < (b)) ? (a) : (b))
+#define min(a, b) (((a) < (b)) ? (a) : (b))
 #endif // !defined(min)
 
 #if !defined(max)
-#   define max(a, b)  (((a) > (b)) ? (a) : (b))
+#define max(a, b) (((a) > (b)) ? (a) : (b))
 #endif // !defined(max)
 
 TEST_CASE("no_macro_substitution_test")
 {
-    constexpr auto minValue
+    constexpr auto                                minValue
         = std::numeric_limits<std::uint32_t>::min PL_NO_MACRO_SUBSTITUTION();
-    constexpr auto maxValue
+    constexpr auto                                maxValue
         = std::numeric_limits<std::uint32_t>::max PL_NO_MACRO_SUBSTITUTION();
 
     CHECK(minValue == 0U);
     CHECK(maxValue == 0xFFFFFFFFU);
 
-    int i{ 5 };
-    int j{ 7 };
+    int i{5};
+    int j{7};
     CHECK(min(i, j) == i);
     CHECK(max(i, j) == j);
 }

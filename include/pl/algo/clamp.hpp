@@ -31,14 +31,12 @@
 #ifndef INCG_PL_ALGO_CLAMP_HPP
 #define INCG_PL_ALGO_CLAMP_HPP
 #include "../annotations.hpp" // PL_IN
-#include "../assert.hpp" // PL_DBG_CHECK_PRE
-#include <functional> // std::less
-#include <ciso646> // not
+#include "../assert.hpp"      // PL_DBG_CHECK_PRE
+#include <ciso646>            // not
+#include <functional>         // std::less
 
-namespace pl
-{
-namespace algo
-{
+namespace pl {
+namespace algo {
 /*!
  * \brief If comp('value', 'lowerBound') is true, returns 'lowerBound';
  *        otherwise if comp('upperBound', 'value') is true
@@ -63,23 +61,25 @@ namespace algo
  * \note Complexity of at most two comparisons.
  *       If 'value' compares "equivalent" to either bound,
  *       returns a reference to 'value', not the bound.
- * \warning The behavior is undefined if comp('upperBound', 'lowerBound') is true.
+ * \warning The behavior is undefined if comp('upperBound', 'lowerBound') is
+ *          true.
  *          Capturing the result of clamp by reference if one of the parameters
- *          is rvalue produces a dangling reference if that parameter is returned!
+ *          is rvalue produces a dangling reference if that parameter is
+ *          returned!
  *          Only works for floating-point 'Ty' if NaNs are avoided.
 **/
 template <typename Ty, typename BinaryComparator>
-constexpr const Ty &clamp(
-    PL_IN const Ty &value,
-    PL_IN const Ty &lowerBound,
-    PL_IN const Ty &upperBound,
+constexpr const Ty& clamp(
+    PL_IN const Ty& value,
+    PL_IN const Ty& lowerBound,
+    PL_IN const Ty&  upperBound,
     BinaryComparator comp)
 {
     PL_DBG_CHECK_PRE(not comp(upperBound, lowerBound));
 
-    return ((comp(value, lowerBound)) ? (lowerBound)
-                                      : ((comp(upperBound, value)) ? (upperBound)
-                                                                   : (value)));
+    return comp(value, lowerBound) ? lowerBound : comp(upperBound, value)
+                                                      ? upperBound
+                                                      : value;
 }
 
 /*!
@@ -96,18 +96,20 @@ constexpr const Ty &clamp(
  *       Complexity of at most two comparisons.
  *       If 'value' compares equivalent to either bound,
  *       returns a reference to 'value', not the bound.
- * \warning The behavior is undefined if 'lowerBound' is greater than 'upperBound'.
+ * \warning The behavior is undefined if 'lowerBound' is greater than
+ *          'upperBound'.
  *          Capturing the result of clamp by reference if one of the parameters
- *          is rvalue produces a dangling reference if that parameter is returned!
+ *          is rvalue produces a dangling reference if that parameter is
+ *          returned!
  *          Only works for floating-point 'Ty' if NaNs are avoided.
 **/
 template <typename Ty>
-constexpr const Ty &clamp(
-    PL_IN const Ty &value,
-    PL_IN const Ty &lowerBound,
-    PL_IN const Ty &upperBound)
+constexpr const Ty& clamp(
+    PL_IN const Ty& value,
+    PL_IN const Ty& lowerBound,
+    PL_IN const Ty& upperBound)
 {
-    return ::pl::algo::clamp(value, lowerBound, upperBound, std::less<>{ });
+    return ::pl::algo::clamp(value, lowerBound, upperBound, std::less<>{});
 }
 } // namespace algo
 } // namespace pl

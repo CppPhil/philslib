@@ -30,15 +30,13 @@
 **/
 #ifndef INCG_PL_ALGO_UNINITIALIZED_MOVE_HPP
 #define INCG_PL_ALGO_UNINITIALIZED_MOVE_HPP
-#include <new> // ::operator new
-#include <utility> // std::move
 #include <iterator> // std::iterator_traits
-#include <memory> // std::addressof
+#include <memory>   // std::addressof
+#include <new>      // ::operator new
+#include <utility>  // std::move
 
-namespace pl
-{
-namespace algo
-{
+namespace pl {
+namespace algo {
 /*!
  * \brief Moves elements from the range ['first', 'last') to an uninitialized
  *        memory area beginning at 'dest'.
@@ -54,24 +52,27 @@ namespace algo
 **/
 template <typename InputIterator, typename ForwardIterator>
 ForwardIterator uninitialized_move(
-    InputIterator first,
-    InputIterator last,
+    InputIterator   first,
+    InputIterator   last,
     ForwardIterator dest)
 {
-    using value_type = typename std::iterator_traits<ForwardIterator>::value_type;
+    using value_type =
+        typename std::iterator_traits<ForwardIterator>::value_type;
 
-    ForwardIterator cur{ dest };
+    ForwardIterator cur{dest};
 
     try {
         while (first != last) {
-            ::new(static_cast<void *>(std::addressof(*cur))) value_type(std::move(*first));
+            ::new (static_cast<void*>(std::addressof(*cur)))
+                value_type(std::move(*first));
 
             ++first;
             ++cur;
         }
 
         return cur;
-    } catch (...) {
+    }
+    catch (...) {
         while (dest != cur) {
             dest->~value_type();
             ++dest;

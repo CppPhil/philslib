@@ -26,61 +26,61 @@
 
 #include "../../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
-#endif // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
-#include <cstddef> // std::size_t
-#include <array> // std::array
-#include <vector> // std::vector
-#include <deque> // std::deque
-#include <list> // std::list
-#include <queue> // std::queue
-#include <string> // std::string, std::literals::string_literals::operator""s
-#include <initializer_list> // std::initializer_list
-#include <type_traits> // std::is_same
+#pragma GCC diagnostic pop
+#endif                                       // PL_COMPILER == PL_COMPILER_GCC
 #include "../../../include/pl/cont/back.hpp" // pl::cont::back
+#include "../../include/static_assert.hpp"   // PL_TEST_STATIC_ASSERT
+#include <array>                             // std::array
+#include <cstddef>                           // std::size_t
+#include <deque>                             // std::deque
+#include <initializer_list>                  // std::initializer_list
+#include <list>                              // std::list
+#include <queue>                             // std::queue
+#include <string> // std::string, std::literals::string_literals::operator""s
+#include <type_traits> // std::is_same
+#include <vector>      // std::vector
 
 TEST_CASE("std_array_back_test")
 {
-    static constexpr std::size_t size{ 5U };
-    const std::array<int, size> array{ { 1, 2, 3, 4, 5 } };
+    static constexpr std::size_t size{5U};
+    const std::array<int, size> array{{1, 2, 3, 4, 5}};
     CHECK(pl::cont::back(array) == 5);
 }
 
 TEST_CASE("std_vector_back_test")
 {
-    const std::vector<int> v{ 1, 2, 3 };
+    const std::vector<int> v{1, 2, 3};
     CHECK(pl::cont::back(v) == 3);
 }
 
 TEST_CASE("std_deque_back_test")
 {
-    const std::deque<int> deque{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    const std::deque<int> deque{0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
     CHECK(pl::cont::back(deque) == 9);
 }
 
 TEST_CASE("std_list_back_test")
 {
-    const std::list<int> list{ 1, 2, 3, 4, 5 };
+    const std::list<int> list{1, 2, 3, 4, 5};
     CHECK(pl::cont::back(list) == 5);
 }
 
 TEST_CASE("c_array_back_test")
 {
-    const int cArray[] = { 1, 2, 3, 4, 5, 6, 7 };
+    const int  cArray[]  = {1, 2, 3, 4, 5, 6, 7};
     const char cString[] = "Text";
-    CHECK(pl::cont::back(cArray)  == 7);
+    CHECK(pl::cont::back(cArray) == 7);
     CHECK(pl::cont::back(cString) == '\0');
 }
 
 TEST_CASE("std_queue_back_test")
 {
-    std::queue<int> queue{ };
+    std::queue<int> queue{};
     queue.push(1);
     queue.push(2);
     queue.push(3);
@@ -89,7 +89,7 @@ TEST_CASE("std_queue_back_test")
 
 TEST_CASE("std_string_back_test")
 {
-    const std::string string{ "Hello World!" };
+    const std::string string{"Hello World!"};
     CHECK(pl::cont::back(string) == '!');
 }
 
@@ -97,14 +97,14 @@ TEST_CASE("initializer_list_test")
 {
     using namespace std::literals::string_literals;
 
-    std::initializer_list<int> il{ 1, 2, 3, 4, 5 };
-    const std::initializer_list<std::string> il2{ "text"s };
+    std::initializer_list<int>               il{1, 2, 3, 4, 5};
+    const std::initializer_list<std::string> il2{"text"s};
 
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::cont::back(il)), const int &>::value);
+        std::is_same<decltype(pl::cont::back(il)), const int&>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::cont::back(il2)), const std::string &>::value);
+        std::is_same<decltype(pl::cont::back(il2)), const std::string&>::value);
 
-    CHECK(pl::cont::back(il)  == 5);
+    CHECK(pl::cont::back(il) == 5);
     CHECK(pl::cont::back(il2) == "text"s);
 }

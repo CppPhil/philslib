@@ -33,8 +33,7 @@
 #include <ciso646> // and
 #include <cstdint> // std::uint8_t
 
-namespace pl
-{
+namespace pl {
 /*!
  * \brief Converts a character to an integer.
  * \param ch The character to be converted.

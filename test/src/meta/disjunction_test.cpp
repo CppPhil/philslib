@@ -26,34 +26,30 @@
 
 #include "../../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
+#pragma GCC diagnostic pop
 #endif // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
 #include "../../../include/pl/meta/disjunction.hpp" // pl::meta::disjunction
-#include <ciso646> // not
-#include <vector> // std::vector
+#include "../../include/static_assert.hpp"          // PL_TEST_STATIC_ASSERT
+#include <ciso646>                                  // not
 #include <type_traits> // std::is_integral, std::is_same, std::is_trivially_copyable
+#include <vector>      // std::vector
 
 TEST_CASE("disjunction_positive_test")
 {
     PL_TEST_STATIC_ASSERT(
-        pl::meta::disjunction<
-            std::is_same<int, int>, // true
-            std::is_integral<int>   // true
-        >::value
-    );
+        pl::meta::disjunction<std::is_same<int, int>, // true
+                              std::is_integral<int>   // true
+                              >::value);
 
     PL_TEST_STATIC_ASSERT(
-        pl::meta::disjunction<
-            std::is_same<double, float>,     // false
-            std::is_trivially_copyable<long> // true
-        >::value
-    );
+        pl::meta::disjunction<std::is_same<double, float>,     // false
+                              std::is_trivially_copyable<long> // true
+                              >::value);
 
     CHECK_UNARY(true);
 }
@@ -61,11 +57,9 @@ TEST_CASE("disjunction_positive_test")
 TEST_CASE("disjunction_negative_test")
 {
     PL_TEST_STATIC_ASSERT(
-        not pl::meta::disjunction<
-            std::is_same<int, double>,         // false
-            std::is_pod<std::vector<unsigned>> // false
-        >::value
-    );
+        not pl::meta::disjunction<std::is_same<int, double>,         // false
+                                  std::is_pod<std::vector<unsigned>> // false
+                                  >::value);
 
     CHECK_UNARY(true);
 }

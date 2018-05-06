@@ -1,5 +1,5 @@
 /* This is free and unencumbered software released into the public domain.
- *
+  *
  * Anyone is free to copy, modify, publish, use, compile, sell, or
  * distribute this software, either in source code form or as a compiled
  * binary, for any purpose, commercial or non-commercial, and by any
@@ -26,29 +26,29 @@
 
 #include "../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
-#endif // PL_COMPILER == PL_COMPILER_GCC
-#include "../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
+#pragma GCC diagnostic pop
+#endif                                 // PL_COMPILER == PL_COMPILER_GCC
 #include "../../include/pl/size_t.hpp" // pl::literals::integer_literals::operator""_zu
-#include <cstring> // std::memcmp
-#include <type_traits> // std::is_same
+#include "../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
+#include <cstring>                      // std::memcmp
+#include <type_traits>                  // std::is_same
 
 TEST_CASE("size_t_udl_test")
 {
     using namespace pl::literals::integer_literals;
 
     static constexpr auto a = 0_zu;
-    auto b = 25_zu;
+    auto                  b = 25_zu;
 
     PL_TEST_STATIC_ASSERT(std::is_same<decltype(a), const std::size_t>::value);
     PL_TEST_STATIC_ASSERT(std::is_same<decltype(b), std::size_t>::value);
 
-    std::size_t c{ static_cast<std::size_t>(0U) };
+    std::size_t c{static_cast<std::size_t>(0U)};
     CHECK(std::memcmp(&a, &c, sizeof(c)) == 0);
     c = static_cast<std::size_t>(25U);
     CHECK(std::memcmp(&b, &c, sizeof(c)) == 0);

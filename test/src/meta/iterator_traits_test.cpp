@@ -26,29 +26,26 @@
 
 #include "../../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
+#pragma GCC diagnostic pop
 #endif // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
 #include "../../../include/pl/meta/iterator_traits.hpp" // pl::meta::is_output_iterator, pl::meta::is_random_access_iterator, pl::meta::is_bidirectional_iterator, pl::meta::is_forward_iterator, pl::meta::is_input_iterator
-#include <ciso646> // not
+#include "../../include/static_assert.hpp"              // PL_TEST_STATIC_ASSERT
+#include <ciso646>                                      // not
+#include <forward_list>                                 // std::forward_list
 #include <iterator> // std::ostream_iterator, std::istream_iterator
-#include <vector> // std::vector
-#include <list> // std::list
-#include <forward_list> // std::forward_list
+#include <list>     // std::list
+#include <vector>   // std::vector
 
-namespace pl
-{
-namespace test
-{
-namespace
-{
+namespace pl {
+namespace test {
+namespace {
 using Oi1   = std::ostream_iterator<int>;
-using Ra1   = unsigned char *;
+using Ra1   = unsigned char*;
 using Ra2   = std::vector<float>::const_iterator;
 using Bidi1 = std::list<int>::const_iterator;
 using Fw1   = std::forward_list<std::vector<double>>::iterator;
@@ -130,14 +127,11 @@ TEST_CASE("is_bidirectional_iterator_negative_test")
 
 TEST_CASE("is_forward_iterator_positive_test")
 {
-    PL_TEST_STATIC_ASSERT(
-        pl::meta::is_forward_iterator<pl::test::Ra1>::value);
-    PL_TEST_STATIC_ASSERT(
-        pl::meta::is_forward_iterator<pl::test::Ra2>::value);
+    PL_TEST_STATIC_ASSERT(pl::meta::is_forward_iterator<pl::test::Ra1>::value);
+    PL_TEST_STATIC_ASSERT(pl::meta::is_forward_iterator<pl::test::Ra2>::value);
     PL_TEST_STATIC_ASSERT(
         pl::meta::is_forward_iterator<pl::test::Bidi1>::value);
-    PL_TEST_STATIC_ASSERT(
-        pl::meta::is_forward_iterator<pl::test::Fw1>::value);
+    PL_TEST_STATIC_ASSERT(pl::meta::is_forward_iterator<pl::test::Fw1>::value);
 
     CHECK_UNARY(true);
 }
@@ -154,17 +148,11 @@ TEST_CASE("is_forward_iterator_negative_test")
 
 TEST_CASE("is_input_iterator_positive_test")
 {
-    PL_TEST_STATIC_ASSERT(
-        pl::meta::is_input_iterator<pl::test::Ra1>::value);
-    PL_TEST_STATIC_ASSERT(
-        pl::meta::is_input_iterator<pl::test::Ra2>::value);
-    PL_TEST_STATIC_ASSERT(
-        pl::meta::is_input_iterator<pl::test::Bidi1>::value);
-    PL_TEST_STATIC_ASSERT(
-        pl::meta::is_input_iterator<pl::test::Fw1>::value);
-    PL_TEST_STATIC_ASSERT(
-        pl::meta::is_input_iterator<pl::test::InIt1>::value);
-
+    PL_TEST_STATIC_ASSERT(pl::meta::is_input_iterator<pl::test::Ra1>::value);
+    PL_TEST_STATIC_ASSERT(pl::meta::is_input_iterator<pl::test::Ra2>::value);
+    PL_TEST_STATIC_ASSERT(pl::meta::is_input_iterator<pl::test::Bidi1>::value);
+    PL_TEST_STATIC_ASSERT(pl::meta::is_input_iterator<pl::test::Fw1>::value);
+    PL_TEST_STATIC_ASSERT(pl::meta::is_input_iterator<pl::test::InIt1>::value);
 
     CHECK_UNARY(true);
 }

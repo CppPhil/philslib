@@ -26,21 +26,21 @@
 
 #include "../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
-#endif // PL_COMPILER == PL_COMPILER_GCC
-#include "../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
-#include "../../include/pl/no_macro_substitution.hpp" // PL_NO_MACRO_SUBSTITUTION
+#pragma GCC diagnostic pop
+#endif                                  // PL_COMPILER == PL_COMPILER_GCC
 #include "../../include/pl/integer.hpp" // pl::Int, pl::Uint
-#include <cstddef> // std::size_t
-#include <cstdint> // std::int8_t, std::uint8_t, std::int16_t, std::uint16_t, std::int32_t, std::uint32_t, std::int64_t, std::uint64_t
-#include <climits> // CHAR_BIT
-#include <limits> // std::numeric_limits
-#include <type_traits> // std::is_same
+#include "../../include/pl/no_macro_substitution.hpp" // PL_NO_MACRO_SUBSTITUTION
+#include "../include/static_assert.hpp"               // PL_TEST_STATIC_ASSERT
+#include <climits>                                    // CHAR_BIT
+#include <cstddef>                                    // std::size_t
+#include <cstdint>                                    // std::int8_t, std::uint8_t, std::int16_t, std::uint16_t, std::int32_t, std::uint32_t, std::int64_t, std::uint64_t
+#include <limits>                                     // std::numeric_limits
+#include <type_traits>                                // std::is_same
 
 TEST_CASE("integer_test_types")
 {
@@ -87,32 +87,31 @@ TEST_CASE("integer_test_bit_sizes")
 TEST_CASE("integer_test_min_max")
 {
     PL_TEST_STATIC_ASSERT(
-        std::numeric_limits<pl::Int<8>>::min PL_NO_MACRO_SUBSTITUTION()
+        std::numeric_limits<pl::Int<8>>::min     PL_NO_MACRO_SUBSTITUTION()
         == std::numeric_limits<std::int8_t>::min PL_NO_MACRO_SUBSTITUTION());
     PL_TEST_STATIC_ASSERT(
-        std::numeric_limits<pl::Int<16>>::min PL_NO_MACRO_SUBSTITUTION()
+        std::numeric_limits<pl::Int<16>>::min     PL_NO_MACRO_SUBSTITUTION()
         == std::numeric_limits<std::int16_t>::min PL_NO_MACRO_SUBSTITUTION());
     PL_TEST_STATIC_ASSERT(
-        std::numeric_limits<pl::Int<32>>::min PL_NO_MACRO_SUBSTITUTION()
+        std::numeric_limits<pl::Int<32>>::min     PL_NO_MACRO_SUBSTITUTION()
         == std::numeric_limits<std::int32_t>::min PL_NO_MACRO_SUBSTITUTION());
     PL_TEST_STATIC_ASSERT(
-        std::numeric_limits<pl::Int<64>>::min PL_NO_MACRO_SUBSTITUTION()
+        std::numeric_limits<pl::Int<64>>::min     PL_NO_MACRO_SUBSTITUTION()
         == std::numeric_limits<std::int64_t>::min PL_NO_MACRO_SUBSTITUTION());
     PL_TEST_STATIC_ASSERT(
-        std::numeric_limits<pl::Int<8>>::max PL_NO_MACRO_SUBSTITUTION()
+        std::numeric_limits<pl::Int<8>>::max     PL_NO_MACRO_SUBSTITUTION()
         == std::numeric_limits<std::int8_t>::max PL_NO_MACRO_SUBSTITUTION());
     PL_TEST_STATIC_ASSERT(
-        std::numeric_limits<pl::Int<16>>::max PL_NO_MACRO_SUBSTITUTION()
+        std::numeric_limits<pl::Int<16>>::max     PL_NO_MACRO_SUBSTITUTION()
         == std::numeric_limits<std::int16_t>::max PL_NO_MACRO_SUBSTITUTION());
     PL_TEST_STATIC_ASSERT(
-        std::numeric_limits<pl::Int<32>>::max PL_NO_MACRO_SUBSTITUTION()
+        std::numeric_limits<pl::Int<32>>::max     PL_NO_MACRO_SUBSTITUTION()
         == std::numeric_limits<std::int32_t>::max PL_NO_MACRO_SUBSTITUTION());
     PL_TEST_STATIC_ASSERT(
-        std::numeric_limits<pl::Int<64>>::max PL_NO_MACRO_SUBSTITUTION()
+        std::numeric_limits<pl::Int<64>>::max     PL_NO_MACRO_SUBSTITUTION()
         == std::numeric_limits<std::int64_t>::max PL_NO_MACRO_SUBSTITUTION());
     PL_TEST_STATIC_ASSERT(
-        std::numeric_limits<pl::Uint<8>>::min PL_NO_MACRO_SUBSTITUTION()
-        == 0U);
+        std::numeric_limits<pl::Uint<8>>::min PL_NO_MACRO_SUBSTITUTION() == 0U);
     PL_TEST_STATIC_ASSERT(
         std::numeric_limits<pl::Uint<16>>::min PL_NO_MACRO_SUBSTITUTION()
         == 0U);

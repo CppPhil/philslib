@@ -26,62 +26,44 @@
 
 #include "../../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
+#pragma GCC diagnostic pop
 #endif // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/freeer.hpp" // pl::test::Freer
+#include "../../../include/pl/algo/destroy.hpp" // pl::algo::destroy
 #include "../../../include/pl/algo/uninitialized_default_construct.hpp"
 #include "../../../include/pl/algo/uninitialized_default_construct_n.hpp"
 #include "../../../include/pl/algo/uninitialized_move.hpp"
 #include "../../../include/pl/algo/uninitialized_move_n.hpp"
 #include "../../../include/pl/algo/uninitialized_value_construct.hpp"
 #include "../../../include/pl/algo/uninitialized_value_construct_n.hpp"
-#include "../../../include/pl/algo/destroy.hpp" // pl::algo::destroy
-#include <cstddef> // std::size_t
-#include <cstdlib> // std::malloc
-#include <memory> // std::unique_ptr
-#include <iterator> // std::begin, std::end
-#include <array> // std::array
+#include "../../include/freeer.hpp" // pl::test::Freer
+#include <array>                    // std::array
+#include <cstddef>                  // std::size_t
+#include <cstdlib>                  // std::malloc
+#include <iterator>                 // std::begin, std::end
+#include <memory>                   // std::unique_ptr
 
-namespace pl
-{
-namespace test
-{
-namespace
-{
-class TestType
-{
+namespace pl {
+namespace test {
+namespace {
+class TestType {
 public:
-    TestType() noexcept
-        : m_constructed{ true },
-          m_wasMoveConstructed{ false }
+    TestType() noexcept : m_constructed{true}, m_wasMoveConstructed{false} {}
+    TestType(const TestType&) = default;
+
+    TestType& operator=(const TestType&) = default;
+
+    TestType(TestType&&) noexcept : m_constructed{true},
+                                    m_wasMoveConstructed{true}
     {
     }
 
-    TestType(const TestType &) = default;
-
-    TestType &operator=(const TestType &) = default;
-
-    TestType(TestType &&) noexcept
-        : m_constructed{ true },
-          m_wasMoveConstructed{ true }
-    {
-    }
-
-    bool isConstructed() const noexcept
-    {
-        return m_constructed;
-    }
-
-    bool wasMoveConstructed() const noexcept
-    {
-        return m_wasMoveConstructed;
-    }
-
+    bool isConstructed() const noexcept { return m_constructed; }
+    bool wasMoveConstructed() const noexcept { return m_wasMoveConstructed; }
 private:
     bool m_constructed;
     bool m_wasMoveConstructed;
@@ -92,21 +74,21 @@ private:
 
 TEST_CASE("unitialized_construction")
 {
-    static constexpr std::size_t size{ 15U };
+    static constexpr std::size_t size{15U};
 
     std::unique_ptr<unsigned char, pl::test::Freeer> up{
-        static_cast<unsigned char *>(
+        static_cast<unsigned char*>(
             std::malloc(size * sizeof(pl::test::TestType))),
-        pl::test::Freeer{ }
-    };
+        pl::test::Freeer{}};
 
-    auto *begin = reinterpret_cast<pl::test::TestType *>(up.get());
-    auto *end   = begin + size;
+    auto* begin = reinterpret_cast<pl::test::TestType*>(up.get());
+    auto* end   = begin + size;
 
-    SUBCASE("default_construct") {
+    SUBCASE("default_construct")
+    {
         pl::algo::uninitialized_default_construct(begin, end);
 
-        for (auto *it = begin; it != end; ++it) {
+        for (auto* it = begin; it != end; ++it) {
             CHECK_UNARY(it->isConstructed());
             CHECK_UNARY_FALSE(it->wasMoveConstructed());
         }
@@ -114,11 +96,12 @@ TEST_CASE("unitialized_construction")
         pl::algo::destroy(begin, end);
     }
 
-    SUBCASE("default_construct_n") {
+    SUBCASE("default_construct_n")
+    {
         const auto retVal
             = pl::algo::uninitialized_default_construct_n(begin, size);
 
-        for (auto *it = begin; it != end; ++it) {
+        for (auto* it = begin; it != end; ++it) {
             CHECK_UNARY(it->isConstructed());
             CHECK_UNARY_FALSE(it->wasMoveConstructed());
         }
@@ -128,16 +111,15 @@ TEST_CASE("unitialized_construction")
         pl::algo::destroy(begin, end);
     }
 
-    SUBCASE("move") {
-        std::array<pl::test::TestType, size> array{ };
-        array.fill(pl::test::TestType{ });
+    SUBCASE("move")
+    {
+        std::array<pl::test::TestType, size> array{};
+        array.fill(pl::test::TestType{});
 
         const auto retVal = pl::algo::uninitialized_move(
-            std::begin(array),
-            std::end(array),
-            begin);
+            std::begin(array), std::end(array), begin);
 
-        for (auto *it = begin; it != end; ++it) {
+        for (auto* it = begin; it != end; ++it) {
             CHECK_UNARY(it->isConstructed());
             CHECK_UNARY(it->wasMoveConstructed());
         }
@@ -147,30 +129,30 @@ TEST_CASE("unitialized_construction")
         pl::algo::destroy(begin, end);
     }
 
-    SUBCASE("move_n") {
-        std::array<pl::test::TestType, size> array{ };
-        array.fill(pl::test::TestType{ });
+    SUBCASE("move_n")
+    {
+        std::array<pl::test::TestType, size> array{};
+        array.fill(pl::test::TestType{});
 
-        const auto pair = pl::algo::uninitialized_move_n(
-            std::begin(array),
-            size,
-            begin);
+        const auto pair
+            = pl::algo::uninitialized_move_n(std::begin(array), size, begin);
 
-        for (auto *it = begin; it != end; ++it) {
+        for (auto* it = begin; it != end; ++it) {
             CHECK_UNARY(it->isConstructed());
             CHECK_UNARY(it->wasMoveConstructed());
         }
 
-        CHECK(pair.first  == std::end(array));
+        CHECK(pair.first == std::end(array));
         CHECK(pair.second == end);
 
         pl::algo::destroy(begin, end);
     }
 
-    SUBCASE("value_construct") {
+    SUBCASE("value_construct")
+    {
         pl::algo::uninitialized_value_construct(begin, end);
 
-        for (auto *it = begin; it != end; ++it) {
+        for (auto* it = begin; it != end; ++it) {
             CHECK_UNARY(it->isConstructed());
             CHECK_UNARY_FALSE(it->wasMoveConstructed());
         }
@@ -178,11 +160,12 @@ TEST_CASE("unitialized_construction")
         pl::algo::destroy(begin, end);
     }
 
-    SUBCASE("value_construct_n") {
+    SUBCASE("value_construct_n")
+    {
         const auto retVal
             = pl::algo::uninitialized_value_construct_n(begin, size);
 
-        for (auto *it = begin; it != end; ++it) {
+        for (auto* it = begin; it != end; ++it) {
             CHECK_UNARY(it->isConstructed());
             CHECK_UNARY_FALSE(it->wasMoveConstructed());
         }

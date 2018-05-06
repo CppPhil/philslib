@@ -34,6 +34,7 @@
 #include "annotations.hpp" // PL_INOUT
 #include "compiler.hpp" // PL_COMPILER, PL_COMPILER_MSVC, PL_COMPILER_VERSION, PL_COMPILER_VERSION_CHECK
 #include <type_traits> // std::underlying_type_t
+
 /*!
  * \def PL_ENABLE_BITMASK_OPERATORS(ScopedEnum)
  * \brief Enables bitmask operators for the scoped enum type passed in.
@@ -57,118 +58,118 @@
  *              std::cout << std::boolalpha;
  *
  *              // enm is A and B toggled on
- *              auto enm = user::ScopedEnum::optionA | user::ScopedEnum::optionB;
+ *              auto enm = user::ScopedEnum::optionA
+ *                         | user::ScopedEnum::optionB;
  *              enm &= ~user::ScopedEnum::optionA; // toggle A off
- *              std::cout << (enm == user::ScopedEnum::optionB) // it's just B now
+ *              std::cout << (enm == user::ScopedEnum::optionB)
  *                        << std::endl;
  *          }
 **/
 
-#if (PL_COMPILER != PL_COMPILER_MSVC) || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
-#   define PL_ENABLE_BITMASK_OPERATORS(ScopedEnum) \
-        constexpr ScopedEnum operator|(ScopedEnum lhs, ScopedEnum rhs) \
-        { \
-            using Underlying = std::underlying_type_t<ScopedEnum>; \
-            return static_cast<ScopedEnum>( \
-                static_cast<Underlying>(lhs) | static_cast<Underlying>(rhs)); \
-        } \
-        \
-        constexpr ScopedEnum operator&(ScopedEnum lhs, ScopedEnum rhs) \
-        { \
-            using Underlying = std::underlying_type_t<ScopedEnum>; \
-            return static_cast<ScopedEnum>( \
-                static_cast<Underlying>(lhs) & static_cast<Underlying>(rhs)); \
-        } \
-        \
-        constexpr ScopedEnum operator^(ScopedEnum lhs, ScopedEnum rhs) \
-        { \
-            using Underlying = std::underlying_type_t<ScopedEnum>; \
-            return static_cast<ScopedEnum>( \
-                static_cast<Underlying>(lhs) ^ static_cast<Underlying>(rhs)); \
-        } \
-        \
-        constexpr ScopedEnum operator~(ScopedEnum lhs) \
-        { \
-            using Underlying = std::underlying_type_t<ScopedEnum>; \
-            return static_cast<ScopedEnum>( \
-                ~static_cast<Underlying>(lhs)); \
-        } \
-        \
-        constexpr ScopedEnum &operator|=(PL_INOUT ScopedEnum &lhs, ScopedEnum rhs) \
-        { \
-            using Underlying = std::underlying_type_t<ScopedEnum>; \
-            lhs = static_cast<ScopedEnum>( \
-                static_cast<Underlying>(lhs) | static_cast<Underlying>(rhs)); \
-            return lhs; \
-        } \
-        \
-        constexpr ScopedEnum &operator&=(PL_INOUT ScopedEnum &lhs, ScopedEnum rhs) \
-        { \
-            using Underlying = std::underlying_type_t<ScopedEnum>; \
-            lhs = static_cast<ScopedEnum>( \
-                static_cast<Underlying>(lhs) & static_cast<Underlying>(rhs)); \
-            return lhs; \
-        } \
-        \
-        constexpr ScopedEnum &operator^=(PL_INOUT ScopedEnum &lhs, ScopedEnum rhs) \
-        { \
-            using Underlying = std::underlying_type_t<ScopedEnum>; \
-            lhs = static_cast<ScopedEnum>( \
-                static_cast<Underlying>(lhs) ^ static_cast<Underlying>(rhs)); \
-            return lhs; \
-        }
+#if (PL_COMPILER != PL_COMPILER_MSVC) \
+    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
+#define PL_ENABLE_BITMASK_OPERATORS(ScopedEnum)                                \
+    constexpr ScopedEnum operator|(ScopedEnum lhs, ScopedEnum rhs)             \
+    {                                                                          \
+        using Underlying = std::underlying_type_t<ScopedEnum>;                 \
+        return static_cast<ScopedEnum>(                                        \
+            static_cast<Underlying>(lhs) | static_cast<Underlying>(rhs));      \
+    }                                                                          \
+                                                                               \
+    constexpr ScopedEnum operator&(ScopedEnum lhs, ScopedEnum rhs)             \
+    {                                                                          \
+        using Underlying = std::underlying_type_t<ScopedEnum>;                 \
+        return static_cast<ScopedEnum>(                                        \
+            static_cast<Underlying>(lhs) & static_cast<Underlying>(rhs));      \
+    }                                                                          \
+                                                                               \
+    constexpr ScopedEnum operator^(ScopedEnum lhs, ScopedEnum rhs)             \
+    {                                                                          \
+        using Underlying = std::underlying_type_t<ScopedEnum>;                 \
+        return static_cast<ScopedEnum>(                                        \
+            static_cast<Underlying>(lhs) ^ static_cast<Underlying>(rhs));      \
+    }                                                                          \
+                                                                               \
+    constexpr ScopedEnum operator~(ScopedEnum lhs)                             \
+    {                                                                          \
+        using Underlying = std::underlying_type_t<ScopedEnum>;                 \
+        return static_cast<ScopedEnum>(~static_cast<Underlying>(lhs));         \
+    }                                                                          \
+                                                                               \
+    constexpr ScopedEnum& operator|=(PL_INOUT ScopedEnum& lhs, ScopedEnum rhs) \
+    {                                                                          \
+        using Underlying = std::underlying_type_t<ScopedEnum>;                 \
+        lhs              = static_cast<ScopedEnum>(                            \
+            static_cast<Underlying>(lhs) | static_cast<Underlying>(rhs));      \
+        return lhs;                                                            \
+    }                                                                          \
+                                                                               \
+    constexpr ScopedEnum& operator&=(PL_INOUT ScopedEnum& lhs, ScopedEnum rhs) \
+    {                                                                          \
+        using Underlying = std::underlying_type_t<ScopedEnum>;                 \
+        lhs              = static_cast<ScopedEnum>(                            \
+            static_cast<Underlying>(lhs) & static_cast<Underlying>(rhs));      \
+        return lhs;                                                            \
+    }                                                                          \
+                                                                               \
+    constexpr ScopedEnum& operator^=(PL_INOUT ScopedEnum& lhs, ScopedEnum rhs) \
+    {                                                                          \
+        using Underlying = std::underlying_type_t<ScopedEnum>;                 \
+        lhs              = static_cast<ScopedEnum>(                            \
+            static_cast<Underlying>(lhs) ^ static_cast<Underlying>(rhs));      \
+        return lhs;                                                            \
+    }
 #else
-#   define PL_ENABLE_BITMASK_OPERATORS(ScopedEnum) \
-        constexpr ScopedEnum operator|(ScopedEnum lhs, ScopedEnum rhs) \
-        { \
-            using Underlying = std::underlying_type_t<ScopedEnum>; \
-            return static_cast<ScopedEnum>( \
-                static_cast<Underlying>(lhs) | static_cast<Underlying>(rhs)); \
-        } \
-        \
-        constexpr ScopedEnum operator&(ScopedEnum lhs, ScopedEnum rhs) \
-        { \
-            using Underlying = std::underlying_type_t<ScopedEnum>; \
-            return static_cast<ScopedEnum>( \
-                static_cast<Underlying>(lhs) & static_cast<Underlying>(rhs)); \
-        } \
-        \
-        constexpr ScopedEnum operator^(ScopedEnum lhs, ScopedEnum rhs) \
-        { \
-            using Underlying = std::underlying_type_t<ScopedEnum>; \
-            return static_cast<ScopedEnum>( \
-                static_cast<Underlying>(lhs) ^ static_cast<Underlying>(rhs)); \
-        } \
-        \
-        constexpr ScopedEnum operator~(ScopedEnum lhs) \
-        { \
-            using Underlying = std::underlying_type_t<ScopedEnum>; \
-            return static_cast<ScopedEnum>( \
-                ~static_cast<Underlying>(lhs)); \
-        } \
-        \
-        inline ScopedEnum &operator|=(PL_INOUT ScopedEnum &lhs, ScopedEnum rhs) \
-        { \
-            using Underlying = std::underlying_type_t<ScopedEnum>; \
-            lhs = static_cast<ScopedEnum>( \
-                static_cast<Underlying>(lhs) | static_cast<Underlying>(rhs)); \
-            return lhs; \
-        } \
-        \
-        inline ScopedEnum &operator&=(PL_INOUT ScopedEnum &lhs, ScopedEnum rhs) \
-        { \
-            using Underlying = std::underlying_type_t<ScopedEnum>; \
-            lhs = static_cast<ScopedEnum>( \
-                static_cast<Underlying>(lhs) & static_cast<Underlying>(rhs)); \
-            return lhs; \
-        } \
-        \
-        inline ScopedEnum &operator^=(PL_INOUT ScopedEnum &lhs, ScopedEnum rhs) \
-        { \
-            using Underlying = std::underlying_type_t<ScopedEnum>; \
-            lhs = static_cast<ScopedEnum>( \
-                static_cast<Underlying>(lhs) ^ static_cast<Underlying>(rhs)); \
-            return lhs; \
-        }
+#define PL_ENABLE_BITMASK_OPERATORS(ScopedEnum)                             \
+    constexpr ScopedEnum operator|(ScopedEnum lhs, ScopedEnum rhs)          \
+    {                                                                       \
+        using Underlying = std::underlying_type_t<ScopedEnum>;              \
+        return static_cast<ScopedEnum>(                                     \
+            static_cast<Underlying>(lhs) | static_cast<Underlying>(rhs));   \
+    }                                                                       \
+                                                                            \
+    constexpr ScopedEnum operator&(ScopedEnum lhs, ScopedEnum rhs)          \
+    {                                                                       \
+        using Underlying = std::underlying_type_t<ScopedEnum>;              \
+        return static_cast<ScopedEnum>(                                     \
+            static_cast<Underlying>(lhs) & static_cast<Underlying>(rhs));   \
+    }                                                                       \
+                                                                            \
+    constexpr ScopedEnum operator^(ScopedEnum lhs, ScopedEnum rhs)          \
+    {                                                                       \
+        using Underlying = std::underlying_type_t<ScopedEnum>;              \
+        return static_cast<ScopedEnum>(                                     \
+            static_cast<Underlying>(lhs) ^ static_cast<Underlying>(rhs));   \
+    }                                                                       \
+                                                                            \
+    constexpr ScopedEnum operator~(ScopedEnum lhs)                          \
+    {                                                                       \
+        using Underlying = std::underlying_type_t<ScopedEnum>;              \
+        return static_cast<ScopedEnum>(~static_cast<Underlying>(lhs));      \
+    }                                                                       \
+                                                                            \
+    inline ScopedEnum& operator|=(PL_INOUT ScopedEnum& lhs, ScopedEnum rhs) \
+    {                                                                       \
+        using Underlying = std::underlying_type_t<ScopedEnum>;              \
+        lhs              = static_cast<ScopedEnum>(                         \
+            static_cast<Underlying>(lhs) | static_cast<Underlying>(rhs));   \
+        return lhs;                                                         \
+    }                                                                       \
+                                                                            \
+    inline ScopedEnum& operator&=(PL_INOUT ScopedEnum& lhs, ScopedEnum rhs) \
+    {                                                                       \
+        using Underlying = std::underlying_type_t<ScopedEnum>;              \
+        lhs              = static_cast<ScopedEnum>(                         \
+            static_cast<Underlying>(lhs) & static_cast<Underlying>(rhs));   \
+        return lhs;                                                         \
+    }                                                                       \
+                                                                            \
+    inline ScopedEnum& operator^=(PL_INOUT ScopedEnum& lhs, ScopedEnum rhs) \
+    {                                                                       \
+        using Underlying = std::underlying_type_t<ScopedEnum>;              \
+        lhs              = static_cast<ScopedEnum>(                         \
+            static_cast<Underlying>(lhs) ^ static_cast<Underlying>(rhs));   \
+        return lhs;                                                         \
+    }
 #endif
 #endif // INCG_PL_BITMASK_HPP

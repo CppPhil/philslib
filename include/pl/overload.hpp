@@ -31,36 +31,32 @@
 **/
 #ifndef INCG_PL_OVERLOAD_HPP
 #define INCG_PL_OVERLOAD_HPP
-#include "annotations.hpp" // PL_IN
+#include "annotations.hpp"       // PL_IN
 #include "meta/remove_cvref.hpp" // pl::meta::remove_cvref_t
-#include <utility> // std::forward
+#include <utility>               // std::forward
 
-namespace pl
-{
+namespace pl {
 /*!
  * \brief The primary 'Overloaded' template.
  *        Exports all the call operators of the lambdas, which are base types.
 **/
-template <typename Lambda1, typename ...Lambdas>
-class Overloaded
-    : public Lambda1,
-      public Overloaded<Lambdas ...>
-{
+template <typename Lambda1, typename... Lambdas>
+class Overloaded : public Lambda1, public Overloaded<Lambdas...> {
 public:
     /*!
      * \brief Creates an 'Overloaded' object.
      * \param lambda1 The first lambda to construct.
      * \param lambdas The rest of the lambdas to construct.
     **/
-    template <typename FirstLambda, typename ...OtherLambdas>
-    Overloaded(PL_IN FirstLambda &&lambda1, PL_IN OtherLambdas &&...lambdas)
-        : Lambda1{ std::forward<FirstLambda>(lambda1) },
-          Overloaded<Lambdas ...>{ std::forward<OtherLambdas>(lambdas) ... }
+    template <typename FirstLambda, typename... OtherLambdas>
+    Overloaded(PL_IN FirstLambda&& lambda1, PL_IN OtherLambdas&&... lambdas)
+        : Lambda1{std::forward<FirstLambda>(lambda1)}
+        , Overloaded<Lambdas...>{std::forward<OtherLambdas>(lambdas)...}
     {
     }
 
     using Lambda1::operator();
-    using Overloaded<Lambdas ...>::operator();
+    using Overloaded<Lambdas...>::operator();
 };
 
 /*!
@@ -69,17 +65,15 @@ public:
  *        base template.
 **/
 template <typename Lambda1>
-class Overloaded<Lambda1>
-    : public Lambda1
-{
+class Overloaded<Lambda1> : public Lambda1 {
 public:
     /*!
      * \brief Constructs an 'Overloaded' object.
      * \param lambda1 The first lambda to construct.
     **/
     template <typename FirstLambda>
-    explicit Overloaded(PL_IN FirstLambda &&lambda1)
-        : Lambda1{ std::forward<FirstLambda>(lambda1) }
+    explicit Overloaded(PL_IN FirstLambda&& lambda1)
+        : Lambda1{std::forward<FirstLambda>(lambda1)}
     {
     }
 
@@ -93,16 +87,15 @@ public:
  *         lambdas passed into the parameter list.
  * \note The parameter list may not be empty.
 **/
-template <typename ...Lambdas>
-auto overload(PL_IN Lambdas &&...lambdas)
+template <typename... Lambdas>
+auto overload(PL_IN Lambdas&&... lambdas)
 {
     static_assert(
         sizeof...(Lambdas) > 0,
         "You must supply at least one argument to pl::overload");
 
-    return Overloaded<meta::remove_cvref_t<Lambdas> ...>{
-        std::forward<Lambdas>(lambdas) ...
-    };
+    return Overloaded<meta::remove_cvref_t<Lambdas>...>{
+        std::forward<Lambdas>(lambdas)...};
 }
 } // namespace pl
 #endif // INCG_PL_OVERLOAD_HPP

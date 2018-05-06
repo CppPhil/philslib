@@ -26,15 +26,15 @@
 
 #include "../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
-#endif // PL_COMPILER == PL_COMPILER_GCC
+#pragma GCC diagnostic pop
+#endif                                   // PL_COMPILER == PL_COMPILER_GCC
 #include "../../include/pl/overload.hpp" // pl::overload
-#include <string> // std::string
+#include <string>                        // std::string
 
 TEST_CASE("overload_simple_test")
 {
@@ -43,16 +43,15 @@ TEST_CASE("overload_simple_test")
 
 TEST_CASE("overload_advanced_test")
 {
-    const std::string string{ "Text" };
+    const std::string string{"Text"};
 
-    auto l1 = [](int i) { return i * i; };
+    auto l1       = [](int i) { return i * i; };
     const auto l2 = [](double d1, double d2) { return d1 + d2; };
-    auto l3 = [](const std::string &s) { return s.front(); };
-    const auto &r = l3;
+    auto l3       = [](const std::string& s) { return s.front(); };
+    const auto&                     r = l3;
 
-    const auto overload = pl::overload(
-        l1, l2, r,
-        [](float f) { return f * 2.0F; });
+    const auto overload
+        = pl::overload(l1, l2, r, [](float f) { return f * 2.0F; });
 
     CHECK(overload(5) == 25);
     CHECK(overload(1.1, 2.2) == doctest::Approx(3.3));

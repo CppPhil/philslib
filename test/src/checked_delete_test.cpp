@@ -26,19 +26,19 @@
 
 #include "../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
-#endif // PL_COMPILER == PL_COMPILER_GCC
+#pragma GCC diagnostic pop
+#endif                                         // PL_COMPILER == PL_COMPILER_GCC
 #include "../../include/pl/checked_delete.hpp" // pl::checkedDeleteAndNull, pl::checkedArrayDeleteAndNull
 
 TEST_CASE("checked_delete_and_null_test")
 {
-    int *p{ new int{ 5 } };
-    int *a{ new int[5U]{ 1, 2, 3, 4, 5 } };
+    int* p{new int{5}};
+    int* a{new int[5U]{1, 2, 3, 4, 5}};
 
     pl::checkedDeleteAndNull(p);
     pl::checkedArrayDeleteAndNull(a);

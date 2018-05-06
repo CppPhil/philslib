@@ -26,45 +26,38 @@
 
 #include "../../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
+#pragma GCC diagnostic pop
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../../include/pl/thd/concurrent.hpp" // pl::thd::Concurrent
-#include <stdexcept> // std::logic_error
-#include <future> // std::future
-#include <vector> // std::vector
+#include <future>                                 // std::future
+#include <stdexcept>                              // std::logic_error
+#include <vector>                                 // std::vector
 
 TEST_CASE("concurrent_test")
 {
-    pl::thd::Concurrent<std::vector<int>> concurrent{ std::vector<int>{ } };
+    pl::thd::Concurrent<std::vector<int>> concurrent{std::vector<int>{}};
 
     std::future<std::vector<int>::size_type> fut1{
-        concurrent([](std::vector<int> &v) {
+        concurrent([](std::vector<int>& v) {
             v.push_back(1);
             return v.size();
-        })
-    };
+        })};
 
-    std::future<int> fut2{
-        concurrent([](std::vector<int> &v) {
-            v.push_back(2);
-            return v.front();
-        })
-    };
+    std::future<int> fut2{concurrent([](std::vector<int>& v) {
+        v.push_back(2);
+        return v.front();
+    })};
 
     std::future<std::vector<int>::size_type> fut3{
-        concurrent(&std::vector<int>::size)
-    };
+        concurrent(&std::vector<int>::size)};
 
-    std::future<void> fut4{
-        concurrent([](std::vector<int> &) {
-            throw std::logic_error{ "test error" };
-        })
-    };
+    std::future<void> fut4{concurrent(
+        [](std::vector<int>&) { throw std::logic_error{"test error"}; })};
 
     CHECK(fut1.get() == 1U);
     CHECK(fut2.get() == 1);

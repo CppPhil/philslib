@@ -32,24 +32,20 @@
 #ifndef INCG_PL_THD_THEN_HPP
 #define INCG_PL_THD_THEN_HPP
 #include "../annotations.hpp" // PL_INOUT, PL_IN
-#include "../invoke.hpp" // pl::invoke
-#include <future> // std::future, std::async
+#include "../invoke.hpp"      // pl::invoke
+#include <future>             // std::future, std::async
 
-namespace pl
-{
-namespace thd
-{
-namespace detail
-{
+namespace pl {
+namespace thd {
+namespace detail {
 /*!
  * \brief Implementation function of then handling the non-void case.
  *        Not to be used directly.
 **/
 template <typename Ty, typename Continuation>
 auto thenImpl(
-    PL_INOUT std::future<Ty> &future,
-    PL_IN Continuation &continuation)
-    -> decltype(auto)
+    PL_INOUT std::future<Ty>& future,
+    PL_IN Continuation& continuation) -> decltype(auto)
 {
     return ::pl::invoke(continuation, future.get());
 }
@@ -60,9 +56,8 @@ auto thenImpl(
 **/
 template <typename Continuation>
 auto thenImpl(
-    PL_INOUT std::future<void> &future,
-    PL_IN Continuation &continuation)
-    -> decltype(auto)
+    PL_INOUT std::future<void>& future,
+    PL_IN Continuation& continuation) -> decltype(auto)
 {
     future.wait();
     return ::pl::invoke(continuation);
@@ -83,8 +78,7 @@ auto thenImpl(
  * the continuation passing in the value returned by that future.
 **/
 template <typename Ty, typename Continuation>
-auto then(std::future<Ty> future, Continuation continuation)
-    -> decltype(auto)
+auto then(std::future<Ty> future, Continuation continuation) -> decltype(auto)
 {
     return std::async(
         std::launch::async,

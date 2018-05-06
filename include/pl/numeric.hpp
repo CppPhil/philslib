@@ -32,8 +32,7 @@
 #define INCG_PL_NUMERIC_HPP
 #include <ciso646> // not, and
 
-namespace pl
-{
+namespace pl {
 /*!
  * \brief Determines whether a given number is even.
  * \param numeric The number to check.
@@ -43,7 +42,7 @@ namespace pl
 template <typename Numeric>
 constexpr bool isEven(Numeric numeric)
 {
-    return ((numeric & Numeric{ 1 }) == Numeric{ });
+    return ((numeric & Numeric{1}) == Numeric{});
 }
 
 /*!
@@ -55,7 +54,7 @@ constexpr bool isEven(Numeric numeric)
 template <typename Numeric>
 constexpr bool isOdd(Numeric numeric)
 {
-    return not ::pl::isEven(numeric);
+    return not::pl::isEven(numeric);
 }
 
 /*!
@@ -68,7 +67,8 @@ constexpr bool isOdd(Numeric numeric)
  * \warning lowerBound must be <= upperBound
 **/
 template <typename Numeric>
-constexpr bool isBetween(Numeric checkMe, Numeric lowerBound, Numeric upperBound)
+constexpr bool
+isBetween(Numeric checkMe, Numeric lowerBound, Numeric upperBound)
 {
     return ((checkMe >= lowerBound) and (checkMe <= upperBound));
 }

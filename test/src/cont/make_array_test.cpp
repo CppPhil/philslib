@@ -26,20 +26,20 @@
 
 #include "../../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
+#pragma GCC diagnostic pop
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../../include/pl/cont/make_array.hpp" // pl::cont::makeArray
-#include "../../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
-#include <type_traits> // std::is_same
+#include "../../include/static_assert.hpp"         // PL_TEST_STATIC_ASSERT
+#include <type_traits>                             // std::is_same
 
 TEST_CASE("test_make_array_basic")
 {
-    auto array1 = pl::cont::makeArray(1, 2, 3, 4, 5);
+    auto       array1 = pl::cont::makeArray(1, 2, 3, 4, 5);
     const auto array2 = pl::cont::makeArray(5U, 6U, 7U);
 
     PL_TEST_STATIC_ASSERT(

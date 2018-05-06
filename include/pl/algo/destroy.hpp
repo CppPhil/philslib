@@ -31,12 +31,10 @@
 #ifndef INCG_PL_ALGO_DESTROY_HPP
 #define INCG_PL_ALGO_DESTROY_HPP
 #include "destroy_at.hpp" // pl::algo::destroy_at
-#include <memory> // std::addressof
+#include <memory>         // std::addressof
 
-namespace pl
-{
-namespace algo
-{
+namespace pl {
+namespace algo {
 /*!
  * \brief Destroys the objects in the range ['first', 'last').
  * \param first The begin iterator of the range of elements to destroy.

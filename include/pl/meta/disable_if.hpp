@@ -31,10 +31,8 @@
 #ifndef INCG_PL_META_DISABLE_IF_HPP
 #define INCG_PL_META_DISABLE_IF_HPP
 
-namespace pl
-{
-namespace meta
-{
+namespace pl {
+namespace meta {
 /*!
  * \brief The disable_if meta function.
  * \note This is the false case.
@@ -45,8 +43,7 @@ namespace meta
  * If 'BoolVal' is true the nested type 'type' will not be defined.
 **/
 template <bool BoolVal, typename Ty = void>
-struct disable_if
-{
+struct disable_if {
     // BoolVal is false -> ok.
     using type = Ty;
 };
@@ -61,8 +58,7 @@ struct disable_if
  * If 'BoolVal' is true the nested type 'type' will not be defined.
 **/
 template <typename Ty>
-struct disable_if<true, Ty>
-{
+struct disable_if<true, Ty> {
     // BoolVal is true -> SFINAE away.
 };
 

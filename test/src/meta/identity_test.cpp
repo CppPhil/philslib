@@ -26,24 +26,23 @@
 
 #include "../../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
+#pragma GCC diagnostic pop
 #endif // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
 #include "../../../include/pl/meta/identity.hpp" // pl::meta::identity_t
-#include <ciso646> // not
-#include <string> // std::string
-#include <vector> // std::vector
-#include <type_traits> // std::is_same
+#include "../../include/static_assert.hpp"       // PL_TEST_STATIC_ASSERT
+#include <ciso646>                               // not
+#include <string>                                // std::string
+#include <type_traits>                           // std::is_same
+#include <vector>                                // std::vector
 
 TEST_CASE("identity_positive_test")
 {
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<pl::meta::identity_t<int>, int>::value);
+    PL_TEST_STATIC_ASSERT(std::is_same<pl::meta::identity_t<int>, int>::value);
     PL_TEST_STATIC_ASSERT(
         std::is_same<pl::meta::identity_t<long>, long>::value);
     PL_TEST_STATIC_ASSERT(
@@ -61,13 +60,11 @@ TEST_CASE("identity_negative_test")
     PL_TEST_STATIC_ASSERT(
         not std::is_same<pl::meta::identity_t<long double>, float>::value);
     PL_TEST_STATIC_ASSERT(
-        not std::is_same<
-            pl::meta::identity_t<std::string>, std::vector<char>
-        >::value);
+        not std::is_same<pl::meta::identity_t<std::string>,
+                         std::vector<char>>::value);
     PL_TEST_STATIC_ASSERT(
-        not std::is_same<
-            pl::meta::identity_t<unsigned long long>, short
-        >::value);
+        not std::is_same<pl::meta::identity_t<unsigned long long>,
+                         short>::value);
 
     CHECK_UNARY(true);
 }

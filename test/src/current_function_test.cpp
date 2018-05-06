@@ -26,32 +26,27 @@
 
 #include "../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
+#pragma GCC diagnostic pop
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../include/pl/current_function.hpp" // PL_CURRENT_FUNCTION
-#include <cstring> // std::strstr
+#include <cstring>                               // std::strstr
 
-namespace pl
-{
-namespace test
-{
-namespace
-{
-const char *currentFunctionTest() noexcept
-{
-    return PL_CURRENT_FUNCTION;
-}
+namespace pl {
+namespace test {
+namespace {
+const char* currentFunctionTest() noexcept { return PL_CURRENT_FUNCTION; }
 } // anonymous namespace
 } // namespace test
 } // namespace pl
 
 TEST_CASE("current_function_test")
 {
-    CHECK(std::strstr(pl::test::currentFunctionTest(), "currentFunctionTest")
+    CHECK(
+        std::strstr(pl::test::currentFunctionTest(), "currentFunctionTest")
         != nullptr);
 }

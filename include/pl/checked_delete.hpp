@@ -33,11 +33,10 @@
 #ifndef INCG_PL_CHECKED_DELETE_HPP
 #define INCG_PL_CHECKED_DELETE_HPP
 #include "annotations.hpp" // PL_IN_OPT, PL_INOUT
-#include <new> // operator delete, operator delete[]
-#include <cstddef> // std::nullptr_t
+#include <cstddef>         // std::nullptr_t
+#include <new>             // operator delete, operator delete[]
 
-namespace pl
-{
+namespace pl {
 /*!
  * \brief Calls delete on the pointer passed in.
  * \param p The pointer to call delete on.
@@ -49,7 +48,7 @@ namespace pl
  *          object.
 **/
 template <typename Ty>
-inline void checkedDelete(PL_IN_OPT Ty *p) noexcept
+inline void checkedDelete(PL_IN_OPT Ty* p) noexcept
 {
     using incompleteTypeNotAllowed = unsigned char[sizeof(Ty) ? 1 : -1];
     (void)sizeof(incompleteTypeNotAllowed);
@@ -67,7 +66,7 @@ inline void checkedDelete(PL_IN_OPT Ty *p) noexcept
  *          pointed to C-style array.
  */
 template <typename Ty>
-inline void checkedArrayDelete(PL_IN_OPT Ty *p) noexcept
+inline void checkedArrayDelete(PL_IN_OPT Ty* p) noexcept
 {
     using incompleteTypeNotAllowed = unsigned char[sizeof(Ty) ? 1 : -1];
     (void)sizeof(incompleteTypeNotAllowed);
@@ -75,24 +74,28 @@ inline void checkedArrayDelete(PL_IN_OPT Ty *p) noexcept
 }
 
 /*!
- * \brief Calls pl::checkedDelete on the pointer passed in and then nulls the pointer.
- * \param p A reference to the pointer to call pl::checkedDelete on and then null.
+ * \brief Calls pl::checkedDelete on the pointer passed in and then nulls the
+ *        pointer.
+ * \param p A reference to the pointer to call pl::checkedDelete on and then
+ *          null.
  * \see pl::checkedDelete
  */
 template <typename Ty>
-inline void checkedDeleteAndNull(PL_INOUT Ty *&p) noexcept
+inline void checkedDeleteAndNull(PL_INOUT Ty*& p) noexcept
 {
     ::pl::checkedDelete(p);
     p = nullptr;
 }
 
 /*!
- * \brief Calls pl::checkedArrayDelete on the pointer passed in and then nulls the pointer.
- * \param p A reference to the pointer to caall pl::checkedArrayDelete on and then null.
+ * \brief Calls pl::checkedArrayDelete on the pointer passed in and then nulls
+ *        the pointer.
+ * \param p A reference to the pointer to caall pl::checkedArrayDelete on and
+ *          then null.
  * \see pl::checkedArrayDelete
  */
 template <typename Ty>
-inline void checkedArrayDeleteAndNull(PL_INOUT Ty *&p) noexcept
+inline void checkedArrayDeleteAndNull(PL_INOUT Ty*& p) noexcept
 {
     ::pl::checkedArrayDelete(p);
     p = nullptr;

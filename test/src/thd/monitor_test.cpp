@@ -26,60 +26,38 @@
 
 #include "../../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
-#endif // PL_COMPILER == PL_COMPILER_GCC
+#pragma GCC diagnostic pop
+#endif                                         // PL_COMPILER == PL_COMPILER_GCC
 #include "../../../include/pl/thd/monitor.hpp" // pl::thd::Monitor
-#include <cstring> // std::strcmp
-#include <string> // std::string
-#include <utility> // std::move
+#include <cstring>                             // std::strcmp
+#include <string>                              // std::string
+#include <utility>                             // std::move
 
-namespace pl
-{
-namespace test
-{
-namespace
-{
-class MonitorTestType
-{
+namespace pl {
+namespace test {
+namespace {
+class MonitorTestType {
 public:
     using this_type = MonitorTestType;
 
     MonitorTestType(int i, double d, std::string s)
-        : m_i{ i },
-          m_d{ d },
-          m_s{ std::move(s) }
+        : m_i{i}, m_d{d}, m_s{std::move(s)}
     {
     }
 
-    double getD() const noexcept
-    {
-        return m_d;
-    }
-
-    void setD(double d) noexcept
-    {
-        m_d = d;
-    }
-
-    void setDTo25() noexcept
-    {
-        setD(25.0);
-    }
-
-    const char *str() const noexcept
-    {
-        return m_s.data();
-    }
-
-    int m_i;
+    double getD() const noexcept { return m_d; }
+    void setD(double d) noexcept { m_d = d; }
+    void             setDTo25() noexcept { setD(25.0); }
+    const char*      str() const noexcept { return m_s.data(); }
+    int              m_i;
 
 private:
-    double m_d;
+    double      m_d;
     std::string m_s;
 };
 } // anonymous namespace
@@ -89,16 +67,15 @@ private:
 TEST_CASE("monitor_test")
 {
     pl::thd::Monitor<pl::test::MonitorTestType> monitor{
-        pl::test::MonitorTestType{ 1, 2.0, "text" }
-    };
+        pl::test::MonitorTestType{1, 2.0, "text"}};
 
-    CHECK(monitor([](pl::test::MonitorTestType &o) {
-            return o.getD();
-          }) == doctest::Approx{ 2.0 });
+    CHECK(
+        monitor([](pl::test::MonitorTestType& o) { return o.getD(); })
+        == doctest::Approx{2.0});
 
     monitor(&pl::test::MonitorTestType::setDTo25);
 
-    CHECK(monitor(&pl::test::MonitorTestType::getD) == doctest::Approx{ 25.0 });
+    CHECK(monitor(&pl::test::MonitorTestType::getD) == doctest::Approx{25.0});
 
     CHECK(std::strcmp(monitor(&pl::test::MonitorTestType::str), "text") == 0);
 

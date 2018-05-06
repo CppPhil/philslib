@@ -26,28 +26,27 @@
 
 #include "../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
-#endif // PL_COMPILER == PL_COMPILER_GCC
+#pragma GCC diagnostic pop
+#endif                               // PL_COMPILER == PL_COMPILER_GCC
 #include "../../include/pl/bits.hpp" // pl::setBit, pl::clearBit, pl::toggleBit, pl::isBitSet
-#include <climits> // CHAR_BIT
-#include <cstdint> // std::uint8_t
+#include <climits>                   // CHAR_BIT
+#include <cstdint>                   // std::uint8_t
 
 TEST_CASE("bits_test")
 {
-    static constexpr std::uint8_t lowBit{ 0U };
+    static constexpr std::uint8_t lowBit{0U};
 
-    static constexpr std::uint8_t highBit{
-        (sizeof(std::uint8_t) * CHAR_BIT) - 1U
-    };
+    static constexpr std::uint8_t highBit{(sizeof(std::uint8_t) * CHAR_BIT)
+                                          - 1U};
 
-    std::uint8_t val{ 0U };
+    std::uint8_t val{0U};
 
-    for (std::uint8_t i{ lowBit }; i <= highBit; ++i) {
+    for (std::uint8_t i{lowBit}; i <= highBit; ++i) {
         CHECK_UNARY_FALSE(pl::isBitSet(val, i));
     }
 

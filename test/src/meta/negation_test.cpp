@@ -26,22 +26,21 @@
 
 #include "../../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
+#pragma GCC diagnostic pop
 #endif // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
 #include "../../../include/pl/meta/negation.hpp" // pl::meta::negation
-#include <ciso646> // not
-#include <type_traits> // std::is_same, std::is_floatintg_point, std::is_integral, std::is_trivially_constructible
+#include "../../include/static_assert.hpp"       // PL_TEST_STATIC_ASSERT
+#include <ciso646>                               // not
+#include <type_traits>                           // std::is_same, std::is_floatintg_point, std::is_integral, std::is_trivially_constructible
 
 TEST_CASE("negation_positive_test")
 {
-    PL_TEST_STATIC_ASSERT(
-        pl::meta::negation<std::is_same<int, double>>::value);
+    PL_TEST_STATIC_ASSERT(pl::meta::negation<std::is_same<int, double>>::value);
     PL_TEST_STATIC_ASSERT(
         pl::meta::negation<std::is_floating_point<short>>::value);
 

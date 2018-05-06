@@ -47,19 +47,19 @@
 **/
 
 #if PL_COMPILER == PL_COMPILER_GCC
-#   define PL_ALWAYS_INLINE __attribute__((always_inline)) inline
-#   define PL_NEVER_INLINE __attribute__((noinline))
+#define PL_ALWAYS_INLINE __attribute__((always_inline)) inline
+#define PL_NEVER_INLINE __attribute__((noinline))
 #elif PL_COMPILER == PL_COMPILER_CLANG
-#   define PL_ALWAYS_INLINE __attribute__((always_inline)) inline
-#   define PL_NEVER_INLINE __attribute__((noinline))
+#define PL_ALWAYS_INLINE __attribute__((always_inline)) inline
+#define PL_NEVER_INLINE __attribute__((noinline))
 #elif PL_COMPILER == PL_COMPILER_ICC
-#   define PL_ALWAYS_INLINE __attribute__((always_inline)) inline
-#   define PL_NEVER_INLINE __attribute__((noinline))
+#define PL_ALWAYS_INLINE __attribute__((always_inline)) inline
+#define PL_NEVER_INLINE __attribute__((noinline))
 #elif PL_COMPILER == PL_COMPILER_MSVC
-#   define PL_ALWAYS_INLINE __forceinline
-#   define PL_NEVER_INLINE __declspec(noinline)
+#define PL_ALWAYS_INLINE __forceinline
+#define PL_NEVER_INLINE __declspec(noinline)
 #elif PL_COMPILER == PL_COMPILER_UNKNOWN
-#   define PL_ALWAYS_INLINE inline
-#   define PL_NEVER_INLINE /* nothing */
+#define PL_ALWAYS_INLINE inline
+#define PL_NEVER_INLINE /* nothing */
 #endif
 #endif // INCG_PL_INLINE_HPP

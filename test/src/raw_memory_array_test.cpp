@@ -26,25 +26,25 @@
 
 #include "../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
+#pragma GCC diagnostic pop
 #endif // PL_COMPILER == PL_COMPILER_GCC
-#include "../include/freeer.hpp" // pl::test::Freeer
-#include "../../include/pl/byte.hpp" // pl::Byte
-#include "../../include/pl/as_const.hpp" // pl::asConst
-#include "../../include/pl/iterate_reversed.hpp" // pl::iterateReversed
 #include "../../include/pl/algo/ranged_algorithms.hpp" // pl::algo::all_of
-#include "../../include/pl/raw_memory_array.hpp" // pl::RawMemoryArray
-#include <cstddef> // std::size_t
-#include <cstdlib> // std::calloc
-#include <string> // std::string, std::literals::string_literals::operator""s
-#include <memory> // std::unique_ptr
+#include "../../include/pl/as_const.hpp"               // pl::asConst
+#include "../../include/pl/byte.hpp"                   // pl::Byte
+#include "../../include/pl/iterate_reversed.hpp"       // pl::iterateReversed
+#include "../../include/pl/raw_memory_array.hpp"       // pl::RawMemoryArray
+#include "../include/freeer.hpp"                       // pl::test::Freeer
+#include <algorithm>                                   // std::all_of
+#include <cstddef>                                     // std::size_t
+#include <cstdlib>                                     // std::calloc
 #include <iterator> // std::crbegin, std::crend
-#include <algorithm> // std::all_of
+#include <memory>   // std::unique_ptr
+#include <string>   // std::string, std::literals::string_literals::operator""s
 
 TEST_CASE("raw_memory_array_test")
 {
@@ -52,40 +52,39 @@ TEST_CASE("raw_memory_array_test")
 
     using size_type = pl::RawMemoryArray<std::string>::size_type;
 
-    static constexpr std::size_t strSiz{ sizeof(std::string) };
-    static constexpr std::size_t amtOfStrings{ 10U };
-    static constexpr std::size_t byteCount{ strSiz * amtOfStrings };
+    static constexpr std::size_t strSiz{sizeof(std::string)};
+    static constexpr std::size_t amtOfStrings{10U};
+    static constexpr std::size_t byteCount{strSiz * amtOfStrings};
 
     std::unique_ptr<pl::Byte, pl::test::Freeer> memoryHolder1{
-        static_cast<pl::Byte *>(std::calloc(amtOfStrings, strSiz)),
-        pl::test::Freeer{ }
-    };
-    void * const memory1{ memoryHolder1.get() };
-    pl::RawMemoryArray<std::string> ary1{ memory1, byteCount };
+        static_cast<pl::Byte*>(std::calloc(amtOfStrings, strSiz)),
+        pl::test::Freeer{}};
+    void* const                     memory1{memoryHolder1.get()};
+    pl::RawMemoryArray<std::string> ary1{memory1, byteCount};
 
     std::unique_ptr<pl::Byte, pl::test::Freeer> memoryHolder2{
-        static_cast<pl::Byte *>(std::calloc(amtOfStrings, strSiz)),
-        pl::test::Freeer{ }
-    };
-    void * const memory2{ memoryHolder2.get() };
-    pl::RawMemoryArray<std::string> ary2{ memory2, byteCount, "Text"s };
+        static_cast<pl::Byte*>(std::calloc(amtOfStrings, strSiz)),
+        pl::test::Freeer{}};
+    void* const                     memory2{memoryHolder2.get()};
+    pl::RawMemoryArray<std::string> ary2{memory2, byteCount, "Text"s};
 
-    pl::RawMemoryArray<std::string> empty{ nullptr, 0U };
+    pl::RawMemoryArray<std::string> empty{nullptr, 0U};
 
-    SUBCASE("at") {
-        const pl::RawMemoryArray<std::string> &r{ ary2 };
+    SUBCASE("at")
+    {
+        const pl::RawMemoryArray<std::string>& r{ary2};
 
         REQUIRE(ary1.size() == ary2.size());
 
-        for (size_type i{ }; i < ary1.size(); ++i) {
+        for (size_type i{}; i < ary1.size(); ++i) {
             CHECK(ary1.at(i) != r.at(i));
         }
 
-        for (size_type i{ }; i < ary1.size(); ++i) {
+        for (size_type i{}; i < ary1.size(); ++i) {
             ary1.at(i) = r.at(i);
         }
 
-        for (size_type i{ }; i < ary1.size(); ++i) {
+        for (size_type i{}; i < ary1.size(); ++i) {
             CHECK(ary1.at(i) == r.at(i));
         }
 
@@ -94,66 +93,79 @@ TEST_CASE("raw_memory_array_test")
         CHECK_THROWS_AS((void)empty.at(0U), std::out_of_range);
     }
 
-    SUBCASE("front") {
+    SUBCASE("front")
+    {
         CHECK(pl::asConst(ary1).front() == ""s);
         CHECK(ary2.front() == "Text"s);
         ary1.front() = "Test"s;
         CHECK(pl::asConst(ary1).front() == "Test"s);
     }
 
-    SUBCASE("back") {
+    SUBCASE("back")
+    {
         CHECK(pl::asConst(ary2).back() == "Text"s);
         ary2.back() = "Another text"s;
         CHECK(ary2.back() == "Another text"s);
     }
 
-    SUBCASE("data") {
-        CHECK(static_cast<void *>(ary1.data()) == memory1);
-        CHECK(static_cast<void *>(ary2.data()) == memory2);
-        CHECK(static_cast<const void *>(ary1.constData())
-            == static_cast<const void *>(memory1));
-        CHECK(static_cast<const void *>(ary2.constData())
-            == static_cast<const void *>(memory2));
+    SUBCASE("data")
+    {
+        CHECK(static_cast<void*>(ary1.data()) == memory1);
+        CHECK(static_cast<void*>(ary2.data()) == memory2);
+        CHECK(
+            static_cast<const void*>(ary1.constData())
+            == static_cast<const void*>(memory1));
+        CHECK(
+            static_cast<const void*>(ary2.constData())
+            == static_cast<const void*>(memory2));
         CHECK(empty.data() == nullptr);
     }
 
-    SUBCASE("iterate_forwards") {
-        for (std::string &s : ary1) {
+    SUBCASE("iterate_forwards")
+    {
+        for (std::string& s : ary1) {
             CHECK_UNARY(s.empty());
             s = "Test"s;
         }
 
-        CHECK_UNARY(pl::algo::all_of(
-            ary1, [](const std::string &s) { return s == "Test"s; }));
+        CHECK_UNARY(pl::algo::all_of(ary1, [](const std::string& s) {
+            return s == "Test"s;
+        }));
 
-        const pl::RawMemoryArray<std::string> &r{ ary2 };
+        const pl::RawMemoryArray<std::string>& r{ary2};
 
-        for (const std::string &s : r) {
+        for (const std::string& s : r) {
             CHECK(s == "Text"s);
         }
     }
 
-    SUBCASE("iterate_backwards") {
-        for (std::string &s : pl::iterateReversed(ary2)) {
+    SUBCASE("iterate_backwards")
+    {
+        for (std::string& s : pl::iterateReversed(ary2)) {
             CHECK(s == "Text"s);
             s = "Test"s;
         }
 
-        CHECK_UNARY(std::all_of(std::crbegin(ary2), std::crend(ary2),
-            [](const std::string &s) { return s == "Test"s; }));
+        CHECK_UNARY(
+            std::all_of(
+                std::crbegin(ary2), std::crend(ary2), [](const std::string& s) {
+                    return s == "Test"s;
+                }));
 
-        for (const std::string &s : pl::iterateReversed(pl::asConst(ary1))) {
+        for (const std::string& s : pl::iterateReversed(pl::asConst(ary1))) {
             CHECK_UNARY(s.empty());
         }
     }
 
-    SUBCASE("empty") {
+    SUBCASE("empty")
+    {
         CHECK_UNARY_FALSE(ary1.empty());
         CHECK_UNARY_FALSE(ary2.empty());
         CHECK_UNARY(empty.empty());
     }
 
-    SUBCASE("size") {
+    SUBCASE("size")
+    {
         CHECK(ary1.size() == amtOfStrings);
         CHECK(ary2.size() == amtOfStrings);
         CHECK(empty.size() == 0U);
@@ -162,11 +174,12 @@ TEST_CASE("raw_memory_array_test")
         CHECK(empty.max_size() == 0U);
     }
 
-    SUBCASE("fill") {
-        const auto &retVal = ary1.fill("sample text"s);
+    SUBCASE("fill")
+    {
+        const auto& retVal = ary1.fill("sample text"s);
         CHECK(retVal == ary1);
 
-        CHECK_UNARY(pl::algo::all_of(ary1, [](const std::string &s) {
+        CHECK_UNARY(pl::algo::all_of(ary1, [](const std::string& s) {
             return s == "sample text"s;
         }));
 
@@ -174,7 +187,8 @@ TEST_CASE("raw_memory_array_test")
         CHECK_UNARY(empty.empty());
     }
 
-    SUBCASE("equality") {
+    SUBCASE("equality")
+    {
         CHECK(ary1 != ary2);
         ary2.fill(""s);
         CHECK(ary1 == ary2);
@@ -182,7 +196,8 @@ TEST_CASE("raw_memory_array_test")
         CHECK(ary2 != empty);
     }
 
-    SUBCASE("ordering") {
+    SUBCASE("ordering")
+    {
         CHECK(ary1 < ary2);
         CHECK(ary2 > ary1);
         CHECK(ary1 <= ary2);

@@ -26,56 +26,36 @@
 
 #include "../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
-#endif // PL_COMPILER == PL_COMPILER_GCC
+#pragma GCC diagnostic pop
+#endif                                 // PL_COMPILER == PL_COMPILER_GCC
 #include "../../include/pl/invoke.hpp" // pl::invoke
-#include <cstdint> // std::uint64_t
-#include <functional> // std::bind
+#include <cstdint>                     // std::uint64_t
+#include <functional>                  // std::bind
 
-namespace pl
-{
-namespace test
-{
-namespace
-{
+namespace pl {
+namespace test {
+namespace {
 std::uint64_t f(std::uint64_t v, std::uint64_t multiplier)
 {
     return v * multiplier;
 }
 
-std::uint64_t f(std::uint64_t v)
-{
-    return f(v, 2U);
-}
-
-class TestClass
-{
+std::uint64_t f(std::uint64_t v) { return f(v, 2U); }
+class TestClass {
 public:
-    explicit TestClass(std::uint64_t v)
-        : m_v{ v }
-    {
-    }
-
-    std::uint64_t memFun(std::uint64_t v) const
-    {
-        return f(v, m_v);
-    }
-
-    std::uint64_t m_v;
+    explicit TestClass(std::uint64_t v) : m_v{v} {}
+    std::uint64_t memFun(std::uint64_t v) const { return f(v, m_v); }
+    std::uint64_t                      m_v;
 };
 
-class Functor
-{
+class Functor {
 public:
-    std::uint64_t operator()(std::uint64_t v) const
-    {
-        return f(v);
-    }
+    std::uint64_t operator()(std::uint64_t v) const { return f(v); }
 };
 } // anonymous namespace
 } // namespace test
@@ -83,26 +63,25 @@ public:
 
 TEST_CASE("invoke_test_function_pointer")
 {
-    static constexpr std::uint64_t arg{ 5U };
-    static constexpr std::uint64_t expected{ 10U };
+    static constexpr std::uint64_t arg{5U};
+    static constexpr std::uint64_t expected{10U};
 
-    std::uint64_t (*fp)(std::uint64_t){ &pl::test::f };
+    std::uint64_t (*fp)(std::uint64_t){&pl::test::f};
 
     CHECK(pl::invoke(fp, arg) == expected);
 }
 
 TEST_CASE("invoke_test_member_function_pointer")
 {
-    static constexpr std::uint64_t arg{ 7U };
-    static constexpr std::uint64_t multiplier{ 3U };
-    static constexpr std::uint64_t expected{ 21U };
+    static constexpr std::uint64_t arg{7U};
+    static constexpr std::uint64_t multiplier{3U};
+    static constexpr std::uint64_t expected{21U};
 
-    std::uint64_t (pl::test::TestClass::*memberFunctionPointer)(std::uint64_t) const{
-        &pl::test::TestClass::memFun
-    };
+    std::uint64_t (pl::test::TestClass::*memberFunctionPointer)(std::uint64_t)
+        const {&pl::test::TestClass::memFun};
 
-    pl::test::TestClass object{ multiplier };
-    pl::test::TestClass *pObject{ &object };
+    pl::test::TestClass  object{multiplier};
+    pl::test::TestClass* pObject{&object};
 
     CHECK(pl::invoke(memberFunctionPointer, object, arg) == expected);
     CHECK(pl::invoke(memberFunctionPointer, pObject, arg) == expected);
@@ -110,14 +89,13 @@ TEST_CASE("invoke_test_member_function_pointer")
 
 TEST_CASE("invoke_test_member_object_pointer")
 {
-    static constexpr std::uint64_t v{ 5U };
+    static constexpr std::uint64_t v{5U};
 
     std::uint64_t pl::test::TestClass::*memberObjectPointer{
-        &pl::test::TestClass::m_v
-    };
+        &pl::test::TestClass::m_v};
 
-    pl::test::TestClass object{ v };
-    pl::test::TestClass *pObject{ &object };
+    pl::test::TestClass  object{v};
+    pl::test::TestClass* pObject{&object};
 
     CHECK(pl::invoke(memberObjectPointer, object) == v);
     CHECK(pl::invoke(memberObjectPointer, pObject) == v);
@@ -128,9 +106,9 @@ TEST_CASE("invoke_test_functor")
     using BinaryFunctionPointer
         = std::uint64_t (*)(std::uint64_t, std::uint64_t);
 
-    pl::test::Functor functor{ };
+    pl::test::Functor functor{};
     const auto lambda = [](std::uint64_t v) { return v * 5U; };
-    const auto bind = std::bind(
+    const auto                           bind = std::bind(
         static_cast<BinaryFunctionPointer>(&pl::test::f),
         std::placeholders::_1,
         25U);

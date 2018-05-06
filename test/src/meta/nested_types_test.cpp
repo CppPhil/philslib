@@ -26,22 +26,22 @@
 
 #include "../../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
+#pragma GCC diagnostic pop
 #endif // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
 #include "../../../include/pl/meta/nested_types.hpp" // pl::meta::value_type, pl::meta::allocator_type, pl::meta::difference_type, pl::meta::size_type, pl::meta::key_type, pl::meta::mapped_type, pl::meta::element_type, pl::meta::deleter_type, pl::meta::container_type
-#include <memory> // std::unique_ptr
-#include <vector> // std::vector
-#include <deque> // std::deque
-#include <unordered_map> // std::unordered_map
-#include <stack> // std::stack
-#include <string> // std::string
-#include <type_traits> // std::is_same
+#include "../../include/static_assert.hpp"           // PL_TEST_STATIC_ASSERT
+#include <deque>                                     // std::deque
+#include <memory>                                    // std::unique_ptr
+#include <stack>                                     // std::stack
+#include <string>                                    // std::string
+#include <type_traits>                               // std::is_same
+#include <unordered_map>                             // std::unordered_map
+#include <vector>                                    // std::vector
 
 TEST_CASE("value_type_test")
 {
@@ -120,8 +120,8 @@ TEST_CASE("deleter_type_test")
 TEST_CASE("container_type_test")
 {
     PL_TEST_STATIC_ASSERT(
-        std::is_same<pl::meta::container_type<std::stack<const char *>>,
-                     std::deque<const char *>>::value);
+        std::is_same<pl::meta::container_type<std::stack<const char*>>,
+                     std::deque<const char*>>::value);
 
     CHECK_UNARY(true);
 }

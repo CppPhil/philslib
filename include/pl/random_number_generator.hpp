@@ -30,48 +30,41 @@
 **/
 #ifndef INCG_PL_RANDOM_NUMBER_GENERATOR_HPP
 #define INCG_PL_RANDOM_NUMBER_GENERATOR_HPP
-#include "annotations.hpp" // PL_INOUT
-#include "assert.hpp" // PL_DBG_CHECK_PRE
+#include "annotations.hpp"           // PL_INOUT
+#include "assert.hpp"                // PL_DBG_CHECK_PRE
+#include "meta/disable_if.hpp"       // pl::meta::disable_if_t
+#include "meta/identity.hpp"         // pl::meta::identity_t
+#include "meta/remove_cvref.hpp"     // pl::meta::remove_cvref_t
 #include "no_macro_substitution.hpp" // PL_NO_MACRO_SUBSTITUTION
-#include "meta/identity.hpp" // pl::meta::identity_t
-#include "meta/disable_if.hpp" // pl::meta::disable_if_t
-#include "meta/remove_cvref.hpp" // pl::meta::remove_cvref_t
-#include <cstddef> // std::size_t
-#include <limits> // std::numeric_limits
-#include <iterator> // std::begin, std::end
-#include <memory> // std::unique_ptr
-#include <type_traits> // std::is_floating_point, std::true_type, std::false_type, std::is_same, std::enable_if_t
-#include <algorithm> // std::shuffle
-#include <random> // std::random_device, std::mt19937
+#include <algorithm>                 // std::shuffle
+#include <cstddef>                   // std::size_t
+#include <iterator>                  // std::begin, std::end
+#include <limits>                    // std::numeric_limits
+#include <memory>                    // std::unique_ptr
+#include <random>                    // std::random_device, std::mt19937
+#include <type_traits>               // std::is_floating_point, std::true_type, std::false_type, std::is_same, std::enable_if_t
 
-namespace pl
-{
-namespace detail
-{
+namespace pl {
+namespace detail {
 static constexpr std::size_t largeUrbgThreshold = 50U;
 
 template <typename Urbg, bool IsLarge>
-class UrbgStorageImpl
-{
+class UrbgStorageImpl {
 public:
-    using this_type = UrbgStorageImpl;
+    using this_type    = UrbgStorageImpl;
     using element_type = Urbg;
 
     // assume isLarge == true
 
     explicit UrbgStorageImpl(std::random_device::result_type seed)
-        : m_urbg{ std::make_unique<element_type>(seed) }
+        : m_urbg{std::make_unique<element_type>(seed)}
     {
     }
 
-    element_type &get()
+    element_type&       get() { return *m_urbg; }
+    const element_type& get() const
     {
-        return *m_urbg;
-    }
-
-    const element_type &get() const
-    {
-        return const_cast<this_type *>(this)->get();
+        return const_cast<this_type*>(this)->get();
     }
 
 private:
@@ -79,29 +72,24 @@ private:
 };
 
 template <typename Urbg>
-class UrbgStorageImpl<Urbg, false>
-{
+class UrbgStorageImpl<Urbg, false> {
 public:
-    using this_type = UrbgStorageImpl;
+    using this_type    = UrbgStorageImpl;
     using element_type = Urbg;
 
     explicit UrbgStorageImpl(std::random_device::result_type seed)
-        : m_urbg{ seed }
+        : m_urbg{seed}
     {
     }
 
-    UrbgStorageImpl(const this_type &) = delete;
+    UrbgStorageImpl(const this_type&) = delete;
 
-    this_type &operator=(const this_type &) = delete;
+    this_type& operator=(const this_type&) = delete;
 
-    element_type &get()
+    element_type&       get() { return m_urbg; }
+    const element_type& get() const
     {
-        return m_urbg;
-    }
-
-    const element_type &get() const
-    {
-        return const_cast<this_type *>(this)->get();
+        return const_cast<this_type*>(this)->get();
     }
 
 private:
@@ -110,8 +98,7 @@ private:
 
 template <typename Urbg>
 class UrbgStorage
-    : public UrbgStorageImpl<Urbg, sizeof(Urbg) >= largeUrbgThreshold>
-{
+    : public UrbgStorageImpl<Urbg, sizeof(Urbg) >= largeUrbgThreshold> {
 public:
     using this_type = UrbgStorage;
     using base_type = UrbgStorageImpl<Urbg, sizeof(Urbg) >= largeUrbgThreshold>;
@@ -124,68 +111,57 @@ template <typename Type>
 struct distribution_of;
 
 template <>
-struct distribution_of<float>
-{
+struct distribution_of<float> {
     using type = std::uniform_real_distribution<float>;
 };
 
 template <>
-struct distribution_of<double>
-{
+struct distribution_of<double> {
     using type = std::uniform_real_distribution<double>;
 };
 
 template <>
-struct distribution_of<long double>
-{
+struct distribution_of<long double> {
     using type = std::uniform_real_distribution<long double>;
 };
 
 template <>
-struct distribution_of<short>
-{
+struct distribution_of<short> {
     using type = std::uniform_int_distribution<short>;
 };
 
 template <>
-struct distribution_of<int>
-{
+struct distribution_of<int> {
     using type = std::uniform_int_distribution<int>;
 };
 
 template <>
-struct distribution_of<long>
-{
+struct distribution_of<long> {
     using type = std::uniform_int_distribution<long>;
 };
 
 template <>
-struct distribution_of<long long>
-{
+struct distribution_of<long long> {
     using type = std::uniform_int_distribution<long long>;
 };
 
 template <>
-struct distribution_of<unsigned short>
-{
+struct distribution_of<unsigned short> {
     using type = std::uniform_int_distribution<unsigned short>;
 };
 
 template <>
-struct distribution_of<unsigned int>
-{
+struct distribution_of<unsigned int> {
     using type = std::uniform_int_distribution<unsigned int>;
 };
 
 template <>
-struct distribution_of<unsigned long>
-{
+struct distribution_of<unsigned long> {
     using type = std::uniform_int_distribution<unsigned long>;
 };
 
 template <>
-struct distribution_of<unsigned long long>
-{
+struct distribution_of<unsigned long long> {
     using type = std::uniform_int_distribution<unsigned long long>;
 };
 
@@ -205,10 +181,9 @@ using distribution_of_t = typename distribution_of<Type>::type;
  *        By default uses the std::mt19937 engine.
 **/
 template <typename Engine = std::mt19937>
-class RandomNumberGenerator
-{
+class RandomNumberGenerator {
 public:
-    using this_type = RandomNumberGenerator;
+    using this_type    = RandomNumberGenerator;
     using element_type = Engine;
 
     /*!
@@ -216,21 +191,16 @@ public:
      *        Initializes the underlying random_device and uses it
      *        to seed the engine.
     **/
-    RandomNumberGenerator()
-        : m_randomDevice{ },
-          m_urbg{ m_randomDevice() }
-    {
-    }
+    RandomNumberGenerator() : m_randomDevice{}, m_urbg{m_randomDevice()} {}
+    /*!
+     * \brief this type is non-copyable.
+    **/
+    RandomNumberGenerator(const this_type&) = delete;
 
     /*!
      * \brief this type is non-copyable.
     **/
-    RandomNumberGenerator(const this_type &) = delete;
-
-    /*!
-     * \brief this type is non-copyable.
-    **/
-    this_type &operator=(const this_type &) = delete;
+    this_type& operator=(const this_type&) = delete;
 
     /*!
      * \brief Generates a random number from the range of [begin,end)
@@ -250,16 +220,16 @@ public:
     **/
     template <typename Numeric>
     auto generate(
-        meta::identity_t<Numeric> begin
-            = std::numeric_limits<Numeric>::min PL_NO_MACRO_SUBSTITUTION(),
-        meta::identity_t<Numeric> end
-            = std::numeric_limits<Numeric>::max PL_NO_MACRO_SUBSTITUTION())
-    -> meta::disable_if_t<std::is_same<meta::remove_cvref_t<Numeric>, bool>::value, Numeric>
+        meta::identity_t<Numeric>           begin
+        = std::numeric_limits<Numeric>::min PL_NO_MACRO_SUBSTITUTION(),
+        meta::identity_t<Numeric>           end
+        = std::numeric_limits<Numeric>::max PL_NO_MACRO_SUBSTITUTION())
+        -> meta::disable_if_t<std::is_same<meta::remove_cvref_t<Numeric>,
+                                           bool>::value,
+                              Numeric>
     {
         return generateImpl<Numeric>(
-            begin,
-            end,
-            typename std::is_floating_point<Numeric>::type{ });
+            begin, end, typename std::is_floating_point<Numeric>::type{});
     }
 
     /*!
@@ -268,10 +238,10 @@ public:
      * \return the boolean value generated.
     **/
     template <typename Bool>
-    auto generate(double trueChance = 0.5)
-    -> std::enable_if_t<std::is_same<meta::remove_cvref_t<Bool>, bool>::value, bool>
+    auto generate(double trueChance = 0.5) -> std::
+        enable_if_t<std::is_same<meta::remove_cvref_t<Bool>, bool>::value, bool>
     {
-        std::bernoulli_distribution dist{ trueChance };
+        std::bernoulli_distribution dist{trueChance};
         return dist(m_urbg.get());
     }
 
@@ -284,7 +254,7 @@ public:
      * \return A reference to this RandomNumberGenerator.
     **/
     template <typename RandomAccessIterator>
-    this_type &shuffle(RandomAccessIterator begin, RandomAccessIterator end)
+    this_type& shuffle(RandomAccessIterator begin, RandomAccessIterator end)
     {
         std::shuffle(begin, end, m_urbg.get());
         return *this;
@@ -296,7 +266,7 @@ public:
      * \return A reference to this RandomNumberGenerator.
     **/
     template <typename Container>
-    this_type &shuffle(PL_INOUT Container &container)
+    this_type& shuffle(PL_INOUT Container& container)
     {
         return shuffle(std::begin(container), std::end(container));
     }
@@ -309,7 +279,7 @@ private:
         std::true_type)
     {
         PL_DBG_CHECK_PRE(begin < end);
-        detail::distribution_of_t<Numeric> dist{ begin, end };
+        detail::distribution_of_t<Numeric> dist{begin, end};
         return dist(m_urbg.get());
     }
 
@@ -320,11 +290,11 @@ private:
         std::false_type)
     {
         PL_DBG_CHECK_PRE(begin <= end);
-        detail::distribution_of_t<Numeric> dist{ begin, end };
+        detail::distribution_of_t<Numeric> dist{begin, end};
         return dist(m_urbg.get());
     }
 
-    std::random_device m_randomDevice;
+    std::random_device                m_randomDevice;
     detail::UrbgStorage<element_type> m_urbg;
 };
 } // namespace pl

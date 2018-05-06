@@ -32,24 +32,21 @@
 #ifndef INCG_PL_THD_MONITOR_HPP
 #define INCG_PL_THD_MONITOR_HPP
 #include "../annotations.hpp" // PL_IN
-#include "../invoke.hpp" // pl::invoke
-#include <mutex> // std::mutex, std::lock_guard
-#include <utility> // std::move, std::forward
+#include "../invoke.hpp"      // pl::invoke
+#include <mutex>              // std::mutex, std::lock_guard
+#include <utility>            // std::move, std::forward
 
-namespace pl
-{
-namespace thd
-{
+namespace pl {
+namespace thd {
 /*!
  * \brief Stores shared data in its private section.
  *        Allows different threads to operate on the shared data
  *        by passing in callables that operate on the shared data.
 **/
 template <typename SharedData>
-class Monitor
-{
+class Monitor {
 public:
-    using this_type = Monitor;
+    using this_type    = Monitor;
     using element_type = SharedData;
 
     /*!
@@ -57,20 +54,19 @@ public:
      * \param sharedData the data to be protected by the Monitor.
     **/
     explicit Monitor(element_type sharedData)
-        : m_sharedData{ std::move(sharedData) },
-          m_mutex{ }
+        : m_sharedData{std::move(sharedData)}, m_mutex{}
     {
     }
 
     /*!
      * \brief This type is non-copyable.
     **/
-    Monitor(const this_type &) = delete;
+    Monitor(const this_type&) = delete;
 
     /*!
      * \brief This type is non-copyable.
     **/
-    this_type &operator=(const this_type &) = delete;
+    this_type& operator=(const this_type&) = delete;
 
     /*!
      * \brief Receives a callable and invokes that callable by passing the
@@ -80,17 +76,17 @@ public:
      *         as the callable's call operator's argument.
     **/
     template <typename Callable>
-    auto operator()(PL_IN Callable &&callable) -> decltype(auto)
+    auto operator()(PL_IN Callable&& callable) -> decltype(auto)
     {
-        std::lock_guard<std::mutex> lockGuard{ m_mutex };
+        std::lock_guard<std::mutex> lockGuard{m_mutex};
         return ::pl::invoke(std::forward<Callable>(callable), m_sharedData);
     }
 
 private:
     element_type m_sharedData; //!< the shared data
-    std::mutex m_mutex; /*!< the mutex to guard access
-                         *   to the shared data
-                        **/
+    std::mutex   m_mutex;      /*!< the mutex to guard access
+                                *   to the shared data
+                               **/
 };
 } // namespace thd
 } // namespace pl

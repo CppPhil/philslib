@@ -30,19 +30,19 @@
 **/
 #ifndef INCG_PL_EXCEPT_HPP
 #define INCG_PL_EXCEPT_HPP
-#include "compiler.hpp" // PL_COMPILER, PL_COMPILER_MSVC
-#include "source_line.hpp" // PL_SOURCE_LINE
+#include "begin_end_macro.hpp"  // PL_BEGIN_MACRO, PL_END_MACRO
+#include "compiler.hpp"         // PL_COMPILER, PL_COMPILER_MSVC
 #include "current_function.hpp" // PL_CURRENT_FUNCTION
-#include "begin_end_macro.hpp" // PL_BEGIN_MACRO, PL_END_MACRO
-#include "stringify.hpp" // PL_STRINGIFY
-#include <string> // std::string
-#include <exception> // std::exception
-#include <stdexcept> // std::runtime_error, std::logic_error
-#include <system_error> // std::error_code
-#include <future> // std::future_error
-#include <memory> // std::bad_weak_ptr
-#include <typeinfo> // std::bad_typeid
-#include <iostream> // std::cerr
+#include "source_line.hpp"      // PL_SOURCE_LINE
+#include "stringify.hpp"        // PL_STRINGIFY
+#include <exception>            // std::exception
+#include <future>               // std::future_error
+#include <iostream>             // std::cerr
+#include <memory>               // std::bad_weak_ptr
+#include <stdexcept>            // std::runtime_error, std::logic_error
+#include <string>               // std::string
+#include <system_error>         // std::error_code
+#include <typeinfo>             // std::bad_typeid
 
 /*!
  * \def PL_DEFINE_EXCEPTION_TYPE(exceptionTypeIdentifier, baseClass)
@@ -51,24 +51,21 @@
  *        in the current namespace. This macro makes defining new exception
  *        types a lot more convenient by generating a lot of boilerplate code.
 **/
-#define PL_DEFINE_EXCEPTION_TYPE(exceptionTypeIdentifier, baseClass) \
-    class exceptionTypeIdentifier \
-        : public baseClass \
-    { \
-    public: \
-        using this_type = exceptionTypeIdentifier; \
-        using base_type = baseClass; \
-        \
-        explicit exceptionTypeIdentifier(const std::string &what_arg) \
-            : base_type{ what_arg } \
-        { \
-        } \
-        \
-        explicit exceptionTypeIdentifier(const char *what_arg) \
-            : base_type{ what_arg } \
-        { \
-        } \
-        \
+#define PL_DEFINE_EXCEPTION_TYPE(exceptionTypeIdentifier, baseClass)  \
+    class exceptionTypeIdentifier : public baseClass {                \
+    public:                                                           \
+        using this_type = exceptionTypeIdentifier;                    \
+        using base_type = baseClass;                                  \
+                                                                      \
+        explicit exceptionTypeIdentifier(const std::string& what_arg) \
+            : base_type{what_arg}                                     \
+        {                                                             \
+        }                                                             \
+                                                                      \
+        explicit exceptionTypeIdentifier(const char* what_arg)        \
+            : base_type{what_arg}                                     \
+        {                                                             \
+        }                                                             \
     }
 
 /*!
@@ -85,15 +82,16 @@
  * of the user to include in the exception object's message, std::string must
  * be constructible from message.
 **/
-#define PL_THROW_WITH_SOURCE_INFO(exceptionType, message) \
-    throw exceptionType{ \
-        "Message: " \
-        + std::string{ message } \
-        + "\nexception was thrown at:" \
-          "\nfile: " __FILE__ \
-          "\nline: " PL_SOURCE_LINE \
-          "\nfunction: " \
-        + std::string{ PL_CURRENT_FUNCTION } \
+#define PL_THROW_WITH_SOURCE_INFO(exceptionType, message)   \
+    throw exceptionType                                     \
+    {                                                       \
+        "Message: " + std::string{message}                  \
+            + "\nexception was thrown at:\nfile: " __FILE__ \
+              "\nline: " PL_SOURCE_LINE "\nfunction: "      \
+            + std::string                                   \
+        {                                                   \
+            PL_CURRENT_FUNCTION                             \
+        }                                                   \
     }
 
 /*!
@@ -102,12 +100,12 @@
  * \note Uses PL_THROW_WITH_SOURCE_INFO internally.
  * \see PL_THROW_WITH_SOURCE_INFO
 **/
-#define PL_THROW_IF_NULL(pointer) \
-    PL_BEGIN_MACRO \
-    if ((pointer) == nullptr) { \
-        PL_THROW_WITH_SOURCE_INFO(pl::NullPointerException, \
-            PL_STRINGIFY(pointer) " was null!"); \
-    } \
+#define PL_THROW_IF_NULL(pointer)                                          \
+    PL_BEGIN_MACRO                                                         \
+    if ((pointer) == nullptr) {                                            \
+        PL_THROW_WITH_SOURCE_INFO(                                         \
+            pl::NullPointerException, PL_STRINGIFY(pointer) " was null!"); \
+    }                                                                      \
     PL_END_MACRO
 
 /*!
@@ -117,20 +115,18 @@
  * \note Uses PL_THROW_WITH_SOURCE_INFO internally.
  * \see PL_THROW_WITH_SOURCE_INFO
 **/
-#define PL_NOT_YET_IMPLEMENTED() \
-    PL_THROW_WITH_SOURCE_INFO(pl::NotYetImplementedException, \
+#define PL_NOT_YET_IMPLEMENTED()        \
+    PL_THROW_WITH_SOURCE_INFO(          \
+        pl::NotYetImplementedException, \
         "function has not yet been implemented!")
 
-namespace pl
-{
+namespace pl {
 /*!
  * \brief Exception thrown on assertion violation.
  * \note Not to be caught, this exception indicates a bug.
  * \see assert.hpp
 **/
-class AssertionViolationException
-    : public std::runtime_error
-{
+class AssertionViolationException : public std::runtime_error {
 public:
     using std::runtime_error::runtime_error;
 };
@@ -140,9 +136,7 @@ public:
  * \note Not to be caught, this exception indicates a bug.
  * \see assert.hpp
 **/
-class PreconditionViolationException
-    : public AssertionViolationException
-{
+class PreconditionViolationException : public AssertionViolationException {
 public:
     using AssertionViolationException::AssertionViolationException;
 };
@@ -152,9 +146,7 @@ public:
  * \note Not to be caught, this exception indicates a bug.
  * \see assert.hpp
 **/
-class PostconditionViolationException
-    : public AssertionViolationException
-{
+class PostconditionViolationException : public AssertionViolationException {
 public:
     using AssertionViolationException::AssertionViolationException;
 };
@@ -162,9 +154,7 @@ public:
 /*!
  * \brief Exception that you can throw if given an unexpected null pointer.
 **/
-class NullPointerException
-    : public std::runtime_error
-{
+class NullPointerException : public std::runtime_error {
 public:
     using std::runtime_error::runtime_error;
 };
@@ -172,9 +162,7 @@ public:
 /*!
  * \brief Used by the PL_NOT_YET_IMPLEMENTED macro.
 **/
-class NotYetImplementedException
-    : public std::runtime_error
-{
+class NotYetImplementedException : public std::runtime_error {
 public:
     using std::runtime_error::runtime_error;
 };
@@ -182,9 +170,7 @@ public:
 /*!
  * \brief Exception that you can throw if an arithmetic error were to occur.
 **/
-class ArithmeticException
-    : public std::runtime_error
-{
+class ArithmeticException : public std::runtime_error {
 public:
     using std::runtime_error::runtime_error;
 };
@@ -192,9 +178,7 @@ public:
 /*!
  * \brief Exception that you can throw if given an illegal argument.
 **/
-class IllegalArgumentException
-    : public std::runtime_error
-{
+class IllegalArgumentException : public std::runtime_error {
 public:
     using std::runtime_error::runtime_error;
 };
@@ -202,19 +186,16 @@ public:
 /*!
  * \brief Exception that you can throw if an index is out of bounds.
 **/
-class IndexOutOfBoundsException
-    : public std::runtime_error
-{
+class IndexOutOfBoundsException : public std::runtime_error {
 public:
     using std::runtime_error::runtime_error;
 };
 
 /*!
- * \brief Exception that you can throw if a requested operation is not supported.
+ * \brief Exception that you can throw if a requested operation is not
+ *supported.
 **/
-class OperationNotSupportedException
-    : public std::runtime_error
-{
+class OperationNotSupportedException : public std::runtime_error {
 public:
     using std::runtime_error::runtime_error;
 };
@@ -222,17 +203,16 @@ public:
 /*!
  * \brief Exception that indicates an invalid size.
 **/
-class InvalidSizeException
-    : public std::runtime_error
-{
+class InvalidSizeException : public std::runtime_error {
 public:
     using std::runtime_error::runtime_error;
 };
 
 #if PL_COMPILER == PL_COMPILER_MSVC
-#   pragma warning(push)
-#   pragma warning(disable:4505) // unreferenced local function has been removed
-#endif // PL_COMPILER == PL_COMPILER_MSVC
+#pragma warning(push)
+#pragma warning(disable : 4505) // unreferenced local function has been removed
+#endif                          // PL_COMPILER == PL_COMPILER_MSVC
+
 /*!
  * \brief Function to handle uncaught exceptions.
  * \warning Only call this function in a catch block!
@@ -241,7 +221,8 @@ public:
  * \example int main()
  *          try {
  *              app::throwException();
- *          } catch (...) {
+ *          }
+ *          catch (...) {
  *              pl::handleExceptions();
  *          }
  *
@@ -258,89 +239,93 @@ inline void handleExceptions()
 
     try {
         throw;
-    } catch (const std::bad_array_new_length &e) {
+    }
+    catch (const std::bad_array_new_length& e) {
         std::cerr << functionName
                   << " caught std::bad_array_new_length exception:\n"
                   << e.what() << '\n';
-    } catch (const std::bad_alloc &e) {
-        std::cerr << functionName
-                  << " caught std::bad_alloc exception:\n"
+    }
+    catch (const std::bad_alloc& e) {
+        std::cerr << functionName << " caught std::bad_alloc exception:\n"
                   << e.what() << '\n';
-    } catch (const std::ios_base::failure &e) {
+    }
+    catch (const std::ios_base::failure& e) {
         std::cerr << functionName
                   << " caught std::bad_ios_base::failure exception:\n"
                   << e.what() << '\n';
-    } catch (const std::system_error &e) {
-        std::cerr << functionName
-                  << " caught std::system_error exception:\n"
+    }
+    catch (const std::system_error& e) {
+        std::cerr << functionName << " caught std::system_error exception:\n"
                   << e.what() << '\n';
-    } catch (const std::out_of_range &e) {
-        std::cerr << functionName
-                  << " caught std::out_of_range exception:\n"
+    }
+    catch (const std::out_of_range& e) {
+        std::cerr << functionName << " caught std::out_of_range exception:\n"
                   << e.what() << '\n';
-    } catch (const std::length_error &e) {
-        std::cerr << functionName
-                  << " caught std::length_error exception:\n"
+    }
+    catch (const std::length_error& e) {
+        std::cerr << functionName << " caught std::length_error exception:\n"
                   << e.what() << '\n';
-    } catch (const std::invalid_argument &e) {
+    }
+    catch (const std::invalid_argument& e) {
         std::cerr << functionName
                   << " caught std::invalid_argument exception:\n"
                   << e.what() << '\n';
-    } catch (const std::future_error &e) {
-        std::cerr << functionName
-                  << " caught std::future_error exception:\n"
+    }
+    catch (const std::future_error& e) {
+        std::cerr << functionName << " caught std::future_error exception:\n"
                   << e.what() << '\n';
-    } catch (const std::domain_error &e) {
-        std::cerr << functionName
-                  << " caught std::domain_error exception:\n"
+    }
+    catch (const std::domain_error& e) {
+        std::cerr << functionName << " caught std::domain_error exception:\n"
                   << e.what() << '\n';
-    } catch (const std::logic_error &e) {
-        std::cerr << functionName
-                  << " caught std::logic_error exception:\n"
+    }
+    catch (const std::logic_error& e) {
+        std::cerr << functionName << " caught std::logic_error exception:\n"
                   << e.what() << '\n';
-    } catch (const std::overflow_error &e) {
-        std::cerr << functionName
-                  << " caught std::overflow_error exception:\n"
+    }
+    catch (const std::overflow_error& e) {
+        std::cerr << functionName << " caught std::overflow_error exception:\n"
                   << e.what() << '\n';
-    } catch (const std::underflow_error &e) {
-        std::cerr << functionName
-                  << " caught std::underflow_error exception:\n"
+    }
+    catch (const std::underflow_error& e) {
+        std::cerr << functionName << " caught std::underflow_error exception:\n"
                   << e.what() << '\n';
-    } catch (const std::range_error &e) {
-        std::cerr << functionName
-                  << " caught std::range_error exception:\n"
+    }
+    catch (const std::range_error& e) {
+        std::cerr << functionName << " caught std::range_error exception:\n"
                   << e.what() << '\n';
-    } catch (const std::runtime_error &e) {
-        std::cerr << functionName
-                  << " caught std::runtime_error exception:\n"
+    }
+    catch (const std::runtime_error& e) {
+        std::cerr << functionName << " caught std::runtime_error exception:\n"
                   << e.what() << '\n';
-    } catch (const std::bad_weak_ptr &e) {
-        std::cerr << functionName
-                  << " caught std::bad_weak_ptr exception:\n"
+    }
+    catch (const std::bad_weak_ptr& e) {
+        std::cerr << functionName << " caught std::bad_weak_ptr exception:\n"
                   << e.what() << '\n';
-    } catch (const std::bad_typeid &e) {
-        std::cerr << functionName
-                  << " caught std::bad_typeid exception:\n"
+    }
+    catch (const std::bad_typeid& e) {
+        std::cerr << functionName << " caught std::bad_typeid exception:\n"
                   << e.what() << '\n';
-    } catch (const std::bad_exception &e) {
-        std::cerr << functionName
-                  << " caught std::bad_exception exception:\n"
+    }
+    catch (const std::bad_exception& e) {
+        std::cerr << functionName << " caught std::bad_exception exception:\n"
                   << e.what() << '\n';
-    } catch (const std::bad_cast &e) {
-        std::cerr << functionName
-                  << " caught std::bad_cast exception:\n"
+    }
+    catch (const std::bad_cast& e) {
+        std::cerr << functionName << " caught std::bad_cast exception:\n"
                   << e.what() << '\n';
-    } catch (const std::exception &e) {
-        std::cerr << functionName
-                  << " caught std::exception exception:\n"
+    }
+    catch (const std::exception& e) {
+        std::cerr << functionName << " caught std::exception exception:\n"
                   << e.what() << '\n';
-    } catch (...) {
-        std::cerr << functionName
-                  << " caught unknown exception!\n";
+    }
+    catch (...) {
+        std::cerr << functionName << " caught unknown exception!\n";
     }
 }
+
 #if PL_COMPILER == PL_COMPILER_MSVC
-#   pragma warning(pop)
+#pragma warning(pop)
 #endif // PL_COMPILER == PL_COMPILER_MSVC
 } // namespace pl
 #endif // INCG_PL_EXCEPT_HPP

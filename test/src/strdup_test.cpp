@@ -26,21 +26,21 @@
 
 #include "../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
-#endif // PL_COMPILER == PL_COMPILER_GCC
+#pragma GCC diagnostic pop
+#endif                                 // PL_COMPILER == PL_COMPILER_GCC
 #include "../../include/pl/strdup.hpp" // pl::strdup, pl::strndup
-#include <cstddef> // std::size_t
-#include <cstring> // std::strlen, std::strcmp
+#include <cstddef>                     // std::size_t
+#include <cstring>                     // std::strlen, std::strcmp
 
 TEST_CASE("strdup_test")
 {
-    static constexpr char str[]{ "Text" };
-    std::unique_ptr<char[]> up{ pl::strdup(str) };
+    static constexpr char   str[]{"Text"};
+    std::unique_ptr<char[]> up{pl::strdup(str)};
 
     REQUIRE(up != nullptr);
     CHECK(std::strlen(up.get()) == 4U);
@@ -54,11 +54,10 @@ TEST_CASE("strdup_test")
 
 TEST_CASE("strndup_test")
 {
-    static constexpr char str[]{ "Sample text" };
-    static constexpr std::size_t strLen{
-        (sizeof(str) / sizeof(str[0U])) - sizeof(str[0U])
-    };
-    std::unique_ptr<char[]> up{ nullptr };
+    static constexpr char        str[]{"Sample text"};
+    static constexpr std::size_t strLen{(sizeof(str) / sizeof(str[0U]))
+                                        - sizeof(str[0U])};
+    std::unique_ptr<char[]> up{nullptr};
 
     up = pl::strndup(str, 0U);
     REQUIRE(up != nullptr);

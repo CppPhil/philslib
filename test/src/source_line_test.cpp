@@ -26,19 +26,19 @@
 
 #include "../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
-#endif // PL_COMPILER == PL_COMPILER_GCC
+#pragma GCC diagnostic pop
+#endif                                      // PL_COMPILER == PL_COMPILER_GCC
 #include "../../include/pl/source_line.hpp" // PL_SOURCE_LINE
-#include <cstring> // std::strcmp
+#include <cstring>                          // std::strcmp
 
 TEST_CASE("source_line_test")
 {
-    static constexpr char sourceLineString[]{ PL_SOURCE_LINE };
+    static constexpr char sourceLineString[]{PL_SOURCE_LINE};
 
     CHECK(std::strcmp(sourceLineString, "41") == 0);
 }

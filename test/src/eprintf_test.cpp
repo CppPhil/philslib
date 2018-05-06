@@ -26,24 +26,23 @@
 
 #include "../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
+#pragma GCC diagnostic pop
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../include/pl/cont/make_array.hpp" // pl::cont::makeArray
-#include "../../include/pl/eprintf.hpp" // pl::eprintf
+#include "../../include/pl/eprintf.hpp"         // pl::eprintf
 
 TEST_CASE("eprintf_test")
 {
     static constexpr auto array = pl::cont::makeArray('H', 'e', 'l', 'l', 'o');
-    static constexpr int expectedCount = 11;
+    static constexpr int  expectedCount = 11;
 
-    const int retVal{
-        pl::eprintf("Test %.*s\n", static_cast<int>(array.size()), array.data())
-    };
+    const int retVal{pl::eprintf(
+        "Test %.*s\n", static_cast<int>(array.size()), array.data())};
 
     REQUIRE(retVal >= 0);
     CHECK(retVal == expectedCount);

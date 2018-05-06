@@ -32,18 +32,15 @@
 #ifndef INCG_PL_ITERATE_REVERSED_HPP
 #define INCG_PL_ITERATE_REVERSED_HPP
 #include "annotations.hpp" // PL_IN
-#include "begin_end.hpp" // pl::begin, ...
+#include "begin_end.hpp"   // pl::begin, ...
 
-namespace pl
-{
-namespace detail
-{
+namespace pl {
+namespace detail {
 /*!
  * \brief Type used by pl::iterateReversed. Used for non-const containers.
 **/
 template <typename Container>
-class RevForAdapter final
-{
+class RevForAdapter final {
 public:
     using this_type = RevForAdapter;
 
@@ -52,8 +49,7 @@ public:
      *        reference to the container passed in.
      * \param container The container to iterate over.
     **/
-    explicit RevForAdapter(PL_IN Container &container)
-        : m_container{ container }
+    explicit RevForAdapter(PL_IN Container& container) : m_container{container}
     {
     }
 
@@ -62,31 +58,22 @@ public:
      * \return The reverse begin iterator to the container.
      * \note This function is called by the range based for loop.
     **/
-    auto begin() -> decltype(auto)
-    {
-        return ::pl::rbegin(m_container);
-    }
-
+    auto begin() -> decltype(auto) { return ::pl::rbegin(m_container); }
     /*!
      * \brief Returns the reverse end iterator to the container.
      * \return The reverse end iterator to the container.
      * \note This function is called by the range based for loop.
     **/
-    auto end() -> decltype(auto)
-    {
-        return ::pl::rend(m_container);
-    }
-
+    auto end() -> decltype(auto) { return ::pl::rend(m_container); }
 private:
-    Container &m_container; //!< reference to the container to iterate over.
+    Container& m_container; //!< reference to the container to iterate over.
 };
 
 /*!
  * \brief Type used by pl::iterateReversed. Used for const containers.
 **/
 template <typename Container>
-class RevForAdapterConst final
-{
+class RevForAdapterConst final {
 public:
     using this_type = RevForAdapterConst;
 
@@ -95,8 +82,8 @@ public:
      *        reference to the container passed in.
      * \param container The container to iterate over.
     **/
-    explicit RevForAdapterConst(PL_IN const Container &container)
-        : m_container{ container }
+    explicit RevForAdapterConst(PL_IN const Container& container)
+        : m_container{container}
     {
     }
 
@@ -105,23 +92,16 @@ public:
      * \return The const reverse begin iterator to the container.
      * \note This function is called by the range based for loop.
     **/
-    auto begin() const -> decltype(auto)
-    {
-        return ::pl::crbegin(m_container);
-    }
-
+    auto begin() const -> decltype(auto) { return ::pl::crbegin(m_container); }
     /*!
      * \brief Returns the const reverse end iterator to the container.
      * \return The const reverse end iterator to the container.
      * \note This function is called by the range based for loop.
     **/
-    auto end() const -> decltype(auto)
-    {
-        return ::pl::crend(m_container);
-    }
-
+    auto end() const -> decltype(auto) { return ::pl::crend(m_container); }
 private:
-    const Container &m_container; //!< const lvalue reference to the container to iterate over.
+    const Container& m_container; //!< const lvalue reference to the container
+                                  //!to iterate over.
 };
 } // namespace detail
 
@@ -138,9 +118,9 @@ private:
  *          }
 **/
 template <typename Container>
-detail::RevForAdapter<Container> iterateReversed(PL_IN Container &container)
+detail::RevForAdapter<Container> iterateReversed(PL_IN Container& container)
 {
-    return detail::RevForAdapter<Container>{ container };
+    return detail::RevForAdapter<Container>{container};
 }
 
 /*!
@@ -155,9 +135,10 @@ detail::RevForAdapter<Container> iterateReversed(PL_IN Container &container)
  *          }
 **/
 template <typename Container>
-detail::RevForAdapterConst<Container> iterateReversed(PL_IN const Container &container)
+detail::RevForAdapterConst<Container> iterateReversed(
+    PL_IN const Container& container)
 {
-    return detail::RevForAdapterConst<Container>{ container };
+    return detail::RevForAdapterConst<Container>{container};
 }
 } // namespace pl
 #endif // INCG_PL_ITERATE_REVERSED_HPP

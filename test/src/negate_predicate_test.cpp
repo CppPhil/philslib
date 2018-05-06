@@ -26,52 +26,32 @@
 
 #include "../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
+#pragma GCC diagnostic pop
 #endif // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/pl/negate_predicate.hpp" // pl::negatePredicate
 #include "../../include/pl/algo/ranged_algorithms.hpp" // pl::all_of
-#include <cstring> // std::strchr
-#include <vector> // std::vector
+#include "../../include/pl/negate_predicate.hpp"       // pl::negatePredicate
+#include <cstring>                                     // std::strchr
+#include <vector>                                      // std::vector
 
-namespace pl
-{
-namespace test
-{
-namespace
-{
-bool is5(int i)
-{
-    return i == 5;
-}
-
-class Type
-{
+namespace pl {
+namespace test {
+namespace {
+bool is5(int i) { return i == 5; }
+class Type {
 public:
-    explicit Type(bool v)
-        : m_v{ v }
-    {
-    }
-
-    bool memFun(const char *s) const
-    {
-        return std::strchr(s, 'a') != nullptr;
-    }
-
-    bool m_v;
+    explicit Type(bool v) : m_v{v} {}
+    bool memFun(const char* s) const { return std::strchr(s, 'a') != nullptr; }
+    bool                    m_v;
 };
 
-class Functor
-{
+class Functor {
 public:
-    bool operator()(int a, int b) const
-    {
-        return a != b;
-    }
+    bool operator()(int a, int b) const { return a != b; }
 };
 } // anonymous namespace
 } // namespace test
@@ -79,9 +59,9 @@ public:
 
 TEST_CASE("negate_predicate_function_pointer_test")
 {
-    auto fp = &pl::test::is5;
-    auto &r = fp;
-    const auto &cr = fp;
+    auto        fp = &pl::test::is5;
+    auto&       r  = fp;
+    const auto& cr = fp;
 
     CHECK_UNARY_FALSE(pl::negatePredicate(r)(5));
     CHECK_UNARY(pl::negatePredicate(r)(4));
@@ -92,12 +72,12 @@ TEST_CASE("negate_predicate_function_pointer_test")
 
 TEST_CASE("negate_predicate_member_function_pointer_test")
 {
-    auto memFunPtr = &pl::test::Type::memFun;
-    auto &r = memFunPtr;
-    const auto &cr = memFunPtr;
+    auto        memFunPtr = &pl::test::Type::memFun;
+    auto&       r         = memFunPtr;
+    const auto& cr        = memFunPtr;
 
-    pl::test::Type obj{ true };
-    pl::test::Type *pObj{ &obj };
+    pl::test::Type  obj{true};
+    pl::test::Type* pObj{&obj};
 
     CHECK_UNARY(pl::negatePredicate(r)(obj, "bcdef"));
     CHECK_UNARY_FALSE(pl::negatePredicate(r)(obj, "thoetnineuaieui"));
@@ -108,19 +88,19 @@ TEST_CASE("negate_predicate_member_function_pointer_test")
     CHECK_UNARY_FALSE(pl::negatePredicate(r)(pObj, "thoetnineuaieui"));
     CHECK_UNARY(pl::negatePredicate(cr)(pObj, "bcdef"));
     CHECK_UNARY_FALSE(pl::negatePredicate(cr)(pObj, "ueoutihaiii"));
- }
+}
 
 TEST_CASE("negate_predicate_member_object_pointer_test")
 {
-    auto memObjPtr = &pl::test::Type::m_v;
-    auto &r = memObjPtr;
-    const auto &cr = memObjPtr;
+    auto        memObjPtr = &pl::test::Type::m_v;
+    auto&       r         = memObjPtr;
+    const auto& cr        = memObjPtr;
 
-    pl::test::Type obj1{ false };
-    pl::test::Type *pObj1{ &obj1 };
+    pl::test::Type  obj1{false};
+    pl::test::Type* pObj1{&obj1};
 
-    pl::test::Type obj2{ true };
-    pl::test::Type *pObj2{ &obj2 };
+    pl::test::Type  obj2{true};
+    pl::test::Type* pObj2{&obj2};
 
     CHECK_UNARY(pl::negatePredicate(r)(obj1));
     CHECK_UNARY_FALSE(pl::negatePredicate(r)(obj2));
@@ -135,9 +115,9 @@ TEST_CASE("negate_predicate_member_object_pointer_test")
 
 TEST_CASE("negate_predicate_functor_test")
 {
-    pl::test::Functor functor{ };
-    pl::test::Functor &r{ functor };
-    const pl::test::Functor &cr{ functor };
+    pl::test::Functor        functor{};
+    pl::test::Functor&       r{functor};
+    const pl::test::Functor& cr{functor};
 
     CHECK_UNARY(pl::negatePredicate(r)(5, 5));
     CHECK_UNARY_FALSE(pl::negatePredicate(r)(5, 6));
@@ -148,12 +128,12 @@ TEST_CASE("negate_predicate_functor_test")
 
 TEST_CASE("negate_predicate_lambda_test")
 {
-    auto l = [](int i) { return i > 5; };
-    auto &r = l;
-    const auto &cr = l;
+    auto l             = [](int i) { return i > 5; };
+    auto&           r  = l;
+    const auto&     cr = l;
 
-    const std::vector<int> vec1{ 1, 2, 3, 4, 5 };
-    const std::vector<int> vec2{ 2, 3, 4, 5, 6 };
+    const std::vector<int> vec1{1, 2, 3, 4, 5};
+    const std::vector<int> vec2{2, 3, 4, 5, 6};
 
     CHECK_UNARY(pl::algo::all_of(vec1, pl::negatePredicate(r)));
     CHECK_UNARY_FALSE(pl::algo::all_of(vec2, pl::negatePredicate(r)));

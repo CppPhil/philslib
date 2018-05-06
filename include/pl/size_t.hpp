@@ -33,17 +33,14 @@
 #define INCG_PL_SIZE_T_HPP
 #include "compiler.hpp" // PL_COMPILER, PL_COMPILER_MSVC, PL_COMPILER_VERSION, PL_COMPILER_VERSION_CHECK
 #include "no_macro_substitution.hpp" // PL_NO_MACRO_SUBSTITUTION
-#include <ciso646> // and
-#include <cassert> // assert
-#include <cstddef> // std::size_t
-#include <limits> // std::numeric_limits
+#include <cassert>                   // assert
+#include <ciso646>                   // and
+#include <cstddef>                   // std::size_t
+#include <limits>                    // std::numeric_limits
 
-namespace pl
-{
-inline namespace literals
-{
-inline namespace integer_literals
-{
+namespace pl {
+inline namespace literals {
+inline namespace integer_literals {
 /*!
  * \brief User defined literal (UDL) to create an object of type std::size_t.
  * \param value The value to create the std::size_t object. Must be within
@@ -55,11 +52,13 @@ inline namespace integer_literals
 **/
 constexpr std::size_t operator""_zu(unsigned long long value)
 {
-#if (PL_COMPILER != PL_COMPILER_MSVC) || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
+#if (PL_COMPILER != PL_COMPILER_MSVC) \
+    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
     assert(
         (value <= std::numeric_limits<std::size_t>::max PL_NO_MACRO_SUBSTITUTION())
         and "value was too large in pl::literals::integer_literals::operator\"\"_zu");
-#endif // (PL_COMPILER != PL_COMPILER_MSVC) || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
+#endif // (PL_COMPILER != PL_COMPILER_MSVC) || (PL_COMPILER_VERSION >=
+       // PL_COMPILER_VERSION_CHECK(19, 11, 0))
     return static_cast<std::size_t>(value);
 }
 } // inline namespace integer_literals

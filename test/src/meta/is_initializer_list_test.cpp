@@ -26,26 +26,23 @@
 
 #include "../../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
+#pragma GCC diagnostic pop
 #endif // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
 #include "../../../include/pl/meta/is_initializer_list.hpp" // pl::meta::is_initializer_list
-#include <ciso646> // not
-#include <initializer_list> // std::initializer_list
-#include <string> // std::string
-#include <vector> // std::vector
+#include "../../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
+#include <ciso646>                         // not
+#include <initializer_list>                // std::initializer_list
+#include <string>                          // std::string
+#include <vector>                          // std::vector
 
-namespace pl
-{
-namespace test
-{
-namespace
-{
+namespace pl {
+namespace test {
+namespace {
 using Ty1 = std::initializer_list<int>;
 using Ty2 = std::initializer_list<double>;
 using Ty3 = std::initializer_list<std::string>;
@@ -58,12 +55,9 @@ using Ty6 = std::vector<std::string>;
 
 TEST_CASE("is_initializer_list_positive_tests")
 {
-    PL_TEST_STATIC_ASSERT(
-        pl::meta::is_initializer_list<pl::test::Ty1>::value);
-    PL_TEST_STATIC_ASSERT(
-        pl::meta::is_initializer_list<pl::test::Ty2>::value);
-    PL_TEST_STATIC_ASSERT(
-        pl::meta::is_initializer_list<pl::test::Ty3>::value);
+    PL_TEST_STATIC_ASSERT(pl::meta::is_initializer_list<pl::test::Ty1>::value);
+    PL_TEST_STATIC_ASSERT(pl::meta::is_initializer_list<pl::test::Ty2>::value);
+    PL_TEST_STATIC_ASSERT(pl::meta::is_initializer_list<pl::test::Ty3>::value);
 
     CHECK_UNARY(true);
 }

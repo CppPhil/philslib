@@ -26,30 +26,25 @@
 
 #include "../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
-#endif // PL_COMPILER == PL_COMPILER_GCC
-#include "../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
+#pragma GCC diagnostic pop
+#endif                                      // PL_COMPILER == PL_COMPILER_GCC
 #include "../../include/pl/noncopyable.hpp" // PL_NONCOPYABLE
-#include <ciso646> // not
+#include "../include/static_assert.hpp"     // PL_TEST_STATIC_ASSERT
+#include <ciso646>                          // not
 #include <type_traits> // std::is_copy_constructible, std::is_copy_assignable
 
-namespace pl
-{
-namespace test
-{
-namespace
-{
-class Copyable
-{
+namespace pl {
+namespace test {
+namespace {
+class Copyable {
 };
 
-class NonCopyable
-{
+class NonCopyable {
 public:
     PL_NONCOPYABLE(NonCopyable);
 };
@@ -61,8 +56,7 @@ TEST_CASE("noncopyable_test")
 {
     PL_TEST_STATIC_ASSERT(
         std::is_copy_constructible<pl::test::Copyable>::value);
-    PL_TEST_STATIC_ASSERT(
-        std::is_copy_assignable<pl::test::Copyable>::value);
+    PL_TEST_STATIC_ASSERT(std::is_copy_assignable<pl::test::Copyable>::value);
 
     PL_TEST_STATIC_ASSERT(
         not std::is_copy_constructible<pl::test::NonCopyable>::value);

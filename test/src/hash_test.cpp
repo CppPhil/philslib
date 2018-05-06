@@ -26,75 +26,64 @@
 
 #include "../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
-#endif // PL_COMPILER == PL_COMPILER_GCC
-#include <ciso646> // and
-#include <cstddef> // std::size_t
-#include <utility> // std::move
-#include <string> // std::string
-#include <iterator> // std::end
-#include <functional> // std::hash
-#include <unordered_set> // std::unordered_set
+#pragma GCC diagnostic pop
+#endif                               // PL_COMPILER == PL_COMPILER_GCC
 #include "../../include/pl/hash.hpp" // pl::hash
+#include <ciso646>                   // and
+#include <cstddef>                   // std::size_t
+#include <functional>                // std::hash
+#include <iterator>                  // std::end
+#include <string>                    // std::string
+#include <unordered_set>             // std::unordered_set
+#include <utility>                   // std::move
 
-namespace pl
-{
-namespace test
-{
-namespace
-{
+namespace pl {
+namespace test {
+namespace {
 class Hashable;
 } // anonymous namespace
 } // namespace test
 } // namespace pl
 
-namespace std
-{
+namespace std {
 template <>
 struct hash<::pl::test::Hashable>;
 } // namespace std
 
-namespace pl
-{
-namespace test
-{
-namespace
-{
-class Hashable
-{
+namespace pl {
+namespace test {
+namespace {
+class Hashable {
 public:
     Hashable(std::string string, int integer)
-        : m_string{ std::move(string) },
-          m_integer{ integer }
+        : m_string{std::move(string)}, m_integer{integer}
     {
     }
 
     friend ::std::hash<Hashable>;
 
-    friend bool operator==(const Hashable &a, const Hashable &b)
+    friend bool operator==(const Hashable& a, const Hashable& b)
     {
         return (a.m_string == b.m_string) and (a.m_integer == b.m_integer);
     }
 
 private:
     std::string m_string;
-    int m_integer;
+    int         m_integer;
 };
 } // anonymous namespace
 } // namespace test
 } // namespace pl
 
-namespace std
-{
+namespace std {
 template <>
-struct hash<::pl::test::Hashable>
-{
-    size_t operator()(const ::pl::test::Hashable &hashable) const
+struct hash<::pl::test::Hashable> {
+    size_t operator()(const ::pl::test::Hashable& hashable) const
     {
         return ::pl::hash(hashable.m_string, hashable.m_integer);
     }
@@ -103,17 +92,17 @@ struct hash<::pl::test::Hashable>
 
 TEST_CASE("hash_positive_test")
 {
-    static const std::string str{ "Test" };
-    constexpr int integer{ 5 };
+    static const std::string str{"Test"};
+    constexpr int            integer{5};
 
-    std::size_t hashSeed{ 0U };
+    std::size_t hashSeed{0U};
     pl::detail::addHash(hashSeed, str);
     pl::detail::addHash(hashSeed, integer);
 
-    pl::test::Hashable obj{ str, integer };
-    pl::test::Hashable copy{ obj };
+    pl::test::Hashable obj{str, integer};
+    pl::test::Hashable copy{obj};
 
-    std::hash<pl::test::Hashable> hasher{ };
+    std::hash<pl::test::Hashable> hasher{};
 
     CHECK(hasher(obj) == hashSeed);
     CHECK(hasher(copy) == hashSeed);
@@ -122,22 +111,23 @@ TEST_CASE("hash_positive_test")
 
 TEST_CASE("hash_negative_test")
 {
-    pl::test::Hashable a{ "text", 5 };
-    pl::test::Hashable b{ "text", 6, };
+    pl::test::Hashable a{"text", 5};
+    pl::test::Hashable b{
+        "text", 6,
+    };
 
-    CHECK(std::hash<pl::test::Hashable>{ }(a)
-        != std::hash<pl::test::Hashable>{ }(b));
+    CHECK(
+        std::hash<pl::test::Hashable>{}(a)
+        != std::hash<pl::test::Hashable>{}(b));
 }
 
 TEST_CASE("hash_unordered_set_test")
 {
-    std::unordered_set<pl::test::Hashable> set{
-        pl::test::Hashable{ "test", 25 }
-    };
+    std::unordered_set<pl::test::Hashable> set{pl::test::Hashable{"test", 25}};
 
-    CHECK(set.find(pl::test::Hashable{ "test", 25 }) != std::end(set));
-    CHECK(set.find(pl::test::Hashable{ "text", 25 }) == std::end(set));
+    CHECK(set.find(pl::test::Hashable{"test", 25}) != std::end(set));
+    CHECK(set.find(pl::test::Hashable{"text", 25}) == std::end(set));
 
     set.emplace("hashTest", 50);
-    CHECK(set.find(pl::test::Hashable{ "hashTest", 50}) != std::end(set));
+    CHECK(set.find(pl::test::Hashable{"hashTest", 50}) != std::end(set));
 }

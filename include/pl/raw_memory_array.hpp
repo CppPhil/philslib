@@ -30,36 +30,34 @@
 **/
 #ifndef INCG_PL_RAW_MEMORY_ARRAY_HPP
 #define INCG_PL_RAW_MEMORY_ARRAY_HPP
-#include "annotations.hpp" // PL_NODISCARD, PL_OUT, PL_IN
 #include "algo/destroy.hpp" // pl::algo::destroy
-#include "assert.hpp" // PL_DBG_CHECK_PRE
-#include <ciso646> // not
-#include <cstddef> // std::size_t, std::ptrdiff_t
-#include <stdexcept> // std::out_of_range
-#include <iterator> // std::reverse_iterator
-#include <memory> // std::uninitialized_fill
+#include "annotations.hpp"  // PL_NODISCARD, PL_OUT, PL_IN
+#include "assert.hpp"       // PL_DBG_CHECK_PRE
 #include <algorithm> // std::fill, std::equal, std::lexicographical_compare
+#include <ciso646>   // not
+#include <cstddef>   // std::size_t, std::ptrdiff_t
+#include <iterator>  // std::reverse_iterator
+#include <memory>    // std::uninitialized_fill
+#include <stdexcept> // std::out_of_range
 
-namespace pl
-{
+namespace pl {
 /*!
  * \brief Type that can be used to treat some raw memory as a fixed size array.
 **/
 template <typename Ty>
-class RawMemoryArray
-{
+class RawMemoryArray {
 public:
-    using this_type = RawMemoryArray;
-    using value_type = Ty;
-    using size_type = std::size_t;
-    using difference_type = std::ptrdiff_t;
-    using reference = value_type &;
-    using const_reference = const value_type &;
-    using pointer = value_type *;
-    using const_pointer = const value_type *;
-    using iterator = pointer;
-    using const_iterator = const_pointer;
-    using reverse_iterator = std::reverse_iterator<iterator>;
+    using this_type              = RawMemoryArray;
+    using value_type             = Ty;
+    using size_type              = std::size_t;
+    using difference_type        = std::ptrdiff_t;
+    using reference              = value_type&;
+    using const_reference        = const value_type&;
+    using pointer                = value_type*;
+    using const_pointer          = const value_type*;
+    using iterator               = pointer;
+    using const_iterator         = const_pointer;
+    using reverse_iterator       = std::reverse_iterator<iterator>;
     using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
     /*!
@@ -89,11 +87,11 @@ public:
      *          value_type objects that are to be placed into it.
     **/
     RawMemoryArray(
-        PL_OUT void *rawMemory,
-        size_type byteCount,
+        PL_OUT void* rawMemory,
+        size_type    byteCount,
         PL_IN const_reference initialValue = value_type())
-        : m_data{ static_cast<pointer>(rawMemory) },
-          m_size{ byteCount / sizeof(value_type) }
+        : m_data{static_cast<pointer>(rawMemory)}
+        , m_size{byteCount / sizeof(value_type)}
     {
         std::uninitialized_fill(begin(), end(), initialValue);
     }
@@ -103,20 +101,16 @@ public:
      *        of all the elements that were placement new'ed into the raw
      *        memory.
     **/
-    ~RawMemoryArray()
-    {
-        ::pl::algo::destroy(begin(), end());
-    }
+    ~RawMemoryArray() { ::pl::algo::destroy(begin(), end()); }
+    /*!
+     * \brief This type is non-copyable.
+    **/
+    RawMemoryArray(const this_type&) = delete;
 
     /*!
      * \brief This type is non-copyable.
     **/
-    RawMemoryArray(const this_type &) = delete;
-
-    /*!
-     * \brief This type is non-copyable.
-    **/
-    this_type &operator=(const this_type &) = delete;
+    this_type& operator=(const this_type&) = delete;
 
     /*!
      * \brief Returns a reference to the element at specified location
@@ -129,10 +123,9 @@ public:
     **/
     PL_NODISCARD reference at(size_type pos)
     {
-        if (not (pos < size())) {
+        if (not(pos < size())) {
             throw std::out_of_range{
-                "pos in pl::RawMemoryArray::at was out of bounds!"
-            };
+                "pos in pl::RawMemoryArray::at was out of bounds!"};
         }
 
         return (*this)[pos];
@@ -149,7 +142,7 @@ public:
     **/
     PL_NODISCARD const_reference at(size_type pos) const
     {
-        return const_cast<this_type *>(this)->at(pos);
+        return const_cast<this_type*>(this)->at(pos);
     }
 
     /*!
@@ -175,7 +168,7 @@ public:
     **/
     PL_NODISCARD const_reference operator[](size_type pos) const noexcept
     {
-        return const_cast<this_type *>(this)->operator[](pos);
+        return const_cast<this_type*>(this)->operator[](pos);
     }
 
     /*!
@@ -198,7 +191,7 @@ public:
     **/
     PL_NODISCARD const_reference front() const
     {
-        return const_cast<this_type *>(this)->front();
+        return const_cast<this_type*>(this)->front();
     }
 
     /*!
@@ -221,7 +214,7 @@ public:
     **/
     PL_NODISCARD const_reference back() const
     {
-        return const_cast<this_type *>(this)->back();
+        return const_cast<this_type*>(this)->back();
     }
 
     /*!
@@ -234,11 +227,7 @@ public:
      *         equal to the address of the first element.
      * \note Constant complexity.
     **/
-    PL_NODISCARD pointer data() noexcept
-    {
-        return m_data;
-    }
-
+    PL_NODISCARD pointer data() noexcept { return m_data; }
     /*!
      * \brief Returns a pointer to the underlying element storage.
      *        The pointer is such that range [data(), data() + size()) is always
@@ -251,7 +240,7 @@ public:
     **/
     PL_NODISCARD const_pointer data() const noexcept
     {
-        return const_cast<this_type *>(this)->data();
+        return const_cast<this_type*>(this)->data();
     }
 
     /*!
@@ -264,11 +253,7 @@ public:
      *         equal to the address of the first element.
      * \note Constant complexity.
     **/
-    PL_NODISCARD const_pointer constData() const noexcept
-    {
-        return data();
-    }
-
+    PL_NODISCARD const_pointer constData() const noexcept { return data(); }
     /*!
      * \brief Returns an iterator to the first element.
      * \return Iterator to the first element.
@@ -278,11 +263,7 @@ public:
      * If the RawMemoryArray is empty, the returned iterator will be
      * equal to end().
     **/
-    PL_NODISCARD iterator begin() noexcept
-    {
-        return data();
-    }
-
+    PL_NODISCARD iterator begin() noexcept { return data(); }
     /*!
      * \brief Returns an iterator to the first element.
      * \return Iterator to the first element.
@@ -294,7 +275,7 @@ public:
     **/
     PL_NODISCARD const_iterator begin() const noexcept
     {
-        return const_cast<this_type *>(this)->begin();
+        return const_cast<this_type*>(this)->begin();
     }
 
     /*!
@@ -306,44 +287,35 @@ public:
      * If the RawMemoryArray is empty, the returned iterator will be
      * equal to end().
     **/
-    PL_NODISCARD const_iterator cbegin() const noexcept
-    {
-        return begin();
-    }
-
+    PL_NODISCARD const_iterator cbegin() const noexcept { return begin(); }
     /*!
      * \brief Returns an iterator to the element following the last element.
      * \return Iterator to the element following the last element.
-     * \warning Dereferencing the iterator returned results in undefined behavior.
+     * \warning Dereferencing the iterator returned results in undefined
+     *behavior.
      * \note Constant complexity.
     **/
-    PL_NODISCARD iterator end() noexcept
-    {
-        return m_data + m_size;
-    }
-
+    PL_NODISCARD iterator end() noexcept { return m_data + m_size; }
     /*!
      * \brief Returns an iterator to the element following the last element.
      * \return Iterator to the element following the last element.
-     * \warning Dereferencing the iterator returned results in undefined behavior.
+     * \warning Dereferencing the iterator returned results in undefined
+     *behavior.
      * \note Constant complexity.
     **/
     PL_NODISCARD const_iterator end() const noexcept
     {
-        return const_cast<this_type *>(this)->end();
+        return const_cast<this_type*>(this)->end();
     }
 
     /*!
      * \brief Returns an iterator to the element following the last element.
      * \return Iterator to the element following the last element.
-     * \warning Dereferencing the iterator returned results in undefined behavior.
+     * \warning Dereferencing the iterator returned results in undefined
+     *behavior.
      * \note Constant complexity.
     **/
-    PL_NODISCARD const_iterator cend() const noexcept
-    {
-        return end();
-    }
-
+    PL_NODISCARD const_iterator cend() const noexcept { return end(); }
     /*!
      * \brief Returns a reverse iterator to the first element of the
      *        reversed RawMemoryArray. It corresponds to the last element
@@ -353,7 +325,7 @@ public:
     **/
     PL_NODISCARD reverse_iterator rbegin() noexcept
     {
-        return reverse_iterator{ end() };
+        return reverse_iterator{end()};
     }
 
     /*!
@@ -365,7 +337,7 @@ public:
     **/
     PL_NODISCARD const_reverse_iterator rbegin() const noexcept
     {
-        return const_cast<this_type *>(this)->rbegin();
+        return const_cast<this_type*>(this)->rbegin();
     }
 
     /*!
@@ -391,7 +363,7 @@ public:
     **/
     PL_NODISCARD reverse_iterator rend() noexcept
     {
-        return reverse_iterator{ begin() };
+        return reverse_iterator{begin()};
     }
 
     /*!
@@ -405,7 +377,7 @@ public:
     **/
     PL_NODISCARD const_reverse_iterator rend() const noexcept
     {
-        return const_cast<this_type *>(this)->rend();
+        return const_cast<this_type*>(this)->rend();
     }
 
     /*!
@@ -426,21 +398,13 @@ public:
      * \brief Checks if the RawMemoryArray has no elements.
      * \return true if the RawMemoryArray is empty, false otherwise.
     **/
-    PL_NODISCARD bool empty() const noexcept
-    {
-        return size() == 0U;
-    }
-
+    PL_NODISCARD bool empty() const noexcept { return size() == 0U; }
     /*!
      * \brief Returns the number of elements.
      * \return The number of elements.
      * \note Constant complexity.
     **/
-    PL_NODISCARD size_type size() const noexcept
-    {
-        return m_size;
-    }
-
+    PL_NODISCARD size_type size() const noexcept { return m_size; }
     /*!
      * \brief Returns the maximum number of elements this object is able to
      *        hold due to system or implementation limitations.
@@ -449,18 +413,14 @@ public:
      *       Because RawMemoryArray is of fixed size the value returned is equal
      *       to the value returned by size().
     **/
-    PL_NODISCARD size_type max_size() const noexcept
-    {
-        return size();
-    }
-
+    PL_NODISCARD size_type max_size() const noexcept { return size(); }
     /*!
      * \brief Assigns the given value to all elements.
      * \param value The value to assign to the elements.
      * \return A reference to this object.
      * \note Complexity is linear in .size().
     **/
-    this_type &fill(PL_IN const_reference value)
+    this_type& fill(PL_IN const_reference value)
     {
         std::fill(begin(), end(), value);
 
@@ -473,13 +433,9 @@ public:
      * \return A reference to this object.
      * \note Complexity is linear in .size().
     **/
-    this_type &assign(PL_IN const_reference value)
-    {
-        return fill(value);
-    }
-
+    this_type& assign(PL_IN const_reference value) { return fill(value); }
 private:
-    pointer m_data; /*!< Pointer to the raw memory interpreted as 'Ty'. */
+    pointer   m_data; /*!< Pointer to the raw memory interpreted as 'Ty'. */
     size_type m_size; /*!< The amount of elements that fit in the raw memory */
 };
 
@@ -495,8 +451,8 @@ private:
 **/
 template <typename Ty>
 bool operator==(
-    PL_IN const ::pl::RawMemoryArray<Ty> &lhs,
-    PL_IN const ::pl::RawMemoryArray<Ty> &rhs)
+    PL_IN const ::pl::RawMemoryArray<Ty>& lhs,
+    PL_IN const ::pl::RawMemoryArray<Ty>& rhs)
 {
     return std::equal(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
 }
@@ -513,10 +469,10 @@ bool operator==(
 **/
 template <typename Ty>
 bool operator!=(
-    PL_IN const ::pl::RawMemoryArray<Ty> &lhs,
-    PL_IN const ::pl::RawMemoryArray<Ty> &rhs)
+    PL_IN const ::pl::RawMemoryArray<Ty>& lhs,
+    PL_IN const ::pl::RawMemoryArray<Ty>& rhs)
 {
-    return not (lhs == rhs);
+    return not(lhs == rhs);
 }
 
 /*!
@@ -528,27 +484,26 @@ bool operator!=(
 **/
 template <typename Ty>
 bool operator<(
-    PL_IN const ::pl::RawMemoryArray<Ty> &lhs,
-    PL_IN const ::pl::RawMemoryArray<Ty> &rhs)
+    PL_IN const ::pl::RawMemoryArray<Ty>& lhs,
+    PL_IN const ::pl::RawMemoryArray<Ty>& rhs)
 {
     return std::lexicographical_compare(
-        lhs.begin(), lhs.end(),
-        rhs.begin(), rhs.end());
+        lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
 }
 
 /*!
  * \brief Compares the contents of 'lhs' and 'rhs' lexicographically.
  * \param lhs The first operand.
  * \param rhs The second operand.
- * \return true if the contents of 'lhs' are lexicographically less than or equal
- *         the contents of 'rhs', false otherwise
+ * \return true if the contents of 'lhs' are lexicographically less than or
+ *         equal the contents of 'rhs', false otherwise
 **/
 template <typename Ty>
 bool operator<=(
-    PL_IN const ::pl::RawMemoryArray<Ty> &lhs,
-    PL_IN const ::pl::RawMemoryArray<Ty> &rhs)
+    PL_IN const ::pl::RawMemoryArray<Ty>& lhs,
+    PL_IN const ::pl::RawMemoryArray<Ty>& rhs)
 {
-    return not (rhs < lhs);
+    return not(rhs < lhs);
 }
 
 /*!
@@ -560,8 +515,8 @@ bool operator<=(
 **/
 template <typename Ty>
 bool operator>(
-    PL_IN const ::pl::RawMemoryArray<Ty> &lhs,
-    PL_IN const ::pl::RawMemoryArray<Ty> &rhs)
+    PL_IN const ::pl::RawMemoryArray<Ty>& lhs,
+    PL_IN const ::pl::RawMemoryArray<Ty>& rhs)
 {
     return rhs < lhs;
 }
@@ -575,10 +530,10 @@ bool operator>(
 **/
 template <typename Ty>
 bool operator>=(
-    PL_IN const ::pl::RawMemoryArray<Ty> &lhs,
-    PL_IN const ::pl::RawMemoryArray<Ty> &rhs)
+    PL_IN const ::pl::RawMemoryArray<Ty>& lhs,
+    PL_IN const ::pl::RawMemoryArray<Ty>& rhs)
 {
-    return not (lhs < rhs);
+    return not(lhs < rhs);
 }
 } // namespace pl
 #endif // INCG_PL_RAW_MEMORY_ARRAY_HPP

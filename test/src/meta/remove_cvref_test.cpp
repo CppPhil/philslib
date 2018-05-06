@@ -26,16 +26,16 @@
 
 #include "../../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
+#pragma GCC diagnostic pop
 #endif // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
 #include "../../../include/pl/meta/remove_cvref.hpp" // pl::meta::remove_cvref
-#include <type_traits> // std::is_same
+#include "../../include/static_assert.hpp"           // PL_TEST_STATIC_ASSERT
+#include <type_traits>                               // std::is_same
 
 TEST_CASE("remove_cvref_test")
 {
@@ -43,10 +43,10 @@ TEST_CASE("remove_cvref_test")
         std::is_same<pl::meta::remove_cvref_t<int>, int>::value);
 
     PL_TEST_STATIC_ASSERT(
-        std::is_same<pl::meta::remove_cvref_t<int &>, int>::value);
+        std::is_same<pl::meta::remove_cvref_t<int&>, int>::value);
 
     PL_TEST_STATIC_ASSERT(
-        std::is_same<pl::meta::remove_cvref_t<int &&>, int>::value);
+        std::is_same<pl::meta::remove_cvref_t<int&&>, int>::value);
 
     PL_TEST_STATIC_ASSERT(
         std::is_same<pl::meta::remove_cvref_t<const int>, int>::value);
@@ -58,24 +58,24 @@ TEST_CASE("remove_cvref_test")
         std::is_same<pl::meta::remove_cvref_t<const volatile int>, int>::value);
 
     PL_TEST_STATIC_ASSERT(
-        std::is_same<pl::meta::remove_cvref_t<const int &>, int>::value);
+        std::is_same<pl::meta::remove_cvref_t<const int&>, int>::value);
 
     PL_TEST_STATIC_ASSERT(
-        std::is_same<pl::meta::remove_cvref_t<volatile int &>, int>::value);
+        std::is_same<pl::meta::remove_cvref_t<volatile int&>, int>::value);
 
     PL_TEST_STATIC_ASSERT(
-        std::is_same<pl::meta::remove_cvref_t<const volatile int &>, int>
-            ::value);
+        std::is_same<pl::meta::remove_cvref_t<const volatile int&>,
+                     int>::value);
 
     PL_TEST_STATIC_ASSERT(
-        std::is_same<pl::meta::remove_cvref_t<const int &&>, int>::value);
+        std::is_same<pl::meta::remove_cvref_t<const int&&>, int>::value);
 
     PL_TEST_STATIC_ASSERT(
-        std::is_same<pl::meta::remove_cvref_t<volatile int &&>, int>::value);
+        std::is_same<pl::meta::remove_cvref_t<volatile int&&>, int>::value);
 
     PL_TEST_STATIC_ASSERT(
-        std::is_same<pl::meta::remove_cvref_t<const volatile int &&>, int>
-            ::value);
+        std::is_same<pl::meta::remove_cvref_t<const volatile int&&>,
+                     int>::value);
 
     CHECK_UNARY(true);
 }

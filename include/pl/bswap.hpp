@@ -32,10 +32,9 @@
 #ifndef INCG_PL_BSWAP_HPP
 #define INCG_PL_BSWAP_HPP
 #include "as_bytes.hpp" // pl::asBytes
-#include <algorithm> // std::reverse
+#include <algorithm>    // std::reverse
 
-namespace pl
-{
+namespace pl {
 /*!
  * \brief Reverses the bytes of the argument passed and returns the result.
  * \param ty The object for which to receive a copy of that has its bytes
@@ -52,8 +51,8 @@ namespace pl
 template <typename Type>
 inline Type bswap(Type ty) noexcept
 {
-    auto begin = ::pl::asBytes(ty);
-    const auto end = begin + sizeof(Type);
+    auto       begin = ::pl::asBytes(ty);
+    const auto end   = begin + sizeof(Type);
 
     std::reverse(begin, end);
 

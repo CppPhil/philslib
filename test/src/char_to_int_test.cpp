@@ -26,33 +26,31 @@
 
 #include "../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
+#pragma GCC diagnostic pop
 #endif // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/pl/char_to_int.hpp" // pl::charToInt
 #include "../../include/pl/algo/ranged_algorithms.hpp" // pl::algo::transform
-#include <cstddef> // std::size_t
-#include <cstdint> // std::uint8_t
-#include <iterator> // std::begin
-#include <array> // std::array
+#include "../../include/pl/char_to_int.hpp"            // pl::charToInt
+#include <array>                                       // std::array
+#include <cstddef>                                     // std::size_t
+#include <cstdint>                                     // std::uint8_t
+#include <iterator>                                    // std::begin
 
 TEST_CASE("char_to_int_test")
 {
-    static constexpr std::size_t digits{ 10U };
+    static constexpr std::size_t digits{10U};
 
-    const std::array<unsigned char, digits> characters{ {
-        '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'
-    } };
+    const std::array<unsigned char, digits> characters{
+        {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'}};
 
-    const std::array<std::uint8_t, digits> integers{ {
-        1, 2, 3, 4, 5, 6, 7, 8, 9, 0
-    } };
+    const std::array<std::uint8_t, digits> integers{
+        {1, 2, 3, 4, 5, 6, 7, 8, 9, 0}};
 
-    std::array<std::uint8_t, digits> result{ { 0U } };
+    std::array<std::uint8_t, digits> result{{0U}};
 
     pl::algo::transform(characters, std::begin(result), &pl::charToInt);
 

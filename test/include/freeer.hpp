@@ -27,16 +27,13 @@
 #ifndef INCG_PL_TEST_FREEER_HPP
 #define INCG_PL_TEST_FREEER_HPP
 
-namespace pl
-{
-namespace test
-{
+namespace pl {
+namespace test {
 /*!
  * \brief An invocable object that calls std::free from <cstdlib> on the
  *        void * passed into its call operator.
 **/
-class Freeer
-{
+class Freeer {
 public:
     using this_type = Freeer;
 
@@ -45,7 +42,7 @@ public:
      *        or std::calloc.
      * \param toBeFreed Pointer to the data to free.
     **/
-    void operator()(void *toBeFreed) const noexcept;
+    void operator()(void* toBeFreed) const noexcept;
 };
 } // namespace test
 } // namespace pl

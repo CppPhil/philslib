@@ -26,16 +26,16 @@
 
 #include "../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
-#endif // PL_COMPILER == PL_COMPILER_GCC
+#pragma GCC diagnostic pop
+#endif                                // PL_COMPILER == PL_COMPILER_GCC
 #include "../../include/pl/timer.hpp" // pl::Timer
-#include <thread> // std::this_thread::sleep_for
-#include <chrono> // std::literals::chrono_literals::operator""ms, std::chrono::duration_cast, std::chrono::milliseconds
+#include <chrono>                     // std::literals::chrono_literals::operator""ms, std::chrono::duration_cast, std::chrono::milliseconds
+#include <thread>                     // std::this_thread::sleep_for
 
 TEST_CASE("timer_test")
 {
@@ -43,7 +43,7 @@ TEST_CASE("timer_test")
     using namespace std::literals::chrono_literals;
     using Ms = chrono::milliseconds;
 
-    pl::Timer timer{ };
+    pl::Timer timer{};
     std::this_thread::sleep_for(100ms);
     CHECK(chrono::duration_cast<Ms>(timer.elapsedTime()) >= 100ms);
 

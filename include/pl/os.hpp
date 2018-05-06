@@ -85,40 +85,40 @@
 **/
 
 #define PL_OS_WINDOWS (0x0000) /* meaningless number */
-#define PL_OS_MAC (0x0001) /* meaningless number */
-#define PL_OS_LINUX (0x0002) /* meaningless number */
+#define PL_OS_MAC (0x0001)     /* meaningless number */
+#define PL_OS_LINUX (0x0002)   /* meaningless number */
 #define PL_OS_ANDROID (0x0003) /* meaningless number */
 #define PL_OS_FREEBSD (0x0004) /* meaningless number */
 #define PL_OS_SOLARIS (0x0005) /* meaningless number */
 #define PL_OS_UNKNOWN (0xFFFF) /* meaningless number */
 
 #if defined(_WIN32)
-#   define PL_OS PL_OS_WINDOWS
-#   define PL_OS_NAME "Windows"
+#define PL_OS PL_OS_WINDOWS
+#define PL_OS_NAME "Windows"
 #elif defined(__APPLE__)
-#   define PL_OS PL_OS_MAC
-#   define PL_OS_NAME "MacOS"
+#define PL_OS PL_OS_MAC
+#define PL_OS_NAME "MacOS"
 #elif defined(__unix__)
-#   if defined(__ANDROID__)
-#       define PL_OS PL_OS_ANDROID
-#       define PL_OS_NAME "Android"
-#   elif defined(__linux__)
-#       define PL_OS PL_OS_LINUX
-#       define PL_OS_NAME "Linux"
-#   elif defined(__FreeBSD__)
-#       define PL_OS PL_OS_FREEBSD
-#       define PL_OS_NAME "FreeBSD"
-#   else
-#       define PL_OS PL_OS_UNKNOWN
-#       define PL_OS_NAME "Unknown"
-#       warning "Unknown Unix based operating system"
-#   endif
-#elif defined(__sun) && defined(__SVR4)
-#   define PL_OS PL_OS_SOLARIS
-#   define PL_OS_NAME "Solaris"
+#if defined(__ANDROID__)
+#define PL_OS PL_OS_ANDROID
+#define PL_OS_NAME "Android"
+#elif defined(__linux__)
+#define PL_OS PL_OS_LINUX
+#define PL_OS_NAME "Linux"
+#elif defined(__FreeBSD__)
+#define PL_OS PL_OS_FREEBSD
+#define PL_OS_NAME "FreeBSD"
 #else
-#   define PL_OS PL_OS_UNKNOWN
-#   define PL_OS_NAME "Unknown"
-#   warning "Operating system could not be detected"
+#define PL_OS PL_OS_UNKNOWN
+#define PL_OS_NAME "Unknown"
+#warning "Unknown Unix based operating system"
+#endif
+#elif defined(__sun) && defined(__SVR4)
+#define PL_OS PL_OS_SOLARIS
+#define PL_OS_NAME "Solaris"
+#else
+#define PL_OS PL_OS_UNKNOWN
+#define PL_OS_NAME "Unknown"
+#warning "Operating system could not be detected"
 #endif
 #endif // INCG_PL_OS_HPP

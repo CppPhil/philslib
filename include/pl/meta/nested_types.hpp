@@ -31,10 +31,8 @@
 #ifndef INCG_PL_META_NESTED_TYPES_HPP
 #define INCG_PL_META_NESTED_TYPES_HPP
 
-namespace pl
-{
-namespace meta
-{
+namespace pl {
+namespace meta {
 /*!
  * \brief Alias of the nested type value_type of Type.
 **/

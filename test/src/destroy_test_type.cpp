@@ -26,18 +26,12 @@
 
 #include "../include/destroy_test_type.hpp"
 
-namespace pl
-{
-namespace test
-{
-DestroyTestType::DestroyTestType(bool *p)
-    : m_p{ p }
-{
-}
+namespace pl {
+namespace test {
+DestroyTestType::DestroyTestType(bool* p) : m_p{p} {}
+DestroyTestType::DestroyTestType(const DestroyTestType&) = default;
 
-DestroyTestType::DestroyTestType(const DestroyTestType &) = default;
-
-DestroyTestType &DestroyTestType::operator=(const DestroyTestType &) = default;
+DestroyTestType& DestroyTestType::operator=(const DestroyTestType&) = default;
 
 DestroyTestType::~DestroyTestType()
 {

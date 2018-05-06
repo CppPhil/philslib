@@ -26,51 +26,52 @@
 
 #include "../../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
-#endif // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
+#pragma GCC diagnostic pop
+#endif                                       // PL_COMPILER == PL_COMPILER_GCC
 #include "../../../include/pl/meta/none.hpp" // pl::meta::none
-#include <type_traits> // std::is_same, std::is_pod, std::true_type, std::false_type, std::is_array, std::is_pointer, std::is_floating_point
-#include <vector> // std::vector
-#include <string> // std::string
+#include "../../include/static_assert.hpp"   // PL_TEST_STATIC_ASSERT
+#include <string>                            // std::string
+#include <type_traits>                       // std::is_same, std::is_pod, std::true_type, std::false_type, std::is_array, std::is_pointer, std::is_floating_point
+#include <vector>                            // std::vector
 
 TEST_CASE("none_positive_test")
 {
-    PL_TEST_STATIC_ASSERT(std::is_same<pl::meta::none<>::type,
-        std::true_type>::value);
+    PL_TEST_STATIC_ASSERT(
+        std::is_same<pl::meta::none<>::type, std::true_type>::value);
 
-    PL_TEST_STATIC_ASSERT(std::is_same<
-        pl::meta::none<std::is_pod<std::vector<int>>>::type,
-        std::true_type>::value);
+    PL_TEST_STATIC_ASSERT(
+        std::is_same<pl::meta::none<std::is_pod<std::vector<int>>>::type,
+                     std::true_type>::value);
 
-    PL_TEST_STATIC_ASSERT(std::is_same<
-        pl::meta::none<std::is_array<void>, std::is_pointer<std::string>>::type,
-        std::true_type>::value);
+    PL_TEST_STATIC_ASSERT(
+        std::is_same<pl::meta::none<std::is_array<void>,
+                                    std::is_pointer<std::string>>::type,
+                     std::true_type>::value);
 
     CHECK_UNARY(true);
 }
 
 TEST_CASE("none_negative_test")
 {
-    PL_TEST_STATIC_ASSERT(std::is_same<
-        pl::meta::none<std::is_pod<int>>::type,
-        std::false_type>::value);
+    PL_TEST_STATIC_ASSERT(
+        std::is_same<pl::meta::none<std::is_pod<int>>::type,
+                     std::false_type>::value);
 
-    PL_TEST_STATIC_ASSERT(std::is_same<
-        pl::meta::none<std::is_array<double[]>, std::is_pointer<void *>>::type,
-        std::false_type>::value);
+    PL_TEST_STATIC_ASSERT(
+        std::is_same<pl::meta::none<std::is_array<double[]>,
+                                    std::is_pointer<void*>>::type,
+                     std::false_type>::value);
 
-    PL_TEST_STATIC_ASSERT(std::is_same<
-        pl::meta::none<std::is_floating_point<char *>,
-                       std::is_array<short &&>,
-                       std::is_same<int *, int *>
-        >::type,
-        std::false_type>::value);
+    PL_TEST_STATIC_ASSERT(
+        std::is_same<pl::meta::none<std::is_floating_point<char*>,
+                                    std::is_array<short&&>,
+                                    std::is_same<int*, int*>>::type,
+                     std::false_type>::value);
 
     CHECK_UNARY(true);
 }

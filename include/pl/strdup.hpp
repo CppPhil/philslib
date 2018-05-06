@@ -32,16 +32,13 @@
 #ifndef INCG_PL_STRDUP_HPP
 #define INCG_PL_STRDUP_HPP
 #include "annotations.hpp" // PL_NODISCARD, PL_IN, PL_NULL_TERMINATED
-#include <cstddef> // std::size_t
-#include <cstring> // std::memcpy, std::strlen
-#include <memory> // std::unique_ptr
+#include <cstddef>         // std::size_t
+#include <cstring>         // std::memcpy, std::strlen
+#include <memory>          // std::unique_ptr
 
-namespace pl
-{
-namespace detail
-{
-namespace
-{
+namespace pl {
+namespace detail {
+namespace {
 /*!
  * \brief Returns std::strlen(string) or maximumLength, whichever is less.
  * \param string The null-terminated byte string to check. May not be nullptr!
@@ -49,10 +46,10 @@ namespace
  * \return std::strlen(string) or maximumLength, whichever is less.
 **/
 std::size_t strnlen(
-    PL_IN PL_NULL_TERMINATED(const char *)string,
+    PL_IN       PL_NULL_TERMINATED(const char*) string,
     std::size_t maximumLength) noexcept
 {
-    std::size_t pos{ 0U };
+    std::size_t pos{0U};
 
     for (; pos < maximumLength; ++pos) {
         if (string[pos] == '\0') {
@@ -65,8 +62,7 @@ std::size_t strnlen(
 } // anonymous namespace
 } // namespace detail
 
-namespace
-{
+namespace {
 /*!
  * \brief Creates a copy of a null-terminated string.
  * \param str Pointer to the null-terminated byte string to duplicate.
@@ -74,12 +70,12 @@ namespace
  * \return The copy.
 **/
 PL_NODISCARD std::unique_ptr<char[]> strdup(
-    PL_IN PL_NULL_TERMINATED(const char *)str) noexcept
+    PL_IN PL_NULL_TERMINATED(const char*) str) noexcept
 {
-      const auto bytesNeeded = std::strlen(str) + static_cast<std::size_t>(1U);
-      auto returnValue = std::make_unique<char[]>(bytesNeeded);
-      std::memcpy(returnValue.get(), str, bytesNeeded);
-      return returnValue;
+    const auto bytesNeeded = std::strlen(str) + static_cast<std::size_t>(1U);
+    auto       returnValue = std::make_unique<char[]>(bytesNeeded);
+    std::memcpy(returnValue.get(), str, bytesNeeded);
+    return returnValue;
 }
 
 /*!
@@ -95,11 +91,11 @@ PL_NODISCARD std::unique_ptr<char[]> strdup(
  * 'size' bytes, it is added to the duplicated string.
 **/
 PL_NODISCARD std::unique_ptr<char[]> strndup(
-    PL_IN PL_NULL_TERMINATED(const char *)str,
+    PL_IN       PL_NULL_TERMINATED(const char*) str,
     std::size_t size) noexcept
 {
     const auto stringLength = ::pl::detail::strnlen(str, size);
-    auto returnValue = std::make_unique<char[]>(stringLength + 1U);
+    auto       returnValue  = std::make_unique<char[]>(stringLength + 1U);
     std::memcpy(returnValue.get(), str, stringLength);
     returnValue[stringLength] = '\0';
     return returnValue;

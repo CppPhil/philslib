@@ -31,12 +31,11 @@
 #ifndef INCG_PL_BYTE_HPP
 #define INCG_PL_BYTE_HPP
 #include "compiler.hpp" // PL_COMPILER, PL_COMPILER_MSVC, PL_COMPILER_VERSION, PL_COMPILER_VERSION_CHECK
-#include <ciso646> // and
 #include <cassert> // assert
+#include <ciso646> // and
 #include <climits> // UCHAR_MAX
 
-namespace pl
-{
+namespace pl {
 /*!
  * \brief The Byte type. To be used when viewing something as raw bytes.
  *        An alias for unsigned char. This type is effectively a 1 byte large
@@ -44,10 +43,8 @@ namespace pl
 **/
 using Byte = unsigned char;
 
-inline namespace literals
-{
-inline namespace integer_literals
-{
+inline namespace literals {
+inline namespace integer_literals {
 /*!
  * \brief User defined literal (UDL) to create a pl::Byte object.
  * \param value The value to use to create the pl::Byte object,
@@ -58,12 +55,14 @@ inline namespace integer_literals
 **/
 constexpr ::pl::Byte operator""_byte(unsigned long long value)
 {
-#if (PL_COMPILER != PL_COMPILER_MSVC) || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
+#if (PL_COMPILER != PL_COMPILER_MSVC) \
+    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
     assert(
         (value <= UCHAR_MAX)
         and "value was too large in "
         "pl::literals::integer_literals::operator\"\"_byte");
-#endif // (PL_COMPILER != PL_COMPILER_MSVC) || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
+#endif // (PL_COMPILER != PL_COMPILER_MSVC) || (PL_COMPILER_VERSION >=
+       // PL_COMPILER_VERSION_CHECK(19, 11, 0))
     return static_cast<::pl::Byte>(value);
 }
 } // inline namespace integer_literals

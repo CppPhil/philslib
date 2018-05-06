@@ -30,13 +30,11 @@
 **/
 #ifndef INCG_PL_ALGO_SLIDE_HPP
 #define INCG_PL_ALGO_SLIDE_HPP
-#include <utility> // std::pair
 #include <algorithm> // std::rotate
+#include <utility>   // std::pair
 
-namespace pl
-{
-namespace algo
-{
+namespace pl {
+namespace algo {
 /*!
  * \brief The slide algorithm slides a range in a container to another place
  *        in the same container.
@@ -66,17 +64,17 @@ auto slide(
     RandomAccessIterator first,
     RandomAccessIterator last,
     RandomAccessIterator place)
--> std::pair<RandomAccessIterator, RandomAccessIterator>
+    -> std::pair<RandomAccessIterator, RandomAccessIterator>
 {
     if (place < first) {
-        return { place, std::rotate(place, first, last) };
+        return {place, std::rotate(place, first, last)};
     }
 
     if (last < place) {
-        return { std::rotate(first, last, place), place };
+        return {std::rotate(first, last, place), place};
     }
 
-    return { first, last };
+    return {first, last};
 }
 } // namespace algo
 } // namespace pl

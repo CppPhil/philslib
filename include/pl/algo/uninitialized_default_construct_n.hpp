@@ -30,17 +30,16 @@
 **/
 #ifndef INCG_PL_ALGO_UNINITIALIZED_DEFAULT_CONSTRUCT_N_HPP
 #define INCG_PL_ALGO_UNINITIALIZED_DEFAULT_CONSTRUCT_N_HPP
-#include <new> // ::operator new
 #include <iterator> // std::iterator_traits
-#include <memory> // std::addressof
+#include <memory>   // std::addressof
+#include <new>      // ::operator new
 
-namespace pl
-{
-namespace algo
-{
+namespace pl {
+namespace algo {
 /*!
  * \brief Constructs 'n' objects of type
- *        typename iterator_traits<'ForwardIterator'>::value_type in the uninitialized
+ *        typename iterator_traits<'ForwardIterator'>::value_type in the
+ *        uninitialized
  *        storage starting at 'first' by default-initialization.
  * \param first The beginning of the range of elements to initialize.
  * \param n The number of elements to initialize. May not be larger than the
@@ -55,22 +54,24 @@ namespace algo
 template <typename ForwardIterator, typename SizeType>
 ForwardIterator uninitialized_default_construct_n(
     ForwardIterator first,
-    SizeType n)
+    SizeType        n)
 {
-    using value_type = typename std::iterator_traits<ForwardIterator>::value_type;
+    using value_type =
+        typename std::iterator_traits<ForwardIterator>::value_type;
 
-    ForwardIterator cur{ first };
+    ForwardIterator cur{first};
 
     try {
         while (n > 0) {
-            ::new(static_cast<void *>(std::addressof(*cur))) value_type;
+            ::new (static_cast<void*>(std::addressof(*cur))) value_type;
 
             ++cur;
             --n;
         }
 
         return cur;
-    } catch (...) {
+    }
+    catch (...) {
         while (first != cur) {
             first->~value_type();
 

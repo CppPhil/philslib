@@ -31,23 +31,21 @@
 #ifndef INCG_PL_PRINT_BYTES_AS_HEX_HPP
 #define INCG_PL_PRINT_BYTES_AS_HEX_HPP
 #include "annotations.hpp" // PL_IN, PL_INOUT
+#include "byte.hpp"        // pl::Byte
 #include "except.hpp" // PL_THROW_IF_NULL, pl::NullPointerException, pl::InvalidSizeException
-#include "byte.hpp" // pl::Byte
-#include <cstdint> // std::uint16_t
 #include <cstddef> // std::size_t
-#include <ios> // std::uppercase, std::hex
+#include <cstdint> // std::uint16_t
 #include <iomanip> // std::setw, std::setfill
+#include <ios>     // std::uppercase, std::hex
 #include <ostream> // std::ostream
+#include <string>  // std::string
 #include <utility> // std::move
-#include <string> // std::string
 
-namespace pl
-{
+namespace pl {
 /*!
  * \brief Type to print raw memory as hexadecimal digits.
 **/
-class PrintBytesAsHex
-{
+class PrintBytesAsHex {
 public:
     using this_type = PrintBytesAsHex;
 
@@ -63,33 +61,33 @@ public:
      *         pl::InvalidSizeException if countBytes is 0.
     **/
     PrintBytesAsHex(
-        PL_IN const void *dataToPrint,
-        std::size_t countBytes,
-        std::string delim = " ");
+        PL_IN const void* dataToPrint,
+        std::size_t       countBytes,
+        std::string       delim = " ");
 
     /*!
      * \brief Defaulted copy constructor to suppress 'has pointer data members
-     *        but does not override copy constructor or copy assignment operator'
-     *        warning from -Weffc++.
+     *        but does not override copy constructor or copy assignment
+     *        operator' warning from -Weffc++.
     **/
-    PrintBytesAsHex(const this_type &);
+    PrintBytesAsHex(const this_type&);
 
     /*!
      * \brief Defaulted move constructor.
     **/
-    PrintBytesAsHex(this_type &&);
+    PrintBytesAsHex(this_type&&);
 
     /*!
-     * \brief Defaulted copy assignment operator to suppress 'has pointer data members
-     *        but does not override copy constructor or copy assignment operator'
-     *        warning from -Weffc++.
+     * \brief Defaulted copy assignment operator to suppress 'has pointer data
+     *        members but does not override copy constructor or copy assignment
+     *        operator' warning from -Weffc++.
     **/
-    this_type &operator=(const this_type &);
+    this_type& operator=(const this_type&);
 
     /*!
      * \brief Defaulted move assignment operator.
     **/
-    this_type &operator=(this_type &&);
+    this_type& operator=(this_type&&);
 
     /*!
      * \brief Prints a PrintBytesAsHex object to an ostream printing the memory
@@ -98,47 +96,46 @@ public:
      * \param toPrint The PrintBytesAsHex object to print.
      * \return A reference to 'os'.
     **/
-    friend std::ostream &operator<<(
-        PL_INOUT std::ostream &os,
-        PL_IN const this_type &toPrint);
+    friend std::ostream& operator<<(
+        PL_INOUT std::ostream& os,
+        PL_IN const this_type& toPrint);
 
 private:
-    const void *m_dataToPrint; /*!< Pointer to the data to print */
-    std::size_t m_countBytes; /*!< The size of the data in bytes */
-    std::string m_delim; /*!< The delimiter */
+    const void* m_dataToPrint; /*!< Pointer to the data to print */
+    std::size_t m_countBytes;  /*!< The size of the data in bytes */
+    std::string m_delim;       /*!< The delimiter */
 };
 
 inline PrintBytesAsHex::PrintBytesAsHex(
-    PL_IN const void *dataToPrint,
-    std::size_t countBytes,
-    std::string delim)
-    : m_dataToPrint{ dataToPrint },
-      m_countBytes{ countBytes },
-      m_delim{ std::move(delim) }
+    PL_IN const void* dataToPrint,
+    std::size_t       countBytes,
+    std::string       delim)
+    : m_dataToPrint{dataToPrint}
+    , m_countBytes{countBytes}
+    , m_delim{std::move(delim)}
 {
     PL_THROW_IF_NULL(m_dataToPrint);
 
     if (m_countBytes == 0U) {
         throw InvalidSizeException{
-            "countBytes in pl::PrintBytesAsHex constructor was 0."
-        };
+            "countBytes in pl::PrintBytesAsHex constructor was 0."};
     }
 }
 
-inline PrintBytesAsHex::PrintBytesAsHex(const this_type &) = default;
+inline PrintBytesAsHex::PrintBytesAsHex(const this_type&) = default;
 
-inline PrintBytesAsHex::PrintBytesAsHex(this_type &&) = default;
+inline PrintBytesAsHex::PrintBytesAsHex(this_type&&) = default;
 
-inline PrintBytesAsHex &PrintBytesAsHex::operator=(const this_type &) = default;
+inline PrintBytesAsHex& PrintBytesAsHex::operator=(const this_type&) = default;
 
-inline PrintBytesAsHex &PrintBytesAsHex::operator=(this_type &&) = default;
+inline PrintBytesAsHex& PrintBytesAsHex::operator=(this_type&&) = default;
 
-inline std::ostream &operator<<(
-    PL_INOUT std::ostream &os,
-    PL_IN const PrintBytesAsHex &toPrint)
+inline std::ostream& operator<<(
+    PL_INOUT std::ostream& os,
+    PL_IN const PrintBytesAsHex& toPrint)
 {
     static constexpr auto nibblesPerByte = 2;
-    static constexpr auto fillChar = '0';
+    static constexpr auto fillChar       = '0';
 
     // save the format flags.
     const auto flags = os.flags();
@@ -146,9 +143,9 @@ inline std::ostream &operator<<(
     try {
         os << std::uppercase << std::hex;
 
-        auto *dataToPrint = static_cast<const Byte *>(toPrint.m_dataToPrint);
+        auto* dataToPrint = static_cast<const Byte*>(toPrint.m_dataToPrint);
 
-        for (std::size_t i{ 0U }; i < toPrint.m_countBytes; ++i) {
+        for (std::size_t i{0U}; i < toPrint.m_countBytes; ++i) {
             os << std::setw(nibblesPerByte) << std::setfill(fillChar)
                << static_cast<std::uint16_t>(dataToPrint[i]);
 
@@ -156,7 +153,8 @@ inline std::ostream &operator<<(
                 os << toPrint.m_delim;
             }
         }
-    } catch (...) {
+    }
+    catch (...) {
         // restore the format flags
         os.flags(flags);
         throw;

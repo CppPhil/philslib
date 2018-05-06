@@ -32,15 +32,13 @@
 #ifndef INCG_PL_CONT_BACK_HPP
 #define INCG_PL_CONT_BACK_HPP
 #include "../annotations.hpp" // PL_IN
-#include "../assert.hpp" // PL_DBG_CHECK_PRE
-#include <ciso646> // not
-#include <cstddef> // std::size_t
-#include <initializer_list> // std::initializer_list
+#include "../assert.hpp"      // PL_DBG_CHECK_PRE
+#include <ciso646>            // not
+#include <cstddef>            // std::size_t
+#include <initializer_list>   // std::initializer_list
 
-namespace pl
-{
-namespace cont
-{
+namespace pl {
+namespace cont {
 /*!
  * \brief Gets the last element of a container.
  * \param cont The container to get the last element of.
@@ -48,7 +46,7 @@ namespace cont
  * \warning Undefined behavior occurs if the container passed in is empty.
 **/
 template <typename Cont>
-constexpr auto back(PL_IN Cont &cont) -> decltype(auto)
+constexpr auto back(PL_IN Cont& cont) -> decltype(auto)
 {
     PL_DBG_CHECK_PRE(not cont.empty());
 

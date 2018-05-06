@@ -37,8 +37,9 @@
  *        the PL_TEST_STATIC_ASSERT macro as well.
 **/
 
-#define PL_TEST_STATIC_ASSERT(...) \
-    static_assert((__VA_ARGS__), "static_assert failed in file: " __FILE__ \
-                               ", line: " PL_SOURCE_LINE \
-                               ", expression: " #__VA_ARGS__)
+#define PL_TEST_STATIC_ASSERT(...)                                          \
+    static_assert(                                                          \
+        (__VA_ARGS__),                                                      \
+        "static_assert failed in file: " __FILE__ ", line: " PL_SOURCE_LINE \
+        ", expression: " #__VA_ARGS__)
 #endif // INCG_PL_TEST_STATIC_ASSERT_HPP

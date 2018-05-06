@@ -26,31 +26,30 @@
 
 #include "../../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
+#pragma GCC diagnostic pop
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../../include/pl/algo/for_each_n.hpp" // pl::algo::for_each_n
-#include <iterator> // std::begin, std::end
-#include <vector> // std::vector
+#include <iterator>                                // std::begin, std::end
+#include <vector>                                  // std::vector
 
 TEST_CASE("for_each_n_test")
 {
-    std::vector<int> v{ 1, 2, 3, 4, 5, 6 };
+    std::vector<int> v{1, 2, 3, 4, 5, 6};
 
-    SUBCASE("entire_range_squared") {
+    SUBCASE("entire_range_squared")
+    {
         const auto it = pl::algo::for_each_n(
-            std::begin(v),
-            v.size(),
-            [](int &e) { e *= e; });
+            std::begin(v), v.size(), [](int& e) { e *= e; });
 
         REQUIRE(v.size() == 6U);
-        CHECK(v[0U] ==  1);
-        CHECK(v[1U] ==  4);
-        CHECK(v[2U] ==  9);
+        CHECK(v[0U] == 1);
+        CHECK(v[1U] == 4);
+        CHECK(v[2U] == 9);
         CHECK(v[3U] == 16);
         CHECK(v[4U] == 25);
         CHECK(v[5U] == 36);
@@ -58,15 +57,14 @@ TEST_CASE("for_each_n_test")
         CHECK(it == std::end(v));
     }
 
-    SUBCASE("three_first_elements_doubled") {
-        static constexpr std::vector<int>::size_type count{ 3U };
+    SUBCASE("three_first_elements_doubled")
+    {
+        static constexpr std::vector<int>::size_type count{3U};
 
         REQUIRE(count <= v.size());
 
         const auto it = pl::algo::for_each_n(
-            std::begin(v),
-            count,
-            [](int &e) { e *= 2; });
+            std::begin(v), count, [](int& e) { e *= 2; });
 
         REQUIRE(v.size() == 6U);
         CHECK(v[0U] == 2);

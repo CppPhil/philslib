@@ -26,24 +26,24 @@
 
 #include "../../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
+#pragma GCC diagnostic pop
 #endif // PL_COMPILER == PL_COMPILER_GCC
-#include <type_traits> // std::is_same
-#include <string> // std::string
-#include "../../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
 #include "../../../include/pl/cont/to_array.hpp" // pl::cont::toArray
+#include "../../include/static_assert.hpp"       // PL_TEST_STATIC_ASSERT
+#include <string>                                // std::string
+#include <type_traits>                           // std::is_same
 
 TEST_CASE("to_array_general_test")
 {
-    int cArray1[]{ 1, 2, 3, 4, 5 };
-    const double cArray2[]{ 1.1, 2.2, 3.3 };
+    int          cArray1[]{1, 2, 3, 4, 5};
+    const double cArray2[]{1.1, 2.2, 3.3};
 
-    auto array1 = pl::cont::toArray(cArray1);
+    auto       array1 = pl::cont::toArray(cArray1);
     const auto array2 = pl::cont::toArray(cArray2);
 
     PL_TEST_STATIC_ASSERT(
@@ -66,14 +66,14 @@ TEST_CASE("to_array_general_test")
 
 TEST_CASE("to_array_one_element_test")
 {
-    const std::string cArray[]{ std::string{ "Hello World" } };
+    const std::string cArray[]{std::string{"Hello World"}};
 
     const auto array = pl::cont::toArray(cArray);
 
     PL_TEST_STATIC_ASSERT(
         std::is_same<decltype(array),
-            const std::array<std::string, 1U>>::value);
+                     const std::array<std::string, 1U>>::value);
 
     REQUIRE(array.size() == 1U);
-    CHECK(array[0U] == std::string{ "Hello World" });
+    CHECK(array[0U] == std::string{"Hello World"});
 }

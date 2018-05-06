@@ -31,17 +31,16 @@
 **/
 #ifndef INCG_PL_CONCEPT_POLY_HPP
 #define INCG_PL_CONCEPT_POLY_HPP
-#include "annotations.hpp" // PL_IN, PL_INOUT
-#include "meta/disable_if.hpp" // pl::meta::disable_if_t
+#include "annotations.hpp"       // PL_IN, PL_INOUT
+#include "assert.hpp"            // PL_DBG_CHECK_PRE
+#include "meta/disable_if.hpp"   // pl::meta::disable_if_t
 #include "meta/remove_cvref.hpp" // pl::meta::remove_cvref_t
-#include "assert.hpp" // PL_DBG_CHECK_PRE
-#include <cstddef> // std::nullptr_t
-#include <utility> // std::forward, std::swap
-#include <memory> // std::unique_ptr, std::make_unique
-#include <type_traits> //  std::is_same
+#include <cstddef>               // std::nullptr_t
+#include <memory>                // std::unique_ptr, std::make_unique
+#include <type_traits>           //  std::is_same
+#include <utility>               // std::forward, std::swap
 
-namespace pl
-{
+namespace pl {
 /*!
  * \brief Type for concept based polymorphism.
  *
@@ -67,8 +66,7 @@ namespace pl
  * than reference semantics.
 **/
 template <typename Concept, template <typename> class Model>
-class ConceptPoly
-{
+class ConceptPoly {
 public:
     /*!
      * \brief An alias of this type.
@@ -118,11 +116,13 @@ public:
      *          constructor!
     **/
     template <typename Impl,
-              typename = meta::disable_if_t<
-                  std::is_same<meta::remove_cvref_t<Impl>, this_type>::value,
-                  void>>
-    explicit ConceptPoly(PL_IN Impl &&impl)
-        : m_ptr{ std::make_unique<Model<meta::remove_cvref_t<Impl>>>(std::forward<Impl>(impl)) }
+              typename
+              = meta::disable_if_t<std::is_same<meta::remove_cvref_t<Impl>,
+                                                this_type>::value,
+                                   void>>
+    explicit ConceptPoly(PL_IN Impl&& impl)
+        : m_ptr{std::make_unique<Model<meta::remove_cvref_t<Impl>>>(
+              std::forward<Impl>(impl))}
     {
     }
 
@@ -134,8 +134,7 @@ public:
      *       underlying Model<???> type.
      * \warning Precondition: other is not in the moved-from state.
     **/
-    ConceptPoly(PL_IN const this_type &other)
-        : m_ptr{ nullptr }
+    ConceptPoly(PL_IN const this_type& other) : m_ptr{nullptr}
     {
         PL_DBG_CHECK_PRE(static_cast<bool>(other));
         m_ptr = other.m_ptr->clone();
@@ -152,7 +151,7 @@ public:
      * Move constructs a ConceptPoly object from another one.
      * Performs a member by member move.
     **/
-    ConceptPoly(PL_IN this_type &&) noexcept = default;
+    ConceptPoly(PL_IN this_type&&) noexcept = default;
 
     /*!
      * \brief Copy assignment operator. Copy assigns this object with 'other'.
@@ -165,7 +164,7 @@ public:
      *       type and return a clone as std::unique_ptr<Concept>.
      * \warning Precondition: other is not in the moved-from state.
     **/
-    this_type &operator=(PL_IN const this_type &other)
+    this_type& operator=(PL_IN const this_type& other)
     {
         PL_DBG_CHECK_PRE(static_cast<bool>(other));
         m_ptr = other.m_ptr->clone();
@@ -181,38 +180,36 @@ public:
      *          to check if a ConceptPoly object is valid, that is, it isn't
      *          in the moved-from state.
     **/
-    this_type &operator=(PL_IN this_type &&) noexcept = default;
+    this_type& operator=(PL_IN this_type&&) noexcept = default;
 
     /*!
      * \brief Swaps this object with the one passed into the parameter.
      * \param other The other object to swap with.
      * \note Just swaps the underlying std::unique_ptrs.
     **/
-    void swap(PL_INOUT this_type &other) noexcept
+    void swap(PL_INOUT this_type& other) noexcept
     {
         std::swap(m_ptr, other.m_ptr);
     }
 
     /*!
-     * \brief Accessor function to get to the object managed by this ConceptPoly.
+     * \brief Accessor function to get to the object managed by this
+     *        ConceptPoly.
      * \return A raw pointer of type Concept * to the object managed by
      *         this ConceptPoly.
      * \note Can be used to access the object directly.
     **/
-    Concept *get() noexcept
-    {
-        return m_ptr.get();
-    }
-
+    Concept* get() noexcept { return m_ptr.get(); }
     /*!
-     * \brief Accessor function to get to the object managed by this ConceptPoly.
+     * \brief Accessor function to get to the object managed by this
+     *        ConceptPoly.
      * \return A raw pointer of type const Concept * to the object managed by
      *         this ConceptPoly.
      * \note Can be used to access the object directly.
     **/
-    const Concept *get() const noexcept
+    const Concept* get() const noexcept
     {
-        return const_cast<this_type *>(this)->get();
+        return const_cast<this_type*>(this)->get();
     }
 
     /*!
@@ -220,7 +217,7 @@ public:
      * \return A Concept & to the object managed.
      * \warning Precondition: this object is not in the moved-from state.
     **/
-    Concept &operator*()
+    Concept& operator*()
     {
         PL_DBG_CHECK_PRE(this->operator bool());
         return *m_ptr;
@@ -231,9 +228,9 @@ public:
      * \return A const Concept & to the object managed.
      * \warning Precondition: this object is not in the moved-from state.
     **/
-    const Concept &operator*() const
+    const Concept& operator*() const
     {
-        return const_cast<this_type *>(this)->operator*();
+        return const_cast<this_type*>(this)->operator*();
     }
 
     /*!
@@ -242,7 +239,7 @@ public:
      * \return A Concept *.
      * \warning Precondition: this object is not in the moved-from state.
     **/
-    Concept *operator->()
+    Concept* operator->()
     {
         PL_DBG_CHECK_PRE(this->operator bool());
         return m_ptr.operator->();
@@ -254,9 +251,9 @@ public:
      * \return A const Concept *.
      * \warning Precondition: this object is not in the moved-from state.
     **/
-    const Concept *operator->() const
+    const Concept* operator->() const
     {
-        return const_cast<this_type *>(this)->operator->();
+        return const_cast<this_type*>(this)->operator->();
     }
 
     /*!
@@ -265,11 +262,7 @@ public:
      * \return true if this object is valid.
      *         false if this object is in the moved-from state.
     **/
-    explicit operator bool() const noexcept
-    {
-        return static_cast<bool>(m_ptr);
-    }
-
+    explicit operator bool() const noexcept { return static_cast<bool>(m_ptr); }
 private:
     std::unique_ptr<Concept> m_ptr; /*!< The underlying unique_ptr */
 };
@@ -284,8 +277,8 @@ private:
 **/
 template <typename Concept, template <typename> class Model>
 void swap(
-    PL_INOUT ConceptPoly<Concept, Model> &lhs,
-    PL_INOUT ConceptPoly<Concept, Model> &rhs) noexcept
+    PL_INOUT ConceptPoly<Concept, Model>& lhs,
+    PL_INOUT ConceptPoly<Concept, Model>& rhs) noexcept
 {
     lhs.swap(rhs);
 }

@@ -26,50 +26,40 @@
 
 #include "../../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
-#endif // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
+#pragma GCC diagnostic pop
+#endif                                         // PL_COMPILER == PL_COMPILER_GCC
 #include "../../../include/pl/meta/void_t.hpp" // pl::meta::void_t
-#include <utility> // std::declval
-#include <string> // std::string
+#include "../../include/static_assert.hpp"     // PL_TEST_STATIC_ASSERT
+#include <string>                              // std::string
 #include <type_traits> // std::true_type, std::false_type, std::is_same
+#include <utility>     // std::declval
 
-namespace test
-{
-namespace
-{
+namespace test {
+namespace {
 template <typename, typename = pl::meta::void_t<>>
-struct is_prefix_incrementable
-    : public std::false_type
-{
+struct is_prefix_incrementable : public std::false_type {
 };
 
 template <typename Ty>
-struct is_prefix_incrementable<
-    Ty,
-    pl::meta::void_t<decltype(++std::declval<Ty &>())>>
-    : public std::true_type
-{
+struct is_prefix_incrementable<Ty,
+                               pl::meta::void_t<decltype(
+                                   ++std::declval<Ty&>())>>
+    : public std::true_type {
 };
 
-struct PrefixIncrementable
-{
-    PrefixIncrementable &operator++() noexcept
-    {
-        return *this;
-    }
+struct PrefixIncrementable {
+    PrefixIncrementable& operator++() noexcept { return *this; }
 };
 
-struct PostfixIncrementable
-{
+struct PostfixIncrementable {
 };
 
-PostfixIncrementable operator++(PostfixIncrementable &a, int) noexcept
+PostfixIncrementable operator++(PostfixIncrementable& a, int)noexcept
 {
     return a;
 }
@@ -79,29 +69,28 @@ PostfixIncrementable operator++(PostfixIncrementable &a, int) noexcept
 TEST_CASE("void_t_test")
 {
     // avoid unused function warnings.
-    test::PrefixIncrementable prefixIncrementable{ };
-    test::PostfixIncrementable postfixIncrementable{ };
+    test::PrefixIncrementable  prefixIncrementable{};
+    test::PostfixIncrementable postfixIncrementable{};
     ++prefixIncrementable;
     postfixIncrementable++;
 
-    PL_TEST_STATIC_ASSERT(std::is_same<
-        test::is_prefix_incrementable<int>::type,
-        std::true_type>::value);
+    PL_TEST_STATIC_ASSERT(
+        std::is_same<test::is_prefix_incrementable<int>::type,
+                     std::true_type>::value);
 
-    PL_TEST_STATIC_ASSERT(std::is_same<
-        test::is_prefix_incrementable<std::string>::type,
-        std::false_type
-    >::value);
+    PL_TEST_STATIC_ASSERT(
+        std::is_same<test::is_prefix_incrementable<std::string>::type,
+                     std::false_type>::value);
 
-    PL_TEST_STATIC_ASSERT(std::is_same<
-        test::is_prefix_incrementable<test::PrefixIncrementable>::type,
-        std::true_type
-    >::value);
+    PL_TEST_STATIC_ASSERT(
+        std::is_same<test::is_prefix_incrementable<test::PrefixIncrementable>::
+                         type,
+                     std::true_type>::value);
 
-    PL_TEST_STATIC_ASSERT(std::is_same<
-        test::is_prefix_incrementable<test::PostfixIncrementable>::type,
-        std::false_type
-    >::value);
+    PL_TEST_STATIC_ASSERT(
+        std::is_same<test::is_prefix_incrementable<test::PostfixIncrementable>::
+                         type,
+                     std::false_type>::value);
 
     CHECK_UNARY(true);
 }

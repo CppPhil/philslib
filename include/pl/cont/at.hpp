@@ -32,15 +32,13 @@
 #ifndef INCG_PL_CONT_AT_HPP
 #define INCG_PL_CONT_AT_HPP
 #include "../annotations.hpp" // PL_IN
-#include <ciso646> // not
-#include <cstddef> // std::size_t
-#include <stdexcept> // std::out_of_range
-#include <initializer_list> // std::initializer_list
+#include <ciso646>            // not
+#include <cstddef>            // std::size_t
+#include <initializer_list>   // std::initializer_list
+#include <stdexcept>          // std::out_of_range
 
-namespace pl
-{
-namespace cont
-{
+namespace pl {
+namespace cont {
 /*!
  * \brief Retrieves a reference to the element at position 'index' in the
  *        C-Array 'arr'.
@@ -50,12 +48,11 @@ namespace cont
  * \throws std::out_of_range if 'index' is out of bounds.
 **/
 template <typename Ty, std::size_t Size>
-constexpr Ty &at(PL_IN Ty (&arr)[Size], std::size_t index)
+constexpr Ty& at(PL_IN Ty (&arr)[Size], std::size_t index)
 {
-    if (not (index < Size)) {
+    if (not(index < Size)) {
         throw std::out_of_range{
-            "index was out of bounds in pl::cont::at (C-Array)"
-        };
+            "index was out of bounds in pl::cont::at (C-Array)"};
     }
 
     return arr[index];
@@ -70,13 +67,12 @@ constexpr Ty &at(PL_IN Ty (&arr)[Size], std::size_t index)
  * \throws std::out_of_range if 'index' is out of bounds.
 **/
 template <typename Container>
-constexpr auto at(PL_IN Container &container, std::size_t index)
+constexpr auto at(PL_IN Container& container, std::size_t index)
     -> decltype(container[container.size()])
 {
-    if (not (index < container.size())) {
+    if (not(index < container.size())) {
         throw std::out_of_range{
-            "index was out of bounds in pl::cont::at (container)"
-        };
+            "index was out of bounds in pl::cont::at (container)"};
     }
 
     return container[index];
@@ -93,10 +89,9 @@ constexpr auto at(PL_IN Container &container, std::size_t index)
 template <typename Ty>
 constexpr Ty at(std::initializer_list<Ty> il, std::size_t index)
 {
-    if (not (index < il.size())) {
+    if (not(index < il.size())) {
         throw std::out_of_range{
-            "index was out of bounds in pl::cont::at (initializer_list)"
-        };
+            "index was out of bounds in pl::cont::at (initializer_list)"};
     }
 
     return *(il.begin() + index);

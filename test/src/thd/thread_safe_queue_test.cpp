@@ -26,24 +26,24 @@
 
 #include "../../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
+#pragma GCC diagnostic pop
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../../include/pl/thd/thread_safe_queue.hpp" // pl::thd::ThreadSafeQueue
 #include <future> // std::future, std::async, std::launch::async
 
 TEST_CASE("thread_safe_queue_test")
 {
-    pl::thd::ThreadSafeQueue<int> q{ };
+    pl::thd::ThreadSafeQueue<int> q{};
 
     CHECK_UNARY(q.empty());
     CHECK(q.size() == 0U);
 
-    static constexpr int i{ 5 };
+    static constexpr int i{5};
 
     q.push(1);
     q.push(i);
@@ -51,7 +51,8 @@ TEST_CASE("thread_safe_queue_test")
     CHECK_UNARY_FALSE(q.empty());
     CHECK(q.size() == 2U);
 
-    SUBCASE("add_elements") {
+    SUBCASE("add_elements")
+    {
         q.push(1);
         q.push(i);
 
@@ -59,8 +60,9 @@ TEST_CASE("thread_safe_queue_test")
         CHECK(q.size() == 4U);
     }
 
-    SUBCASE("remove_elements") {
-        int val{ };
+    SUBCASE("remove_elements")
+    {
+        int val{};
 
         val = q.pop();
 
@@ -75,15 +77,13 @@ TEST_CASE("thread_safe_queue_test")
         CHECK(q.size() == 0U);
     }
 
-    SUBCASE("multithreaded") {
-        std::future<int> fut{ std::async(
-            std::launch::async,
-            [&q] {
-                q.pop();
-                q.pop();
-                return q.pop();
-            })
-        };
+    SUBCASE("multithreaded")
+    {
+        std::future<int> fut{std::async(std::launch::async, [&q] {
+            q.pop();
+            q.pop();
+            return q.pop();
+        })};
 
         q.push(20);
         CHECK(fut.get() == 20);

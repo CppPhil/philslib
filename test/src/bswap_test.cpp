@@ -26,37 +26,37 @@
 
 #include "../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
-#endif // PL_COMPILER == PL_COMPILER_GCC
+#pragma GCC diagnostic pop
+#endif                                  // PL_COMPILER == PL_COMPILER_GCC
+#include "../../include/pl/bswap.hpp"   // pl::bswap
+#include "../../include/pl/byte.hpp"    // pl::Byte
 #include "../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
-#include "../../include/pl/bswap.hpp" // pl::bswap
-#include "../../include/pl/byte.hpp" // pl::Byte
-#include <cstdint> // std::uint32_t
-#include <cstddef> // std::size_t
-#include <cstring> // std::memcpy, std::memcmp
-#include <array> // std::array
+#include <array>                        // std::array
+#include <cstddef>                      // std::size_t
+#include <cstdint>                      // std::uint32_t
+#include <cstring>                      // std::memcpy, std::memcmp
 
 TEST_CASE("bswap_test")
 {
-    static constexpr std::size_t byteSize{ 4U };
+    static constexpr std::size_t byteSize{4U};
 
     PL_TEST_STATIC_ASSERT(sizeof(std::uint32_t) == byteSize);
 
-    const std::array<pl::Byte, byteSize> le{ {
-        static_cast<pl::Byte>(0xDD), static_cast<pl::Byte>(0xCC),
-        static_cast<pl::Byte>(0xBB), static_cast<pl::Byte>(0xAA)
-    } };
-    const std::array<pl::Byte, byteSize> be{ {
-        static_cast<pl::Byte>(0xAA), static_cast<pl::Byte>(0xBB),
-        static_cast<pl::Byte>(0xCC), static_cast<pl::Byte>(0xDD)
-    } };
+    const std::array<pl::Byte, byteSize> le{{static_cast<pl::Byte>(0xDD),
+                                             static_cast<pl::Byte>(0xCC),
+                                             static_cast<pl::Byte>(0xBB),
+                                             static_cast<pl::Byte>(0xAA)}};
+    const std::array<pl::Byte, byteSize> be{{static_cast<pl::Byte>(0xAA),
+                                             static_cast<pl::Byte>(0xBB),
+                                             static_cast<pl::Byte>(0xCC),
+                                             static_cast<pl::Byte>(0xDD)}};
 
-    std::uint32_t val{ };
+    std::uint32_t val{};
 
     std::memcpy(&val, le.data(), byteSize);
     val = pl::bswap(val);

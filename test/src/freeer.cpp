@@ -27,11 +27,9 @@
 #include "../include/freeer.hpp"
 #include <cstdlib> // std::free
 
-namespace pl
-{
-namespace test
-{
-void Freeer::operator()(void *toBeFreed) const noexcept
+namespace pl {
+namespace test {
+void Freeer::operator()(void* toBeFreed) const noexcept
 {
     std::free(toBeFreed); // free the memory
 }

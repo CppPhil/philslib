@@ -31,10 +31,8 @@
 #ifndef INCG_PL_META_IDENTITY_HPP
 #define INCG_PL_META_IDENTITY_HPP
 
-namespace pl
-{
-namespace meta
-{
+namespace pl {
+namespace meta {
 /*!
  * \brief The identity meta function.
  *        Returns Ty unchanged.
@@ -44,8 +42,7 @@ namespace meta
  * instead of Ty directly in order to prevent type deduction of Ty.
 **/
 template <typename Ty>
-struct identity
-{
+struct identity {
     using type = Ty;
 };
 

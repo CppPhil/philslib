@@ -49,14 +49,14 @@
 **/
 
 #if PL_COMPILER == PL_COMPILER_GCC
-#   define PL_RESTRICT __restrict__
+#define PL_RESTRICT __restrict__
 #elif PL_COMPILER == PL_COMPILER_CLANG
-#   define PL_RESTRICT __restrict__
+#define PL_RESTRICT __restrict__
 #elif PL_COMPILER == PL_COMPILER_ICC
-#   define PL_RESTRICT restrict
+#define PL_RESTRICT restrict
 #elif PL_COMPILER == PL_COMPILER_MSVC
-#   define PL_RESTRICT __restrict
+#define PL_RESTRICT __restrict
 #elif PL_COMPILER == PL_COMPILER_UNKNOWN
-#   define PL_RESTRICT /* nothing */
+#define PL_RESTRICT /* nothing */
 #endif
 #endif // INCG_PL_RESTRICT_HPP

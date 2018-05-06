@@ -31,53 +31,50 @@
 #ifndef INCG_PL_CONT_DATA_HPP
 #define INCG_PL_CONT_DATA_HPP
 #include "../annotations.hpp" // PL_IN
-#include <cstddef> // std::size_t
-#include <string> // std::basic_string
-#include <initializer_list> // std::initializer_list
-#include <memory> // std::addressof
-#include <type_traits> // std::true_type, std::false_type
+#include <cstddef>            // std::size_t
+#include <initializer_list>   // std::initializer_list
+#include <memory>             // std::addressof
+#include <string>             // std::basic_string
+#include <type_traits>        // std::true_type, std::false_type
 
-namespace pl
-{
-namespace cont
-{
-namespace detail
-{
+namespace pl {
+namespace cont {
+namespace detail {
 /* Workaround to get a CharT * for a non const basic_string,
  * rather than a const CharT * with pre C++17 implementations.
 **/
 
 template <typename CharT, typename Traits, typename Allocator>
 std::true_type isBasicString(
-    const std::basic_string<CharT, Traits, Allocator> &);
+    const std::basic_string<CharT, Traits, Allocator>&);
 
 std::false_type isBasicString(...);
 
 template <typename CharT, typename Traits, typename Allocator>
-constexpr CharT *dataImpl(
-    PL_IN std::basic_string<CharT, Traits, Allocator> &basicString,
+constexpr CharT* dataImpl(
+    PL_IN std::basic_string<CharT, Traits, Allocator>& basicString,
     std::true_type)
 {
-    return std::addressof(basicString[0]);
+    return std::addressof(basicString[0U]);
 }
 
 template <typename CharT, typename Traits, typename Allocator>
-constexpr const CharT *dataImpl(
-    PL_IN const std::basic_string<CharT, Traits, Allocator> &basicString,
+constexpr const CharT* dataImpl(
+    PL_IN const std::basic_string<CharT, Traits, Allocator>& basicString,
     std::true_type)
 {
     return basicString.data();
 }
 
 template <typename Container>
-constexpr auto dataImpl(PL_IN Container &container, std::false_type)
+constexpr auto dataImpl(PL_IN Container& container, std::false_type)
     -> decltype(container.data())
 {
     return container.data();
 }
 
 template <typename Container>
-constexpr auto dataImpl(PL_IN const Container &container, std::false_type)
+constexpr auto dataImpl(PL_IN const Container& container, std::false_type)
     -> decltype(container.data())
 {
     return container.data();
@@ -93,11 +90,10 @@ constexpr auto dataImpl(PL_IN const Container &container, std::false_type)
  * \warning Do not dereference the pointer returned if 'container' is empty.
 **/
 template <typename Container>
-constexpr auto data(PL_IN Container &container) -> decltype(auto)
+constexpr auto data(PL_IN Container& container) -> decltype(auto)
 {
     return ::pl::cont::detail::dataImpl(
-        container,
-        decltype(::pl::cont::detail::isBasicString(container)){ });
+        container, decltype(::pl::cont::detail::isBasicString(container)){});
 }
 
 /*!
@@ -109,7 +105,7 @@ constexpr auto data(PL_IN Container &container) -> decltype(auto)
  *         C-Style array.
 **/
 template <typename Ty, std::size_t Size>
-constexpr Ty *data(PL_IN Ty (&array)[Size]) noexcept
+constexpr Ty* data(PL_IN Ty (&array)[Size]) noexcept
 {
     return array;
 }
@@ -122,7 +118,7 @@ constexpr Ty *data(PL_IN Ty (&array)[Size]) noexcept
  *         std::initializer_list.
 **/
 template <typename Ty>
-constexpr const Ty *data(std::initializer_list<Ty> initList) noexcept
+constexpr const Ty* data(std::initializer_list<Ty> initList) noexcept
 {
     return initList.begin();
 }

@@ -26,33 +26,34 @@
 
 #include "../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
+#pragma GCC diagnostic pop
 #endif // PL_COMPILER == PL_COMPILER_GCC
-#include "../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
 #include "../../include/pl/unrelated_pointer_cast.hpp" // pl::unrelated_pointer_cast
-#include <cstring> // std::memcpy
-#include <cstdint> // std::uint32_t
-#include <cstddef> // std::size_t
-#include <array> // std::array
+#include "../include/static_assert.hpp"                // PL_TEST_STATIC_ASSERT
+#include <array>                                       // std::array
+#include <cstddef>                                     // std::size_t
+#include <cstdint>                                     // std::uint32_t
+#include <cstring>                                     // std::memcpy
 
 TEST_CASE("unrelated_pointer_cast_test")
 {
-    static constexpr std::size_t bytes{ sizeof(std::uint32_t) };
-    static constexpr std::array<char, bytes> ary{ "\xAA\xBB\xCC" };
+    static constexpr std::size_t bytes{sizeof(std::uint32_t)};
+    static constexpr std::array<char, bytes> ary{"\xAA\xBB\xCC"};
 
-    std::uint32_t i{ };
+    std::uint32_t i{};
 
     PL_TEST_STATIC_ASSERT(sizeof(i) == ary.size());
 
     std::memcpy(&i, ary.data(), ary.size());
 
-    SUBCASE("non_const") {
-        char * const p{ pl::unrelated_pointer_cast<char *>(&i) };
+    SUBCASE("non_const")
+    {
+        char* const p{pl::unrelated_pointer_cast<char*>(&i)};
 
         CHECK(p[0U] == '\xAA');
         CHECK(p[1U] == '\xBB');
@@ -70,9 +71,10 @@ TEST_CASE("unrelated_pointer_cast_test")
         CHECK(p[3U] == '\xDE');
     }
 
-    SUBCASE("const") {
-        const std::uint32_t &r{ i };
-        const char * const p{ pl::unrelated_pointer_cast<const char *>(&r) };
+    SUBCASE("const")
+    {
+        const std::uint32_t& r{i};
+        const char* const    p{pl::unrelated_pointer_cast<const char*>(&r)};
 
         CHECK(p[0U] == '\xAA');
         CHECK(p[1U] == '\xBB');

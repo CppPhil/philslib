@@ -31,18 +31,17 @@
 **/
 #ifndef INCG_PL_BEGIN_END_HPP
 #define INCG_PL_BEGIN_END_HPP
-#include "annotations.hpp" // PL_IN
+#include "annotations.hpp"              // PL_IN
+#include "meta/disable_if.hpp"          // pl::meta::disable_if_t
 #include "meta/is_initializer_list.hpp" // pl::meta::is_initializer_list
-#include "meta/disable_if.hpp" // pl::meta::disable_if_t
-#include "meta/remove_cvref.hpp" // pl::meta::remove_cvref_t
-#include <ciso646> // or
-#include <cstddef> // std::size_t
-#include <iterator> // std::reverse_iterator
-#include <initializer_list> // std::initializer_list
-#include <type_traits> // std::is_array
+#include "meta/remove_cvref.hpp"        // pl::meta::remove_cvref_t
+#include <ciso646>                      // or
+#include <cstddef>                      // std::size_t
+#include <initializer_list>             // std::initializer_list
+#include <iterator>                     // std::reverse_iterator
+#include <type_traits>                  // std::is_array
 
-namespace pl
-{
+namespace pl {
 /*!
  * \brief Returns an iterator to the beginning of the container.
  * \param container The container for which to get an iterator to its
@@ -50,10 +49,9 @@ namespace pl
  * \return An iterator to the beginning of container.
 **/
 template <typename Container>
-constexpr auto begin(PL_IN Container &container) noexcept
-    -> meta::disable_if_t<
-        std::is_array<meta::remove_cvref_t<Container>>::value,
-        decltype(container.begin())>
+constexpr auto begin(PL_IN Container& container) noexcept
+    -> meta::disable_if_t<std::is_array<meta::remove_cvref_t<Container>>::value,
+                          decltype(container.begin())>
 {
     return container.begin();
 }
@@ -64,7 +62,7 @@ constexpr auto begin(PL_IN Container &container) noexcept
  * \return An iterator to the beginning of array.
 **/
 template <typename Type, std::size_t Size>
-constexpr Type *begin(PL_IN Type (&array)[Size]) noexcept
+constexpr Type* begin(PL_IN Type (&array)[Size]) noexcept
 {
     return array;
 }
@@ -76,7 +74,8 @@ constexpr Type *begin(PL_IN Type (&array)[Size]) noexcept
  * \return A const_iterator to the beginning of the container.
 **/
 template <typename Container>
-constexpr auto cbegin(PL_IN const Container &container) noexcept -> decltype(auto)
+constexpr auto cbegin(PL_IN const Container& container) noexcept
+    -> decltype(auto)
 {
     return ::pl::begin(container);
 }
@@ -87,10 +86,9 @@ constexpr auto cbegin(PL_IN const Container &container) noexcept -> decltype(aut
  * \return The end iterator of container.
 **/
 template <typename Container>
-constexpr auto end(PL_IN Container &container) noexcept
-    -> meta::disable_if_t<
-        std::is_array<meta::remove_cvref_t<Container>>::value,
-        decltype(container.end())>
+constexpr auto end(PL_IN Container& container) noexcept
+    -> meta::disable_if_t<std::is_array<meta::remove_cvref_t<Container>>::value,
+                          decltype(container.end())>
 {
     return container.end();
 }
@@ -101,7 +99,7 @@ constexpr auto end(PL_IN Container &container) noexcept
  * \return The end iterator of array.
 **/
 template <typename Type, std::size_t Size>
-constexpr Type *end(PL_IN Type (&array)[Size]) noexcept
+constexpr Type* end(PL_IN Type (&array)[Size]) noexcept
 {
     return ::pl::begin(array) + Size;
 }
@@ -112,7 +110,7 @@ constexpr Type *end(PL_IN Type (&array)[Size]) noexcept
  * \return The end const_iterator of container.
 **/
 template <typename Container>
-constexpr auto cend(PL_IN const Container &container) noexcept -> decltype(auto)
+constexpr auto cend(PL_IN const Container& container) noexcept -> decltype(auto)
 {
     return ::pl::end(container);
 }
@@ -123,11 +121,13 @@ constexpr auto cend(PL_IN const Container &container) noexcept -> decltype(auto)
  * \return The begin reverse_iterator of container.
 **/
 template <typename Container>
-constexpr auto rbegin(PL_IN Container &container) noexcept
-    -> meta::disable_if_t<
-        std::is_array<meta::remove_cvref_t<Container>>::value
-        or meta::is_initializer_list<meta::remove_cvref_t<Container>>::value,
-        decltype(container.rbegin())>
+constexpr auto rbegin(PL_IN Container& container) noexcept -> meta::
+    disable_if_t<std::is_array<meta::remove_cvref_t<Container>>::value
+                     or meta::
+                            is_initializer_list<meta::
+                                                    remove_cvref_t<Container>>::
+                                value,
+                 decltype(container.rbegin())>
 {
     return container.rbegin();
 }
@@ -138,9 +138,10 @@ constexpr auto rbegin(PL_IN Container &container) noexcept
  * \return The begin reverse_iterator of 'il'.
 **/
 template <typename Element>
-constexpr std::reverse_iterator<const Element *> rbegin(std::initializer_list<Element> il) noexcept
+constexpr std::reverse_iterator<const Element*> rbegin(
+    std::initializer_list<Element> il) noexcept
 {
-    return std::reverse_iterator<const Element *>{ il.end() };
+    return std::reverse_iterator<const Element*>{il.end()};
 }
 
 /*!
@@ -149,9 +150,10 @@ constexpr std::reverse_iterator<const Element *> rbegin(std::initializer_list<El
  * \return The begin reverse_iterator of array.
 **/
 template <typename Type, std::size_t Size>
-constexpr std::reverse_iterator<Type *> rbegin(PL_IN Type (&array)[Size]) noexcept
+constexpr std::reverse_iterator<Type*> rbegin(
+    PL_IN Type (&array)[Size]) noexcept
 {
-    return std::reverse_iterator<Type *>{ array + Size };
+    return std::reverse_iterator<Type*>{array + Size};
 }
 
 /*!
@@ -160,7 +162,8 @@ constexpr std::reverse_iterator<Type *> rbegin(PL_IN Type (&array)[Size]) noexce
  * \return The begin const_reverse_iterator of container.
 **/
 template <typename Container>
-constexpr auto crbegin(PL_IN const Container &container) noexcept -> decltype(auto)
+constexpr auto crbegin(PL_IN const Container& container) noexcept
+    -> decltype(auto)
 {
     return ::pl::rbegin(container);
 }
@@ -171,11 +174,13 @@ constexpr auto crbegin(PL_IN const Container &container) noexcept -> decltype(au
  * \return The end reverse_iterator of container.
 **/
 template <typename Container>
-constexpr auto rend(PL_IN Container &container) noexcept
-    -> meta::disable_if_t<
-        std::is_array<meta::remove_cvref_t<Container>>::value
-        or meta::is_initializer_list<meta::remove_cvref_t<Container>>::value,
-        decltype(container.rend())>
+constexpr auto rend(PL_IN Container& container) noexcept -> meta::
+    disable_if_t<std::is_array<meta::remove_cvref_t<Container>>::value
+                     or meta::
+                            is_initializer_list<meta::
+                                                    remove_cvref_t<Container>>::
+                                value,
+                 decltype(container.rend())>
 {
     return container.rend();
 }
@@ -186,9 +191,10 @@ constexpr auto rend(PL_IN Container &container) noexcept
  * \return The end reverse_iterator of 'il'.
 **/
 template <typename Element>
-constexpr std::reverse_iterator<const Element *> rend(std::initializer_list<Element> il) noexcept
+constexpr std::reverse_iterator<const Element*> rend(
+    std::initializer_list<Element> il) noexcept
 {
-    return std::reverse_iterator<const Element *>{ il.begin() };
+    return std::reverse_iterator<const Element*>{il.begin()};
 }
 
 /*!
@@ -197,9 +203,9 @@ constexpr std::reverse_iterator<const Element *> rend(std::initializer_list<Elem
  * \return The end reverse_iterator of array.
 **/
 template <typename Type, std::size_t Size>
-constexpr std::reverse_iterator<Type *> rend(PL_IN Type (&array)[Size]) noexcept
+constexpr std::reverse_iterator<Type*> rend(PL_IN Type (&array)[Size]) noexcept
 {
-    return std::reverse_iterator<Type *>{ array };
+    return std::reverse_iterator<Type*>{array};
 }
 
 /*!
@@ -208,7 +214,8 @@ constexpr std::reverse_iterator<Type *> rend(PL_IN Type (&array)[Size]) noexcept
  * \return The end const_reverse_iterator of container.
 **/
 template <typename Container>
-constexpr auto crend(PL_IN const Container &container) noexcept -> decltype(auto)
+constexpr auto crend(PL_IN const Container& container) noexcept
+    -> decltype(auto)
 {
     return ::pl::rend(container);
 }

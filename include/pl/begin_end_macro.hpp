@@ -39,12 +39,14 @@
  * \see PL_END_MACRO
 **/
 #define PL_BEGIN_MACRO do {
-
 /*!
  * \def PL_END_MACRO
  * \brief To be used to end definitions of macros that shall be forced to
  *        require a semicolon when used.
  * \see PL_BEGIN_MACRO
 **/
-#define PL_END_MACRO } while ((void)0, 0) /* avoid warnings */
+#define PL_END_MACRO \
+    }                \
+    while ((void)0, 0) /* avoid warnings */
+
 #endif // INCG_PL_BEGIN_END_MACRO_HPP

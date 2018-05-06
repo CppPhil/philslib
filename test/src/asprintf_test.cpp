@@ -26,50 +26,52 @@
 
 #include "../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
-#endif // PL_COMPILER == PL_COMPILER_GCC
+#pragma GCC diagnostic pop
+#endif                                   // PL_COMPILER == PL_COMPILER_GCC
 #include "../../include/pl/asprintf.hpp" // pl::asprintf, pl::vasprintf
-#include <cstddef> // std::size_t
-#include <cstring> // std::strcmp, std::strlen
-#include <memory> // std::unique_ptr
-#include <string> // std::string
+#include <cstddef>                       // std::size_t
+#include <cstring>                       // std::strcmp, std::strlen
+#include <memory>                        // std::unique_ptr
+#include <string>                        // std::string
 
 TEST_CASE("asprintf_unique_ptr_test")
 {
-    static constexpr int expectedBytesWritten{ 7 };
+    static constexpr int expectedBytesWritten{7};
 
-    std::unique_ptr<char[]> up{ nullptr };
+    std::unique_ptr<char[]> up{nullptr};
 
-    const int ret{ pl::asprintf(&up, "Text %02X", 0xF) };
+    const int ret{pl::asprintf(&up, "Text %02X", 0xF)};
 
     REQUIRE(ret >= 0);
     REQUIRE(up != nullptr);
 
     CHECK(ret == expectedBytesWritten);
-    CHECK(std::strlen(up.get())
+    CHECK(
+        std::strlen(up.get())
         == static_cast<std::size_t>(expectedBytesWritten));
     CHECK(std::strcmp(up.get(), "Text 0F") == 0);
 }
 
 TEST_CASE("asprintf_string_test")
 {
-    static constexpr int expectedBytesWritten{ 21 };
-    static constexpr char str[]{ "Hello World" };
+    static constexpr int  expectedBytesWritten{21};
+    static constexpr char str[]{"Hello World"};
 
-    std::string string{ };
+    std::string string{};
 
-    int ret{ pl::asprintf(&string, "String: \"%s\"", str) };
+    int ret{pl::asprintf(&string, "String: \"%s\"", str)};
 
     REQUIRE(ret >= 0);
     REQUIRE_UNARY_FALSE(string.empty());
 
     CHECK(ret == expectedBytesWritten);
-    CHECK(string.size()
+    CHECK(
+        string.size()
         == static_cast<std::string::size_type>(expectedBytesWritten));
     CHECK(string == "String: \"Hello World\"");
 

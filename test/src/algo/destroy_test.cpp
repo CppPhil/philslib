@@ -26,45 +26,46 @@
 
 #include "../../../include/pl/compiler.hpp"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
-#   pragma GCC diagnostic pop
+#pragma GCC diagnostic pop
 #endif // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/destroy_test_type.hpp" // pl::test::DestroyTestType
-#include "../../include/freeer.hpp" // pl::test::Freer
 #include "../../../include/pl/algo/destroy.hpp"
 #include "../../../include/pl/algo/destroy_at.hpp"
 #include "../../../include/pl/algo/destroy_n.hpp"
-#include <cstddef> // std::size_t
-#include <cstdlib> // std::malloc, std::free
-#include <memory> // std::unique_ptr
-#include <array> // std::array
-#include <new> // ::operator new
+#include "../../include/destroy_test_type.hpp" // pl::test::DestroyTestType
+#include "../../include/freeer.hpp"            // pl::test::Freer
+#include <array>                               // std::array
+#include <cstddef>                             // std::size_t
+#include <cstdlib>                             // std::malloc, std::free
+#include <memory>                              // std::unique_ptr
+#include <new>                                 // ::operator new
 
 TEST_CASE("test_destroy_algorithms")
 {
     static constexpr std::size_t size = 10U;
 
     std::unique_ptr<unsigned char, pl::test::Freeer> up{
-        static_cast<unsigned char *>(
+        static_cast<unsigned char*>(
             std::malloc(size * sizeof(pl::test::DestroyTestType))),
-        pl::test::Freeer{ }
-    };
+        pl::test::Freeer{}};
 
-    auto *begin = reinterpret_cast<pl::test::DestroyTestType *>(up.get());
-    auto *end   = begin + size;
+    auto* begin = reinterpret_cast<pl::test::DestroyTestType*>(up.get());
+    auto* end   = begin + size;
 
-    std::array<bool, size> ary{ };
+    std::array<bool, size> ary{};
     ary.fill(false);
 
-    for (std::size_t i{ 0U }; i < size; ++i) {
-        ::new(static_cast<void *>(&begin[i])) pl::test::DestroyTestType{ &ary[i] };
+    for (std::size_t i{0U}; i < size; ++i) {
+        ::new (static_cast<void*>(&begin[i]))
+            pl::test::DestroyTestType{&ary[i]};
     }
 
-    SUBCASE("test_destroy") {
+    SUBCASE("test_destroy")
+    {
         pl::algo::destroy(begin, end);
 
         for (bool b : ary) {
@@ -72,8 +73,9 @@ TEST_CASE("test_destroy_algorithms")
         }
     }
 
-    SUBCASE("test_destroy_at") {
-        for (std::size_t i{ 0U }; i < size; ++i) {
+    SUBCASE("test_destroy_at")
+    {
+        for (std::size_t i{0U}; i < size; ++i) {
             pl::algo::destroy_at(&begin[i]);
         }
 
@@ -82,7 +84,8 @@ TEST_CASE("test_destroy_algorithms")
         }
     }
 
-    SUBCASE("test_destroy_n") {
+    SUBCASE("test_destroy_n")
+    {
         pl::algo::destroy_n(begin, size);
 
         for (bool b : ary) {

@@ -30,13 +30,11 @@
 **/
 #ifndef INCG_PL_ALGO_FOR_EACH_N_HPP
 #define INCG_PL_ALGO_FOR_EACH_N_HPP
-#include "../invoke.hpp" // pl::invoke
 #include "../assert.hpp" // PL_DBG_CHECK_PRE
+#include "../invoke.hpp" // pl::invoke
 
-namespace pl
-{
-namespace algo
-{
+namespace pl {
+namespace algo {
 /*!
  * \brief Applies the given Invocable 'unaryInvocable' to the result of
  *        dereferencing every iterator in the range ['first', 'first' + 'n'),
@@ -62,14 +60,12 @@ namespace algo
  * \return 'first' + 'n'
 **/
 template <typename InputIterator, typename SizeType, typename UnaryInvocable>
-InputIterator for_each_n(
-    InputIterator first,
-    SizeType n,
-    UnaryInvocable unaryInvocable)
+InputIterator
+for_each_n(InputIterator first, SizeType n, UnaryInvocable unaryInvocable)
 {
     PL_DBG_CHECK_PRE(n >= 0);
 
-    for (SizeType i{ }; i < n; ++first) {
+    for (SizeType i{}; i < n; ++first) {
         ::pl::invoke(unaryInvocable, *first);
         ++i;
     }
