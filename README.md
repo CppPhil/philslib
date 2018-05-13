@@ -193,6 +193,7 @@ include/pl/restrict.hpp: Portable macro to define a restrict pointer.
 include/pl/size_t.hpp: User defined literal to create std::size_t objects.  
 include/pl/source_line.hpp: Macro that expands to a string literal of the current line in the current source file.  
 include/pl/strdup.hpp: strdup and strndup functions similar to the ones known from POSIX or the C dynamic memory TR.  
+include/pl/string_view.hpp: string view type for null-terminated strings with a never emtpy guarantee.  
 include/pl/stringify.hpp: The classic stringification macro.  
 include/pl/timer.hpp: Simple timer class to measure durations of time.  
 include/pl/toggle_bool.hpp: Function to invert the value of a bool object.  
