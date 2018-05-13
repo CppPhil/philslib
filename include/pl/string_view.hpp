@@ -31,7 +31,7 @@
 #ifndef INCG_PL_STRING_VIEW_HPP
 #define INCG_PL_STRING_VIEW_HPP
 #include "annotations.hpp" // PL_NODISCARD, PL_IN, PL_OUT, PL_INOUT, PL_NULL_TERMINATED, PL_IMPLICIT
-#include "compiler.hpp"          // PL_COMPILER, PL_COMPILER_MSVC
+#include "compiler.hpp" // PL_COMPILER, PL_COMPILER_MSVC, PL_COMPILER_VERSION, PL_COMPILER_VERSION_CHECK
 #include "meta/remove_cvref.hpp" // pl::meta::remove_cvref_t
 #include <algorithm>             // std::min, std::copy_n
 #include <ciso646>               // and, not
@@ -403,12 +403,19 @@ public:
         m_size -= charactersToRemove;
     }
 
-    /*!
-     * \brief Exchanges the view with that of 'other'.
-     * \param other view to swap with
-     * \note Constant complexity.
-    **/
-    constexpr void swap(PL_INOUT this_type& other) noexcept
+/*!
+ * \brief Exchanges the view with that of 'other'.
+ * \param other view to swap with
+ * \note Constant complexity.
+ *       Using msvc this function will only be a constexpr function
+ *       if msvc17 or newer is used.
+**/
+#if (PL_COMPILER != PL_COMPILER_MSVC) \
+    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
+    constexpr
+#endif
+        void
+        swap(PL_INOUT this_type& other) noexcept
     {
         const const_pointer pointer = m_data;
         m_data                      = other.m_data;
