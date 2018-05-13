@@ -31,6 +31,7 @@
 #ifndef INCG_PL_STRING_VIEW_HPP
 #define INCG_PL_STRING_VIEW_HPP
 #include "annotations.hpp" // PL_NODISCARD, PL_IN, PL_OUT, PL_INOUT, PL_NULL_TERMINATED, PL_IMPLICIT
+#include "compiler.hpp"          // PL_COMPILER, PL_COMPILER_MSVC
 #include "meta/remove_cvref.hpp" // pl::meta::remove_cvref_t
 #include <algorithm>             // std::min, std::copy_n
 #include <ciso646>               // and, not
@@ -41,6 +42,11 @@
 #include <string>                // std::char_Traits, std::basic_string
 #include <type_traits> // std::is_same, std::is_pointer, std::remove_const_t, std::remove_pointer_t
 
+#if PL_COMPILER == PL_COMPILER_MSVC
+#pragma warning(push)
+#pragma warning(disable : 4814) // in C++14 'constexpr' will not imply 'const';
+                                // consider explicitly specifying 'const'
+#endif                          // PL_COMPILER == PL_COMPILER_MSVC
 namespace pl {
 namespace detail {
 template <typename CharT>
@@ -818,4 +824,7 @@ constexpr WStringView operator""_sv(
 } // inline namespace string_view_literals
 } // inline namespace literals
 } // namespace pl
+#if PL_COMPILER == PL_COMPILER_MSVC
+#pragma warning(pop)
+#endif // PL_COMPILER == PL_COMPILER_MSVC
 #endif // INCG_PL_STRING_VIEW_HPP
