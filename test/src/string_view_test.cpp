@@ -36,7 +36,6 @@
 #include "../../include/pl/iterate_reversed.hpp" // pl::iterateReversed
 #include "../../include/pl/string_view.hpp" // pl::StringView, pl::U16StringView, pl::U32StringView, pl::WStringView
 #include "../../test/include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
-#include <ciso646>                              // not
 #include <cstddef>                              // std::size_t
 #include <cstring>                              // std::strcmp, std::memcmp
 #include <iterator>                             // std::distance
@@ -236,10 +235,6 @@ TEST_CASE("string_view_constructability_test")
         std::is_constructible<pl::StringView, std::string&>::value);
     PL_TEST_STATIC_ASSERT(
         std::is_constructible<pl::StringView, const std::string&>::value);
-    PL_TEST_STATIC_ASSERT(
-        not std::is_constructible<pl::StringView, std::string>::value);
-    PL_TEST_STATIC_ASSERT(
-        not std::is_constructible<pl::StringView, std::string&&>::value);
 
     PL_TEST_STATIC_ASSERT(
         std::is_constructible<pl::StringView, char[1]>::value);
