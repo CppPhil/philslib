@@ -36,6 +36,7 @@
 #include <algorithm>             // std::min, std::copy_n
 #include <ciso646>               // and, not
 #include <cstddef>               // std::size_t, std::ptrdiff_t
+#include <ios>                   // std::streamsize
 #include <iterator>              // std::reverse_iterator
 #include <ostream>               // std::basic_ostream
 #include <stdexcept>             // std::out_of_range
@@ -478,7 +479,7 @@ public:
 /*!
  * \brief Compares this string view to a null-terminated character
  *        string.
- * \param other The null-terminated character string to compare to.
+ * \param string The null-terminated character string to compare to.
  * \return A value < 0 if this string view is considered less than
  *         'other'.
  *         0 if this string view is considered equal to 'other'.
@@ -576,7 +577,7 @@ std::basic_ostream<CharT, Traits>& operator<<(
     PL_INOUT std::basic_ostream<CharT, Traits>& os,
     BasicStringView<CharT, Traits>              string)
 {
-    return os.write(string.data(), string.size());
+    return os.write(string.data(), static_cast<std::streamsize>(string.size()));
 }
 
 template <typename CharT, typename Traits>
