@@ -384,16 +384,23 @@ public:
      *       viewed have to be null-terminated.
     **/
     constexpr const_pointer data() const noexcept { return m_data; }
-    /*!
-     * \brief Moves the start of the view forward by 'charactersToRemove'
-     *        characters.
-     * \param charactersToRemove number of characters to remove from the start
-     *                           of the view
-     * \note Constant complexity.
-     *       if 'charactersToRemove' > size() all characters are removed from
-     *       the view, leaving it pointing to an empty string.
-    **/
-    constexpr void remove_prefix(size_type charactersToRemove) noexcept
+/*!
+ * \brief Moves the start of the view forward by 'charactersToRemove'
+ *        characters.
+ * \param charactersToRemove number of characters to remove from the start
+ *                           of the view
+ * \note Constant complexity.
+ *       if 'charactersToRemove' > size() all characters are removed from
+ *       the view, leaving it pointing to an empty string.
+ *       Using msvc this function will only be a constexpr function
+ *       if msvc17 or newer is used.
+**/
+#if (PL_COMPILER != PL_COMPILER_MSVC) \
+    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
+    constexpr
+#endif
+        void
+        remove_prefix(size_type charactersToRemove) noexcept
     {
         if (charactersToRemove > size()) {
             charactersToRemove = size();
