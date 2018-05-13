@@ -446,16 +446,23 @@ public:
             begin(), end(), allocator);
     }
 
-    /*!
-     * \brief Compares this string view with another one.
-     * \param other The other string view to compare to.
-     * \return A value < 0 if this string view is considered less than
-     *         'other'.
-     *         0 if this string view is considered equal to 'other'.
-     *         A value > 0 if this string view is considered greate than
-     *         'other'.
-    **/
-    constexpr int compare(this_type other) const noexcept
+/*!
+ * \brief Compares this string view with another one.
+ * \param other The other string view to compare to.
+ * \return A value < 0 if this string view is considered less than
+ *         'other'.
+ *         0 if this string view is considered equal to 'other'.
+ *         A value > 0 if this string view is considered greate than
+ *         'other'.
+ * \note Using msvc this function will only be a constexpr function
+ *       if msvc17 or newer is used.
+**/
+#if (PL_COMPILER != PL_COMPILER_MSVC) \
+    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
+    constexpr
+#endif
+        int
+        compare(this_type other) const noexcept
     {
         const size_type length{std::min(size(), other.size())};
         int result{traits_type::compare(data(), other.data(), length)};
@@ -468,18 +475,24 @@ public:
         return result;
     }
 
-    /*!
-     * \brief Compares this string view to a null-terminated character
-     *        string.
-     * \param other The null-terminated character string to compare to.
-     * \return A value < 0 if this string view is considered less than
-     *         'other'.
-     *         0 if this string view is considered equal to 'other'.
-     *         A value > 0 if this string view is considered greate than
-     *         'other'.
-    **/
-    constexpr int compare(PL_IN PL_NULL_TERMINATED(const_pointer) string) const
-        noexcept
+/*!
+ * \brief Compares this string view to a null-terminated character
+ *        string.
+ * \param other The null-terminated character string to compare to.
+ * \return A value < 0 if this string view is considered less than
+ *         'other'.
+ *         0 if this string view is considered equal to 'other'.
+ *         A value > 0 if this string view is considered greate than
+ *         'other'.
+ * \note Using msvc this function will only be a constexpr function
+ *       if msvc17 or newer is used.
+**/
+#if (PL_COMPILER != PL_COMPILER_MSVC) \
+    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
+    constexpr
+#endif
+        int
+        compare(PL_IN PL_NULL_TERMINATED(const_pointer) string) const noexcept
     {
         return compare(this_type{string});
     }
@@ -546,9 +559,14 @@ private:
 };
 
 template <typename CharT, typename Traits>
-constexpr void swap(
-    PL_INOUT BasicStringView<CharT, Traits>& first,
-    PL_INOUT BasicStringView<CharT, Traits>& second) noexcept
+#if (PL_COMPILER != PL_COMPILER_MSVC) \
+    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
+constexpr
+#endif
+    void
+    swap(
+        PL_INOUT BasicStringView<CharT, Traits>& first,
+        PL_INOUT BasicStringView<CharT, Traits>& second) noexcept
 {
     first.swap(second);
 }
