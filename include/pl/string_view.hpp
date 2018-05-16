@@ -153,7 +153,7 @@ public:
                                                                                     remove_cvref_t<Ty>>>,
                                         value_type>::value>>
     PL_IMPLICIT constexpr BasicStringView(
-        PL_IN PL_NULL_TERMINATED(const Ty&&) string) noexcept
+        PL_IN PL_NULL_TERMINATED(Ty&&) string) noexcept
         : m_data{string},
           m_size{traits_type::length(string)}
     {
@@ -182,7 +182,8 @@ public:
     **/
     template <typename Allocator>
     PL_IMPLICIT constexpr BasicStringView(
-        PL_IN std::basic_string<value_type, traits_type, Allocator>&&) noexcept
+        PL_IN const
+            std::basic_string<value_type, traits_type, Allocator>&&) noexcept
         = delete;
 
     /*!
