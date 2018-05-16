@@ -153,7 +153,7 @@ public:
                                                                                     remove_cvref_t<Ty>>>,
                                         value_type>::value>>
     PL_IMPLICIT constexpr BasicStringView(
-        PL_IN PL_NULL_TERMINATED(Ty&&) string) noexcept
+        PL_IN PL_NULL_TERMINATED(const Ty&&) string) noexcept
         : m_data{string},
           m_size{traits_type::length(string)}
     {
