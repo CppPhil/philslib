@@ -311,14 +311,14 @@ template <typename Cont,
           typename BinaryOperation>
 inline auto transform(
     Cont&&            cont,
-    InputIterator&&   beginOfSecondRange,
+    InputIterator&&   begin_of_second_range,
     OutputIterator&&  destination,
     BinaryOperation&& binary_op) -> decltype(auto)
 {
     return std::transform(
         std::begin(cont),
         std::end(cont),
-        std::forward<InputIterator>(beginOfSecondRange),
+        std::forward<InputIterator>(begin_of_second_range),
         std::forward<OutputIterator>(destination),
         std::forward<BinaryOperation>(binary_op));
 }

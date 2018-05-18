@@ -30,8 +30,7 @@
 **/
 #ifndef INCG_PL_ALGO_FOR_EACH_N_HPP
 #define INCG_PL_ALGO_FOR_EACH_N_HPP
-#include "../compiler.hpp" // PL_COMPILER_MSVC, PL_COMPILER_VERSION_CHECK
-#include "../invoke.hpp"   // pl::invoke
+#include "../invoke.hpp" // pl::invoke
 
 namespace pl {
 namespace algo {
@@ -61,12 +60,8 @@ namespace algo {
  * \return 'first' + 'n'
 **/
 template <typename InputIterator, typename SizeType, typename UnaryInvocable>
-#if (PL_COMPILER != PL_COMPILER_MSVC) \
-    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
-constexpr
-#endif
-    InputIterator
-    for_each_n(InputIterator first, SizeType n, UnaryInvocable unary_invocable)
+inline InputIterator
+for_each_n(InputIterator first, SizeType n, UnaryInvocable unary_invocable)
 {
     for (SizeType i{}; i < n; ++first) {
         ::pl::invoke(unary_invocable, *first);

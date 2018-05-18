@@ -44,7 +44,7 @@ namespace algo {
  * \note The complexity is linear in the distance between 'first' and 'last'.
 **/
 template <typename ForwardIterator>
-void destroy(ForwardIterator first, ForwardIterator last)
+inline void destroy(ForwardIterator first, ForwardIterator last)
 {
     while (first != last) {
         ::pl::algo::destroy_at(std::addressof(*first));

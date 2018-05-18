@@ -43,7 +43,7 @@ namespace algo {
  *            or otherwise be invalid.
 **/
 template <typename Ty>
-void destroy_at(PL_OUT Ty* ptr)
+inline void destroy_at(PL_OUT Ty* ptr)
 {
     PL_DBG_CHECK_PRE(ptr != nullptr);
 

@@ -47,7 +47,7 @@ namespace algo {
  * \note The complexity is linear in 'n'.
 **/
 template <typename ForwardIterator, typename SizeType>
-ForwardIterator destroy_n(ForwardIterator first, SizeType n)
+inline ForwardIterator destroy_n(ForwardIterator first, SizeType n)
 {
     while (n > 0) {
         ::pl::algo::destroy_at(std::addressof(*first));
