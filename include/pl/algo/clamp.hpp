@@ -75,8 +75,6 @@ constexpr const Ty& clamp(
     PL_IN const Ty&  upper_bound,
     BinaryComparator comp)
 {
-    PL_DBG_CHECK_PRE(not comp(upper_bound, lower_bound));
-
     return comp(value, lower_bound) ? lower_bound : comp(upper_bound, value)
                                                         ? upper_bound
                                                         : value;
