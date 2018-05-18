@@ -44,7 +44,8 @@ namespace detail {
  *        Not to be used directly.
 **/
 template <typename Callable, typename... Args>
-auto invokeImpl(std::true_type, PL_IN Callable&& callable, PL_IN Args&&... args) noexcept(
+constexpr auto
+invokeImpl(std::true_type, PL_IN Callable&& callable, PL_IN Args&&... args) noexcept(
     noexcept(std::mem_fn(callable)(std::forward<Args>(args)...)))
     -> decltype(auto)
 {
@@ -56,7 +57,8 @@ auto invokeImpl(std::true_type, PL_IN Callable&& callable, PL_IN Args&&... args)
  *        Not to be used directly.
 **/
 template <typename Callable, typename... Args>
-auto invokeImpl(std::false_type, PL_IN Callable&& callable, PL_IN Args&&... args) noexcept(
+constexpr auto
+invokeImpl(std::false_type, PL_IN Callable&& callable, PL_IN Args&&... args) noexcept(
     noexcept(std::forward<Callable>(callable)(std::forward<Args>(args)...)))
     -> decltype(auto)
 {
@@ -81,7 +83,7 @@ auto invokeImpl(std::false_type, PL_IN Callable&& callable, PL_IN Args&&... args
  * as well as access non-static data members through member object pointers.
 **/
 template <typename Callable, typename... Args>
-auto invoke(PL_IN Callable&& callable, PL_IN Args&&... args) noexcept(
+constexpr auto invoke(PL_IN Callable&& callable, PL_IN Args&&... args) noexcept(
     noexcept(
         ::pl::detail::invokeImpl(
             typename std::is_member_pointer<std::decay_t<Callable>>::type{},
