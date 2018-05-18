@@ -96,7 +96,7 @@ TEST_CASE("make_from_tuple_test")
     CHECK(b.p() == nullptr);
 
     const pl::test::test_type c{pl::makeFromTuple<pl::test::test_type>(
-        pl::cont::makeArray(UINT32_C(7), UINT32_C(500)))};
+        pl::cont::make_array(UINT32_C(7), UINT32_C(500)))};
 
     CHECK(c.s() == "7"s);
     CHECK(c.i() == UINT32_C(500));
