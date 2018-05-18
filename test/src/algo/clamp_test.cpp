@@ -34,10 +34,14 @@
 #pragma GCC diagnostic pop
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../../include/pl/algo/clamp.hpp"
-#include <functional> // std::greater
+#include "../../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
+#include <functional>                      // std::greater
 
 TEST_CASE("clamp_test")
 {
+    static constexpr int result{pl::algo::clamp(1, 2, 3)};
+    PL_TEST_STATIC_ASSERT(result == 2);
+
     CHECK(pl::algo::clamp(3, 2, 4) == 3);
     CHECK(pl::algo::clamp(3, 4, 5) == 4);
     CHECK(pl::algo::clamp(3, 1, 2) == 2);
