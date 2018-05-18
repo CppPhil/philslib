@@ -30,7 +30,8 @@
 **/
 #ifndef INCG_PL_ALGO_FOR_EACH_N_HPP
 #define INCG_PL_ALGO_FOR_EACH_N_HPP
-#include "../invoke.hpp" // pl::invoke
+#include "../compiler.hpp" // PL_COMPILER_MSVC, PL_COMPILER_VERSION_CHECK
+#include "../invoke.hpp"   // pl::invoke
 
 namespace pl {
 namespace algo {
@@ -53,14 +54,19 @@ namespace algo {
  * \note If the iterator type is mutable, 'unary_invocable' may modify the
  *       elements of the range through the dereferenced iterator.
  *       If 'unary_invocable' returns a result, the result is ignored.
+ * \note When using msvc will only be constexpr if msvc17 or newer is used.
  * \warning If 'n' is less than zero, the behavior is undefined.
  *          If 'first' + 'n' is beyond the end iterator of the range,
  *          the behavior is undefined.
  * \return 'first' + 'n'
 **/
 template <typename InputIterator, typename SizeType, typename UnaryInvocable>
-constexpr InputIterator
-for_each_n(InputIterator first, SizeType n, UnaryInvocable unary_invocable)
+#if (PL_COMPILER != PL_COMPILER_MSVC) \
+    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
+constexpr
+#endif
+    InputIterator
+    for_each_n(InputIterator first, SizeType n, UnaryInvocable unary_invocable)
 {
     for (SizeType i{}; i < n; ++first) {
         ::pl::invoke(unary_invocable, *first);
