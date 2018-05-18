@@ -29,9 +29,9 @@
 
 namespace pl {
 namespace test {
-void Freeer::operator()(void* toBeFreed) const noexcept
+void freeer::operator()(void* to_be_freed) const noexcept
 {
-    std::free(toBeFreed); // free the memory
+    std::free(to_be_freed); // free the memory
 }
 } // namespace test
 } // namespace pl

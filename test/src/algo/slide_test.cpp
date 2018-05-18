@@ -49,20 +49,20 @@ TEST_CASE("slide_test")
 
     SUBCASE("slide_3_last_to_front")
     {
-        const auto slideFromBegin = end - 3;
-        const auto slideFromEnd   = end;
-        const auto slideTo        = begin;
+        const auto slide_from_begin = end - 3;
+        const auto slide_from_end   = end;
+        const auto slide_to         = begin;
 
-        REQUIRE(slideFromBegin >= begin);
-        REQUIRE(slideFromBegin <= end);
-        REQUIRE(slideFromEnd >= begin);
-        REQUIRE(slideFromEnd <= end);
-        REQUIRE(slideFromBegin <= slideFromEnd);
-        REQUIRE(slideTo >= begin);
-        REQUIRE(slideTo <= end);
+        REQUIRE(slide_from_begin >= begin);
+        REQUIRE(slide_from_begin <= end);
+        REQUIRE(slide_from_end >= begin);
+        REQUIRE(slide_from_end <= end);
+        REQUIRE(slide_from_begin <= slide_from_end);
+        REQUIRE(slide_to >= begin);
+        REQUIRE(slide_to <= end);
 
         const auto pair
-            = pl::algo::slide(slideFromBegin, slideFromEnd, slideTo);
+            = pl::algo::slide(slide_from_begin, slide_from_end, slide_to);
 
         CHECK(array.at(0U) == 5);
         CHECK(array.at(1U) == 6);
@@ -72,26 +72,26 @@ TEST_CASE("slide_test")
         CHECK(array.at(5U) == 3);
         CHECK(array.at(6U) == 4);
 
-        CHECK(pair.first == slideTo);
-        CHECK(pair.second == (slideTo + 3));
+        CHECK(pair.first == slide_to);
+        CHECK(pair.second == (slide_to + 3));
     }
 
     SUBCASE("slide_2_first_to_back")
     {
-        const auto slideFromBegin = begin;
-        const auto slideFromEnd   = begin + 2;
-        const auto slideTo        = end;
+        const auto slide_from_begin = begin;
+        const auto slide_from_end   = begin + 2;
+        const auto slide_to         = end;
 
-        REQUIRE(slideFromBegin >= begin);
-        REQUIRE(slideFromBegin <= end);
-        REQUIRE(slideFromEnd >= begin);
-        REQUIRE(slideFromEnd <= end);
-        REQUIRE(slideFromBegin <= slideFromEnd);
-        REQUIRE(slideTo >= begin);
-        REQUIRE(slideTo <= end);
+        REQUIRE(slide_from_begin >= begin);
+        REQUIRE(slide_from_begin <= end);
+        REQUIRE(slide_from_end >= begin);
+        REQUIRE(slide_from_end <= end);
+        REQUIRE(slide_from_begin <= slide_from_end);
+        REQUIRE(slide_to >= begin);
+        REQUIRE(slide_to <= end);
 
         const auto pair
-            = pl::algo::slide(slideFromBegin, slideFromEnd, slideTo);
+            = pl::algo::slide(slide_from_begin, slide_from_end, slide_to);
 
         CHECK(array.at(0U) == 3);
         CHECK(array.at(1U) == 4);
@@ -103,26 +103,26 @@ TEST_CASE("slide_test")
 
         CHECK(
             pair.first
-            == (slideTo - (std::distance(slideFromBegin, slideFromEnd))));
-        CHECK(pair.second == slideTo);
+            == (slide_to - (std::distance(slide_from_begin, slide_from_end))));
+        CHECK(pair.second == slide_to);
     }
 
     SUBCASE("slide_to_center")
     {
-        const auto slideFromBegin = begin;
-        const auto slideFromEnd   = slideFromBegin + 2;
-        const auto slideTo        = begin + (size / 2U);
+        const auto slide_from_begin = begin;
+        const auto slide_from_end   = slide_from_begin + 2;
+        const auto slide_to         = begin + (size / 2U);
 
-        REQUIRE(slideFromBegin >= begin);
-        REQUIRE(slideFromBegin <= end);
-        REQUIRE(slideFromEnd >= begin);
-        REQUIRE(slideFromEnd <= end);
-        REQUIRE(slideFromBegin <= slideFromEnd);
-        REQUIRE(slideTo >= begin);
-        REQUIRE(slideTo <= end);
+        REQUIRE(slide_from_begin >= begin);
+        REQUIRE(slide_from_begin <= end);
+        REQUIRE(slide_from_end >= begin);
+        REQUIRE(slide_from_end <= end);
+        REQUIRE(slide_from_begin <= slide_from_end);
+        REQUIRE(slide_to >= begin);
+        REQUIRE(slide_to <= end);
 
         const auto pair
-            = pl::algo::slide(slideFromBegin, slideFromEnd, slideTo);
+            = pl::algo::slide(slide_from_begin, slide_from_end, slide_to);
 
         CHECK(array.at(0U) == 3);
         CHECK(array.at(1U) == 1);
@@ -134,26 +134,26 @@ TEST_CASE("slide_test")
 
         CHECK(
             pair.first
-            == (slideTo - (std::distance(slideFromBegin, slideFromEnd))));
-        CHECK(pair.second == slideTo);
+            == (slide_to - (std::distance(slide_from_begin, slide_from_end))));
+        CHECK(pair.second == slide_to);
     }
 
     SUBCASE("slide_empty_range")
     {
-        const auto slideFromBegin = begin + 1;
-        const auto slideFromEnd   = slideFromBegin;
-        const auto slideTo        = end;
+        const auto slide_from_begin = begin + 1;
+        const auto slide_from_end   = slide_from_begin;
+        const auto slide_to         = end;
 
-        REQUIRE(slideFromBegin >= begin);
-        REQUIRE(slideFromBegin <= end);
-        REQUIRE(slideFromEnd >= begin);
-        REQUIRE(slideFromEnd <= end);
-        REQUIRE(slideFromBegin <= slideFromEnd);
-        REQUIRE(slideTo >= begin);
-        REQUIRE(slideTo <= end);
+        REQUIRE(slide_from_begin >= begin);
+        REQUIRE(slide_from_begin <= end);
+        REQUIRE(slide_from_end >= begin);
+        REQUIRE(slide_from_end <= end);
+        REQUIRE(slide_from_begin <= slide_from_end);
+        REQUIRE(slide_to >= begin);
+        REQUIRE(slide_to <= end);
 
         const auto pair
-            = pl::algo::slide(slideFromBegin, slideFromEnd, slideTo);
+            = pl::algo::slide(slide_from_begin, slide_from_end, slide_to);
 
         CHECK(array.at(0U) == 1);
         CHECK(array.at(1U) == 2);
@@ -169,20 +169,20 @@ TEST_CASE("slide_test")
 
     SUBCASE("slide_entire_range")
     {
-        const auto slideFromBegin = begin;
-        const auto slideFromEnd   = end;
-        const auto slideTo        = begin + 3;
+        const auto slide_from_begin = begin;
+        const auto slide_from_end   = end;
+        const auto slide_to         = begin + 3;
 
-        REQUIRE(slideFromBegin >= begin);
-        REQUIRE(slideFromBegin <= end);
-        REQUIRE(slideFromEnd >= begin);
-        REQUIRE(slideFromEnd <= end);
-        REQUIRE(slideFromBegin <= slideFromEnd);
-        REQUIRE(slideTo >= begin);
-        REQUIRE(slideTo <= end);
+        REQUIRE(slide_from_begin >= begin);
+        REQUIRE(slide_from_begin <= end);
+        REQUIRE(slide_from_end >= begin);
+        REQUIRE(slide_from_end <= end);
+        REQUIRE(slide_from_begin <= slide_from_end);
+        REQUIRE(slide_to >= begin);
+        REQUIRE(slide_to <= end);
 
         const auto pair
-            = pl::algo::slide(slideFromBegin, slideFromEnd, slideTo);
+            = pl::algo::slide(slide_from_begin, slide_from_end, slide_to);
 
         CHECK(array.at(0U) == 1);
         CHECK(array.at(1U) == 2);

@@ -41,7 +41,7 @@
 namespace pl {
 namespace test {
 namespace {
-class TestType {
+class test_type {
 public:
     std::string f() { return "non-const"; }
     std::string f() const { return "const"; }
@@ -52,14 +52,14 @@ public:
 
 TEST_CASE("as_const_test")
 {
-    pl::test::TestType testObj{};
+    pl::test::test_type testObj{};
 
     PL_TEST_STATIC_ASSERT(
         std::is_const<std::remove_reference_t<decltype(
             pl::asConst(testObj))>>::value);
     PL_TEST_STATIC_ASSERT(
         std::is_same<decltype(pl::asConst(testObj)),
-                     const pl::test::TestType&>::value);
+                     const pl::test::test_type&>::value);
 
     CHECK(testObj.f() == "non-const");
     CHECK(pl::asConst(testObj).f() == "const");

@@ -44,26 +44,26 @@
 namespace pl {
 namespace test {
 namespace {
-class TestType {
+class test_type {
 public:
-    TestType(std::string s, std::uint32_t i, void* p)
+    test_type(std::string s, std::uint32_t i, void* p)
         : m_s{std::move(s)}, m_i{i}, m_p{p}
     {
     }
 
-    TestType(std::string s, std::uint32_t i)
-        : TestType{std::move(s), i, nullptr}
+    test_type(std::string s, std::uint32_t i)
+        : test_type{std::move(s), i, nullptr}
     {
     }
 
-    TestType(std::uint32_t a1, std::uint32_t a2)
-        : TestType{std::to_string(a1), a2}
+    test_type(std::uint32_t a1, std::uint32_t a2)
+        : test_type{std::to_string(a1), a2}
     {
     }
 
-    TestType(const TestType&) = default;
+    test_type(const test_type&) = default;
 
-    TestType& operator=(const TestType&) = default;
+    test_type& operator=(const test_type&) = default;
 
     const std::string& s() const noexcept { return m_s; }
     std::uint32_t      i() const noexcept { return m_i; }
@@ -81,21 +81,21 @@ TEST_CASE("make_from_tuple_test")
 {
     using namespace std::literals::string_literals;
 
-    const pl::test::TestType a{pl::makeFromTuple<pl::test::TestType>(
+    const pl::test::test_type a{pl::makeFromTuple<pl::test::test_type>(
         std::make_tuple("test"s, UINT32_C(25), nullptr))};
 
     CHECK(a.s() == "test"s);
     CHECK(a.i() == UINT32_C(25));
     CHECK(a.p() == nullptr);
 
-    const pl::test::TestType b{pl::makeFromTuple<pl::test::TestType>(
+    const pl::test::test_type b{pl::makeFromTuple<pl::test::test_type>(
         std::make_pair("text"s, UINT32_C(50)))};
 
     CHECK(b.s() == "text"s);
     CHECK(b.i() == UINT32_C(50));
     CHECK(b.p() == nullptr);
 
-    const pl::test::TestType c{pl::makeFromTuple<pl::test::TestType>(
+    const pl::test::test_type c{pl::makeFromTuple<pl::test::test_type>(
         pl::cont::makeArray(UINT32_C(7), UINT32_C(500)))};
 
     CHECK(c.s() == "7"s);

@@ -36,8 +36,8 @@
 #include "../../../include/pl/algo/destroy.hpp"
 #include "../../../include/pl/algo/destroy_at.hpp"
 #include "../../../include/pl/algo/destroy_n.hpp"
-#include "../../include/destroy_test_type.hpp" // pl::test::DestroyTestType
-#include "../../include/freeer.hpp"            // pl::test::Freer
+#include "../../include/destroy_test_type.hpp" // pl::test::destroy_test_type
+#include "../../include/freeer.hpp"            // pl::test::freeer
 #include <array>                               // std::array
 #include <cstddef>                             // std::size_t
 #include <cstdlib>                             // std::malloc, std::free
@@ -48,12 +48,12 @@ TEST_CASE("test_destroy_algorithms")
 {
     static constexpr std::size_t size = 10U;
 
-    std::unique_ptr<unsigned char, pl::test::Freeer> up{
+    std::unique_ptr<unsigned char, pl::test::freeer> up{
         static_cast<unsigned char*>(
-            std::malloc(size * sizeof(pl::test::DestroyTestType))),
-        pl::test::Freeer{}};
+            std::malloc(size * sizeof(pl::test::destroy_test_type))),
+        pl::test::freeer{}};
 
-    auto* begin = reinterpret_cast<pl::test::DestroyTestType*>(up.get());
+    auto* begin = reinterpret_cast<pl::test::destroy_test_type*>(up.get());
     auto* end   = begin + size;
 
     std::array<bool, size> ary{};
@@ -61,7 +61,7 @@ TEST_CASE("test_destroy_algorithms")
 
     for (std::size_t i{0U}; i < size; ++i) {
         ::new (static_cast<void*>(&begin[i]))
-            pl::test::DestroyTestType{&ary[i]};
+            pl::test::destroy_test_type{&ary[i]};
     }
 
     SUBCASE("test_destroy")

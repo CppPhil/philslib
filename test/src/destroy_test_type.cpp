@@ -28,12 +28,13 @@
 
 namespace pl {
 namespace test {
-DestroyTestType::DestroyTestType(bool* p) : m_p{p} {}
-DestroyTestType::DestroyTestType(const DestroyTestType&) = default;
+destroy_test_type::destroy_test_type(bool* p) : m_p{p} {}
+destroy_test_type::destroy_test_type(const destroy_test_type&) = default;
 
-DestroyTestType& DestroyTestType::operator=(const DestroyTestType&) = default;
+destroy_test_type& destroy_test_type::operator=(const destroy_test_type&)
+    = default;
 
-DestroyTestType::~DestroyTestType()
+destroy_test_type::~destroy_test_type()
 {
     // replace the previous value (should be false) of the bool with true.
     // this way a test can observe this destructor having been called.
