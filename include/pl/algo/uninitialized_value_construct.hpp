@@ -50,7 +50,9 @@ namespace algo {
  *       The complexity is linear in the distance between 'first' and 'last'.
 **/
 template <typename ForwardIterator>
-void uninitialized_value_construct(ForwardIterator first, ForwardIterator last)
+inline void uninitialized_value_construct(
+    ForwardIterator first,
+    ForwardIterator last)
 {
     using value_type =
         typename std::iterator_traits<ForwardIterator>::value_type;

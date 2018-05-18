@@ -51,7 +51,7 @@ namespace algo {
  * \note The complexity is linear in the distance between 'first' and 'last'.
 **/
 template <typename InputIterator, typename ForwardIterator>
-ForwardIterator uninitialized_move(
+inline ForwardIterator uninitialized_move(
     InputIterator   first,
     InputIterator   last,
     ForwardIterator dest)

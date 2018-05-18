@@ -50,7 +50,7 @@ namespace algo {
  *       The complexity is linear in the distance between 'first' and 'last'.
 **/
 template <typename ForwardIterator>
-void uninitialized_default_construct(
+inline void uninitialized_default_construct(
     ForwardIterator first,
     ForwardIterator last)
 {

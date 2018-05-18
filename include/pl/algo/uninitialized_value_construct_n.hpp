@@ -52,7 +52,7 @@ namespace algo {
  *       The complexity is linear in 'n'.
 **/
 template <typename ForwardIterator, typename SizeType>
-ForwardIterator uninitialized_value_construct_n(
+inline ForwardIterator uninitialized_value_construct_n(
     ForwardIterator first,
     SizeType        n)
 {

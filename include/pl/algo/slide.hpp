@@ -60,7 +60,7 @@ namespace algo {
  * ranges are typically half open in C++.
 **/
 template <typename RandomAccessIterator>
-auto slide(
+inline auto slide(
     RandomAccessIterator first,
     RandomAccessIterator last,
     RandomAccessIterator place)
