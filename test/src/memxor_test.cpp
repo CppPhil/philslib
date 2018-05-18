@@ -41,7 +41,7 @@
 
 TEST_CASE("memxor_test")
 {
-    constexpr auto expectedArray = pl::cont::makeArray(
+    constexpr auto expectedArray = pl::cont::make_array(
         static_cast<pl::Byte>('\x17'),
         static_cast<pl::Byte>('\x0A'),
         static_cast<pl::Byte>('\x1C'),
@@ -53,7 +53,7 @@ TEST_CASE("memxor_test")
         static_cast<pl::Byte>('\x55'),
         static_cast<pl::Byte>('\x00'));
 
-    constexpr auto srcArray = pl::cont::makeArray(
+    constexpr auto srcArray = pl::cont::make_array(
         static_cast<pl::Byte>('\x63'),
         static_cast<pl::Byte>('\x6F'),
         static_cast<pl::Byte>('\x6F'),
@@ -65,7 +65,7 @@ TEST_CASE("memxor_test")
         static_cast<pl::Byte>('\x21'),
         static_cast<pl::Byte>('\x00'));
 
-    auto destArray = pl::cont::makeArray(
+    auto destArray = pl::cont::make_array(
         static_cast<pl::Byte>('\x74'),
         static_cast<pl::Byte>('\x65'),
         static_cast<pl::Byte>('\x73'),

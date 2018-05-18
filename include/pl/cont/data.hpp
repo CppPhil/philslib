@@ -45,36 +45,36 @@ namespace detail {
 **/
 
 template <typename CharT, typename Traits, typename Allocator>
-std::true_type isBasicString(
+std::true_type is_basic_string(
     const std::basic_string<CharT, Traits, Allocator>&);
 
-std::false_type isBasicString(...);
+std::false_type is_basic_string(...);
 
 template <typename CharT, typename Traits, typename Allocator>
-constexpr CharT* dataImpl(
-    PL_IN std::basic_string<CharT, Traits, Allocator>& basicString,
+constexpr CharT* data_impl(
+    PL_IN std::basic_string<CharT, Traits, Allocator>& basic_string,
     std::true_type)
 {
-    return std::addressof(basicString[0U]);
+    return std::addressof(basic_string[0U]);
 }
 
 template <typename CharT, typename Traits, typename Allocator>
-constexpr const CharT* dataImpl(
-    PL_IN const std::basic_string<CharT, Traits, Allocator>& basicString,
+constexpr const CharT* data_impl(
+    PL_IN const std::basic_string<CharT, Traits, Allocator>& basic_string,
     std::true_type)
 {
-    return basicString.data();
+    return basic_string.data();
 }
 
 template <typename Container>
-constexpr auto dataImpl(PL_IN Container& container, std::false_type)
+constexpr auto data_impl(PL_IN Container& container, std::false_type)
     -> decltype(container.data())
 {
     return container.data();
 }
 
 template <typename Container>
-constexpr auto dataImpl(PL_IN const Container& container, std::false_type)
+constexpr auto data_impl(PL_IN const Container& container, std::false_type)
     -> decltype(container.data())
 {
     return container.data();
@@ -92,8 +92,8 @@ constexpr auto dataImpl(PL_IN const Container& container, std::false_type)
 template <typename Container>
 constexpr auto data(PL_IN Container& container) -> decltype(auto)
 {
-    return ::pl::cont::detail::dataImpl(
-        container, decltype(::pl::cont::detail::isBasicString(container)){});
+    return ::pl::cont::detail::data_impl(
+        container, decltype(::pl::cont::detail::is_basic_string(container)){});
 }
 
 /*!
@@ -113,14 +113,14 @@ constexpr Ty* data(PL_IN Ty (&array)[Size]) noexcept
 /*!
  * \brief Returns a pointer to the block of memory containing the elements
  *        the std::initializer_list.
- * \param initList The initializer_list to get the pointer for.
+ * \param init_list The initializer_list to get the pointer for.
  * \return A pointer to the block of memory containing the elements of the
  *         std::initializer_list.
 **/
 template <typename Ty>
-constexpr const Ty* data(std::initializer_list<Ty> initList) noexcept
+constexpr const Ty* data(std::initializer_list<Ty> init_list) noexcept
 {
-    return initList.begin();
+    return init_list.begin();
 }
 } // namespace cont
 } // namespace pl

@@ -72,10 +72,10 @@ TEST_CASE("std_list_back_test")
 
 TEST_CASE("c_array_back_test")
 {
-    const int  cArray[]  = {1, 2, 3, 4, 5, 6, 7};
-    const char cString[] = "Text";
-    CHECK(pl::cont::back(cArray) == 7);
-    CHECK(pl::cont::back(cString) == '\0');
+    const int  c_array[]  = {1, 2, 3, 4, 5, 6, 7};
+    const char c_string[] = "Text";
+    CHECK(pl::cont::back(c_array) == 7);
+    CHECK(pl::cont::back(c_string) == '\0');
 }
 
 TEST_CASE("std_queue_back_test")

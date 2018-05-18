@@ -221,51 +221,51 @@ TEST_CASE("valarray_size_test")
 
 TEST_CASE("unordered_map_size_test")
 {
-    std::unordered_map<int, int> unorderedMap1{{1, 1}, {1, 1}, {2, 2}, {2, 2}};
-    const std::unordered_map<int, int> unorderedMap2{
+    std::unordered_map<int, int> unordered_map1{{1, 1}, {1, 1}, {2, 2}, {2, 2}};
+    const std::unordered_map<int, int> unordered_map2{
         {1, 1}, {1, 1}, {2, 2}, {2, 2}, {5, 5}};
 
-    CHECK(pl::cont::size(unorderedMap1) == 2U);
-    CHECK(pl::cont::size(unorderedMap2) == 3U);
+    CHECK(pl::cont::size(unordered_map1) == 2U);
+    CHECK(pl::cont::size(unordered_map2) == 3U);
 }
 
 TEST_CASE("unordered_multimap_size_test")
 {
-    std::unordered_multimap<int, int> unorderedMultimap1{
+    std::unordered_multimap<int, int> unordered_multimap1{
         {1, 1}, {1, 1}, {2, 2}, {2, 2}};
-    const std::unordered_multimap<int, int> unorderedMultimap2{
+    const std::unordered_multimap<int, int> unordered_multimap2{
         {1, 1}, {1, 1}, {2, 2}, {2, 2}, {5, 5}};
 
-    CHECK(pl::cont::size(unorderedMultimap1) == 4U);
-    CHECK(pl::cont::size(unorderedMultimap2) == 5U);
+    CHECK(pl::cont::size(unordered_multimap1) == 4U);
+    CHECK(pl::cont::size(unordered_multimap2) == 5U);
 }
 
 TEST_CASE("unordered_set_size_test")
 {
-    std::unordered_set<int>       unorderedSet1{1, 1, 2};
-    const std::unordered_set<int> unorderedSet2{1, 1, 2};
+    std::unordered_set<int>       unordered_set1{1, 1, 2};
+    const std::unordered_set<int> unordered_set2{1, 1, 2};
 
-    CHECK(pl::cont::size(unorderedSet1) == 2U);
-    CHECK(pl::cont::size(unorderedSet2) == 2U);
+    CHECK(pl::cont::size(unordered_set1) == 2U);
+    CHECK(pl::cont::size(unordered_set2) == 2U);
 }
 
 TEST_CASE("unordered_multiset_size_test")
 {
-    std::unordered_multiset<int>       unorderedMultiset1{1, 1, 2};
-    const std::unordered_multiset<int> unorderedMultiset2{1, 1, 2};
+    std::unordered_multiset<int>       unordered_multiset1{1, 1, 2};
+    const std::unordered_multiset<int> unordered_multiset2{1, 1, 2};
 
-    CHECK(pl::cont::size(unorderedMultiset1) == 3U);
-    CHECK(pl::cont::size(unorderedMultiset2) == 3U);
+    CHECK(pl::cont::size(unordered_multiset1) == 3U);
+    CHECK(pl::cont::size(unordered_multiset2) == 3U);
 }
 
 TEST_CASE("initializer_list_size_test")
 {
-    std::initializer_list<const char*>       initList1{"Hello", "World"};
-    const std::initializer_list<const char*> initList2{
+    std::initializer_list<const char*>       init_list1{"Hello", "World"};
+    const std::initializer_list<const char*> init_list2{
         "This", "is", "some", "text."};
-    const std::initializer_list<void*> initList3{};
+    const std::initializer_list<void*> init_list3{};
 
-    CHECK(pl::cont::size(initList1) == 2U);
-    CHECK(pl::cont::size(initList2) == 4U);
-    CHECK(pl::cont::size(initList3) == 0U);
+    CHECK(pl::cont::size(init_list1) == 2U);
+    CHECK(pl::cont::size(init_list2) == 4U);
+    CHECK(pl::cont::size(init_list3) == 0U);
 }

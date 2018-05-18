@@ -40,7 +40,7 @@
 
 TEST_CASE("zero_memory_test")
 {
-    auto ary = pl::cont::makeArray(
+    auto ary = pl::cont::make_array(
         static_cast<pl::Byte>(0xAB),
         static_cast<pl::Byte>(0xCD),
         static_cast<pl::Byte>(0xEF),

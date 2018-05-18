@@ -38,7 +38,7 @@
 
 TEST_CASE("eprintf_test")
 {
-    static constexpr auto array = pl::cont::makeArray('H', 'e', 'l', 'l', 'o');
+    static constexpr auto array = pl::cont::make_array('H', 'e', 'l', 'l', 'o');
     static constexpr int  expectedCount = 11;
 
     const int retVal{pl::eprintf(

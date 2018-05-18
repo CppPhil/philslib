@@ -26,7 +26,7 @@
 
 /*!
  * \file to_array.hpp
- * \brief Exports the toArray function.
+ * \brief Exports the to_array function.
 **/
 #ifndef INCG_PL_CONT_TO_ARRAY_HPP
 #define INCG_PL_CONT_TO_ARRAY_HPP
@@ -40,10 +40,10 @@ namespace pl {
 namespace cont {
 namespace detail {
 /*!
- * \brief Implementation function of toArray, not to be used directly.
+ * \brief Implementation function of to_array, not to be used directly.
 **/
 template <typename Ty, std::size_t               Size, std::size_t... Indices>
-constexpr std::array<std::remove_cv_t<Ty>, Size> toArrayImpl(
+constexpr std::array<std::remove_cv_t<Ty>, Size> to_array_impl(
     PL_IN Ty (&array)[Size],
     std::index_sequence<Indices...>)
 {
@@ -62,10 +62,10 @@ constexpr std::array<std::remove_cv_t<Ty>, Size> toArrayImpl(
  * corresponding element of 'array'.
 **/
 template <typename Ty, std::size_t               Size>
-constexpr std::array<std::remove_cv_t<Ty>, Size> toArray(
+constexpr std::array<std::remove_cv_t<Ty>, Size> to_array(
     PL_IN Ty (&array)[Size])
 {
-    return detail::toArrayImpl(array, std::make_index_sequence<Size>{});
+    return detail::to_array_impl(array, std::make_index_sequence<Size>{});
 }
 } // namespace cont
 } // namespace pl

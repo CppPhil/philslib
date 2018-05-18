@@ -51,7 +51,7 @@ namespace {
 template <typename InputIterator>
 bool isEqualToExpected(InputIterator first, InputIterator last)
 {
-    static constexpr auto expected = ::pl::cont::makeArray(1, 2, 3, 4, 5);
+    static constexpr auto expected = ::pl::cont::make_array(1, 2, 3, 4, 5);
 
     return std::equal(first, last, ::pl::begin(expected), ::pl::end(expected));
 }

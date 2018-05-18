@@ -138,17 +138,17 @@ TEST_CASE("vector_front_test")
 
 TEST_CASE("forward_list_front_test")
 {
-    std::forward_list<int>       forwardList1{0, 1, 2, 3, 4};
-    const std::forward_list<int> forwardList2{5, 6, 7, 8, 9, 10, 11};
+    std::forward_list<int>       forward_list1{0, 1, 2, 3, 4};
+    const std::forward_list<int> forward_list2{5, 6, 7, 8, 9, 10, 11};
 
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::cont::front(forwardList1)), int&>::value);
+        std::is_same<decltype(pl::cont::front(forward_list1)), int&>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::cont::front(forwardList2)),
+        std::is_same<decltype(pl::cont::front(forward_list2)),
                      const int&>::value);
 
-    CHECK(pl::cont::front(forwardList1) == 0);
-    CHECK(pl::cont::front(forwardList2) == 5);
+    CHECK(pl::cont::front(forward_list1) == 0);
+    CHECK(pl::cont::front(forward_list2) == 5);
 }
 
 TEST_CASE("c_array_front_test")

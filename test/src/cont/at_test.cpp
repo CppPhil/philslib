@@ -47,11 +47,11 @@ TEST_CASE("at_test")
 
     std::vector<int>       vec1{1, 2, 3, 4};
     const std::vector<int> vec2{5, 6, 7, 8};
-    const std::vector<int> emptyVector{};
+    const std::vector<int> empty_vector{};
 
     std::initializer_list<std::string>       il1{"test", "text"};
     const std::initializer_list<std::string> il2{"Hello", "World"};
-    std::initializer_list<std::string>       emptyInitList{};
+    std::initializer_list<std::string>       empty_init_list{};
 
     SUBCASE("type_test")
     {
@@ -110,11 +110,11 @@ TEST_CASE("at_test")
 
         CHECK_THROWS_AS(pl::cont::at(vec1, 4U), std::out_of_range);
         CHECK_THROWS_AS(pl::cont::at(vec2, 4U), std::out_of_range);
-        CHECK_THROWS_AS(pl::cont::at(emptyVector, 0U), std::out_of_range);
+        CHECK_THROWS_AS(pl::cont::at(empty_vector, 0U), std::out_of_range);
 
         CHECK_THROWS_AS(pl::cont::at(il1, 2U), std::out_of_range);
         CHECK_THROWS_AS(pl::cont::at(il2, 2U), std::out_of_range);
-        CHECK_THROWS_AS(pl::cont::at(emptyInitList, 0U), std::out_of_range);
+        CHECK_THROWS_AS(pl::cont::at(empty_init_list, 0U), std::out_of_range);
 
         CHECK_THROWS_AS(
             pl::cont::at(a1, static_cast<std::size_t>(-1)), std::out_of_range);
@@ -127,14 +127,14 @@ TEST_CASE("at_test")
             pl::cont::at(vec2, static_cast<std::size_t>(-1)),
             std::out_of_range);
         CHECK_THROWS_AS(
-            pl::cont::at(emptyVector, static_cast<std::size_t>(-1)),
+            pl::cont::at(empty_vector, static_cast<std::size_t>(-1)),
             std::out_of_range);
         CHECK_THROWS_AS(
             pl::cont::at(il1, static_cast<std::size_t>(-1)), std::out_of_range);
         CHECK_THROWS_AS(
             pl::cont::at(il2, static_cast<std::size_t>(-1)), std::out_of_range);
         CHECK_THROWS_AS(
-            pl::cont::at(emptyInitList, static_cast<std::size_t>(-1)),
+            pl::cont::at(empty_init_list, static_cast<std::size_t>(-1)),
             std::out_of_range);
     }
 }

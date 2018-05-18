@@ -117,18 +117,18 @@ TEST_CASE("initializer_list_data_test")
 
 TEST_CASE("c_array_data_test")
 {
-    char       cArray1[] = "Test";
-    const char cArray2[]
+    char       c_array1[] = "Test";
+    const char c_array2[]
         = {'H', 'e', 'l', 'l', 'o', ' ', 'W', 'o', 'r', 'l', 'd', '\0'};
 
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::cont::data(cArray1)), char*>::value);
+        std::is_same<decltype(pl::cont::data(c_array1)), char*>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::cont::data(cArray2)), const char*>::value);
+        std::is_same<decltype(pl::cont::data(c_array2)), const char*>::value);
 
-    CHECK(pl::cont::data(cArray1) == &cArray1[0]);
-    CHECK(pl::cont::data(cArray2) == &cArray2[0]);
+    CHECK(pl::cont::data(c_array1) == &c_array1[0U]);
+    CHECK(pl::cont::data(c_array2) == &c_array2[0U]);
 
-    CHECK(pl::cont::data(cArray1) == static_cast<char*>(cArray1));
-    CHECK(pl::cont::data(cArray2) == static_cast<const char*>(cArray2));
+    CHECK(pl::cont::data(c_array1) == static_cast<char*>(c_array1));
+    CHECK(pl::cont::data(c_array2) == static_cast<const char*>(c_array2));
 }

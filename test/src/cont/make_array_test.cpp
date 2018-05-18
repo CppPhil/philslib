@@ -33,14 +33,14 @@
 #if PL_COMPILER == PL_COMPILER_GCC
 #pragma GCC diagnostic pop
 #endif // PL_COMPILER == PL_COMPILER_GCC
-#include "../../../include/pl/cont/make_array.hpp" // pl::cont::makeArray
+#include "../../../include/pl/cont/make_array.hpp" // pl::cont::make_array
 #include "../../include/static_assert.hpp"         // PL_TEST_STATIC_ASSERT
 #include <type_traits>                             // std::is_same
 
 TEST_CASE("test_make_array_basic")
 {
-    auto       array1 = pl::cont::makeArray(1, 2, 3, 4, 5);
-    const auto array2 = pl::cont::makeArray(5U, 6U, 7U);
+    auto       array1 = pl::cont::make_array(1, 2, 3, 4, 5);
+    const auto array2 = pl::cont::make_array(5U, 6U, 7U);
 
     PL_TEST_STATIC_ASSERT(
         std::is_same<decltype(array1), std::array<int, 5>>::value);
@@ -62,7 +62,7 @@ TEST_CASE("test_make_array_basic")
 
 TEST_CASE("test_make_array_common_type")
 {
-    const auto array = pl::cont::makeArray(1, 1L, 2LL);
+    const auto array = pl::cont::make_array(1, 1L, 2LL);
 
     PL_TEST_STATIC_ASSERT(
         std::is_same<decltype(array)::value_type, long long>::value);
@@ -72,21 +72,21 @@ TEST_CASE("test_make_array_common_type")
     CHECK(array[1U] == 1LL);
     CHECK(array[2U] == 2LL);
 
-    const auto anotherArray = pl::cont::makeArray(1.1F, 2.2);
+    const auto another_array = pl::cont::make_array(1.1F, 2.2);
 
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(anotherArray)::value_type, double>::value);
+        std::is_same<decltype(another_array)::value_type, double>::value);
 
-    REQUIRE(anotherArray.size() == 2U);
-    CHECK(anotherArray[0U] == doctest::Approx(1.1));
-    CHECK(anotherArray[1U] == doctest::Approx(2.2));
+    REQUIRE(another_array.size() == 2U);
+    CHECK(another_array[0U] == doctest::Approx(1.1));
+    CHECK(another_array[1U] == doctest::Approx(2.2));
 }
 
 TEST_CASE("test_make_array_desired_type")
 {
-    const auto array1 = pl::cont::makeArray<double>(5.3F, 1.1F);
+    const auto array1 = pl::cont::make_array<double>(5.3F, 1.1F);
     const auto array2
-        = pl::cont::makeArray<long long>(1, 2L, static_cast<short>(5));
+        = pl::cont::make_array<long long>(1, 2L, static_cast<short>(5));
 
     PL_TEST_STATIC_ASSERT(
         std::is_same<decltype(array1)::value_type, double>::value);

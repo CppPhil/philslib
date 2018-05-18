@@ -26,7 +26,7 @@
 
 /*!
  * \file make_array.hpp
- * \brief Exports the makeArray function that creates a std::array
+ * \brief Exports the make_array function that creates a std::array
  *        from a given template type parameter pack.
 **/
 #ifndef INCG_PL_CONT_MAKE_ARRAY_HPP
@@ -42,18 +42,18 @@ namespace pl {
 namespace cont {
 namespace detail {
 /*!
- * \brief Implementation of makeArray. Do not use directly.
+ * \brief Implementation of make_array. Do not use directly.
 **/
 template <typename DesiredType, typename...>
-struct ReturnTypeHelper {
+struct return_type_helper {
     using type = DesiredType;
 };
 
 /*!
- * \brief Implementation of makeArray. Do not use directly.
+ * \brief Implementation of make_array. Do not use directly.
 **/
 template <typename... Types>
-struct ReturnTypeHelper<void, Types...> : public std::common_type<Types...> {
+struct return_type_helper<void, Types...> : public std::common_type<Types...> {
     static_assert(
         ::pl::meta::
             conjunction<::pl::meta::is_not_reference_wrapper<Types>...>::value,
@@ -61,11 +61,11 @@ struct ReturnTypeHelper<void, Types...> : public std::common_type<Types...> {
 };
 
 /*!
- * \brief Implementation of makeArray. Do not use directly.
+ * \brief Implementation of make_array. Do not use directly.
 **/
 template <typename DesiredType, typename... Types>
-using ReturnType
-    = std::array<typename ReturnTypeHelper<DesiredType, Types...>::type,
+using return_type
+    = std::array<typename return_type_helper<DesiredType, Types...>::type,
                  sizeof...(Types)>;
 } // namespace detail
 
@@ -75,7 +75,7 @@ using ReturnType
  * \return The resulting std::array.
 **/
 template <typename DesiredType = void, typename... Args>
-constexpr detail::ReturnType<DesiredType, Args...> makeArray(
+constexpr detail::return_type<DesiredType, Args...> make_array(
     PL_IN Args&&... args)
 {
     return {{std::forward<Args>(args)...}};

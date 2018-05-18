@@ -33,18 +33,18 @@
 #if PL_COMPILER == PL_COMPILER_GCC
 #pragma GCC diagnostic pop
 #endif // PL_COMPILER == PL_COMPILER_GCC
-#include "../../../include/pl/cont/to_array.hpp" // pl::cont::toArray
+#include "../../../include/pl/cont/to_array.hpp" // pl::cont::to_array
 #include "../../include/static_assert.hpp"       // PL_TEST_STATIC_ASSERT
 #include <string>                                // std::string
 #include <type_traits>                           // std::is_same
 
 TEST_CASE("to_array_general_test")
 {
-    int          cArray1[]{1, 2, 3, 4, 5};
-    const double cArray2[]{1.1, 2.2, 3.3};
+    int          c_array1[]{1, 2, 3, 4, 5};
+    const double c_array2[]{1.1, 2.2, 3.3};
 
-    auto       array1 = pl::cont::toArray(cArray1);
-    const auto array2 = pl::cont::toArray(cArray2);
+    auto       array1 = pl::cont::to_array(c_array1);
+    const auto array2 = pl::cont::to_array(c_array2);
 
     PL_TEST_STATIC_ASSERT(
         std::is_same<decltype(array1), std::array<int, 5U>>::value);
@@ -66,9 +66,9 @@ TEST_CASE("to_array_general_test")
 
 TEST_CASE("to_array_one_element_test")
 {
-    const std::string cArray[]{std::string{"Hello World"}};
+    const std::string c_array[]{std::string{"Hello World"}};
 
-    const auto array = pl::cont::toArray(cArray);
+    const auto array = pl::cont::to_array(c_array);
 
     PL_TEST_STATIC_ASSERT(
         std::is_same<decltype(array),

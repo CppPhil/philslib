@@ -66,16 +66,16 @@ constexpr auto front(PL_IN Type (&arr)[Size]) noexcept -> decltype(auto)
 
 /*!
  * \brief Gets the first (index 0) element of an initializer_list.
- * \param initList The initializer_list to get the first (index 0) element of.
+ * \param init_list The initializer_list to get the first (index 0) element of.
  * \return The first (index 0) element of the initializer_list.
  * \warning Undefined behavior occurs if the initializer_list passed in is
  *          empty.
 **/
 template <typename Ty>
-constexpr auto front(std::initializer_list<Ty> initList) noexcept
+constexpr auto front(std::initializer_list<Ty> init_list) noexcept
     -> decltype(auto)
 {
-    return *(initList.begin());
+    return *(init_list.begin());
 }
 } // namespace cont
 } // namespace pl
