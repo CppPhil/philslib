@@ -39,7 +39,8 @@ namespace algo {
 /*!
  * \brief Calls the destructor of the object pointed to by 'ptr',
  *        as if by ptr->~Ty();
- * \param ptr A pointer to the object to be destroyed. May not be nullptr!
+ * \param ptr A pointer to the object to be destroyed. May not be nullptr
+ *            or otherwise be invalid.
 **/
 template <typename Ty>
 void destroy_at(PL_OUT Ty* ptr)
