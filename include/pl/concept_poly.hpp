@@ -26,7 +26,7 @@
 
 /*!
  * \file concept_poly.hpp
- * \brief Exports the ConceptPoly template type that can be used to
+ * \brief Exports the concept_poly template type that can be used to
  *        create runtime polymorphic objects with value semantics.
 **/
 #ifndef INCG_PL_CONCEPT_POLY_HPP
@@ -37,53 +37,53 @@
 #include "meta/remove_cvref.hpp" // pl::meta::remove_cvref_t
 #include <cstddef>               // std::nullptr_t
 #include <memory>                // std::unique_ptr, std::make_unique
-#include <type_traits>           //  std::is_same
+#include <type_traits>           // std::is_same
 #include <utility>               // std::forward, std::swap
 
 namespace pl {
 /*!
  * \brief Type for concept based polymorphism.
  *
- * The 'Concept' type must be a pure abstract base class that serves as the
+ * The 'concept' type must be a pure abstract base class that serves as the
  * type that defines the interface. All the member functions, excluding
- * the destructor, of the 'Concept' type must be pure virtual.
- * The destructor of the 'Concept' type must be declared virtual.
- * The 'Concept' type must define a pure virtual 'clone' member function
+ * the destructor, of the 'concept' type must be pure virtual.
+ * The destructor of the 'concept' type must be declared virtual.
+ * The 'concept' type must define a pure virtual 'clone' member function
  * that used for cloning (virtual copy constructor). The return type of
- * that 'clone' pure virtual member function must be std::unique_ptr<Concept>.
- * The 'Model' type must be a template type that has one template type
+ * that 'clone' pure virtual member function must be std::unique_ptr<concept>.
+ * The 'model' type must be a template type that has one template type
  * parameter, that template type parameter may be any type wrapped by the
- * 'Model' template type. The 'Model' template type must be derived from
- * 'Concept' and implement all the virtual member functions of 'Concept'.
- * The 'clone' virtual member function of 'Model' shall return a copy
- * of itself as std::unique_ptr<Concept>.
+ * 'model' template type. The 'model' template type must be derived from
+ * 'concept' and implement all the virtual member functions of 'concept'.
+ * The 'clone' virtual member function of 'model' shall return a copy
+ * of itself as std::unique_ptr<concept>.
  * Can be used to 'put' types into a 'type-hierarchy' that cannot derive
- * from any type. Allows putting types that fulfill the Concept through
- * the Model into the corresponding ConceptPoly without the implementation
+ * from any type. Allows putting types that fulfill the concept through
+ * the model into the corresponding concept_poly without the implementation
  * type needing to be derived from any type, resulting in looser coupling
  * and allowing the type to be used outside of any type-hierarchy, completely
  * avoiding virtual function call overhead. Provides value semantics rather
  * than reference semantics.
 **/
 template <typename Concept, template <typename> class Model>
-class ConceptPoly {
+class concept_poly {
 public:
     /*!
      * \brief An alias of this type.
     **/
-    using this_type = ConceptPoly;
+    using this_type = concept_poly;
 
     /*!
-     * \brief Type alias of the 'Concept' type.
-     *        Used to be able to query the 'Concept' type.
+     * \brief Type alias of the 'concept' type.
+     *        Used to be able to query the 'concept' type.
     **/
     using concept_type = Concept;
 
     /*!
      * \brief Alias of the 'Model<???>' type.
-     *        Used to be able to query the 'Model' type.
+     *        Used to be able to query the 'model' type.
      * \note You can check the dynamic type by comparing the std::type_info
-     *       objects of different instantiations of the 'Model' template type
+     *       objects of different instantiations of the 'model' template type
      *       with the std::type_info object for the object returned by
      *       one of the accessor functions.
     **/
@@ -92,7 +92,7 @@ public:
 
     /*!
      * \brief The pointer type used by the underlying std::unique_ptr.
-     *        An alias for Concept *.
+     *        An alias for Concept*.
     **/
     using pointer = typename std::unique_ptr<Concept>::pointer;
 
@@ -103,15 +103,15 @@ public:
     using element_type = typename std::unique_ptr<Concept>::element_type;
 
     /*!
-     * \brief The deletery_type used by the underlying std::unique_ptr.
+     * \brief The deleter_type used by the underlying std::unique_ptr.
     **/
     using deleter_type = typename std::unique_ptr<Concept>::deleter_type;
 
     /*!
-     * \brief Constructs a ConceptPoly object from the object passed in.
+     * \brief Constructs a concept_poly object from the object passed in.
      * \param impl The implementation object to use.
      * \note This constructor will only be enabled if 'Impl' is not
-     *       of type ConceptPoly<Concept, Model>.
+     *       of type concept_poly<Concept, Model>.
      * \warning Do not replace the second template type parameter of this
      *          constructor!
     **/
@@ -120,21 +120,21 @@ public:
               = meta::disable_if_t<std::is_same<meta::remove_cvref_t<Impl>,
                                                 this_type>::value,
                                    void>>
-    explicit ConceptPoly(PL_IN Impl&& impl)
+    explicit concept_poly(PL_IN Impl&& impl)
         : m_ptr{std::make_unique<Model<meta::remove_cvref_t<Impl>>>(
               std::forward<Impl>(impl))}
     {
     }
 
     /*!
-     * \brief Copy constructs a ConceptPoly object from another one.
-     * \param other The other ConceptPoly object to create a copy of.
-     * \note Uses the 'clone' virtual member function of 'Concept',
+     * \brief Copy constructs a concept_poly object from another one.
+     * \param other The other concept_poly object to create a copy of.
+     * \note Uses the 'clone' virtual member function of 'concept',
      *       which must return std::unique_ptr<Concept> and clone the
      *       underlying Model<???> type.
      * \warning Precondition: other is not in the moved-from state.
     **/
-    ConceptPoly(PL_IN const this_type& other) : m_ptr{nullptr}
+    concept_poly(PL_IN const this_type& other) : m_ptr{nullptr}
     {
         PL_DBG_CHECK_PRE(static_cast<bool>(other));
         m_ptr = other.m_ptr->clone();
@@ -144,22 +144,22 @@ public:
      * \brief Defaulted move constructor.
      * \warning The object passed into the parameter is left in the
      *          moved-from state. The operator bool() member function
-     *          of the ConceptPoly type can be used to determine whether
+     *          of the concept_poly type can be used to determine whether
      *          the object is valid, that is, it is not in the moved from
      *          state.
      *
-     * Move constructs a ConceptPoly object from another one.
+     * Move constructs a concept_poly object from another one.
      * Performs a member by member move.
     **/
-    ConceptPoly(PL_IN this_type&&) noexcept = default;
+    concept_poly(PL_IN this_type&&) noexcept = default;
 
     /*!
      * \brief Copy assignment operator. Copy assigns this object with 'other'.
-     * \param other The other ConceptPoly object to become a copy of.
+     * \param other The other concept_poly object to become a copy of.
      * \return A reference to this object.
      * \note Destroys the current implementation object and replaces it
      *       with a copy of the parameter's.
-     *       Uses the 'clone' virtual member function of the 'Concept' type
+     *       Uses the 'clone' virtual member function of the 'concept' type
      *       which must be correctly implemented by the derived Model<???>
      *       type and return a clone as std::unique_ptr<Concept>.
      * \warning Precondition: other is not in the moved-from state.
@@ -177,7 +177,7 @@ public:
      * \note Performs a member by member move.
      * \warning The object passed into the parameter is left in the moved-from
      *          state. The operator bool() member function can be used
-     *          to check if a ConceptPoly object is valid, that is, it isn't
+     *          to check if a concept_poly object is valid, that is, it isn't
      *          in the moved-from state.
     **/
     this_type& operator=(PL_IN this_type&&) noexcept = default;
@@ -194,17 +194,17 @@ public:
 
     /*!
      * \brief Accessor function to get to the object managed by this
-     *        ConceptPoly.
-     * \return A raw pointer of type Concept * to the object managed by
-     *         this ConceptPoly.
+     *        concept_poly.
+     * \return A raw pointer of type Concept* to the object managed by
+     *         this concept_poly.
      * \note Can be used to access the object directly.
     **/
     Concept* get() noexcept { return m_ptr.get(); }
     /*!
      * \brief Accessor function to get to the object managed by this
-     *        ConceptPoly.
-     * \return A raw pointer of type const Concept * to the object managed by
-     *         this ConceptPoly.
+     *        concept_poly.
+     * \return A raw pointer of type const Concept* to the object managed by
+     *         this concept_poly.
      * \note Can be used to access the object directly.
     **/
     const Concept* get() const noexcept
@@ -235,8 +235,8 @@ public:
 
     /*!
      * \brief Operator to call member functions on the object managed
-     *        that are defined by the 'Concept' interface type.
-     * \return A Concept *.
+     *        that are defined by the 'concept' interface type.
+     * \return A Concept*.
      * \warning Precondition: this object is not in the moved-from state.
     **/
     Concept* operator->()
@@ -247,8 +247,8 @@ public:
 
     /*!
      * \brief Operator to call const member functions on the object managed
-     *        that are defined by the 'Concept' interface type.
-     * \return A const Concept *.
+     *        that are defined by the 'concept' interface type.
+     * \return A const Concept*.
      * \warning Precondition: this object is not in the moved-from state.
     **/
     const Concept* operator->() const
@@ -268,7 +268,7 @@ private:
 };
 
 /*!
- * \brief Non member swap function for the ConceptPoly template type.
+ * \brief Non member swap function for the concept_poly template type.
  *        Swaps the two parameters passed in with each other.
  * \param lhs The first parameter.
  * \param rhs The second parameter.
@@ -277,8 +277,8 @@ private:
 **/
 template <typename Concept, template <typename> class Model>
 void swap(
-    PL_INOUT ConceptPoly<Concept, Model>& lhs,
-    PL_INOUT ConceptPoly<Concept, Model>& rhs) noexcept
+    PL_INOUT concept_poly<Concept, Model>& lhs,
+    PL_INOUT concept_poly<Concept, Model>& rhs) noexcept
 {
     lhs.swap(rhs);
 }

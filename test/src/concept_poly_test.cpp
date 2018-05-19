@@ -33,7 +33,7 @@
 #if PL_COMPILER == PL_COMPILER_GCC
 #pragma GCC diagnostic pop
 #endif                                       // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/pl/concept_poly.hpp" // pl::ConceptPoly
+#include "../../include/pl/concept_poly.hpp" // pl::concept_poly
 #include <cstddef>                           // std::size_t
 #include <memory>  // std::unique_ptr, std::make_unique
 #include <ostream> // std::ostream
@@ -44,51 +44,51 @@
 namespace pl {
 namespace test {
 namespace {
-class Implementation {
+class implementation {
 public:
-    explicit Implementation(std::string string) : m_string{std::move(string)} {}
+    explicit implementation(std::string string) : m_string{std::move(string)} {}
     friend std::ostream&
-    drawIt(const Implementation& impl, std::ostream& os, std::size_t position);
+    draw_it(const implementation& impl, std::ostream& os, std::size_t position);
 
 private:
     std::string m_string;
 };
 
 std::ostream&
-drawIt(const Implementation& impl, std::ostream& os, std::size_t position)
+draw_it(const implementation& impl, std::ostream& os, std::size_t position)
 {
     return os << std::string(position, ' ') << impl.m_string;
 }
 
-std::ostream& drawIt(int integer, std::ostream& os, std::size_t position)
+std::ostream& draw_it(int integer, std::ostream& os, std::size_t position)
 {
     return os << std::string(position, '?') << ' ' << integer;
 }
 
-class DrawConcept {
+class draw_concept {
 public:
-    DrawConcept()                                      = default;
-    virtual ~DrawConcept()                             = default;
-    virtual std::unique_ptr<DrawConcept> clone() const = 0;
+    draw_concept()                                      = default;
+    virtual ~draw_concept()                             = default;
+    virtual std::unique_ptr<draw_concept> clone() const = 0;
     virtual std::ostream& draw(std::ostream& os, std::size_t position)
-        const                       = 0;
-    DrawConcept(const DrawConcept&) = delete;
-    DrawConcept& operator=(const DrawConcept&) = delete;
+        const                         = 0;
+    draw_concept(const draw_concept&) = delete;
+    draw_concept& operator=(const draw_concept&) = delete;
 };
 
 template <typename Impl>
-class DrawModel : public DrawConcept {
+class draw_model : public draw_concept {
 public:
-    explicit DrawModel(Impl impl) : DrawConcept{}, m_impl{std::move(impl)} {}
-    virtual std::unique_ptr<DrawConcept> clone() const override
+    explicit draw_model(Impl impl) : draw_concept{}, m_impl{std::move(impl)} {}
+    virtual std::unique_ptr<draw_concept> clone() const override
     {
-        return std::make_unique<DrawModel>(m_impl);
+        return std::make_unique<draw_model>(m_impl);
     }
 
     virtual std::ostream& draw(std::ostream& os, std::size_t position)
         const override
     {
-        return ::pl::test::drawIt(m_impl, os, position);
+        return ::pl::test::draw_it(m_impl, os, position);
     }
 
 private:
@@ -102,13 +102,13 @@ TEST_CASE("concept_poly_test")
 {
     using namespace std::literals::string_literals;
 
-    using Drawable
-        = pl::ConceptPoly<pl::test::DrawConcept, pl::test::DrawModel>;
+    using drawable
+        = pl::concept_poly<pl::test::draw_concept, pl::test::draw_model>;
 
     std::ostringstream oss{};
 
-    Drawable a{pl::test::Implementation{"Test"s}};
-    Drawable b{5};
+    drawable a{pl::test::implementation{"Test"s}};
+    drawable b{5};
 
     REQUIRE_UNARY(static_cast<bool>(a));
     REQUIRE_UNARY(static_cast<bool>(b));
@@ -127,7 +127,7 @@ TEST_CASE("concept_poly_test")
 
     SUBCASE("copy_constructor")
     {
-        Drawable c{b};
+        drawable c{b};
         REQUIRE_UNARY(static_cast<bool>(c));
         REQUIRE_UNARY(static_cast<bool>(b));
 
@@ -137,14 +137,14 @@ TEST_CASE("concept_poly_test")
 
     SUBCASE("move_constructor")
     {
-        Drawable c{Drawable{7}};
+        drawable c{drawable{7}};
         REQUIRE_UNARY(static_cast<bool>(c));
         c->draw(oss, 2U);
         CHECK(oss.str() == "?? 7"s);
 
         oss.str(std::string{});
 
-        Drawable d{std::move(c)};
+        drawable d{std::move(c)};
         REQUIRE_UNARY(static_cast<bool>(d));
         CHECK_UNARY_FALSE(static_cast<bool>(c));
         d->draw(oss, 5U);
@@ -153,7 +153,7 @@ TEST_CASE("concept_poly_test")
 
     SUBCASE("copy_assignment")
     {
-        Drawable c{3};
+        drawable c{3};
         REQUIRE_UNARY(static_cast<bool>(c));
         c = a;
         REQUIRE_UNARY(static_cast<bool>(c));
@@ -164,16 +164,16 @@ TEST_CASE("concept_poly_test")
 
     SUBCASE("move_assignment")
     {
-        Drawable c{a};
+        drawable c{a};
         REQUIRE_UNARY(static_cast<bool>(c));
-        c = Drawable{25};
+        c = drawable{25};
         REQUIRE_UNARY(static_cast<bool>(c));
         c->draw(oss, 4U);
         CHECK(oss.str() == "???? 25"s);
 
         oss.str(std::string{});
 
-        Drawable d{1};
+        drawable d{1};
         REQUIRE_UNARY(static_cast<bool>(d));
         d = std::move(c);
         REQUIRE_UNARY(static_cast<bool>(d));
@@ -199,8 +199,8 @@ TEST_CASE("concept_poly_test")
 
     SUBCASE("get_test")
     {
-        pl::test::DrawConcept* p1{a.get()};
-        pl::test::DrawConcept* p2{b.get()};
+        pl::test::draw_concept* p1{a.get()};
+        pl::test::draw_concept* p2{b.get()};
 
         p1->draw(oss, 1U);
         CHECK(oss.str() == " Test"s);
@@ -213,8 +213,8 @@ TEST_CASE("concept_poly_test")
 
     SUBCASE("operator*")
     {
-        pl::test::DrawConcept& r1{*a};
-        pl::test::DrawConcept& r2{*b};
+        pl::test::draw_concept& r1{*a};
+        pl::test::draw_concept& r2{*b};
 
         r1.draw(oss, 5U);
         CHECK(oss.str() == "     Test"s);
