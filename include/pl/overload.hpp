@@ -37,42 +37,42 @@
 
 namespace pl {
 /*!
- * \brief The primary 'Overloaded' template.
+ * \brief The primary 'overloaded' template.
  *        Exports all the call operators of the lambdas, which are base types.
 **/
 template <typename Lambda1, typename... Lambdas>
-class Overloaded : public Lambda1, public Overloaded<Lambdas...> {
+class overloaded : public Lambda1, public overloaded<Lambdas...> {
 public:
     /*!
-     * \brief Creates an 'Overloaded' object.
+     * \brief Creates an 'overloaded' object.
      * \param lambda1 The first lambda to construct.
      * \param lambdas The rest of the lambdas to construct.
     **/
     template <typename FirstLambda, typename... OtherLambdas>
-    Overloaded(PL_IN FirstLambda&& lambda1, PL_IN OtherLambdas&&... lambdas)
+    overloaded(PL_IN FirstLambda&& lambda1, PL_IN OtherLambdas&&... lambdas)
         : Lambda1{std::forward<FirstLambda>(lambda1)}
-        , Overloaded<Lambdas...>{std::forward<OtherLambdas>(lambdas)...}
+        , overloaded<Lambdas...>{std::forward<OtherLambdas>(lambdas)...}
     {
     }
 
     using Lambda1::operator();
-    using Overloaded<Lambdas...>::operator();
+    using overloaded<Lambdas...>::operator();
 };
 
 /*!
- * \brief The recursive base case of the 'Overloaded' machinery.
+ * \brief The recursive base case of the 'overloaded' machinery.
  *        Derives from Lambda1. A partial template specialization of the
  *        base template.
 **/
 template <typename Lambda1>
-class Overloaded<Lambda1> : public Lambda1 {
+class overloaded<Lambda1> : public Lambda1 {
 public:
     /*!
-     * \brief Constructs an 'Overloaded' object.
+     * \brief Constructs an 'overloaded' object.
      * \param lambda1 The first lambda to construct.
     **/
     template <typename FirstLambda>
-    explicit Overloaded(PL_IN FirstLambda&& lambda1)
+    explicit overloaded(PL_IN FirstLambda&& lambda1)
         : Lambda1{std::forward<FirstLambda>(lambda1)}
     {
     }
@@ -81,7 +81,7 @@ public:
 };
 
 /*!
- * \brief Maker function for an 'Overloaded'.
+ * \brief Maker function for an 'overloaded'.
  * \param lambdas The lambdas to be combined.
  * \return An object that features all the call operators of all the
  *         lambdas passed into the parameter list.
@@ -94,7 +94,7 @@ auto overload(PL_IN Lambdas&&... lambdas)
         sizeof...(Lambdas) > 0,
         "You must supply at least one argument to pl::overload");
 
-    return Overloaded<meta::remove_cvref_t<Lambdas>...>{
+    return overloaded<meta::remove_cvref_t<Lambdas>...>{
         std::forward<Lambdas>(lambdas)...};
 }
 } // namespace pl

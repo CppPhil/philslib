@@ -33,8 +33,8 @@
 #if PL_COMPILER == PL_COMPILER_GCC
 #pragma GCC diagnostic pop
 #endif                                   // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/pl/as_bytes.hpp" // pl::asBytes
-#include "../../include/pl/print_bytes_as_hex.hpp" // pl::PrintBytesAsHex
+#include "../../include/pl/as_bytes.hpp" // pl::as_bytes
+#include "../../include/pl/print_bytes_as_hex.hpp" // pl::print_bytes_as_hex
 #include "../include/static_assert.hpp"            // PL_TEST_STATIC_ASSERT
 #include <climits>                                 // CHAR_BIT
 #include <cstdint>                                 // std::uint32_t
@@ -46,6 +46,7 @@
 namespace pl {
 namespace test {
 namespace {
+// this is just here to suppress pedantic MSVC warnings
 template <typename BidirectionalIterator, typename OutputIterator>
 OutputIterator reverse_copy(
     BidirectionalIterator first,
@@ -78,7 +79,7 @@ TEST_CASE("print_bytes_as_hex_test")
 
     SUBCASE("default_delimiter")
     {
-        oss << pl::PrintBytesAsHex{array, sizeof(array)};
+        oss << pl::print_bytes_as_hex{array, sizeof(array)};
         CHECK(oss.str() == "DE AD C0 DE 00"s);
     }
 
@@ -87,7 +88,7 @@ TEST_CASE("print_bytes_as_hex_test")
         std::uint32_t i{};
         PL_TEST_STATIC_ASSERT(sizeof(i) <= sizeof(array));
         std::memcpy(&i, array, sizeof(i));
-        oss << pl::PrintBytesAsHex{&i, sizeof(i), ""};
+        oss << pl::print_bytes_as_hex{&i, sizeof(i), ""};
         CHECK(oss.str() == "DEADC0DE"s);
     }
 
@@ -97,7 +98,7 @@ TEST_CASE("print_bytes_as_hex_test")
         PL_TEST_STATIC_ASSERT(sizeof(i) <= sizeof(array));
         pl::test::reverse_copy(
             std::cbegin(array), std::cend(array) - 1, pl::as_bytes(i));
-        oss << pl::PrintBytesAsHex{&i, sizeof(i), "-"};
+        oss << pl::print_bytes_as_hex{&i, sizeof(i), "-"};
         CHECK(oss.str() == "DE-C0-AD-DE");
     }
 }
