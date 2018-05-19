@@ -34,7 +34,7 @@
 #pragma GCC diagnostic pop
 #endif                                  // PL_COMPILER == PL_COMPILER_GCC
 #include "../../include/pl/bswap.hpp"   // pl::bswap
-#include "../../include/pl/byte.hpp"    // pl::Byte
+#include "../../include/pl/byte.hpp"    // pl::byte
 #include "../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
 #include <array>                        // std::array
 #include <cstddef>                      // std::size_t
@@ -43,30 +43,30 @@
 
 TEST_CASE("bswap_test")
 {
-    static constexpr std::size_t byteSize{4U};
+    static constexpr std::size_t byte_size{4U};
 
-    PL_TEST_STATIC_ASSERT(sizeof(std::uint32_t) == byteSize);
+    PL_TEST_STATIC_ASSERT(sizeof(std::uint32_t) == byte_size);
 
-    const std::array<pl::byte, byteSize> le{{static_cast<pl::byte>(0xDD),
-                                             static_cast<pl::byte>(0xCC),
-                                             static_cast<pl::byte>(0xBB),
-                                             static_cast<pl::byte>(0xAA)}};
-    const std::array<pl::byte, byteSize> be{{static_cast<pl::byte>(0xAA),
-                                             static_cast<pl::byte>(0xBB),
-                                             static_cast<pl::byte>(0xCC),
-                                             static_cast<pl::byte>(0xDD)}};
+    const std::array<pl::byte, byte_size> le{{static_cast<pl::byte>(0xDD),
+                                              static_cast<pl::byte>(0xCC),
+                                              static_cast<pl::byte>(0xBB),
+                                              static_cast<pl::byte>(0xAA)}};
+    const std::array<pl::byte, byte_size> be{{static_cast<pl::byte>(0xAA),
+                                              static_cast<pl::byte>(0xBB),
+                                              static_cast<pl::byte>(0xCC),
+                                              static_cast<pl::byte>(0xDD)}};
 
     std::uint32_t val{};
 
-    std::memcpy(&val, le.data(), byteSize);
+    std::memcpy(&val, le.data(), byte_size);
     val = pl::bswap(val);
-    CHECK(std::memcmp(&val, be.data(), byteSize) == 0);
+    CHECK(std::memcmp(&val, be.data(), byte_size) == 0);
     val = pl::bswap(val);
-    CHECK(std::memcmp(&val, le.data(), byteSize) == 0);
+    CHECK(std::memcmp(&val, le.data(), byte_size) == 0);
 
-    std::memcpy(&val, be.data(), byteSize);
+    std::memcpy(&val, be.data(), byte_size);
     val = pl::bswap(val);
-    CHECK(std::memcmp(&val, le.data(), byteSize) == 0);
+    CHECK(std::memcmp(&val, le.data(), byte_size) == 0);
     val = pl::bswap(val);
-    CHECK(std::memcmp(&val, be.data(), byteSize) == 0);
+    CHECK(std::memcmp(&val, be.data(), byte_size) == 0);
 }
