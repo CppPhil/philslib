@@ -38,8 +38,8 @@ namespace pl {
 namespace {
 /*!
  * \brief printf-style function that prints to stderr, rather than stdout.
- * \param formatString A null-terminated printf-style format string to use for
- *                     printing. May never be nullptr.
+ * \param format_string A null-terminated printf-style format string to use for
+ *                      printing. May never be nullptr or otherwise be invalid.
  * \return Number of characters written if successful
  *         or negative value if an error occurred.
  * \note Behaves exactly like std::printf, but prints to stderr rather than
@@ -48,14 +48,14 @@ namespace {
  *          amount of arguments for the printf-style string.
 **/
 PL_PRINTF_FUNCTION(1, 2)
-int eprintf(PL_IN PL_FMT_STR(const char*) formatString, ...) noexcept
+int eprintf(PL_IN PL_FMT_STR(const char*) format_string, ...) noexcept
 {
     std::va_list args{};
-    va_start(args, formatString);
-    const auto retVal = std::vfprintf(stderr, formatString, args);
+    va_start(args, format_string);
+    const auto ret_val = std::vfprintf(stderr, format_string, args);
     va_end(args);
 
-    return retVal;
+    return ret_val;
 }
 } // anonymous namespace
 } // namespace pl
