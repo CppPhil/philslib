@@ -126,7 +126,7 @@ namespace pl {
  * \note Not to be caught, this exception indicates a bug.
  * \see assert.hpp
 **/
-class AssertionViolationException : public std::runtime_error {
+class assertion_violation_exception : public std::runtime_error {
 public:
     using std::runtime_error::runtime_error;
 };
@@ -136,9 +136,9 @@ public:
  * \note Not to be caught, this exception indicates a bug.
  * \see assert.hpp
 **/
-class PreconditionViolationException : public AssertionViolationException {
+class precondition_violation_exception : public assertion_violation_exception {
 public:
-    using AssertionViolationException::AssertionViolationException;
+    using assertion_violation_exception::assertion_violation_exception;
 };
 
 /*!
@@ -146,9 +146,9 @@ public:
  * \note Not to be caught, this exception indicates a bug.
  * \see assert.hpp
 **/
-class PostconditionViolationException : public AssertionViolationException {
+class postcondition_violation_exception : public assertion_violation_exception {
 public:
-    using AssertionViolationException::AssertionViolationException;
+    using assertion_violation_exception::assertion_violation_exception;
 };
 
 /*!
