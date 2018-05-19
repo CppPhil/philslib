@@ -40,18 +40,19 @@ namespace pl {
 namespace detail {
 namespace {
 /*!
- * \brief Returns std::strlen(string) or maximumLength, whichever is less.
- * \param string The null-terminated byte string to check. May not be nullptr!
- * \param maximumLength The 'maximum length'.
- * \return std::strlen(string) or maximumLength, whichever is less.
+ * \brief Returns std::strlen(string) or maximum_length, whichever is less.
+ * \param string The null-terminated byte string to check.
+ *               May not be nullptr or otherwise be invalid!
+ * \param maximum_length The 'maximum length'.
+ * \return std::strlen(string) or maximum_length, whichever is less.
 **/
 std::size_t strnlen(
     PL_IN       PL_NULL_TERMINATED(const char*) string,
-    std::size_t maximumLength) noexcept
+    std::size_t maximum_length) noexcept
 {
     std::size_t pos{0U};
 
-    for (; pos < maximumLength; ++pos) {
+    for (; pos < maximum_length; ++pos) {
         if (string[pos] == '\0') {
             break;
         }
@@ -66,16 +67,16 @@ namespace {
 /*!
  * \brief Creates a copy of a null-terminated string.
  * \param str Pointer to the null-terminated byte string to duplicate.
- *            May not be nullptr!
+ *            May not be nullptr or otherwise be invalid!
  * \return The copy.
 **/
 PL_NODISCARD std::unique_ptr<char[]> strdup(
     PL_IN PL_NULL_TERMINATED(const char*) str) noexcept
 {
-    const auto bytesNeeded = std::strlen(str) + static_cast<std::size_t>(1U);
-    auto       returnValue = std::make_unique<char[]>(bytesNeeded);
-    std::memcpy(returnValue.get(), str, bytesNeeded);
-    return returnValue;
+    const auto bytes_needed = std::strlen(str) + static_cast<std::size_t>(1U);
+    auto       return_value = std::make_unique<char[]>(bytes_needed);
+    std::memcpy(return_value.get(), str, bytes_needed);
+    return return_value;
 }
 
 /*!
@@ -94,11 +95,11 @@ PL_NODISCARD std::unique_ptr<char[]> strndup(
     PL_IN       PL_NULL_TERMINATED(const char*) str,
     std::size_t size) noexcept
 {
-    const auto stringLength = ::pl::detail::strnlen(str, size);
-    auto       returnValue  = std::make_unique<char[]>(stringLength + 1U);
-    std::memcpy(returnValue.get(), str, stringLength);
-    returnValue[stringLength] = '\0';
-    return returnValue;
+    const auto string_length = ::pl::detail::strnlen(str, size);
+    auto       return_value  = std::make_unique<char[]>(string_length + 1U);
+    std::memcpy(return_value.get(), str, string_length);
+    return_value[string_length] = '\0';
+    return return_value;
 }
 } // anonymous namespace
 } // namespace pl

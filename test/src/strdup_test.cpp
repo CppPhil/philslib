@@ -55,8 +55,8 @@ TEST_CASE("strdup_test")
 TEST_CASE("strndup_test")
 {
     static constexpr char        str[]{"Sample text"};
-    static constexpr std::size_t strLen{(sizeof(str) / sizeof(str[0U]))
-                                        - sizeof(str[0U])};
+    static constexpr std::size_t str_len{(sizeof(str) / sizeof(str[0U]))
+                                         - sizeof(str[0U])};
     std::unique_ptr<char[]> up{nullptr};
 
     up = pl::strndup(str, 0U);
@@ -76,21 +76,21 @@ TEST_CASE("strndup_test")
     CHECK(std::strcmp(up.get(), "Sam") == 0);
     CHECK(up[3U] == '\0');
 
-    up = pl::strndup(str, strLen);
+    up = pl::strndup(str, str_len);
     REQUIRE(up != nullptr);
-    REQUIRE(std::strlen(up.get()) == strLen);
+    REQUIRE(std::strlen(up.get()) == str_len);
     CHECK(std::strcmp(up.get(), str) == 0);
-    CHECK(up[strLen] == '\0');
+    CHECK(up[str_len] == '\0');
 
-    up = pl::strndup(str, strLen + 1U);
+    up = pl::strndup(str, str_len + 1U);
     REQUIRE(up != nullptr);
-    REQUIRE(std::strlen(up.get()) == strLen);
+    REQUIRE(std::strlen(up.get()) == str_len);
     CHECK(std::strcmp(up.get(), str) == 0);
-    CHECK(up[strLen] == '\0');
+    CHECK(up[str_len] == '\0');
 
     up = pl::strndup(str, 500U);
     REQUIRE(up != nullptr);
-    REQUIRE(std::strlen(up.get()) == strLen);
+    REQUIRE(std::strlen(up.get()) == str_len);
     CHECK(std::strcmp(up.get(), str) == 0);
-    CHECK(up[strLen] == '\0');
+    CHECK(up[str_len] == '\0');
 }
