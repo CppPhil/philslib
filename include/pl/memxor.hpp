@@ -44,17 +44,17 @@ namespace pl {
  *                    May not be nullptr!
  * \param source The buffer with which 'destination' shall be xored.
  *               May not be nullptr!
- * \param byteCount The size in bytes of the source buffer.
+ * \param byte_count The size in bytes of the source buffer.
  *                  The destination buffer must be at least as large as
- *                  'byteCount'. You probably want to use buffers of equal
+ *                  'byte_count'. You probably want to use buffers of equal
  *                  byte size for 'destination' and 'source'.
  * \return 'destination' is returned.
- * \warning Make sure 'byteCount' is correct!
+ * \warning Make sure 'byte_count' is correct!
 **/
 inline void* memxor(
     PL_INOUT void* PL_RESTRICT destination,
     PL_IN const void* PL_RESTRICT source,
-    std::size_t                   byteCount)
+    std::size_t                   byte_count)
 {
     PL_DBG_CHECK_PRE(destination != nullptr);
     PL_DBG_CHECK_PRE(source != nullptr);
@@ -62,10 +62,10 @@ inline void* memxor(
     auto dest = static_cast<byte * PL_RESTRICT>(destination);
     auto src  = static_cast<const byte * PL_RESTRICT>(source);
 
-    while (byteCount > 0) {
+    while (byte_count > 0) {
         *dest ^= *src;
 
-        --byteCount;
+        --byte_count;
         ++dest;
         ++src;
     }

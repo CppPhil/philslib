@@ -33,15 +33,15 @@
 #if PL_COMPILER == PL_COMPILER_GCC
 #pragma GCC diagnostic pop
 #endif                               // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/pl/byte.hpp" // pl::Byte
-#include "../../include/pl/cont/make_array.hpp" // pl::makeArray
+#include "../../include/pl/byte.hpp" // pl::byte
+#include "../../include/pl/cont/make_array.hpp" // pl::make_array
 #include "../../include/pl/memxor.hpp"          // pl::memxor
 #include <cstddef>                              // std::size_t
 #include <cstring>                              // std::memcmp
 
 TEST_CASE("memxor_test")
 {
-    constexpr auto expectedArray = pl::cont::make_array(
+    constexpr auto expected_array = pl::cont::make_array(
         static_cast<pl::byte>('\x17'),
         static_cast<pl::byte>('\x0A'),
         static_cast<pl::byte>('\x1C'),
@@ -53,7 +53,7 @@ TEST_CASE("memxor_test")
         static_cast<pl::byte>('\x55'),
         static_cast<pl::byte>('\x00'));
 
-    constexpr auto srcArray = pl::cont::make_array(
+    constexpr auto src_array = pl::cont::make_array(
         static_cast<pl::byte>('\x63'),
         static_cast<pl::byte>('\x6F'),
         static_cast<pl::byte>('\x6F'),
@@ -65,7 +65,7 @@ TEST_CASE("memxor_test")
         static_cast<pl::byte>('\x21'),
         static_cast<pl::byte>('\x00'));
 
-    auto destArray = pl::cont::make_array(
+    auto dest_array = pl::cont::make_array(
         static_cast<pl::byte>('\x74'),
         static_cast<pl::byte>('\x65'),
         static_cast<pl::byte>('\x73'),
@@ -77,18 +77,18 @@ TEST_CASE("memxor_test")
         static_cast<pl::byte>('\x74'),
         static_cast<pl::byte>('\x00'));
 
-    REQUIRE(destArray.size() == srcArray.size());
-    REQUIRE(destArray.size() == expectedArray.size());
+    REQUIRE(dest_array.size() == src_array.size());
+    REQUIRE(dest_array.size() == expected_array.size());
 
-    void* const       dest{destArray.data()};
-    const void* const src{srcArray.data()};
-    const void* const expected{expectedArray.data()};
+    void* const       dest{dest_array.data()};
+    const void* const src{src_array.data()};
+    const void* const expected{expected_array.data()};
 
-    const std::size_t size{destArray.size()};
+    const std::size_t size{dest_array.size()};
 
-    void* const retVal{pl::memxor(dest, src, size)};
+    void* const ret_val{pl::memxor(dest, src, size)};
 
-    CHECK(retVal == dest);
+    CHECK(ret_val == dest);
 
     CHECK(std::memcmp(dest, expected, size) == 0);
 }
