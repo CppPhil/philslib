@@ -141,7 +141,7 @@ TEST_CASE("raw_memory_array_test")
 
     SUBCASE("iterate_backwards")
     {
-        for (std::string& s : pl::iterateReversed(ary2)) {
+        for (std::string& s : pl::iterate_reversed(ary2)) {
             CHECK(s == "Text"s);
             s = "Test"s;
         }
@@ -152,7 +152,7 @@ TEST_CASE("raw_memory_array_test")
                     return s == "Test"s;
                 }));
 
-        for (const std::string& s : pl::iterateReversed(pl::as_const(ary1))) {
+        for (const std::string& s : pl::iterate_reversed(pl::as_const(ary1))) {
             CHECK_UNARY(s.empty());
         }
     }

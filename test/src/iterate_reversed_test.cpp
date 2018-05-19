@@ -33,7 +33,7 @@
 #if PL_COMPILER == PL_COMPILER_GCC
 #pragma GCC diagnostic pop
 #endif // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/pl/iterate_reversed.hpp" // pl::iterateReversed
+#include "../../include/pl/iterate_reversed.hpp" // pl::iterate_reversed
 #include "../include/static_assert.hpp"          // PL_TEST_STATIC_ASSERT
 #include <cstddef>                               // std::size_t
 #include <iterator>                              // std::iterator_traits
@@ -43,42 +43,43 @@
 
 TEST_CASE("iterate_reversed_type_test")
 {
-    std::vector<int>       nonConst{1, 2, 3, 4, 5};
-    const std::vector<int> constVector{1, 2, 3};
+    std::vector<int>       non_const_vec{1, 2, 3, 4, 5};
+    const std::vector<int> const_vector{1, 2, 3};
 
-    using NonConst        = decltype(pl::iterateReversed(nonConst));
-    using NonConstBeginIt = decltype(std::declval<NonConst>().begin());
-    using NonConstEndIt   = decltype(std::declval<NonConst>().end());
+    using non_const          = decltype(pl::iterate_reversed(non_const_vec));
+    using non_const_begin_it = decltype(std::declval<non_const>().begin());
+    using non_const_end_it   = decltype(std::declval<non_const>().end());
 
-    using Const        = decltype(pl::iterateReversed(constVector));
-    using ConstBeginIt = decltype(std::declval<Const>().begin());
-    using ConstEndIt   = decltype(std::declval<Const>().end());
+    using const_type     = decltype(pl::iterate_reversed(const_vector));
+    using const_begin_it = decltype(std::declval<const_type>().begin());
+    using const_end_it   = decltype(std::declval<const_type>().end());
 
     PL_TEST_STATIC_ASSERT(
-        std::is_same<NonConstBeginIt,
+        std::is_same<non_const_begin_it,
                      std::vector<int>::reverse_iterator>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<NonConstEndIt, std::vector<int>::reverse_iterator>::value);
+        std::is_same<non_const_end_it,
+                     std::vector<int>::reverse_iterator>::value);
 
     PL_TEST_STATIC_ASSERT(
-        std::is_same<ConstBeginIt,
+        std::is_same<const_begin_it,
                      std::vector<int>::const_reverse_iterator>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<ConstEndIt,
+        std::is_same<const_end_it,
                      std::vector<int>::const_reverse_iterator>::value);
 
     PL_TEST_STATIC_ASSERT(
-        std::is_same<std::iterator_traits<NonConstBeginIt>::reference,
+        std::is_same<std::iterator_traits<non_const_begin_it>::reference,
                      int&>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<std::iterator_traits<NonConstEndIt>::reference,
+        std::is_same<std::iterator_traits<non_const_end_it>::reference,
                      int&>::value);
 
     PL_TEST_STATIC_ASSERT(
-        std::is_same<std::iterator_traits<ConstBeginIt>::reference,
+        std::is_same<std::iterator_traits<const_begin_it>::reference,
                      const int&>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<std::iterator_traits<ConstEndIt>::reference,
+        std::is_same<std::iterator_traits<const_end_it>::reference,
                      const int&>::value);
 
     CHECK_UNARY(true);
@@ -97,7 +98,7 @@ TEST_CASE("iterate_reversed_test")
 
     SUBCASE("non_const_array")
     {
-        for (auto& e : pl::iterateReversed(a1)) {
+        for (auto& e : pl::iterate_reversed(a1)) {
             CHECK(e == expected[i]);
             ++i;
         }
@@ -105,7 +106,7 @@ TEST_CASE("iterate_reversed_test")
 
     SUBCASE("const_array")
     {
-        for (const auto& e : pl::iterateReversed(a2)) {
+        for (const auto& e : pl::iterate_reversed(a2)) {
             CHECK(e == expected[i]);
             ++i;
         }
@@ -113,7 +114,7 @@ TEST_CASE("iterate_reversed_test")
 
     SUBCASE("non_const_vector")
     {
-        for (auto& e : pl::iterateReversed(vec1)) {
+        for (auto& e : pl::iterate_reversed(vec1)) {
             CHECK(e == expected[i]);
             ++i;
         }
@@ -121,7 +122,7 @@ TEST_CASE("iterate_reversed_test")
 
     SUBCASE("const_vector")
     {
-        for (const auto& e : pl::iterateReversed(vec2)) {
+        for (const auto& e : pl::iterate_reversed(vec2)) {
             CHECK(e == expected[i]);
             ++i;
         }

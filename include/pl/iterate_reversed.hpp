@@ -26,7 +26,7 @@
 
 /*!
  * \file iterate_reversed.hpp
- * \brief Exports the iterateReversed function that can be used to
+ * \brief Exports the iterate_reversed function that can be used to
  *        iterate over a container in reversed order in a range based for loop.
 **/
 #ifndef INCG_PL_ITERATE_REVERSED_HPP
@@ -37,19 +37,20 @@
 namespace pl {
 namespace detail {
 /*!
- * \brief Type used by pl::iterateReversed. Used for non-const containers.
+ * \brief Type used by pl::iterate_reversed. Used for non-const containers.
 **/
 template <typename Container>
-class RevForAdapter final {
+class rev_for_adapter final {
 public:
-    using this_type = RevForAdapter;
+    using this_type = rev_for_adapter;
 
     /*!
-     * \brief Creates a pl::detail::RevForAdapter by storing a non-const lvalue
-     *        reference to the container passed in.
+     * \brief Creates a pl::detail::rev_for_adapter by storing a non-const
+     *        lvalue reference to the container passed in.
      * \param container The container to iterate over.
     **/
-    explicit RevForAdapter(PL_IN Container& container) : m_container{container}
+    explicit rev_for_adapter(PL_IN Container& container)
+        : m_container{container}
     {
     }
 
@@ -70,19 +71,19 @@ private:
 };
 
 /*!
- * \brief Type used by pl::iterateReversed. Used for const containers.
+ * \brief Type used by pl::iterate_reversed. Used for const containers.
 **/
 template <typename Container>
-class RevForAdapterConst final {
+class rev_for_adapter_const final {
 public:
-    using this_type = RevForAdapterConst;
+    using this_type = rev_for_adapter_const;
 
     /*!
-     * \brief Creates a pl::detail::RevForAdapterConst by storing a const lvalue
-     *        reference to the container passed in.
+     * \brief Creates a pl::detail::rev_for_adapter_const by storing a const
+     *        lvalue reference to the container passed in.
      * \param container The container to iterate over.
     **/
-    explicit RevForAdapterConst(PL_IN const Container& container)
+    explicit rev_for_adapter_const(PL_IN const Container& container)
         : m_container{container}
     {
     }
@@ -101,7 +102,7 @@ public:
     auto end() const -> decltype(auto) { return ::pl::crend(m_container); }
 private:
     const Container& m_container; //!< const lvalue reference to the container
-                                  //!to iterate over.
+                                  //! to iterate over.
 };
 } // namespace detail
 
@@ -112,15 +113,11 @@ private:
  * \return An object that a range based for loop can operate on in order to
  *         iterate over the container in reversed order.
  * \note This overload handles non-const containers.
- * \example for (auto &e : pl::iterateReversed(cont)) {
- *              ++e;
- *              std::cout << e << ' ';
- *          }
 **/
 template <typename Container>
-detail::RevForAdapter<Container> iterateReversed(PL_IN Container& container)
+detail::rev_for_adapter<Container> iterate_reversed(PL_IN Container& container)
 {
-    return detail::RevForAdapter<Container>{container};
+    return detail::rev_for_adapter<Container>{container};
 }
 
 /*!
@@ -130,15 +127,12 @@ detail::RevForAdapter<Container> iterateReversed(PL_IN Container& container)
  * \return An object that a range based for loop can operate on in order to
  *         iterate over the container in reversed order.
  * \note This overload handles const containers.
- * \example for (const auto &e : pl::iterateReversed(cont)) {
- *              std::cout << e << ' ';
- *          }
 **/
 template <typename Container>
-detail::RevForAdapterConst<Container> iterateReversed(
+detail::rev_for_adapter_const<Container> iterate_reversed(
     PL_IN const Container& container)
 {
-    return detail::RevForAdapterConst<Container>{container};
+    return detail::rev_for_adapter_const<Container>{container};
 }
 } // namespace pl
 #endif // INCG_PL_ITERATE_REVERSED_HPP
