@@ -159,7 +159,7 @@ include/pl/begin_end_macro.hpp: Macros to facilitate definition of other macros 
 include/pl/bitmask.hpp: Macro to allow the usage of bitwise operators with scoped enums.  
 include/pl/bits.hpp: Convenience function for some bitwise operations.  
 include/pl/bswap.hpp: A portable bswap.  
-include/pl/byte.hpp: A 'Byte' type alias.  
+include/pl/byte.hpp: A 'byte' type alias.  
 include/pl/char_to_int.hpp: Function to convert a decimal 'character' value to a 'numeric' value.  
 include/pl/checked_delete.hpp: Functions to call delete / delete[] that avoid undefined behavior if the pointed to type is incomplete. Also provides functions that null the pointer after calling delete / delete[].  
 include/pl/compiler.hpp: Compiler detection and version checking macros.  
@@ -180,7 +180,7 @@ include/pl/named_operator.hpp: Function to define named operators.
 include/pl/negate_predicate.hpp: Adaptor to create the negation of a predicate, similar to not_fn from C++17.  
 include/pl/no_macro_substitution.hpp: Macro to prevent undesirable macro substitution.  
 include/pl/noncopyable.hpp: Macro to declare a type as non-copyable.  
-include/pl/numeric.hpp: isEven, isOdd and isBetween function templates.  
+include/pl/numeric.hpp: is_even, is_odd and is_between function templates.  
 include/pl/observer_ptr: observer pointer like observer_ptr from library fundamentals TS v2.  
 include/pl/os.hpp: Operating system detection macros.  
 include/pl/overload.hpp: Utility to create an 'overload set object' from 1 or more user provided lambdas. Useful for C++17 std::variant visitation.  
@@ -188,7 +188,6 @@ include/pl/packed.hpp: Portable macros to be able to define packed structures.
 include/pl/print_bytes_as_hex.hpp: Utility to print a memory region as hexadecimals.  
 include/pl/random_number_generator.hpp: A random number generator type.  
 include/pl/raw_memory_array.hpp: Class template to treat a memory region as an array.  
-include/pl/raw_storage.hpp: Convenience wrapper for aligned_storage.  
 include/pl/restrict.hpp: Portable macro to define a restrict pointer.  
 include/pl/size_t.hpp: User defined literal to create std::size_t objects.  
 include/pl/source_line.hpp: Macro that expands to a string literal of the current line in the current source file.  
@@ -200,4 +199,4 @@ include/pl/toggle_bool.hpp: Function to invert the value of a bool object.
 include/pl/unrelated_pointer_cast.hpp: Function template for unrelated pointer casts, leaving reinterpret_cast for just integer to pointer and pointer to integer conversions.  
 include/pl/unused.hpp: Macro to suppress warnings about objects being unused.  
 include/pl/vla.hpp: Macro to be able to define VLAs by using alloca.  
-include/pl/zero_memory.hpp: zeroMemory and secureZeroMemory functions to zero regions of memory.
+include/pl/zero_memory.hpp: zero_memory and secure_zero_memory functions to zero regions of memory.
