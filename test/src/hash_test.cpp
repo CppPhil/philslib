@@ -45,29 +45,29 @@
 namespace pl {
 namespace test {
 namespace {
-class Hashable;
+class hashable;
 } // anonymous namespace
 } // namespace test
 } // namespace pl
 
 namespace std {
 template <>
-struct hash<::pl::test::Hashable>;
+struct hash<::pl::test::hashable>;
 } // namespace std
 
 namespace pl {
 namespace test {
 namespace {
-class Hashable {
+class hashable {
 public:
-    Hashable(std::string string, int integer)
+    hashable(std::string string, int integer)
         : m_string{std::move(string)}, m_integer{integer}
     {
     }
 
-    friend ::std::hash<Hashable>;
+    friend ::std::hash<hashable>;
 
-    friend bool operator==(const Hashable& a, const Hashable& b)
+    friend bool operator==(const hashable& a, const hashable& b)
     {
         return (a.m_string == b.m_string) and (a.m_integer == b.m_integer);
     }
@@ -82,8 +82,8 @@ private:
 
 namespace std {
 template <>
-struct hash<::pl::test::Hashable> {
-    size_t operator()(const ::pl::test::Hashable& hashable) const
+struct hash<::pl::test::hashable> {
+    size_t operator()(const ::pl::test::hashable& hashable) const
     {
         return ::pl::hash(hashable.m_string, hashable.m_integer);
     }
@@ -95,39 +95,39 @@ TEST_CASE("hash_positive_test")
     static const std::string str{"Test"};
     constexpr int            integer{5};
 
-    std::size_t hashSeed{0U};
-    pl::detail::addHash(hashSeed, str);
-    pl::detail::addHash(hashSeed, integer);
+    std::size_t hash_seed{0U};
+    pl::detail::add_hash(hash_seed, str);
+    pl::detail::add_hash(hash_seed, integer);
 
-    pl::test::Hashable obj{str, integer};
-    pl::test::Hashable copy{obj};
+    pl::test::hashable obj{str, integer};
+    pl::test::hashable copy{obj};
 
-    std::hash<pl::test::Hashable> hasher{};
+    std::hash<pl::test::hashable> hasher{};
 
-    CHECK(hasher(obj) == hashSeed);
-    CHECK(hasher(copy) == hashSeed);
+    CHECK(hasher(obj) == hash_seed);
+    CHECK(hasher(copy) == hash_seed);
     CHECK(hasher(obj) == hasher(copy));
 }
 
 TEST_CASE("hash_negative_test")
 {
-    pl::test::Hashable a{"text", 5};
-    pl::test::Hashable b{
+    pl::test::hashable a{"text", 5};
+    pl::test::hashable b{
         "text", 6,
     };
 
     CHECK(
-        std::hash<pl::test::Hashable>{}(a)
-        != std::hash<pl::test::Hashable>{}(b));
+        std::hash<pl::test::hashable>{}(a)
+        != std::hash<pl::test::hashable>{}(b));
 }
 
 TEST_CASE("hash_unordered_set_test")
 {
-    std::unordered_set<pl::test::Hashable> set{pl::test::Hashable{"test", 25}};
+    std::unordered_set<pl::test::hashable> set{pl::test::hashable{"test", 25}};
 
-    CHECK(set.find(pl::test::Hashable{"test", 25}) != std::end(set));
-    CHECK(set.find(pl::test::Hashable{"text", 25}) == std::end(set));
+    CHECK(set.find(pl::test::hashable{"test", 25}) != std::end(set));
+    CHECK(set.find(pl::test::hashable{"text", 25}) == std::end(set));
 
-    set.emplace("hashTest", 50);
-    CHECK(set.find(pl::test::Hashable{"hashTest", 50}) != std::end(set));
+    set.emplace("hash_test", 50);
+    CHECK(set.find(pl::test::hashable{"hash_test", 50}) != std::end(set));
 }

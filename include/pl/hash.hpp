@@ -40,23 +40,23 @@
 namespace pl {
 namespace detail {
 /*!
- * \brief Adds the hash generated for hashable to the current hashSeed.
- * \param hashSeed The hash seed to have the newly generated hash value be
- *        added to.
+ * \brief Adds the hash generated for hashable to the current hash_seed.
+ * \param hash_seed The hash seed to have the newly generated hash value be
+ *                  added to.
  * \param hashable The object to generate a hash for.
 **/
 template <typename Hashable>
-void addHash(
-    PL_INOUT std::size_t& hashSeed,
+void add_hash(
+    PL_INOUT std::size_t& hash_seed,
     PL_IN const Hashable& hashable) noexcept
 {
-    static constexpr auto shiftRight  = 0x2;
-    static constexpr auto shiftLeft   = 0x6;
-    static constexpr auto goldenRatio = 0x9E3779B9;
+    static constexpr auto shift_right  = 0x2;
+    static constexpr auto shift_left   = 0x6;
+    static constexpr auto golden_ratio = 0x9E3779B9;
 
     std::hash<Hashable> hasher{};
-    hashSeed ^= hasher(hashable) + goldenRatio + (hashSeed << shiftLeft)
-                + (hashSeed >> shiftRight);
+    hash_seed ^= hasher(hashable) + golden_ratio + (hash_seed << shift_left)
+                 + (hash_seed >> shift_right);
 }
 } // namespace detail
 
@@ -72,11 +72,11 @@ void addHash(
 template <typename... Args>
 std::size_t hash(PL_IN const Args&... args) noexcept
 {
-    std::size_t hashSeed{0U};
+    std::size_t hash_seed{0U};
 
-    (void)std::initializer_list<int>{(detail::addHash(hashSeed, args), 0)...};
+    (void)std::initializer_list<int>{(detail::add_hash(hash_seed, args), 0)...};
 
-    return hashSeed;
+    return hash_seed;
 }
 } // namespace pl
 #endif // INCG_PL_HASH_HPP
