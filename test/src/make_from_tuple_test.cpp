@@ -33,8 +33,8 @@
 #if PL_COMPILER == PL_COMPILER_GCC
 #pragma GCC diagnostic pop
 #endif // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/pl/cont/make_array.hpp" // pl::cont::makeArray
-#include "../../include/pl/make_from_tuple.hpp" // pl::makeFromTuple
+#include "../../include/pl/cont/make_array.hpp" // pl::cont::make_array
+#include "../../include/pl/make_from_tuple.hpp" // pl::make_from_tuple
 #include <array>                                // std::array
 #include <cstdint>                              // std::uint32_t, UINT32_C
 #include <string> // std::string, std::to_string, std::literals::string_literals::operator""s
@@ -81,21 +81,21 @@ TEST_CASE("make_from_tuple_test")
 {
     using namespace std::literals::string_literals;
 
-    const pl::test::test_type a{pl::makeFromTuple<pl::test::test_type>(
+    const pl::test::test_type a{pl::make_from_tuple<pl::test::test_type>(
         std::make_tuple("test"s, UINT32_C(25), nullptr))};
 
     CHECK(a.s() == "test"s);
     CHECK(a.i() == UINT32_C(25));
     CHECK(a.p() == nullptr);
 
-    const pl::test::test_type b{pl::makeFromTuple<pl::test::test_type>(
+    const pl::test::test_type b{pl::make_from_tuple<pl::test::test_type>(
         std::make_pair("text"s, UINT32_C(50)))};
 
     CHECK(b.s() == "text"s);
     CHECK(b.i() == UINT32_C(50));
     CHECK(b.p() == nullptr);
 
-    const pl::test::test_type c{pl::makeFromTuple<pl::test::test_type>(
+    const pl::test::test_type c{pl::make_from_tuple<pl::test::test_type>(
         pl::cont::make_array(UINT32_C(7), UINT32_C(500)))};
 
     CHECK(c.s() == "7"s);

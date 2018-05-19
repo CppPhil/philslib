@@ -26,7 +26,7 @@
 
 /*!
  * \file make_from_tuple.hpp
- * \brief This header file exports the makeFromTuple function.
+ * \brief This header file exports the make_from_tuple function.
 **/
 #ifndef INCG_PL_MAKE_FROM_TUPLE_HPP
 #define INCG_PL_MAKE_FROM_TUPLE_HPP
@@ -39,34 +39,34 @@
 namespace pl {
 namespace detail {
 /*!
- * \brief Helper function for makeFromTuple.
- * \warning Not to be used directly, use pl::makeFromTuple!.
+ * \brief Helper function for make_from_tuple.
+ * \warning Not to be used directly, use pl::make_from_tuple!.
 **/
 template <typename Ty, typename TupleLike, std::size_t... Indices>
-constexpr Ty makeFromTupleImpl(
-    PL_IN TupleLike&& tupleLike,
+constexpr Ty make_from_tuple_impl(
+    PL_IN TupleLike&& tuple_like,
     std::index_sequence<Indices...>)
 {
-    return Ty(std::get<Indices>(std::forward<TupleLike>(tupleLike))...);
+    return Ty(std::get<Indices>(std::forward<TupleLike>(tuple_like))...);
 }
 } // namespace detail
 
 /*!
  * \brief Construct an object of type 'Ty',
- *        using the elements of the tuple 'tupleLike' as the arguments to the
+ *        using the elements of the tuple 'tuple_like' as the arguments to the
  *        constructor.
- * \param tupleLike tuple whose elements to be used as arguments to the
- *                  constructor of 'Ty'
+ * \param tuple_like tuple whose elements to be used as arguments to the
+ *                   constructor of 'Ty'
  * \return The constructed 'Ty' object.
  * \note The tuple need not be std::tuple, and instead may be anything that
  *       supports std::get and std::tuple_size;
  *       in particular, std::array and std::pair may be used.
 **/
 template <typename Ty, typename TupleLike>
-constexpr Ty makeFromTuple(PL_IN TupleLike&& tupleLike)
+constexpr Ty make_from_tuple(PL_IN TupleLike&& tuple_like)
 {
-    return detail::makeFromTupleImpl<Ty>(
-        std::forward<TupleLike>(tupleLike),
+    return detail::make_from_tuple_impl<Ty>(
+        std::forward<TupleLike>(tuple_like),
         std::make_index_sequence<std::tuple_size<std::decay_t<TupleLike>>::
                                      value>{});
 }
