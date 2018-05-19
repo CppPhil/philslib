@@ -33,7 +33,7 @@
 #if PL_COMPILER == PL_COMPILER_GCC
 #pragma GCC diagnostic pop
 #endif                                       // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/pl/observer_ptr.hpp" // pl::ObserverPtr
+#include "../../include/pl/observer_ptr.hpp" // pl::observer_ptr
 #include "../include/static_assert.hpp"      // PL_TEST_STATIC_ASSERT
 #include <ciso646>                           // not
 #include <cstring>                           // std::strcmp
@@ -46,19 +46,19 @@ TEST_CASE("observer_ptr_test")
     int         i{0U};
     std::string s{"sample text"};
 
-    pl::ObserverPtr<void>        nullPtr{nullptr};
-    pl::ObserverPtr<int>         pointer{&i};
-    pl::ObserverPtr<std::string> sPtr{&s};
+    pl::observer_ptr<void>        null_ptr{nullptr};
+    pl::observer_ptr<int>         pointer{&i};
+    pl::observer_ptr<std::string> s_ptr{&s};
 
     SUBCASE("nullptr_init")
     {
-        const pl::ObserverPtr<double> a{};
-        const pl::ObserverPtr<float>  b{nullptr};
-        const pl::ObserverPtr<int>    c{static_cast<int*>(nullptr)};
+        const pl::observer_ptr<double> a{};
+        const pl::observer_ptr<float>  b{nullptr};
+        const pl::observer_ptr<int>    c{static_cast<int*>(nullptr)};
 
-        CHECK(a == nullPtr);
-        CHECK(b == nullPtr);
-        CHECK(c == nullPtr);
+        CHECK(a == null_ptr);
+        CHECK(b == null_ptr);
+        CHECK(c == null_ptr);
         CHECK(a == nullptr);
         CHECK(b == nullptr);
         CHECK(c == nullptr);
@@ -66,16 +66,16 @@ TEST_CASE("observer_ptr_test")
 
     SUBCASE("converting_ctor")
     {
-        const pl::ObserverPtr<void> ptr{pointer};
+        const pl::observer_ptr<void> ptr{pointer};
         CHECK(ptr == pointer);
     }
 
     SUBCASE("release")
     {
         CHECK(pointer.get() == &i);
-        int* const intPtr{pointer.release()};
-        CHECK(intPtr == &i);
-        CHECK(intPtr != pointer.get());
+        int* const int_ptr{pointer.release()};
+        CHECK(int_ptr == &i);
+        CHECK(int_ptr != pointer.get());
         CHECK(pointer == nullptr);
     }
 
@@ -89,16 +89,16 @@ TEST_CASE("observer_ptr_test")
 
     SUBCASE("swap_member")
     {
-        pl::ObserverPtr<int> localPointer{nullptr};
-        localPointer.swap(pointer);
+        pl::observer_ptr<int> local_pointer{nullptr};
+        local_pointer.swap(pointer);
 
         CHECK(pointer == nullptr);
-        CHECK(localPointer.get() == &i);
+        CHECK(local_pointer.get() == &i);
     }
 
     SUBCASE("swap_non_member")
     {
-        pl::ObserverPtr<int> ptr{};
+        pl::observer_ptr<int> ptr{};
         ::pl::swap(ptr, pointer);
 
         CHECK(pointer == nullptr);
@@ -107,66 +107,67 @@ TEST_CASE("observer_ptr_test")
 
     SUBCASE("get")
     {
-        CHECK(nullPtr.get() == nullptr);
+        CHECK(null_ptr.get() == nullptr);
         CHECK(pointer.get() == &i);
     }
 
     SUBCASE("operator_bool")
     {
-        CHECK_UNARY_FALSE(static_cast<bool>(nullPtr));
+        CHECK_UNARY_FALSE(static_cast<bool>(null_ptr));
         CHECK_UNARY(static_cast<bool>(pointer));
-        CHECK_UNARY(not static_cast<bool>(nullPtr));
+        CHECK_UNARY(not static_cast<bool>(null_ptr));
         CHECK_UNARY_FALSE(not static_cast<bool>(pointer));
     }
 
     SUBCASE("indirection_operator")
     {
         CHECK(*pointer == i);
-        CHECK(std::strcmp((*sPtr).data(), "sample text") == 0);
+        CHECK(std::strcmp((*s_ptr).data(), "sample text") == 0);
     }
 
-    SUBCASE("member_pointer_operator") { CHECK(sPtr->front() == 's'); }
+    SUBCASE("member_pointer_operator") { CHECK(s_ptr->front() == 's'); }
     SUBCASE("conversion_operator")
     {
-        CHECK(static_cast<std::string*>(sPtr) == &s);
+        CHECK(static_cast<std::string*>(s_ptr) == &s);
     }
 
     SUBCASE("maker")
     {
-        const auto op = pl::makeObserver(&s);
-        CHECK(op == sPtr);
+        const auto op = pl::make_observer(&s);
+        CHECK(op == s_ptr);
 
-        const auto op2 = pl::makeObserver(static_cast<void*>(nullptr));
-        CHECK(op2 == nullPtr);
+        const auto op2 = pl::make_observer(static_cast<void*>(nullptr));
+        CHECK(op2 == null_ptr);
         CHECK(nullptr == op2);
     }
 
     SUBCASE("hash")
     {
         const auto val1 = std::hash<std::string*>{}(&s);
-        const auto val2 = std::hash<pl::ObserverPtr<std::string>>{}(sPtr);
+        const auto val2 = std::hash<pl::observer_ptr<std::string>>{}(s_ptr);
         CHECK(val1 == val2);
     }
 
     SUBCASE("low_level_constness")
     {
-        pl::ObserverPtr<const int> constObserverPtr{&i};
+        pl::observer_ptr<const int> const_observer_ptr{&i};
 
         PL_TEST_STATIC_ASSERT(
-            std::is_same<decltype(constObserverPtr.release()),
+            std::is_same<decltype(const_observer_ptr.release()),
                          const int*>::value);
         PL_TEST_STATIC_ASSERT(
-            std::is_same<decltype(constObserverPtr.get()), const int*>::value);
-        PL_TEST_STATIC_ASSERT(
-            std::is_same<decltype(*constObserverPtr), const int&>::value);
-        PL_TEST_STATIC_ASSERT(
-            std::is_same<decltype(constObserverPtr.operator->()),
+            std::is_same<decltype(const_observer_ptr.get()),
                          const int*>::value);
         PL_TEST_STATIC_ASSERT(
-            std::is_same<decltype(constObserverPtr.operator const int*()),
+            std::is_same<decltype(*const_observer_ptr), const int&>::value);
+        PL_TEST_STATIC_ASSERT(
+            std::is_same<decltype(const_observer_ptr.operator->()),
+                         const int*>::value);
+        PL_TEST_STATIC_ASSERT(
+            std::is_same<decltype(const_observer_ptr.operator const int*()),
                          const int*>::value);
 
-        CHECK(constObserverPtr.get() == &i);
-        CHECK(constObserverPtr == pointer);
+        CHECK(const_observer_ptr.get() == &i);
+        CHECK(const_observer_ptr == pointer);
     }
 }
