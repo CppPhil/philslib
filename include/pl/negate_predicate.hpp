@@ -26,7 +26,7 @@
 
 /*!
  * \file negate_predicate.hpp
- * \brief Exports the negatePredicate function.
+ * \brief Exports the negate_predicate function.
 **/
 #ifndef INCG_PL_NEGATE_PREDICATE_HPP
 #define INCG_PL_NEGATE_PREDICATE_HPP
@@ -40,22 +40,22 @@
 namespace pl {
 namespace detail {
 /*!
- * \brief A NegatedPredicate. Type returned by negatePredicate function.
+ * \brief A negated_predicate. Type returned by negate_predicate function.
  *        Stores the predicate passed. Will call the predicate in its call
  *        operator and negate the result.
 **/
 template <typename Predicate>
-class NegatedPredicate final {
+class negated_predicate final {
 public:
-    using this_type   = NegatedPredicate;
+    using this_type   = negated_predicate;
     using return_type = bool;
     using value_type  = Predicate;
 
     /*!
-     * \brief Constructs a NegatedPredicate.
+     * \brief Constructs a negated_predicate.
      * \param predicate The predicate callable that is to be stored and negated.
     **/
-    explicit NegatedPredicate(value_type predicate) noexcept(
+    explicit negated_predicate(value_type predicate) noexcept(
         std::is_nothrow_move_constructible<value_type>::value)
         : m_predicate{std::move(predicate)}
     {
@@ -85,10 +85,10 @@ private:
  *         passed into the parameter.
 **/
 template <typename Predicate>
-detail::NegatedPredicate<meta::remove_cvref_t<Predicate>> negatePredicate(
+detail::negated_predicate<meta::remove_cvref_t<Predicate>> negate_predicate(
     PL_IN Predicate&& predicate)
 {
-    return detail::NegatedPredicate<meta::remove_cvref_t<Predicate>>{
+    return detail::negated_predicate<meta::remove_cvref_t<Predicate>>{
         std::forward<Predicate>(predicate)};
 }
 } // namespace pl

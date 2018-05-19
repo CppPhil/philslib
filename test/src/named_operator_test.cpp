@@ -33,7 +33,7 @@
 #if PL_COMPILER == PL_COMPILER_GCC
 #pragma GCC diagnostic pop
 #endif                                         // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/pl/named_operator.hpp" // pl::makeNamedOperator
+#include "../../include/pl/named_operator.hpp" // pl::make_named_operator
 #include <algorithm>                           // std::find
 #include <cmath>                               // std::pow
 #include <iterator>                            // std::begin, std::end
@@ -43,11 +43,11 @@ TEST_CASE("named_operator_test")
 {
     using namespace pl::named_operator;
 
-    const auto pow = pl::makeNamedOperator(
+    const auto pow = pl::make_named_operator(
         [](double base, double exponent) { return std::pow(base, exponent); });
 
     const auto contains
-        = pl::makeNamedOperator([](const auto& container, const auto& value) {
+        = pl::make_named_operator([](const auto& container, const auto& value) {
               const auto end = std::end(container);
               return std::find(std::begin(container), end, value) != end;
           });

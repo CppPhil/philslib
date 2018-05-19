@@ -81,7 +81,7 @@ TEST_CASE("random_number_generator_test")
     using namespace pl::named_operator;
 
     const auto contains
-        = pl::makeNamedOperator([](const auto& container, const auto& value) {
+        = pl::make_named_operator([](const auto& container, const auto& value) {
               const auto end = std::end(container);
               return std::find(std::begin(container), end, value) != end;
           });

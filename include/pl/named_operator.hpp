@@ -40,131 +40,112 @@ namespace detail {
  *        and operator>.
 **/
 template <typename BinaryCallable, typename Type>
-struct BinaryCallableWithValue {
+struct binary_callable_with_value {
     /*!
      * \brief Constructor.
      * \param p_BinaryCallable The BinaryCallable.
      * \param p_value The left hand side object.
     **/
-    constexpr BinaryCallableWithValue(
-        BinaryCallable p_BinaryCallable,
+    constexpr binary_callable_with_value(
+        BinaryCallable p_binary_callable,
         Type&          p_value)
-        : binaryCallable{std::move(p_BinaryCallable)}, value{p_value}
+        : binary_callable{std::move(p_binary_callable)}, value{p_value}
     {
     }
 
-    BinaryCallable binaryCallable; /*!< The callable to run in operator> */
-    Type&          value;          /*!< The left hand side value */
+    BinaryCallable binary_callable; /*!< The callable to run in operator> */
+    Type&          value;           /*!< The left hand side value */
 };
 } // namespace detail
 
 /*!
  * \brief Struct that holds a BinaryCallable to be used as a named operator.
- * \note Use makeNamedOperator to construct.
+ * \note Use make_named_operator to construct.
 **/
 template <typename BinaryCallable>
-struct NamedOperator {
+struct named_oper {
     /*!
-     * \brief Constructor for NamedOperator.
-     * \param p_binaryCallable The BinaryCallable to use for the NamedOperator.
+     * \brief Constructor for named_oper.
+     * \param p_binary_callable The BinaryCallable to use for the
+     *                          named_operator.
     **/
-    constexpr explicit NamedOperator(BinaryCallable p_binaryCallable)
-        : binaryCallable{std::move(p_binaryCallable)}
+    constexpr explicit named_oper(BinaryCallable p_binary_callable)
+        : binary_callable{std::move(p_binary_callable)}
     {
     }
 
-    BinaryCallable binaryCallable; /*!< The callable to run in operator> */
+    BinaryCallable binary_callable; /*!< The callable to run in operator> */
 };
 
 /*!
- * \brief Creates a NamedOperator.
- * \param binaryCallable The callable that takes the left hand side and the
- *                       right hand side object of the named operator.
- * \return The NamedOperator object.
- * \example using namespace pl::named_operator;
- *
- *          auto pow = pl::makeNamedOperator([](double base, double exponent) {
- *              return std::pow(base, exponent);
- *          });
- *
- *          auto myValue = 2.0;
- *          myValue <pow>= 3.0;
- *          std::cout << myValue << '\n';
- *
- *          std::vector<int> v{ 1, 2, 3, 4, 5, 6 };
- *          auto contains = pl::makeNamedOperator([](const auto &container,
- *                                                   const auto &value) {
- *              const auto end = std::end(container);
- *
- *              return std::find(std::begin(container), end, value) != end;
- *          });
- *
- *          std::cout << (v <contains> 3) << '\n'
- *                    << (v <contains> 7) << '\n';
+ * \brief Creates a named_oper.
+ * \param binary_callable The callable that takes the left hand side and the
+ *                        right hand side object of the named operator.
+ * \return The named_oper object.
 **/
 template <typename BinaryCallable>
-constexpr NamedOperator<BinaryCallable> makeNamedOperator(
-    BinaryCallable binaryCallable)
+constexpr named_oper<BinaryCallable> make_named_operator(
+    BinaryCallable binary_callable)
 {
-    return NamedOperator<BinaryCallable>{binaryCallable};
+    return named_oper<BinaryCallable>{binary_callable};
 }
 
 inline namespace named_operator {
 /*!
- * \brief The operator<, creates the BinaryCallableWithValue object.
+ * \brief The operator<, creates the binary_callable_with_value object.
  * \param value The left hand side object of the named operator.
- * \param namedOperator The named operator that the operator> shall apply.
+ * \param named_operator The named operator that the operator> shall apply.
  * \note Handles non-const left hand side objects.
 **/
 template <typename BinaryCallable, typename Type>
-inline detail::BinaryCallableWithValue<BinaryCallable, Type> operator<(
-    Type&                         value,
-    NamedOperator<BinaryCallable> namedOperator)
+inline detail::binary_callable_with_value<BinaryCallable, Type> operator<(
+    Type&                      value,
+    named_oper<BinaryCallable> named_operator)
 {
-    return detail::BinaryCallableWithValue<BinaryCallable, Type>{
-        namedOperator.binaryCallable, value};
+    return detail::binary_callable_with_value<BinaryCallable, Type>{
+        named_operator.binary_callable, value};
 }
 
 /*!
- * \brief The operator<, creates the BinaryCallableWithValue object.
+ * \brief The operator<, creates the binary_callable_with_value object.
  * \param value The left hand side object of the named operator.
- * \param namedOperator The named operator that the operator> shall apply.
+ * \param named_operator The named operator that the operator> shall apply.
  * \note Handles const qualified left hand side objects.
 **/
 template <typename BinaryCallable, typename Type>
-inline detail::BinaryCallableWithValue<BinaryCallable, const Type> operator<(
-    const Type&                   value,
-    NamedOperator<BinaryCallable> namedOperator)
+inline detail::binary_callable_with_value<BinaryCallable, const Type> operator<(
+    const Type&                value,
+    named_oper<BinaryCallable> named_operator)
 {
-    return detail::BinaryCallableWithValue<BinaryCallable, const Type>{
-        namedOperator.binaryCallable, value};
+    return detail::binary_callable_with_value<BinaryCallable, const Type>{
+        named_operator.binary_callable, value};
 }
 
 /*!
  * \brief Invokes the named operator on the left hand side and right hand
  *        side object of the named operator.
- * \param callableWithValue Object that contains a reference to the left
- *                          hand side object and the named operator.
+ * \param callable_with_value Object that contains a reference to the left
+ *                            hand side object and the named operator.
  * \param value The right hand side object.
  * \return The result of invoking the named operator with the left hand side
  *         object and the right hand side object.
 **/
 template <typename BinaryCallable, typename Type1, typename Type2>
 inline auto operator>(
-    const detail::BinaryCallableWithValue<BinaryCallable, Type1>&
-                 callableWithValue,
+    const detail::binary_callable_with_value<BinaryCallable, Type1>&
+                 callable_with_value,
     const Type2& value) -> decltype(auto)
 {
     return ::pl::invoke(
-        callableWithValue.binaryCallable, callableWithValue.value, value);
+        callable_with_value.binary_callable, callable_with_value.value, value);
 }
 
 /*!
  * \brief Invokes the named operator with the left hand side and right hand
  *        side objects and assigns the result through to the left hand side
  *        object.
- * \param callableWithValue Contains the left hand side object and the
- *                          named operator.
+ * \param callable_with_value Contains the left hand side object and the
+ *                            named operator.
  * \param value The right hand side object.
  * \return The result of assigning the result of invoking the named operator
  *         with the left hand side and right hand side object to the left
@@ -172,11 +153,11 @@ inline auto operator>(
 **/
 template <typename BinaryCallable, typename Type1, typename Type2>
 inline auto operator>=(
-    const detail::BinaryCallableWithValue<BinaryCallable, Type1>&
-                 callableWithValue,
+    const detail::binary_callable_with_value<BinaryCallable, Type1>&
+                 callable_with_value,
     const Type2& value) -> decltype(auto)
 {
-    return callableWithValue.value = callableWithValue > value;
+    return callable_with_value.value = callable_with_value > value;
 }
 } // inline namespace named_operator
 } // namespace pl
