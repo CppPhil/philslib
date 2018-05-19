@@ -53,7 +53,7 @@ constexpr
 inline
 #endif
     bool
-    toggleBool(PL_INOUT bool& b) noexcept
+    toggle_bool(PL_INOUT bool& b) noexcept
 {
     b = not b;
     return b;

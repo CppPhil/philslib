@@ -26,7 +26,7 @@
 
 /*!
  * \file timer.hpp
- * \brief Exports the Timer type.
+ * \brief Exports the timer type.
 **/
 #ifndef INCG_PL_TIMER_HPP
 #define INCG_PL_TIMER_HPP
@@ -36,25 +36,25 @@ namespace pl {
 /*!
  * \brief A timer that can be used to measure durations of time.
 **/
-class Timer {
+class timer {
 public:
-    using this_type = Timer;
+    using this_type = timer;
 
     /*!
-     * \brief Constructs the Timer object.
+     * \brief Constructs the timer object.
      *        The time stored is initialized with the current time.
-     *        Effectively 'starts' the Timer.
+     *        Effectively 'starts' the timer.
     **/
-    Timer() noexcept;
+    timer() noexcept;
 
     /*!
      * \brief Calculates the distance between the current time and the time
-     *        stored in this Timer object.
+     *        stored in this timer object.
      * \return The duration between the current time (when this function is
      *         invoked) and the time stored. The return value can be cast
      *         to the desired duration type using std::chrono::duration_cast.
     **/
-    std::chrono::steady_clock::duration elapsedTime() const noexcept;
+    std::chrono::steady_clock::duration elapsed_time() const noexcept;
 
     /*!
      * \brief Resets the time stored. The time stored is discarded and
@@ -65,22 +65,22 @@ public:
 
 private:
     std::chrono::time_point<std::chrono::steady_clock>
-        m_timeStored; /*!< The time stored */
+        m_time_stored; /*!< The time stored */
 };
 
-inline Timer::Timer() noexcept : m_timeStored{std::chrono::steady_clock::now()}
+inline timer::timer() noexcept : m_time_stored{std::chrono::steady_clock::now()}
 {
 }
 
-inline std::chrono::steady_clock::duration Timer::elapsedTime() const noexcept
+inline std::chrono::steady_clock::duration timer::elapsed_time() const noexcept
 {
-    return std::chrono::steady_clock::now() - m_timeStored;
+    return std::chrono::steady_clock::now() - m_time_stored;
 }
 
-inline Timer& Timer::reset() noexcept
+inline timer& timer::reset() noexcept
 {
     // replace the time stored with the current time.
-    m_timeStored = std::chrono::steady_clock::now();
+    m_time_stored = std::chrono::steady_clock::now();
     return *this;
 }
 } // namespace pl

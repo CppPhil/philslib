@@ -40,5 +40,5 @@
  * Can be used to suppress compiler warnings about unused variables.
 **/
 
-#define PL_UNUSED(param) static_cast<void>((param))
+#define PL_UNUSED(param) ((void)(param))
 #endif // INCG_PL_UNUSED_HPP

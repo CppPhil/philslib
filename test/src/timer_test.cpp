@@ -33,7 +33,7 @@
 #if PL_COMPILER == PL_COMPILER_GCC
 #pragma GCC diagnostic pop
 #endif                                // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/pl/timer.hpp" // pl::Timer
+#include "../../include/pl/timer.hpp" // pl::timer
 #include <chrono>                     // std::literals::chrono_literals::operator""ms, std::chrono::duration_cast, std::chrono::milliseconds
 #include <thread>                     // std::this_thread::sleep_for
 
@@ -43,11 +43,11 @@ TEST_CASE("timer_test")
     using namespace std::literals::chrono_literals;
     using Ms = chrono::milliseconds;
 
-    pl::Timer timer{};
+    pl::timer timer{};
     std::this_thread::sleep_for(100ms);
-    CHECK(chrono::duration_cast<Ms>(timer.elapsedTime()) >= 100ms);
+    CHECK(chrono::duration_cast<Ms>(timer.elapsed_time()) >= 100ms);
 
     timer.reset();
     std::this_thread::sleep_for(150ms);
-    CHECK(chrono::duration_cast<Ms>(timer.elapsedTime()) >= 150ms);
+    CHECK(chrono::duration_cast<Ms>(timer.elapsed_time()) >= 150ms);
 }

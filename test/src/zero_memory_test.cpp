@@ -33,9 +33,9 @@
 #if PL_COMPILER == PL_COMPILER_GCC
 #pragma GCC diagnostic pop
 #endif                               // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/pl/byte.hpp" // pl::Byte
-#include "../../include/pl/cont/make_array.hpp" // pl::makeArray
-#include "../../include/pl/zero_memory.hpp" // pl::zeroMemory, pl::secureZeroMemory
+#include "../../include/pl/byte.hpp" // pl::byte
+#include "../../include/pl/cont/make_array.hpp" // pl::make_array
+#include "../../include/pl/zero_memory.hpp" // pl::zero_memory, pl::secure_zero_memory
 #include <cstdint>                          // std::uint64_t, UINT64_C
 
 TEST_CASE("zero_memory_test")
@@ -56,25 +56,25 @@ TEST_CASE("zero_memory_test")
 
     SUBCASE("zero_memory")
     {
-        pl::zeroMemory(ary.data(), ary.size());
+        pl::zero_memory(ary.data(), ary.size());
 
         for (pl::byte byte : ary) {
             CHECK(byte == static_cast<pl::byte>(0x00));
         }
 
-        pl::zeroMemory(&i, sizeof(i));
+        pl::zero_memory(&i, sizeof(i));
         CHECK(i == UINT64_C(0));
     }
 
     SUBCASE("secure_zero_memory")
     {
-        pl::secureZeroMemory(ary.data(), ary.size());
+        pl::secure_zero_memory(ary.data(), ary.size());
 
         for (pl::byte byte : ary) {
             CHECK(byte == static_cast<pl::byte>(0x00));
         }
 
-        pl::secureZeroMemory(&i, sizeof(i));
+        pl::secure_zero_memory(&i, sizeof(i));
         CHECK(i == UINT64_C(0));
     }
 }

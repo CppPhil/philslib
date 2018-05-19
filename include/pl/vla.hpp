@@ -34,7 +34,7 @@
 #include "raw_memory_array.hpp" // pl::RawMemoryArray
 
 /*!
- * \def PL_VLA(type, identifier, size, initialValue)
+ * \def PL_VLA(type, identifier, size, ...)
  * \brief Creates a VLA. 'type' is the type of the elements that the VLA
  *        will store. 'identifier' is the identifier of the VLA.
  *        'size' is the amount of objects of type 'type' that the VLA will
