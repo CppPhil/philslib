@@ -26,7 +26,7 @@
 
 /*!
  * \file string_view.hpp
- * \brief Exports the StringView type.
+ * \brief Exports the string_view facility.
 **/
 #ifndef INCG_PL_STRING_VIEW_HPP
 #define INCG_PL_STRING_VIEW_HPP
@@ -89,9 +89,9 @@ struct empty_string<wchar_t> {
  *        C style strings.
 **/
 template <typename CharT, typename Traits = std::char_traits<CharT>>
-class BasicStringView {
+class basic_string_view {
 public:
-    using this_type              = BasicStringView;
+    using this_type              = basic_string_view;
     using traits_type            = Traits;
     using value_type             = CharT;
     using pointer                = CharT*;
@@ -111,7 +111,7 @@ public:
      *        to contains merely the null-terminator.
      *        The size of the string view after construction will be 0.
     **/
-    constexpr BasicStringView() noexcept
+    constexpr basic_string_view() noexcept
         : m_data{detail::empty_string<value_type>::value},
           m_size{static_cast<std::size_t>(0U)}
     {
@@ -121,7 +121,7 @@ public:
      * \brief Copy constructor. Constructs a view of the same content as
      *        the view passed into the parameter.
     **/
-    constexpr BasicStringView(PL_IN const this_type&) noexcept = default;
+    constexpr basic_string_view(PL_IN const this_type&) noexcept = default;
 
     /*!
      * \brief Replaces this view with the one passed into the parameter.
@@ -152,7 +152,7 @@ public:
                                                                remove_pointer_t<meta::
                                                                                     remove_cvref_t<Ty>>>,
                                         value_type>::value>>
-    PL_IMPLICIT constexpr BasicStringView(
+    PL_IMPLICIT constexpr basic_string_view(
         PL_IN PL_NULL_TERMINATED(Ty&&) string) noexcept
         : m_data{string},
           m_size{traits_type::length(string)}
@@ -168,7 +168,7 @@ public:
      *          string and may not contain embedded null-characters!
     **/
     template <typename Allocator>
-    PL_IMPLICIT constexpr BasicStringView(
+    PL_IMPLICIT constexpr basic_string_view(
         PL_IN const std::basic_string<value_type, traits_type, Allocator>&
                     string) noexcept : m_data{string.data()},
                                m_size{string.size()}
@@ -181,7 +181,7 @@ public:
      *        creates a dangling string view.
     **/
     template <typename Allocator>
-    PL_IMPLICIT constexpr BasicStringView(
+    PL_IMPLICIT constexpr basic_string_view(
         PL_IN const
             std::basic_string<value_type, traits_type, Allocator>&&) noexcept
         = delete;
@@ -195,7 +195,7 @@ public:
      *          any embedded null characters.
     **/
     template <std::size_t Size>
-    constexpr BasicStringView(
+    constexpr basic_string_view(
         PL_IN PL_NULL_TERMINATED(const value_type (&array)[Size])) noexcept
         : m_data{array},
           m_size{Size - 1U}
@@ -217,7 +217,7 @@ public:
      * \warning The behavior is undefined if ['string', 'string' + 'size') is
      *          not a valid range.
     **/
-    constexpr BasicStringView(
+    constexpr basic_string_view(
         PL_IN     PL_NULL_TERMINATED(const_pointer) string,
         size_type size) noexcept : m_data{string},
                                    m_size{size}
@@ -350,7 +350,7 @@ public:
     {
         if (position > size()) {
             throw std::out_of_range{
-                "BasicStringView::at position was out of bounds."};
+                "basic_string_view::at position was out of bounds."};
         }
 
         return operator[](position);
@@ -387,12 +387,12 @@ public:
     **/
     constexpr const_pointer data() const noexcept { return m_data; }
 /*!
- * \brief Moves the start of the view forward by 'charactersToRemove'
+ * \brief Moves the start of the view forward by 'characters_to_remove'
  *        characters.
- * \param charactersToRemove number of characters to remove from the start
- *                           of the view
+ * \param characters_to_remove number of characters to remove from the start
+ *                             of the view
  * \note Constant complexity.
- *       if 'charactersToRemove' > size() all characters are removed from
+ *       if 'characters_to_remove' > size() all characters are removed from
  *       the view, leaving it pointing to an empty string.
  *       Using msvc this function will only be a constexpr function
  *       if msvc17 or newer is used.
@@ -402,14 +402,14 @@ public:
     constexpr
 #endif
         void
-        remove_prefix(size_type charactersToRemove) noexcept
+        remove_prefix(size_type characters_to_remove) noexcept
     {
-        if (charactersToRemove > size()) {
-            charactersToRemove = size();
+        if (characters_to_remove > size()) {
+            characters_to_remove = size();
         }
 
-        m_data += charactersToRemove;
-        m_size -= charactersToRemove;
+        m_data += characters_to_remove;
+        m_size -= characters_to_remove;
     }
 
 /*!
@@ -560,6 +560,12 @@ private:
     size_type     m_size;
 };
 
+/*!
+ * \brief Non-member swap for basic_string_views.
+ * \param first The first operand.
+ * \param second The second operand.
+ * \note This function can be found by ADL, unlike the swap member function.
+**/
 template <typename CharT, typename Traits>
 #if (PL_COMPILER != PL_COMPILER_MSVC) \
     || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
@@ -567,293 +573,299 @@ constexpr
 #endif
     void
     swap(
-        PL_INOUT BasicStringView<CharT, Traits>& first,
-        PL_INOUT BasicStringView<CharT, Traits>& second) noexcept
+        PL_INOUT basic_string_view<CharT, Traits>& first,
+        PL_INOUT basic_string_view<CharT, Traits>& second) noexcept
 {
     first.swap(second);
 }
 
+/*!
+ * \brief Outputstream insertion operator to print a basic_string_view.
+ * \param os The ostream to print to.
+ * \param string The string view object to print.
+ * \return A reference to 'os'.
+**/
 template <typename CharT, typename Traits>
 std::basic_ostream<CharT, Traits>& operator<<(
     PL_INOUT std::basic_ostream<CharT, Traits>& os,
-    BasicStringView<CharT, Traits>              string)
+    basic_string_view<CharT, Traits>            string)
 {
     return os.write(string.data(), static_cast<std::streamsize>(string.size()));
 }
 
 template <typename CharT, typename Traits>
 constexpr bool operator==(
-    BasicStringView<CharT, Traits> x,
-    BasicStringView<CharT, Traits> y) noexcept
+    basic_string_view<CharT, Traits> x,
+    basic_string_view<CharT, Traits> y) noexcept
 {
     return x.compare(y) == 0;
 }
 
 template <typename CharT, typename Traits, typename Allocator>
 constexpr bool operator==(
-    BasicStringView<CharT, Traits> x,
+    basic_string_view<CharT, Traits> x,
     PL_IN const std::basic_string<CharT, Traits, Allocator>& y) noexcept
 {
-    return x == BasicStringView<CharT, Traits>{y};
+    return x == basic_string_view<CharT, Traits>{y};
 }
 
 template <typename CharT, typename Traits, typename Allocator>
 constexpr bool operator==(
     PL_IN const std::basic_string<CharT, Traits, Allocator>& x,
-    BasicStringView<CharT, Traits> y) noexcept
+    basic_string_view<CharT, Traits> y) noexcept
 {
-    return BasicStringView<CharT, Traits>{x} == y;
+    return basic_string_view<CharT, Traits>{x} == y;
 }
 
 template <typename CharT, typename Traits>
 constexpr bool operator==(
-    BasicStringView<CharT, Traits> x,
+    basic_string_view<CharT, Traits> x,
     PL_IN PL_NULL_TERMINATED(const CharT*) y) noexcept
 {
-    return x == BasicStringView<CharT, Traits>{y};
+    return x == basic_string_view<CharT, Traits>{y};
 }
 
 template <typename CharT, typename Traits>
 constexpr bool operator==(
     PL_IN PL_NULL_TERMINATED(const CharT*) x,
-    BasicStringView<CharT, Traits> y) noexcept
+    basic_string_view<CharT, Traits> y) noexcept
 {
-    return BasicStringView<CharT, Traits>{x} == y;
+    return basic_string_view<CharT, Traits>{x} == y;
 }
 
 template <typename CharT, typename Traits>
 constexpr bool operator!=(
-    BasicStringView<CharT, Traits> x,
-    BasicStringView<CharT, Traits> y) noexcept
+    basic_string_view<CharT, Traits> x,
+    basic_string_view<CharT, Traits> y) noexcept
 {
     return not(x == y);
 }
 
 template <typename CharT, typename Traits, typename Allocator>
 constexpr bool operator!=(
-    BasicStringView<CharT, Traits> x,
+    basic_string_view<CharT, Traits> x,
     PL_IN const std::basic_string<CharT, Traits, Allocator>& y) noexcept
 {
-    return x != BasicStringView<CharT, Traits>{y};
+    return x != basic_string_view<CharT, Traits>{y};
 }
 
 template <typename CharT, typename Traits, typename Allocator>
 constexpr bool operator!=(
     PL_IN const std::basic_string<CharT, Traits, Allocator>& x,
-    BasicStringView<CharT, Traits> y) noexcept
+    basic_string_view<CharT, Traits> y) noexcept
 {
-    return BasicStringView<CharT, Traits>{x} != y;
+    return basic_string_view<CharT, Traits>{x} != y;
 }
 
 template <typename CharT, typename Traits>
 constexpr bool operator!=(
-    BasicStringView<CharT, Traits> x,
+    basic_string_view<CharT, Traits> x,
     PL_IN PL_NULL_TERMINATED(const CharT*) y) noexcept
 {
-    return x != BasicStringView<CharT, Traits>{y};
+    return x != basic_string_view<CharT, Traits>{y};
 }
 
 template <typename CharT, typename Traits>
 constexpr bool operator!=(
     PL_IN PL_NULL_TERMINATED(const CharT*) x,
-    BasicStringView<CharT, Traits> y) noexcept
+    basic_string_view<CharT, Traits> y) noexcept
 {
-    return BasicStringView<CharT, Traits>{x} != y;
+    return basic_string_view<CharT, Traits>{x} != y;
 }
 
 template <typename CharT, typename Traits>
 constexpr bool operator<(
-    BasicStringView<CharT, Traits> x,
-    BasicStringView<CharT, Traits> y) noexcept
+    basic_string_view<CharT, Traits> x,
+    basic_string_view<CharT, Traits> y) noexcept
 {
     return x.compare(y) < 0;
 }
 
 template <typename CharT, typename Traits, typename Allocator>
 constexpr bool operator<(
-    BasicStringView<CharT, Traits> x,
+    basic_string_view<CharT, Traits> x,
     PL_IN const std::basic_string<CharT, Traits, Allocator>& y) noexcept
 {
-    return x < BasicStringView<CharT, Traits>{y};
+    return x < basic_string_view<CharT, Traits>{y};
 }
 
 template <typename CharT, typename Traits, typename Allocator>
 constexpr bool operator<(
     PL_IN const std::basic_string<CharT, Traits, Allocator>& x,
-    BasicStringView<CharT, Traits> y) noexcept
+    basic_string_view<CharT, Traits> y) noexcept
 {
-    return BasicStringView<CharT, Traits>{x} < y;
+    return basic_string_view<CharT, Traits>{x} < y;
 }
 
 template <typename CharT, typename Traits>
 constexpr bool operator<(
-    BasicStringView<CharT, Traits> x,
+    basic_string_view<CharT, Traits> x,
     PL_IN PL_NULL_TERMINATED(const CharT*) y) noexcept
 {
-    return x < BasicStringView<CharT, Traits>{y};
+    return x < basic_string_view<CharT, Traits>{y};
 }
 
 template <typename CharT, typename Traits>
 inline bool operator<(
     PL_IN PL_NULL_TERMINATED(const CharT*) x,
-    BasicStringView<CharT, Traits> y) noexcept
+    basic_string_view<CharT, Traits> y) noexcept
 {
-    return BasicStringView<CharT, Traits>{x} < y;
+    return basic_string_view<CharT, Traits>{x} < y;
 }
 
 template <typename CharT, typename Traits>
 constexpr bool operator>(
-    BasicStringView<CharT, Traits> x,
-    BasicStringView<CharT, Traits> y) noexcept
+    basic_string_view<CharT, Traits> x,
+    basic_string_view<CharT, Traits> y) noexcept
 {
     return x.compare(y) > 0;
 }
 
 template <typename CharT, typename Traits, typename Allocator>
 constexpr bool operator>(
-    BasicStringView<CharT, Traits> x,
+    basic_string_view<CharT, Traits> x,
     PL_IN const std::basic_string<CharT, Traits, Allocator>& y) noexcept
 {
-    return x > BasicStringView<CharT, Traits>{y};
+    return x > basic_string_view<CharT, Traits>{y};
 }
 
 template <typename CharT, typename Traits, typename Allocator>
 constexpr bool operator>(
     PL_IN const std::basic_string<CharT, Traits, Allocator>& x,
-    BasicStringView<CharT, Traits> y) noexcept
+    basic_string_view<CharT, Traits> y) noexcept
 {
-    return BasicStringView<CharT, Traits>{x} > y;
+    return basic_string_view<CharT, Traits>{x} > y;
 }
 
 template <typename CharT, typename Traits>
 constexpr bool operator>(
-    BasicStringView<CharT, Traits> x,
+    basic_string_view<CharT, Traits> x,
     PL_IN PL_NULL_TERMINATED(const CharT*) y) noexcept
 {
-    return x > BasicStringView<CharT, Traits>{y};
+    return x > basic_string_view<CharT, Traits>{y};
 }
 
 template <typename CharT, typename Traits>
 constexpr bool operator>(
     PL_IN PL_NULL_TERMINATED(const CharT*) x,
-    BasicStringView<CharT, Traits> y) noexcept
+    basic_string_view<CharT, Traits> y) noexcept
 {
-    return BasicStringView<CharT, Traits>{x} > y;
+    return basic_string_view<CharT, Traits>{x} > y;
 }
 
 template <typename CharT, typename Traits>
 constexpr bool operator<=(
-    BasicStringView<CharT, Traits> x,
-    BasicStringView<CharT, Traits> y) noexcept
+    basic_string_view<CharT, Traits> x,
+    basic_string_view<CharT, Traits> y) noexcept
 {
     return x.compare(y) <= 0;
 }
 
 template <typename CharT, typename Traits, typename Allocator>
 constexpr bool operator<=(
-    BasicStringView<CharT, Traits> x,
+    basic_string_view<CharT, Traits> x,
     PL_IN const std::basic_string<CharT, Traits, Allocator>& y) noexcept
 {
-    return x <= BasicStringView<CharT, Traits>{y};
+    return x <= basic_string_view<CharT, Traits>{y};
 }
 
 template <typename CharT, typename Traits, typename Allocator>
 constexpr bool operator<=(
     PL_IN const std::basic_string<CharT, Traits, Allocator>& x,
-    BasicStringView<CharT, Traits> y) noexcept
+    basic_string_view<CharT, Traits> y) noexcept
 {
-    return BasicStringView<CharT, Traits>{x} <= y;
+    return basic_string_view<CharT, Traits>{x} <= y;
 }
 
 template <typename CharT, typename Traits>
 constexpr bool operator<=(
-    BasicStringView<CharT, Traits> x,
+    basic_string_view<CharT, Traits> x,
     PL_IN PL_NULL_TERMINATED(const CharT*) y) noexcept
 {
-    return x <= BasicStringView<CharT, Traits>{y};
+    return x <= basic_string_view<CharT, Traits>{y};
 }
 
 template <typename CharT, typename Traits>
 constexpr bool operator<=(
     PL_IN PL_NULL_TERMINATED(const CharT*) x,
-    BasicStringView<CharT, Traits> y) noexcept
+    basic_string_view<CharT, Traits> y) noexcept
 {
-    return BasicStringView<CharT, Traits>{x} <= y;
+    return basic_string_view<CharT, Traits>{x} <= y;
 }
 
 template <typename CharT, typename Traits>
 constexpr bool operator>=(
-    BasicStringView<CharT, Traits> x,
-    BasicStringView<CharT, Traits> y) noexcept
+    basic_string_view<CharT, Traits> x,
+    basic_string_view<CharT, Traits> y) noexcept
 {
     return x.compare(y) >= 0;
 }
 
 template <typename CharT, typename Traits, typename Allocator>
 constexpr bool operator>=(
-    BasicStringView<CharT, Traits> x,
+    basic_string_view<CharT, Traits> x,
     PL_IN const std::basic_string<CharT, Traits, Allocator>& y) noexcept
 {
-    return x >= BasicStringView<CharT, Traits>{y};
+    return x >= basic_string_view<CharT, Traits>{y};
 }
 
 template <typename CharT, typename Traits, typename Allocator>
 constexpr bool operator>=(
     PL_IN const std::basic_string<CharT, Traits, Allocator>& x,
-    BasicStringView<CharT, Traits> y) noexcept
+    basic_string_view<CharT, Traits> y) noexcept
 {
-    return BasicStringView<CharT, Traits>{x} >= y;
+    return basic_string_view<CharT, Traits>{x} >= y;
 }
 
 template <typename CharT, typename Traits>
 constexpr bool operator>=(
-    BasicStringView<CharT, Traits> x,
+    basic_string_view<CharT, Traits> x,
     PL_IN PL_NULL_TERMINATED(const CharT*) y) noexcept
 {
-    return x >= BasicStringView<CharT, Traits>{y};
+    return x >= basic_string_view<CharT, Traits>{y};
 }
 
 template <typename CharT, typename Traits>
 constexpr bool operator>=(
     PL_IN PL_NULL_TERMINATED(const CharT*) x,
-    BasicStringView<CharT, Traits> y) noexcept
+    basic_string_view<CharT, Traits> y) noexcept
 {
-    return BasicStringView<CharT, Traits>{x} >= y;
+    return basic_string_view<CharT, Traits>{x} >= y;
 }
 
-using StringView    = BasicStringView<char>;
-using U16StringView = BasicStringView<char16_t>;
-using U32StringView = BasicStringView<char32_t>;
-using WStringView   = BasicStringView<wchar_t>;
+using string_view    = basic_string_view<char>;
+using u16string_view = basic_string_view<char16_t>;
+using u32string_view = basic_string_view<char32_t>;
+using wstring_view   = basic_string_view<wchar_t>;
 
 inline namespace literals {
 inline namespace string_view_literals {
-constexpr StringView operator""_sv(
+constexpr string_view operator""_sv(
     PL_IN       PL_NULL_TERMINATED(const char*) string,
     std::size_t size) noexcept
 {
-    return StringView{string, size};
+    return string_view{string, size};
 }
 
-constexpr U16StringView operator""_sv(
+constexpr u16string_view operator""_sv(
     PL_IN       PL_NULL_TERMINATED(const char16_t*) string,
     std::size_t size) noexcept
 {
-    return U16StringView{string, size};
+    return u16string_view{string, size};
 }
 
-constexpr U32StringView operator""_sv(
+constexpr u32string_view operator""_sv(
     PL_IN       PL_NULL_TERMINATED(const char32_t*) string,
     std::size_t size) noexcept
 {
-    return U32StringView{string, size};
+    return u32string_view{string, size};
 }
 
-constexpr WStringView operator""_sv(
+constexpr wstring_view operator""_sv(
     PL_IN       PL_NULL_TERMINATED(const wchar_t*) string,
     std::size_t size) noexcept
 {
-    return WStringView{string, size};
+    return wstring_view{string, size};
 }
 } // inline namespace string_view_literals
 } // inline namespace literals

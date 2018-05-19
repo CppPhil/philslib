@@ -43,8 +43,8 @@
  * \def PL_STRINGIFY(tokens)
  * \brief Turns a contiguous sequence of tokens passed in into a
  *        C-String literal.
- * \example PL_STRINGIFY(helloWorld) results in:
- *          "helloWorld"
+ * \example PL_STRINGIFY(helloworld) results in:
+ *          "helloworld"
 **/
 
 #define PL_DETAIL_STRINGIFY(tokens) #tokens

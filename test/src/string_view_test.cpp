@@ -33,22 +33,22 @@
 #if PL_COMPILER == PL_COMPILER_GCC
 #pragma GCC diagnostic pop
 #endif // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/pl/iterate_reversed.hpp" // pl::iterateReversed
-#include "../../include/pl/string_view.hpp" // pl::StringView, pl::U16StringView, pl::U32StringView, pl::WStringView
-#include "../../test/include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
-#include <cstddef>                              // std::size_t
-#include <cstring>                              // std::strcmp, std::memcmp
-#include <iterator>                             // std::distance
+#include "../../include/pl/iterate_reversed.hpp" // pl::iterate_reversed
+#include "../../include/pl/string_view.hpp"      // pl::string_view, ...
+#include "../../test/include/static_assert.hpp"  // PL_TEST_STATIC_ASSERT
+#include <cstddef>                               // std::size_t
+#include <cstring>                               // std::strcmp, std::memcmp
+#include <iterator>                              // std::distance
 #include <sstream> // std::basic_ostringstream, std::ostringstream, std::wostringstream
 #include <string> // std::string, std::u16string, std::u32string, std::wstring
 #include <type_traits> // std::is_constructible, std::is_copy_assignable, std::is_move_assignable
 
 TEST_CASE("string_view_default_construct_test")
 {
-    constexpr pl::StringView    sv1{};
-    constexpr pl::U16StringView sv2{};
-    constexpr pl::U32StringView sv3{};
-    constexpr pl::WStringView   sv4{};
+    constexpr pl::string_view    sv1{};
+    constexpr pl::u16string_view sv2{};
+    constexpr pl::u32string_view sv3{};
+    constexpr pl::wstring_view   sv4{};
 
     CHECK(sv1.size() == 0U);
     CHECK(sv2.size() == 0U);
@@ -90,10 +90,10 @@ TEST_CASE("string_view_copy_test")
 
     SUBCASE("copy_assign")
     {
-        pl::StringView    a{};
-        pl::U16StringView b{};
-        pl::U32StringView c{};
-        pl::WStringView   d{};
+        pl::string_view    a{};
+        pl::u16string_view b{};
+        pl::u32string_view c{};
+        pl::wstring_view   d{};
 
         CHECK(a != sv1);
         CHECK(b != sv2);
@@ -119,10 +119,10 @@ TEST_CASE("string_view_from_pointer_test")
     static constexpr const char32_t* p3 = U"text";
     static constexpr const wchar_t*  p4 = L"text";
 
-    const pl::StringView    sv1{p1};
-    const pl::U16StringView sv2{p2};
-    const pl::U32StringView sv3{p3};
-    const pl::WStringView   sv4{p4};
+    const pl::string_view    sv1{p1};
+    const pl::u16string_view sv2{p2};
+    const pl::u32string_view sv3{p3};
+    const pl::wstring_view   sv4{p4};
 
     CHECK(sv1.size() == 4U);
     CHECK(sv2.size() == 4U);
@@ -154,43 +154,43 @@ TEST_CASE("string_view_from_pointer_test")
     const char* volatile&&       r15{&a[0U]};
     const char* const volatile&& r16{&a[0U]};
 
-    const pl::StringView stringView1{p5};
-    const pl::StringView stringView2{p6};
-    const pl::StringView stringView3{r1};
-    const pl::StringView stringView4{r2};
-    const pl::StringView stringView5{r3};
-    const pl::StringView stringView6{r4};
-    const pl::StringView stringView7{r5};
-    const pl::StringView stringView8{r6};
-    const pl::StringView stringView9{r7};
-    const pl::StringView stringView10{r8};
-    const pl::StringView stringView11{r9};
-    const pl::StringView stringView12{r10};
-    const pl::StringView stringView13{r11};
-    const pl::StringView stringView14{r12};
-    const pl::StringView stringView15{r13};
-    const pl::StringView stringView16{r14};
-    const pl::StringView stringView17{r15};
-    const pl::StringView stringView18{r16};
+    const pl::string_view string_view1{p5};
+    const pl::string_view string_view2{p6};
+    const pl::string_view string_view3{r1};
+    const pl::string_view string_view4{r2};
+    const pl::string_view string_view5{r3};
+    const pl::string_view string_view6{r4};
+    const pl::string_view string_view7{r5};
+    const pl::string_view string_view8{r6};
+    const pl::string_view string_view9{r7};
+    const pl::string_view string_view10{r8};
+    const pl::string_view string_view11{r9};
+    const pl::string_view string_view12{r10};
+    const pl::string_view string_view13{r11};
+    const pl::string_view string_view14{r12};
+    const pl::string_view string_view15{r13};
+    const pl::string_view string_view16{r14};
+    const pl::string_view string_view17{r15};
+    const pl::string_view string_view18{r16};
 
-    CHECK(stringView1 == "text");
-    CHECK(stringView2 == "text");
-    CHECK(stringView3 == "text");
-    CHECK(stringView4 == "text");
-    CHECK(stringView5 == "text");
-    CHECK(stringView6 == "text");
-    CHECK(stringView7 == "text");
-    CHECK(stringView8 == "text");
-    CHECK(stringView9 == "text");
-    CHECK(stringView10 == "text");
-    CHECK(stringView11 == "text");
-    CHECK(stringView12 == "text");
-    CHECK(stringView13 == "text");
-    CHECK(stringView14 == "text");
-    CHECK(stringView15 == "text");
-    CHECK(stringView16 == "text");
-    CHECK(stringView17 == "text");
-    CHECK(stringView18 == "text");
+    CHECK(string_view1 == "text");
+    CHECK(string_view2 == "text");
+    CHECK(string_view3 == "text");
+    CHECK(string_view4 == "text");
+    CHECK(string_view5 == "text");
+    CHECK(string_view6 == "text");
+    CHECK(string_view7 == "text");
+    CHECK(string_view8 == "text");
+    CHECK(string_view9 == "text");
+    CHECK(string_view10 == "text");
+    CHECK(string_view11 == "text");
+    CHECK(string_view12 == "text");
+    CHECK(string_view13 == "text");
+    CHECK(string_view14 == "text");
+    CHECK(string_view15 == "text");
+    CHECK(string_view16 == "text");
+    CHECK(string_view17 == "text");
+    CHECK(string_view18 == "text");
 }
 
 TEST_CASE("string_view_from_std_basic_string_test")
@@ -200,10 +200,10 @@ TEST_CASE("string_view_from_std_basic_string_test")
     const std::u32string s3{U"Sample Text"};
     const std::wstring   s4{L"Sample Text"};
 
-    const pl::StringView    sv1{s1};
-    const pl::U16StringView sv2{s2};
-    const pl::U32StringView sv3{s3};
-    const pl::WStringView   sv4{s4};
+    const pl::string_view    sv1{s1};
+    const pl::u16string_view sv2{s2};
+    const pl::u32string_view sv3{s3};
+    const pl::wstring_view   sv4{s4};
 
     CHECK(sv1.size() == 11U);
     CHECK(sv2.size() == 11U);
@@ -219,40 +219,42 @@ TEST_CASE("string_view_from_std_basic_string_test")
 TEST_CASE("string_view_constructability_test")
 {
     PL_TEST_STATIC_ASSERT(
-        std::is_constructible<pl::StringView, pl::StringView&>::value);
+        std::is_constructible<pl::string_view, pl::string_view&>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_constructible<pl::StringView, const pl::StringView&>::value);
+        std::is_constructible<pl::string_view, const pl::string_view&>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_constructible<pl::StringView, pl::StringView>::value);
+        std::is_constructible<pl::string_view, pl::string_view>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_constructible<pl::StringView, pl::StringView&&>::value);
+        std::is_constructible<pl::string_view, pl::string_view&&>::value);
 
-    PL_TEST_STATIC_ASSERT(std::is_constructible<pl::StringView, char*>::value);
+    PL_TEST_STATIC_ASSERT(std::is_constructible<pl::string_view, char*>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_constructible<pl::StringView, const char*>::value);
-
-    PL_TEST_STATIC_ASSERT(
-        std::is_constructible<pl::StringView, std::string&>::value);
-    PL_TEST_STATIC_ASSERT(
-        std::is_constructible<pl::StringView, const std::string&>::value);
+        std::is_constructible<pl::string_view, const char*>::value);
 
     PL_TEST_STATIC_ASSERT(
-        std::is_constructible<pl::StringView, char[1]>::value);
+        std::is_constructible<pl::string_view, std::string&>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_constructible<pl::StringView, const char[1]>::value);
+        std::is_constructible<pl::string_view, const std::string&>::value);
 
     PL_TEST_STATIC_ASSERT(
-        std::is_constructible<pl::StringView, char*, std::size_t>::value);
+        std::is_constructible<pl::string_view, char[1]>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_constructible<pl::StringView, const char*, std::size_t>::value);
+        std::is_constructible<pl::string_view, const char[1]>::value);
+
+    PL_TEST_STATIC_ASSERT(
+        std::is_constructible<pl::string_view, char*, std::size_t>::value);
+    PL_TEST_STATIC_ASSERT(
+        std::is_constructible<pl::string_view,
+                              const char*,
+                              std::size_t>::value);
 
     CHECK_UNARY(true);
 }
 
 TEST_CASE("string_view_assignability_test")
 {
-    PL_TEST_STATIC_ASSERT(std::is_copy_assignable<pl::StringView>::value);
-    PL_TEST_STATIC_ASSERT(std::is_move_assignable<pl::StringView>::value);
+    PL_TEST_STATIC_ASSERT(std::is_copy_assignable<pl::string_view>::value);
+    PL_TEST_STATIC_ASSERT(std::is_move_assignable<pl::string_view>::value);
 
     CHECK_UNARY(true);
 }
@@ -264,10 +266,10 @@ TEST_CASE("string_view_from_array_test")
     static constexpr char32_t a3[] = U"test";
     static constexpr wchar_t  a4[] = L"test";
 
-    constexpr pl::StringView    sv1{a1};
-    constexpr pl::U16StringView sv2{a2};
-    constexpr pl::U32StringView sv3{a3};
-    constexpr pl::WStringView   sv4{a4};
+    constexpr pl::string_view    sv1{a1};
+    constexpr pl::u16string_view sv2{a2};
+    constexpr pl::u32string_view sv3{a3};
+    constexpr pl::wstring_view   sv4{a4};
 
     CHECK(sv1.size() == 4U);
     CHECK(sv2.size() == 4U);
@@ -288,10 +290,10 @@ TEST_CASE("string_view_from_pointer_with_size_test")
     static constexpr const char32_t* p3 = U"test";
     static constexpr const wchar_t*  p4 = L"test";
 
-    constexpr pl::StringView    sv1{p1, size};
-    constexpr pl::U16StringView sv2{p2, size};
-    constexpr pl::U32StringView sv3{p3, size};
-    constexpr pl::WStringView   sv4{p4, size};
+    constexpr pl::string_view    sv1{p1, size};
+    constexpr pl::u16string_view sv2{p2, size};
+    constexpr pl::u32string_view sv3{p3, size};
+    constexpr pl::wstring_view   sv4{p4, size};
 
     CHECK(sv1.size() == size);
     CHECK(sv2.size() == size);
@@ -306,10 +308,10 @@ TEST_CASE("string_view_from_pointer_with_size_test")
 
 TEST_CASE("string_view_iterate_test")
 {
-    const pl::StringView    sv1{"text"};
-    const pl::U16StringView sv2{u"text"};
-    const pl::U32StringView sv3{U"text"};
-    const pl::WStringView   sv4{L"text"};
+    const pl::string_view    sv1{"text"};
+    const pl::u16string_view sv2{u"text"};
+    const pl::u32string_view sv3{U"text"};
+    const pl::wstring_view   sv4{L"text"};
 
     std::ostringstream                 oss1{};
     std::basic_ostringstream<char16_t> oss2{};
@@ -339,10 +341,10 @@ TEST_CASE("string_view_iterate_test")
 
 TEST_CASE("string_view_iterate_reversed_test")
 {
-    const pl::StringView    sv1{"text"};
-    const pl::U16StringView sv2{u"text"};
-    const pl::U32StringView sv3{U"text"};
-    const pl::WStringView   sv4{L"text"};
+    const pl::string_view    sv1{"text"};
+    const pl::u16string_view sv2{u"text"};
+    const pl::u32string_view sv3{U"text"};
+    const pl::wstring_view   sv4{L"text"};
 
     std::ostringstream                 oss1{};
     std::basic_ostringstream<char16_t> oss2{};
@@ -372,7 +374,7 @@ TEST_CASE("string_view_iterate_reversed_test")
 
 TEST_CASE("string_view_size_test")
 {
-    pl::StringView a{};
+    pl::string_view a{};
     CHECK(a.size() == 0U);
     CHECK(std::distance(a.begin(), a.end()) == 0U);
 
@@ -470,7 +472,7 @@ TEST_CASE("string_view_size_test")
 
 TEST_CASE("string_view_empty_test")
 {
-    pl::StringView a{};
+    pl::string_view a{};
     CHECK_UNARY(a.empty());
 
     a = "";
@@ -482,7 +484,7 @@ TEST_CASE("string_view_empty_test")
 
 TEST_CASE("string_view_subscript_test")
 {
-    constexpr pl::StringView sv{"text"};
+    constexpr pl::string_view sv{"text"};
 
     REQUIRE(sv.size() == 4U);
     CHECK(sv[0U] == 't');
@@ -494,7 +496,7 @@ TEST_CASE("string_view_subscript_test")
 
 TEST_CASE("string_view_at_test")
 {
-    const pl::StringView sv{"abc"};
+    const pl::string_view sv{"abc"};
     CHECK(sv.at(0U) == 'a');
     CHECK(sv.at(1U) == 'b');
     CHECK(sv.at(2U) == 'c');
@@ -512,7 +514,7 @@ TEST_CASE("string_view_front_test")
     constexpr auto sv = "testing"_sv;
     CHECK(sv.front() == 't');
 
-    constexpr pl::StringView sv2{};
+    constexpr pl::string_view sv2{};
     CHECK(sv2.front() == '\0');
 }
 
@@ -526,8 +528,8 @@ TEST_CASE("string_view_back_test")
 
 TEST_CASE("string_view_data_test")
 {
-    const char* const    p{"text"};
-    const pl::StringView sv{p};
+    const char* const     p{"text"};
+    const pl::string_view sv{p};
 
     CHECK(sv.data() == p);
     CHECK(std::strcmp(sv.data(), p) == 0);
@@ -537,8 +539,8 @@ TEST_CASE("string_view_remove_prefix_test")
 {
     using namespace pl::literals::string_view_literals;
 
-    pl::StringView empty{};
-    auto           sv = "test"_sv;
+    pl::string_view empty{};
+    auto            sv = "test"_sv;
 
     REQUIRE(empty.size() == 0U);
     REQUIRE_UNARY(empty.empty());
@@ -633,8 +635,8 @@ TEST_CASE("string_view_remove_prefix_test")
 
 TEST_CASE("string_view_swap_test")
 {
-    pl::StringView sv1{"a"};
-    pl::StringView sv2{"b"};
+    pl::string_view sv1{"a"};
+    pl::string_view sv2{"b"};
 
     SUBCASE("member_swap")
     {
@@ -660,10 +662,10 @@ TEST_CASE("string_view_to_string_test")
     const std::u32string expected3{U"Hello World!"};
     const std::wstring   expected4{L"Hello World!"};
 
-    constexpr pl::StringView    sv1{"Hello World!"};
-    constexpr pl::U16StringView sv2{u"Hello World!"};
-    constexpr pl::U32StringView sv3{U"Hello World!"};
-    constexpr pl::WStringView   sv4{L"Hello World!"};
+    constexpr pl::string_view    sv1{"Hello World!"};
+    constexpr pl::u16string_view sv2{u"Hello World!"};
+    constexpr pl::u32string_view sv3{U"Hello World!"};
+    constexpr pl::wstring_view   sv4{L"Hello World!"};
 
     CHECK(sv1.to_string() == expected1);
     CHECK(sv2.to_string() == expected2);
@@ -673,8 +675,8 @@ TEST_CASE("string_view_to_string_test")
 
 TEST_CASE("string_view_compare_test")
 {
-    const char* const    p{"text"};
-    const pl::StringView sv1{p};
+    const char* const     p{"text"};
+    const pl::string_view sv1{p};
 
     CHECK(sv1.compare(p) == 0);
     CHECK(sv1.compare("texs") > 0);
@@ -686,8 +688,8 @@ TEST_CASE("string_view_compare_test")
 
 TEST_CASE("string_view_starts_with_test")
 {
-    constexpr pl::StringView sv{"Hello World"};
-    constexpr pl::StringView empty{};
+    constexpr pl::string_view sv{"Hello World"};
+    constexpr pl::string_view empty{};
 
     CHECK_UNARY(sv.starts_with('H'));
     CHECK_UNARY_FALSE(empty.starts_with('H'));
@@ -707,8 +709,8 @@ TEST_CASE("string_view_starts_with_test")
 
 TEST_CASE("string_view_ends_with_test")
 {
-    constexpr pl::StringView sv{"Hello World"};
-    constexpr pl::StringView empty{};
+    constexpr pl::string_view sv{"Hello World"};
+    constexpr pl::string_view empty{};
 
     CHECK_UNARY(sv.ends_with('d'));
     CHECK_UNARY_FALSE(empty.ends_with('d'));
@@ -729,10 +731,10 @@ TEST_CASE("string_view_print_test")
     std::basic_ostringstream<char32_t> oss32{};
     std::wostringstream                ossw{};
 
-    const pl::StringView    sv1{"text"};
-    const pl::U16StringView sv2{u"text"};
-    const pl::U32StringView sv3{U"text"};
-    const pl::WStringView   sv4{L"text"};
+    const pl::string_view    sv1{"text"};
+    const pl::u16string_view sv2{u"text"};
+    const pl::u32string_view sv3{U"text"};
+    const pl::wstring_view   sv4{L"text"};
 
     static constexpr char     expected1[] = "text";
     static constexpr char16_t expected2[] = u"text";
@@ -771,10 +773,10 @@ TEST_CASE("string_view_print_test")
 
     SUBCASE("print_empty")
     {
-        oss << pl::StringView{};
-        oss16 << pl::U16StringView{};
-        oss32 << pl::U32StringView{};
-        ossw << pl::WStringView{};
+        oss << pl::string_view{};
+        oss16 << pl::u16string_view{};
+        oss32 << pl::u32string_view{};
+        ossw << pl::wstring_view{};
 
         result1 = oss.str();
         result2 = oss16.str();
