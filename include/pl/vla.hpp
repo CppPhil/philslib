@@ -50,7 +50,7 @@
  *       directly so that the comma effectively disappears.
 **/
 
-#define PL_VLA(type, identifier, size, ...) \
-    ::pl::RawMemoryArray<type> identifier(  \
+#define PL_VLA(type, identifier, size, ...)  \
+    ::pl::raw_memory_array<type> identifier( \
         PL_ALLOCA(sizeof(type) * size), sizeof(type) * size, __VA_ARGS__)
 #endif // INCG_PL_VLA_HPP
