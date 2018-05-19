@@ -41,7 +41,7 @@
 namespace pl {
 namespace test {
 namespace {
-class Type {
+class type {
 public:
     int get() noexcept { return 1; }
     int get() const noexcept { return 2; }
@@ -111,8 +111,8 @@ TEST_CASE("as_ptr_const_is_low_level_const_qualified_test")
 
 TEST_CASE("as_ptr_const_overload_test")
 {
-    pl::test::Type  obj{};
-    pl::test::Type* ptr{&obj};
+    pl::test::type  obj{};
+    pl::test::type* ptr{&obj};
 
     CHECK(ptr->get() == 1);
     CHECK(pl::asPtrConst(ptr)->get() == 2);

@@ -41,7 +41,7 @@ namespace pl {
  *        An alias for unsigned char. This type is effectively a 1 byte large
  *        unsigned integer.
 **/
-using Byte = unsigned char;
+using byte = unsigned char;
 
 inline namespace literals {
 inline namespace integer_literals {
@@ -53,7 +53,7 @@ inline namespace integer_literals {
  * \warning If the value passed in is larger than UCHAR_MAX the program
  *          is ill-formed.
 **/
-constexpr ::pl::Byte operator""_byte(unsigned long long value)
+constexpr ::pl::byte operator""_byte(unsigned long long value)
 {
 #if (PL_COMPILER != PL_COMPILER_MSVC) \
     || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
@@ -63,7 +63,7 @@ constexpr ::pl::Byte operator""_byte(unsigned long long value)
         "pl::literals::integer_literals::operator\"\"_byte");
 #endif // (PL_COMPILER != PL_COMPILER_MSVC) || (PL_COMPILER_VERSION >=
        // PL_COMPILER_VERSION_CHECK(19, 11, 0))
-    return static_cast<::pl::Byte>(value);
+    return static_cast<::pl::byte>(value);
 }
 } // inline namespace integer_literals
 } // inline namespace literals

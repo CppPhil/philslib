@@ -50,27 +50,27 @@ TEST_CASE("as_bytes_buffer_test")
     PL_TEST_STATIC_ASSERT(sizeof(buf2) == byteSize);
 
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::asBytes(buf1)), const pl::Byte*>::value);
+        std::is_same<decltype(pl::asBytes(buf1)), const pl::byte*>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::asBytes(buf2)), pl::Byte*>::value);
+        std::is_same<decltype(pl::asBytes(buf2)), pl::byte*>::value);
 
-    const pl::Byte* p1{pl::asBytes(buf1)};
-    pl::Byte*       p2{pl::asBytes(buf2)};
+    const pl::byte* p1{pl::asBytes(buf1)};
+    pl::byte*       p2{pl::asBytes(buf2)};
 
     REQUIRE(p1 != nullptr);
     REQUIRE(p2 != nullptr);
 
-    CHECK(p1[0U] == static_cast<pl::Byte>(0xAA));
-    CHECK(p1[1U] == static_cast<pl::Byte>(0xBB));
-    CHECK(p1[2U] == static_cast<pl::Byte>(0xCC));
-    CHECK(p1[3U] == static_cast<pl::Byte>(0xDD));
-    CHECK(p1[4U] == static_cast<pl::Byte>(0x00));
+    CHECK(p1[0U] == static_cast<pl::byte>(0xAA));
+    CHECK(p1[1U] == static_cast<pl::byte>(0xBB));
+    CHECK(p1[2U] == static_cast<pl::byte>(0xCC));
+    CHECK(p1[3U] == static_cast<pl::byte>(0xDD));
+    CHECK(p1[4U] == static_cast<pl::byte>(0x00));
 
-    CHECK(p2[0U] == static_cast<pl::Byte>(0xDE));
-    CHECK(p2[1U] == static_cast<pl::Byte>(0xAD));
-    CHECK(p2[2U] == static_cast<pl::Byte>(0xC0));
-    CHECK(p2[3U] == static_cast<pl::Byte>(0xDE));
-    CHECK(p2[4U] == static_cast<pl::Byte>(0x00));
+    CHECK(p2[0U] == static_cast<pl::byte>(0xDE));
+    CHECK(p2[1U] == static_cast<pl::byte>(0xAD));
+    CHECK(p2[2U] == static_cast<pl::byte>(0xC0));
+    CHECK(p2[3U] == static_cast<pl::byte>(0xDE));
+    CHECK(p2[4U] == static_cast<pl::byte>(0x00));
 }
 
 TEST_CASE("as_bytes_int_test")
@@ -82,12 +82,12 @@ TEST_CASE("as_bytes_int_test")
 
     std::memcpy(&v, "\xDE\xAD\xC0\xDE", byteSize);
 
-    const pl::Byte* p{pl::asBytes(v)};
+    const pl::byte* p{pl::asBytes(v)};
 
     REQUIRE(p != nullptr);
 
-    CHECK(p[0U] == static_cast<pl::Byte>(0xDE));
-    CHECK(p[1U] == static_cast<pl::Byte>(0xAD));
-    CHECK(p[2U] == static_cast<pl::Byte>(0xC0));
-    CHECK(p[3U] == static_cast<pl::Byte>(0xDE));
+    CHECK(p[0U] == static_cast<pl::byte>(0xDE));
+    CHECK(p[1U] == static_cast<pl::byte>(0xAD));
+    CHECK(p[2U] == static_cast<pl::byte>(0xC0));
+    CHECK(p[3U] == static_cast<pl::byte>(0xDE));
 }

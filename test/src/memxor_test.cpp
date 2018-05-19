@@ -42,40 +42,40 @@
 TEST_CASE("memxor_test")
 {
     constexpr auto expectedArray = pl::cont::make_array(
-        static_cast<pl::Byte>('\x17'),
-        static_cast<pl::Byte>('\x0A'),
-        static_cast<pl::Byte>('\x1C'),
-        static_cast<pl::Byte>('\x1F'),
-        static_cast<pl::Byte>('\x49'),
-        static_cast<pl::Byte>('\x11'),
-        static_cast<pl::Byte>('\x16'),
-        static_cast<pl::Byte>('\x59'),
-        static_cast<pl::Byte>('\x55'),
-        static_cast<pl::Byte>('\x00'));
+        static_cast<pl::byte>('\x17'),
+        static_cast<pl::byte>('\x0A'),
+        static_cast<pl::byte>('\x1C'),
+        static_cast<pl::byte>('\x1F'),
+        static_cast<pl::byte>('\x49'),
+        static_cast<pl::byte>('\x11'),
+        static_cast<pl::byte>('\x16'),
+        static_cast<pl::byte>('\x59'),
+        static_cast<pl::byte>('\x55'),
+        static_cast<pl::byte>('\x00'));
 
     constexpr auto srcArray = pl::cont::make_array(
-        static_cast<pl::Byte>('\x63'),
-        static_cast<pl::Byte>('\x6F'),
-        static_cast<pl::Byte>('\x6F'),
-        static_cast<pl::Byte>('\x6B'),
-        static_cast<pl::Byte>('\x69'),
-        static_cast<pl::Byte>('\x65'),
-        static_cast<pl::Byte>('\x73'),
-        static_cast<pl::Byte>('\x21'),
-        static_cast<pl::Byte>('\x21'),
-        static_cast<pl::Byte>('\x00'));
+        static_cast<pl::byte>('\x63'),
+        static_cast<pl::byte>('\x6F'),
+        static_cast<pl::byte>('\x6F'),
+        static_cast<pl::byte>('\x6B'),
+        static_cast<pl::byte>('\x69'),
+        static_cast<pl::byte>('\x65'),
+        static_cast<pl::byte>('\x73'),
+        static_cast<pl::byte>('\x21'),
+        static_cast<pl::byte>('\x21'),
+        static_cast<pl::byte>('\x00'));
 
     auto destArray = pl::cont::make_array(
-        static_cast<pl::Byte>('\x74'),
-        static_cast<pl::Byte>('\x65'),
-        static_cast<pl::Byte>('\x73'),
-        static_cast<pl::Byte>('\x74'),
-        static_cast<pl::Byte>('\x20'),
-        static_cast<pl::Byte>('\x74'),
-        static_cast<pl::Byte>('\x65'),
-        static_cast<pl::Byte>('\x78'),
-        static_cast<pl::Byte>('\x74'),
-        static_cast<pl::Byte>('\x00'));
+        static_cast<pl::byte>('\x74'),
+        static_cast<pl::byte>('\x65'),
+        static_cast<pl::byte>('\x73'),
+        static_cast<pl::byte>('\x74'),
+        static_cast<pl::byte>('\x20'),
+        static_cast<pl::byte>('\x74'),
+        static_cast<pl::byte>('\x65'),
+        static_cast<pl::byte>('\x78'),
+        static_cast<pl::byte>('\x74'),
+        static_cast<pl::byte>('\x00'));
 
     REQUIRE(destArray.size() == srcArray.size());
     REQUIRE(destArray.size() == expectedArray.size());

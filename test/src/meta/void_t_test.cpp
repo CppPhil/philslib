@@ -69,10 +69,10 @@ postfix_incrementable operator++(postfix_incrementable& a, int)noexcept
 TEST_CASE("void_t_test")
 {
     // avoid unused function warnings.
-    test::prefix_incrementable  prefixIncrementable{};
-    test::postfix_incrementable postfixIncrementable{};
-    ++prefixIncrementable;
-    postfixIncrementable++;
+    test::prefix_incrementable  prefix_incrementable{};
+    test::postfix_incrementable postfix_incrementable{};
+    ++prefix_incrementable;
+    postfix_incrementable++;
 
     PL_TEST_STATIC_ASSERT(
         std::is_same<test::is_prefix_incrementable<int>::type,

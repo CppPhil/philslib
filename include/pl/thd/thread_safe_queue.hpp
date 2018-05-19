@@ -26,7 +26,7 @@
 
 /*!
  * \file thread_safe_queue.hpp
- * \brief This header file defines the pl::ThreadSafeQueue class
+ * \brief This header file defines the pl::thread_safe_queue class
 **/
 #ifndef INCG_PL_THD_THREAD_SAFE_QUEUE_HPP
 #define INCG_PL_THD_THREAD_SAFE_QUEUE_HPP
@@ -40,28 +40,28 @@
 namespace pl {
 namespace thd {
 /*!
- * \brief Allows the user to push elements to the back of the ThreadSafeQueue
+ * \brief Allows the user to push elements to the back of the thread_safe_queue
  *        and pop elements from the front.
  *
  * This class can be accessed from multiple threads at the same time.
 **/
 template <typename ValueType>
-class ThreadSafeQueue {
+class thread_safe_queue {
 public:
-    using this_type      = ThreadSafeQueue;
+    using this_type      = thread_safe_queue;
     using value_type     = ValueType;
     using container_type = std::queue<value_type>;
     using size_type      = typename container_type::size_type;
 
     /*!
-     * \brief Creates a ThreadSafeQueue.
-     *        The ThreadSafeQueue will start out empty.
+     * \brief Creates a thread_safe_queue.
+     *        The thread_safe_queue will start out empty.
     **/
-    ThreadSafeQueue() noexcept : m_cont{}, m_mutex{}, m_cvHasElements{} {}
+    thread_safe_queue() noexcept : m_cont{}, m_mutex{}, m_cv_has_elements{} {}
     /*!
      * \brief This type is non-copyable.
     **/
-    ThreadSafeQueue(const this_type&) = delete;
+    thread_safe_queue(const this_type&) = delete;
 
     /*!
      * \brief This type is non-copyable.
@@ -78,10 +78,10 @@ public:
     value_type pop()
     {
         std::unique_lock<std::mutex> lock{m_mutex};
-        m_cvHasElements.wait(lock, [this] { return not m_cont.empty(); });
-        auto retMe = m_cont.front();
+        m_cv_has_elements.wait(lock, [this] { return not m_cont.empty(); });
+        auto return_value = m_cont.front();
         m_cont.pop();
-        return retMe;
+        return return_value;
     }
 
     /*!
@@ -98,7 +98,7 @@ public:
         std::unique_lock<std::mutex> lock{m_mutex};
         m_cont.push(data);
         lock.unlock();
-        m_cvHasElements.notify_all();
+        m_cv_has_elements.notify_all();
         return *this;
     }
 
@@ -115,7 +115,7 @@ public:
         std::unique_lock<std::mutex> lock{m_mutex};
         m_cont.push(std::move(data));
         lock.unlock();
-        m_cvHasElements.notify_all();
+        m_cv_has_elements.notify_all();
         return *this;
     }
 
@@ -125,7 +125,8 @@ public:
     **/
     PL_NODISCARD bool empty() const noexcept
     {
-        std::unique_lock<std::mutex> lock{m_mutex};
+        std::lock_guard<std::mutex> lock{m_mutex};
+        (void)lock;
         return m_cont.empty();
     }
 
@@ -135,14 +136,15 @@ public:
     **/
     size_type size() const noexcept
     {
-        std::unique_lock<std::mutex> lock{m_mutex};
+        std::lock_guard<std::mutex> lock{m_mutex};
+        (void)lock;
         return m_cont.size();
     }
 
 private:
     container_type          m_cont;
     mutable std::mutex      m_mutex;
-    std::condition_variable m_cvHasElements;
+    std::condition_variable m_cv_has_elements;
 };
 } // namespace thd
 } // namespace pl

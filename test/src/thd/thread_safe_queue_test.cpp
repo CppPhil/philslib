@@ -33,12 +33,12 @@
 #if PL_COMPILER == PL_COMPILER_GCC
 #pragma GCC diagnostic pop
 #endif // PL_COMPILER == PL_COMPILER_GCC
-#include "../../../include/pl/thd/thread_safe_queue.hpp" // pl::thd::ThreadSafeQueue
+#include "../../../include/pl/thd/thread_safe_queue.hpp" // pl::thd::thread_safe_queue
 #include <future> // std::future, std::async, std::launch::async
 
 TEST_CASE("thread_safe_queue_test")
 {
-    pl::thd::ThreadSafeQueue<int> q{};
+    pl::thd::thread_safe_queue<int> q{};
 
     CHECK_UNARY(q.empty());
     CHECK(q.size() == 0U);

@@ -33,7 +33,7 @@
 #if PL_COMPILER == PL_COMPILER_GCC
 #pragma GCC diagnostic pop
 #endif // PL_COMPILER == PL_COMPILER_GCC
-#include "../../../include/pl/thd/thread_pool.hpp" // pl::thd::ThreadPool
+#include "../../../include/pl/thd/thread_pool.hpp" // pl::thd::thread_pool
 #include <cstddef>                                 // std::size_t
 #include <future>                                  // std::future
 #include <string>                                  // std::string
@@ -44,10 +44,10 @@ namespace test {
 namespace {
 int f1(int i) noexcept { return i * 2; }
 void       f2() noexcept {}
-class Type {
+class type {
 public:
-    double memFn1(double a) const noexcept { return a * 3.0; }
-    void                 memFn2() const noexcept {}
+    double mem_fn1(double a) const noexcept { return a * 3.0; }
+    void                  mem_fn2() const noexcept {}
 };
 } // anonymous namespace
 } // namespace test
@@ -55,38 +55,38 @@ public:
 
 TEST_CASE("thread_pool_test")
 {
-    static constexpr std::size_t noThreads{0U};
-    static constexpr std::size_t twoThreads{2U};
+    static constexpr std::size_t no_threads{0U};
+    static constexpr std::size_t two_threads{2U};
 
-    const unsigned hwConcurrency{std::thread::hardware_concurrency()};
+    const unsigned hw_concurrency{std::thread::hardware_concurrency()};
 
-    REQUIRE(hwConcurrency != 0U);
+    REQUIRE(hw_concurrency != 0U);
 
-    pl::thd::ThreadPool emptyThreadPool{noThreads};
-    pl::thd::ThreadPool twoThreadsThreadPool{twoThreads};
-    pl::thd::ThreadPool hwConcurrencyThreadPool{hwConcurrency};
+    pl::thd::thread_pool empty_thread_pool{no_threads};
+    pl::thd::thread_pool two_threads_thread_pool{two_threads};
+    pl::thd::thread_pool hw_concurrency_thread_pool{hw_concurrency};
 
     SUBCASE("thread_count_test")
     {
-        CHECK(emptyThreadPool.getThreadCount() == noThreads);
-        CHECK(twoThreadsThreadPool.getThreadCount() == twoThreads);
-        CHECK(hwConcurrencyThreadPool.getThreadCount() == hwConcurrency);
+        CHECK(empty_thread_pool.thread_count() == no_threads);
+        CHECK(two_threads_thread_pool.thread_count() == two_threads);
+        CHECK(hw_concurrency_thread_pool.thread_count() == hw_concurrency);
     }
 
     SUBCASE("task_test")
     {
-        pl::thd::ThreadPool& tp{twoThreadsThreadPool};
+        pl::thd::thread_pool& tp{two_threads_thread_pool};
 
-        std::future<int>    fut1{tp.addTask(&pl::test::f1, 5)};
-        std::future<void>   fut2{tp.addTask(&pl::test::f2)};
+        std::future<int>    fut1{tp.add_task(&pl::test::f1, 5)};
+        std::future<void>   fut2{tp.add_task(&pl::test::f2)};
         std::future<double> fut3{
-            tp.addTask(&pl::test::Type::memFn1, pl::test::Type{}, 5.0)};
+            tp.add_task(&pl::test::type::mem_fn1, pl::test::type{}, 5.0)};
         std::future<void> fut4{
-            tp.addTask(&pl::test::Type::memFn2, pl::test::Type{})};
-        std::future<std::string> fut5{tp.addTask(
+            tp.add_task(&pl::test::type::mem_fn2, pl::test::type{})};
+        std::future<std::string> fut5{tp.add_task(
             [](const char* str) { return std::string{"text "} + str; },
             "test")};
-        std::future<void> fut6{tp.addTask([] {})};
+        std::future<void> fut6{tp.add_task([] {})};
 
         CHECK(fut1.get() == 10);
         fut2.wait();

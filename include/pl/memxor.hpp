@@ -59,8 +59,8 @@ inline void* memxor(
     PL_DBG_CHECK_PRE(destination != nullptr);
     PL_DBG_CHECK_PRE(source != nullptr);
 
-    auto dest = static_cast<Byte * PL_RESTRICT>(destination);
-    auto src  = static_cast<const Byte * PL_RESTRICT>(source);
+    auto dest = static_cast<byte * PL_RESTRICT>(destination);
+    auto src  = static_cast<const byte * PL_RESTRICT>(source);
 
     while (byteCount > 0) {
         *dest ^= *src;

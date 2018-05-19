@@ -26,8 +26,8 @@
 
 /*!
  * \file monitor.hpp
- * \brief Defines the Monitor class that can be used to synchronize access
- *         from multiple threads to some shared data.
+ * \brief Defines the monitor class that can be used to synchronize access
+ *        from multiple threads to some shared data.
 **/
 #ifndef INCG_PL_THD_MONITOR_HPP
 #define INCG_PL_THD_MONITOR_HPP
@@ -44,24 +44,24 @@ namespace thd {
  *        by passing in callables that operate on the shared data.
 **/
 template <typename SharedData>
-class Monitor {
+class monitor {
 public:
-    using this_type    = Monitor;
+    using this_type    = monitor;
     using element_type = SharedData;
 
     /*!
-     * \brief Creates a Monitor.
-     * \param sharedData the data to be protected by the Monitor.
+     * \brief Creates a monitor.
+     * \param shared_data the data to be protected by the Monitor.
     **/
-    explicit Monitor(element_type sharedData)
-        : m_sharedData{std::move(sharedData)}, m_mutex{}
+    explicit monitor(element_type shared_data)
+        : m_shared_data{std::move(shared_data)}, m_mutex{}
     {
     }
 
     /*!
      * \brief This type is non-copyable.
     **/
-    Monitor(const this_type&) = delete;
+    monitor(const this_type&) = delete;
 
     /*!
      * \brief This type is non-copyable.
@@ -78,15 +78,16 @@ public:
     template <typename Callable>
     auto operator()(PL_IN Callable&& callable) -> decltype(auto)
     {
-        std::lock_guard<std::mutex> lockGuard{m_mutex};
-        return ::pl::invoke(std::forward<Callable>(callable), m_sharedData);
+        std::lock_guard<std::mutex> lock_guard{m_mutex};
+        (void)lock_guard;
+        return ::pl::invoke(std::forward<Callable>(callable), m_shared_data);
     }
 
 private:
-    element_type m_sharedData; //!< the shared data
-    std::mutex   m_mutex;      /*!< the mutex to guard access
-                                *   to the shared data
-                               **/
+    element_type m_shared_data; //!< the shared data
+    std::mutex   m_mutex;       /*!< the mutex to guard access
+                                 *   to the shared data
+                                **/
 };
 } // namespace thd
 } // namespace pl

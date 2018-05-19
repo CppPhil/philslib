@@ -26,7 +26,7 @@
 
 /*!
  * \file concurrent.hpp
- * \brief Defines the Concurrent type which wraps an instance of any type
+ * \brief Defines the concurrent type which wraps an instance of any type
  *        and manages a thread that runs callables on the instance wrapped.
  *        Those callables are passed in by users.
 **/
@@ -35,7 +35,7 @@
 #include "../annotations.hpp"    // PL_IN, PL_OUT, PL_INOUT
 #include "../compiler.hpp"       // PL_COMPILER, PL_COMPILER_MSVC
 #include "../invoke.hpp"         // pl::invoke
-#include "thread_safe_queue.hpp" // pl::ThreadSafeQueue
+#include "thread_safe_queue.hpp" // pl::thread_safe_queue
 #include <ciso646>               // not
 #include <exception>             // std::current_exception
 #include <functional>            // std::function
@@ -50,26 +50,26 @@ namespace thd {
  * \brief Allows callables to be run on an object managed by a thread.
 **/
 template <typename Type>
-class Concurrent {
+class concurrent {
 public:
-    using this_type = Concurrent;
+    using this_type = concurrent;
 
     /*!
-     * \brief Type alias for the template type parameter of 'Concurrent'.
+     * \brief Type alias for the template type parameter of 'concurrent'.
      *        Can be accessed to query the template type parameter
-     *        that was used for a given 'Concurrent'.
+     *        that was used for a given 'concurrent'.
     **/
     using element_type = Type;
 
     /*!
      * \brief Starts the underlying thread. The thread will remove and execute
-     *        callables stored in the ThreadSafeQueue continuously.
+     *        callables stored in the thread_safe_queue continuously.
      * \param value The object that the callables passed in the call operator
      *        will operate on.
     **/
-    explicit Concurrent(Type value)
-        : m_value{std::move(value)}, m_q{}, m_isDone{false}, m_thd{[this] {
-            while (not m_isDone) {
+    explicit concurrent(Type value)
+        : m_value{std::move(value)}, m_q{}, m_is_done{false}, m_thd{[this] {
+            while (not m_is_done) {
                 m_q.pop()();
             }
         }}
@@ -79,7 +79,7 @@ public:
     /*!
      * \brief This type is non-copyable.
     **/
-    Concurrent(const this_type&) = delete;
+    concurrent(const this_type&) = delete;
 
     /*!
      * \brief This type is non-copyable.
@@ -87,18 +87,18 @@ public:
     this_type& operator=(const this_type&) = delete;
 
     /*!
-     * \brief Adds a callable to the ThreadSafeQueue that will set the
+     * \brief Adds a callable to the thread_safe_queue that will set the
      *        is done boolean flag to true. Which will cause the thread to
      *        return. Then the thread is joined.
      *
      * The underlying thread will continue to run the callables still in the
-     * ThreadSafeQueue. As soon as the callable that sets is done to true is
+     * thread_safe_queue. As soon as the callable that sets is done to true is
      * run the thread will exit its loop. Then the thread calling this
      * destructor joins this instances's underlying thread.
     **/
-    ~Concurrent()
+    ~concurrent()
     {
-        m_q.push([this] { m_isDone = true; });
+        m_q.push([this] { m_is_done = true; });
         m_thd.join();
     }
 
@@ -122,7 +122,7 @@ public:
 
         m_q.push([p, callable, this] {
             try {
-                setValue(*p, callable, m_value);
+                set_value(*p, callable, m_value);
             }
             catch (...) {
                 p->set_exception(std::current_exception());
@@ -134,14 +134,14 @@ public:
 
 private:
     // these type aliases are just for gcc
-    using Function         = std::function<void()>;
-    using concurrent_queue = ThreadSafeQueue<Function>;
+    using function         = std::function<void()>;
+    using concurrent_queue = thread_safe_queue<function>;
 
     /*!
      * \brief Invokes the callable with ty and sets the result to the promise.
     **/
     template <typename Fut, typename Callable, typename Ty>
-    static void setValue(
+    static void set_value(
         PL_OUT std::promise<Fut>& p,
         PL_IN Callable& callable,
         PL_INOUT Ty& ty)
@@ -160,7 +160,7 @@ private:
      *       a regular type.
     **/
     template <typename Callable, typename Ty>
-    static void setValue(
+    static void set_value(
         PL_OUT std::promise<void>& p,
         PL_IN Callable& callable,
         PL_INOUT Ty& ty)
@@ -175,7 +175,7 @@ private:
 
     Type             m_value;
     concurrent_queue m_q;
-    bool             m_isDone; //!< only accessed from m_thd
+    bool             m_is_done; //!< only accessed from m_thd
     std::thread      m_thd;
 };
 } // namespace thd

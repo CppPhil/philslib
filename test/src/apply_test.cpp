@@ -48,9 +48,9 @@ Ty unaryFunctionTemplate(Ty ty)
     return ty;
 }
 
-class Type {
+class type {
 public:
-    explicit Type(int i) noexcept : data{i} {}
+    explicit type(int i) noexcept : data{i} {}
     int               nullaryMemFun() const noexcept { return 5; }
     int unaryMemFun(int i) const noexcept { return 7 + i; }
     template <typename Ty>
@@ -83,8 +83,8 @@ struct GenericFunctor {
 
 TEST_CASE("apply_test")
 {
-    const pl::test::Type        obj{20};
-    const pl::test::Type* const ptr{&obj};
+    const pl::test::type        obj{20};
+    const pl::test::type* const ptr{&obj};
 
     auto nullaryLambda = [] { return 50; };
     auto unaryLambda   = [](int i) { return i * i; };
@@ -102,33 +102,33 @@ TEST_CASE("apply_test")
     SUBCASE("member_function_pointers")
     {
         CHECK(
-            pl::apply(&pl::test::Type::nullaryMemFun, std::make_tuple(obj))
+            pl::apply(&pl::test::type::nullaryMemFun, std::make_tuple(obj))
             == 5);
         CHECK(
-            pl::apply(&pl::test::Type::nullaryMemFun, std::make_tuple(ptr))
+            pl::apply(&pl::test::type::nullaryMemFun, std::make_tuple(ptr))
             == 5);
         CHECK(
-            pl::apply(&pl::test::Type::unaryMemFun, std::make_tuple(obj, 3))
+            pl::apply(&pl::test::type::unaryMemFun, std::make_tuple(obj, 3))
             == 10);
         CHECK(
-            pl::apply(&pl::test::Type::unaryMemFun, std::make_tuple(ptr, 3))
+            pl::apply(&pl::test::type::unaryMemFun, std::make_tuple(ptr, 3))
             == 10);
         CHECK(
             pl::apply(
-                &pl::test::Type::unaryMemFunTemplate<int>,
+                &pl::test::type::unaryMemFunTemplate<int>,
                 std::make_tuple(obj, 4))
             == 4);
         CHECK(
             pl::apply(
-                &pl::test::Type::unaryMemFunTemplate<int>,
+                &pl::test::type::unaryMemFunTemplate<int>,
                 std::make_tuple(ptr, 4))
             == 4);
     }
 
     SUBCASE("member_object_pointer")
     {
-        CHECK(pl::apply(&pl::test::Type::data, std::make_tuple(obj)) == 20);
-        CHECK(pl::apply(&pl::test::Type::data, std::make_tuple(ptr)) == 20);
+        CHECK(pl::apply(&pl::test::type::data, std::make_tuple(obj)) == 20);
+        CHECK(pl::apply(&pl::test::type::data, std::make_tuple(ptr)) == 20);
     }
 
     SUBCASE("functors")

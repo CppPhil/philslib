@@ -33,7 +33,7 @@
 #if PL_COMPILER == PL_COMPILER_GCC
 #pragma GCC diagnostic pop
 #endif                                         // PL_COMPILER == PL_COMPILER_GCC
-#include "../../../include/pl/thd/monitor.hpp" // pl::thd::Monitor
+#include "../../../include/pl/thd/monitor.hpp" // pl::thd::monitor
 #include <cstring>                             // std::strcmp
 #include <string>                              // std::string
 #include <utility>                             // std::move
@@ -41,20 +41,20 @@
 namespace pl {
 namespace test {
 namespace {
-class MonitorTestType {
+class monitor_test_type {
 public:
-    using this_type = MonitorTestType;
+    using this_type = monitor_test_type;
 
-    MonitorTestType(int i, double d, std::string s)
+    monitor_test_type(int i, double d, std::string s)
         : m_i{i}, m_d{d}, m_s{std::move(s)}
     {
     }
 
-    double getD() const noexcept { return m_d; }
-    void setD(double d) noexcept { m_d = d; }
-    void             setDTo25() noexcept { setD(25.0); }
-    const char*      str() const noexcept { return m_s.data(); }
-    int              m_i;
+    double d() const noexcept { return m_d; }
+    void d(double d) noexcept { m_d = d; }
+    void          set_d_to_25() noexcept { d(25.0); }
+    const char*   str() const noexcept { return m_s.data(); }
+    int           m_i;
 
 private:
     double      m_d;
@@ -66,18 +66,22 @@ private:
 
 TEST_CASE("monitor_test")
 {
-    pl::thd::Monitor<pl::test::MonitorTestType> monitor{
-        pl::test::MonitorTestType{1, 2.0, "text"}};
+    pl::thd::monitor<pl::test::monitor_test_type> monitor{
+        pl::test::monitor_test_type{1, 2.0, "text"}};
 
     CHECK(
-        monitor([](pl::test::MonitorTestType& o) { return o.getD(); })
+        monitor([](pl::test::monitor_test_type& o) { return o.d(); })
         == doctest::Approx{2.0});
 
-    monitor(&pl::test::MonitorTestType::setDTo25);
+    monitor(&pl::test::monitor_test_type::set_d_to_25);
 
-    CHECK(monitor(&pl::test::MonitorTestType::getD) == doctest::Approx{25.0});
+    CHECK(
+        monitor(
+            static_cast<double (pl::test::monitor_test_type::*)() const>(
+                &pl::test::monitor_test_type::d))
+        == doctest::Approx{25.0});
 
-    CHECK(std::strcmp(monitor(&pl::test::MonitorTestType::str), "text") == 0);
+    CHECK(std::strcmp(monitor(&pl::test::monitor_test_type::str), "text") == 0);
 
-    CHECK(monitor(&pl::test::MonitorTestType::m_i) == 1);
+    CHECK(monitor(&pl::test::monitor_test_type::m_i) == 1);
 }

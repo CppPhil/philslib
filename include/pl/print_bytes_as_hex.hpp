@@ -143,7 +143,7 @@ inline std::ostream& operator<<(
     try {
         os << std::uppercase << std::hex;
 
-        auto* dataToPrint = static_cast<const Byte*>(toPrint.m_dataToPrint);
+        auto* dataToPrint = static_cast<const byte*>(toPrint.m_dataToPrint);
 
         for (std::size_t i{0U}; i < toPrint.m_countBytes; ++i) {
             os << std::setw(nibblesPerByte) << std::setfill(fillChar)

@@ -43,7 +43,7 @@ namespace detail {
  *        Not to be used directly.
 **/
 template <typename Ty, typename Continuation>
-auto thenImpl(
+inline auto then_impl(
     PL_INOUT std::future<Ty>& future,
     PL_IN Continuation& continuation) -> decltype(auto)
 {
@@ -55,7 +55,7 @@ auto thenImpl(
  *        Not to be used directly.
 **/
 template <typename Continuation>
-auto thenImpl(
+inline auto then_impl(
     PL_INOUT std::future<void>& future,
     PL_IN Continuation& continuation) -> decltype(auto)
 {
@@ -78,12 +78,13 @@ auto thenImpl(
  * the continuation passing in the value returned by that future.
 **/
 template <typename Ty, typename Continuation>
-auto then(std::future<Ty> future, Continuation continuation) -> decltype(auto)
+inline auto then(std::future<Ty> future, Continuation continuation)
+    -> decltype(auto)
 {
     return std::async(
         std::launch::async,
         [](std::future<Ty> fut, Continuation cont) {
-            return detail::thenImpl(fut, cont);
+            return detail::then_impl(fut, cont);
         },
         std::move(future),
         std::move(continuation));

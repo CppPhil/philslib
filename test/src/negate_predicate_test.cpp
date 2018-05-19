@@ -42,9 +42,9 @@ namespace pl {
 namespace test {
 namespace {
 bool is5(int i) { return i == 5; }
-class Type {
+class type {
 public:
-    explicit Type(bool v) : m_v{v} {}
+    explicit type(bool v) : m_v{v} {}
     bool memFun(const char* s) const { return std::strchr(s, 'a') != nullptr; }
     bool                    m_v;
 };
@@ -72,12 +72,12 @@ TEST_CASE("negate_predicate_function_pointer_test")
 
 TEST_CASE("negate_predicate_member_function_pointer_test")
 {
-    auto        memFunPtr = &pl::test::Type::memFun;
+    auto        memFunPtr = &pl::test::type::memFun;
     auto&       r         = memFunPtr;
     const auto& cr        = memFunPtr;
 
-    pl::test::Type  obj{true};
-    pl::test::Type* pObj{&obj};
+    pl::test::type  obj{true};
+    pl::test::type* pObj{&obj};
 
     CHECK_UNARY(pl::negatePredicate(r)(obj, "bcdef"));
     CHECK_UNARY_FALSE(pl::negatePredicate(r)(obj, "thoetnineuaieui"));
@@ -92,15 +92,15 @@ TEST_CASE("negate_predicate_member_function_pointer_test")
 
 TEST_CASE("negate_predicate_member_object_pointer_test")
 {
-    auto        memObjPtr = &pl::test::Type::m_v;
+    auto        memObjPtr = &pl::test::type::m_v;
     auto&       r         = memObjPtr;
     const auto& cr        = memObjPtr;
 
-    pl::test::Type  obj1{false};
-    pl::test::Type* pObj1{&obj1};
+    pl::test::type  obj1{false};
+    pl::test::type* pObj1{&obj1};
 
-    pl::test::Type  obj2{true};
-    pl::test::Type* pObj2{&obj2};
+    pl::test::type  obj2{true};
+    pl::test::type* pObj2{&obj2};
 
     CHECK_UNARY(pl::negatePredicate(r)(obj1));
     CHECK_UNARY_FALSE(pl::negatePredicate(r)(obj2));

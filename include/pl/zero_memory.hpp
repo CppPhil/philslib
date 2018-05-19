@@ -62,7 +62,7 @@ PL_ALWAYS_INLINE void* zeroMemory(PL_OUT void* dest, std::size_t countBytes)
 {
     PL_DBG_CHECK_PRE(dest != nullptr);
 
-    Byte* ptr{static_cast<Byte*>(dest)};
+    byte* ptr{static_cast<byte*>(dest)};
 
     for (; countBytes != 0U; ++ptr, --countBytes) {
         *ptr = 0U;
@@ -100,7 +100,7 @@ PL_ALWAYS_INLINE void* secureZeroMemory(
 {
     PL_DBG_CHECK_PRE(dest != nullptr);
 
-    volatile Byte* ptr{static_cast<volatile Byte*>(dest)};
+    volatile byte* ptr{static_cast<volatile byte*>(dest)};
 
     for (; countBytes != 0U; ++ptr, --countBytes) {
         *ptr = 0U;

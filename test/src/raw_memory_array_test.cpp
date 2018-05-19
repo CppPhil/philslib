@@ -56,14 +56,14 @@ TEST_CASE("raw_memory_array_test")
     static constexpr std::size_t amtOfStrings{10U};
     static constexpr std::size_t byteCount{strSiz * amtOfStrings};
 
-    std::unique_ptr<pl::Byte, pl::test::freeer> memoryHolder1{
-        static_cast<pl::Byte*>(std::calloc(amtOfStrings, strSiz)),
+    std::unique_ptr<pl::byte, pl::test::freeer> memoryHolder1{
+        static_cast<pl::byte*>(std::calloc(amtOfStrings, strSiz)),
         pl::test::freeer{}};
     void* const                     memory1{memoryHolder1.get()};
     pl::RawMemoryArray<std::string> ary1{memory1, byteCount};
 
-    std::unique_ptr<pl::Byte, pl::test::freeer> memoryHolder2{
-        static_cast<pl::Byte*>(std::calloc(amtOfStrings, strSiz)),
+    std::unique_ptr<pl::byte, pl::test::freeer> memoryHolder2{
+        static_cast<pl::byte*>(std::calloc(amtOfStrings, strSiz)),
         pl::test::freeer{}};
     void* const                     memory2{memoryHolder2.get()};
     pl::RawMemoryArray<std::string> ary2{memory2, byteCount, "Text"s};

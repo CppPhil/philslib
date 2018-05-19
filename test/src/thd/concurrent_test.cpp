@@ -33,14 +33,14 @@
 #if PL_COMPILER == PL_COMPILER_GCC
 #pragma GCC diagnostic pop
 #endif // PL_COMPILER == PL_COMPILER_GCC
-#include "../../../include/pl/thd/concurrent.hpp" // pl::thd::Concurrent
+#include "../../../include/pl/thd/concurrent.hpp" // pl::thd::concurrent
 #include <future>                                 // std::future
 #include <stdexcept>                              // std::logic_error
 #include <vector>                                 // std::vector
 
 TEST_CASE("concurrent_test")
 {
-    pl::thd::Concurrent<std::vector<int>> concurrent{std::vector<int>{}};
+    pl::thd::concurrent<std::vector<int>> concurrent{std::vector<int>{}};
 
     std::future<std::vector<int>::size_type> fut1{
         concurrent([](std::vector<int>& v) {

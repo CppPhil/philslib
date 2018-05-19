@@ -46,13 +46,13 @@
 TEST_CASE("alloca_test")
 {
     static constexpr std::size_t byteCount{20U};
-    static constexpr pl::Byte    fillByte{0xAB};
+    static constexpr pl::byte    fillByte{0xAB};
 
     void* memory = PL_ALLOCA(byteCount);
 
     REQUIRE(memory != nullptr);
 
-    auto* begin = static_cast<pl::Byte*>(memory);
+    auto* begin = static_cast<pl::byte*>(memory);
     auto* end   = begin + byteCount;
 
     REQUIRE(
@@ -60,7 +60,7 @@ TEST_CASE("alloca_test")
 
     std::fill(begin, end, fillByte);
 
-    CHECK_UNARY(std::all_of(begin, end, [](pl::Byte byte) {
+    CHECK_UNARY(std::all_of(begin, end, [](pl::byte byte) {
         return byte == fillByte;
     }));
 }
