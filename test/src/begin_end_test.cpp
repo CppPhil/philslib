@@ -34,7 +34,7 @@
 #pragma GCC diagnostic pop
 #endif                                    // PL_COMPILER == PL_COMPILER_GCC
 #include "../../include/pl/begin_end.hpp" // pl::begin, pl::cbegin, pl::end, pl::cend, pl::rbegin, pl::crbegin, pl::rend, pl::crend
-#include "../../include/pl/cont/make_array.hpp" // pl::cont::makeArray
+#include "../../include/pl/cont/make_array.hpp" // pl::cont::make_array
 #include "../../include/pl/cont/size.hpp"       // pl::cont::size
 #include "../include/static_assert.hpp"         // PL_TEST_STATIC_ASSERT
 #include <algorithm>                            // std::equal
@@ -49,7 +49,7 @@ namespace pl {
 namespace test {
 namespace {
 template <typename InputIterator>
-bool isEqualToExpected(InputIterator first, InputIterator last)
+bool is_equal_to_expected(InputIterator first, InputIterator last)
 {
     static constexpr auto expected = ::pl::cont::make_array(1, 2, 3, 4, 5);
 
@@ -62,8 +62,8 @@ bool isEqualToExpected(InputIterator first, InputIterator last)
 TEST_CASE("begin_end_c_array_test")
 {
     static constexpr int ary[]{1, 2, 3, 4, 5};
-    static constexpr int revAry[]{5, 4, 3, 2, 1};
-    int                  nonConst[]{1, 2, 3, 4, 5};
+    static constexpr int rev_ary[]{5, 4, 3, 2, 1};
+    int                  non_const[]{1, 2, 3, 4, 5};
 
     PL_TEST_STATIC_ASSERT(
         std::is_same<decltype(pl::begin(ary)), const int*>::value);
@@ -87,24 +87,24 @@ TEST_CASE("begin_end_c_array_test")
                      std::reverse_iterator<const int*>>::value);
 
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::begin(nonConst)), int*>::value);
+        std::is_same<decltype(pl::begin(non_const)), int*>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::cbegin(nonConst)), const int*>::value);
+        std::is_same<decltype(pl::cbegin(non_const)), const int*>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::end(nonConst)), int*>::value);
+        std::is_same<decltype(pl::end(non_const)), int*>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::cend(nonConst)), const int*>::value);
+        std::is_same<decltype(pl::cend(non_const)), const int*>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::rbegin(nonConst)),
+        std::is_same<decltype(pl::rbegin(non_const)),
                      std::reverse_iterator<int*>>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::crbegin(nonConst)),
+        std::is_same<decltype(pl::crbegin(non_const)),
                      std::reverse_iterator<const int*>>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::rend(nonConst)),
+        std::is_same<decltype(pl::rend(non_const)),
                      std::reverse_iterator<int*>>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::crend(nonConst)),
+        std::is_same<decltype(pl::crend(non_const)),
                      std::reverse_iterator<const int*>>::value);
 
     CHECK(pl::begin(ary) == &ary[0U]);
@@ -112,14 +112,14 @@ TEST_CASE("begin_end_c_array_test")
     CHECK(pl::rbegin(ary).base() == &ary[pl::cont::size(ary)]);
     CHECK(pl::rend(ary).base() == &ary[0U]);
 
-    CHECK_UNARY(pl::test::isEqualToExpected(PL_CBEGIN_CEND(ary)));
-    CHECK_UNARY(pl::test::isEqualToExpected(PL_CRBEGIN_CREND(revAry)));
+    CHECK_UNARY(pl::test::is_equal_to_expected(PL_CBEGIN_CEND(ary)));
+    CHECK_UNARY(pl::test::is_equal_to_expected(PL_CRBEGIN_CREND(rev_ary)));
 }
 
 TEST_CASE("begin_end_list_test")
 {
     const std::list<int> l{1, 2, 3, 4, 5};
-    std::list<int>       nonConst{1, 2, 3, 4, 5};
+    std::list<int>       non_const{1, 2, 3, 4, 5};
     const std::list<int> reverse{5, 4, 3, 2, 1};
 
     PL_TEST_STATIC_ASSERT(
@@ -148,28 +148,28 @@ TEST_CASE("begin_end_list_test")
                      std::list<int>::const_reverse_iterator>::value);
 
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::begin(nonConst)),
+        std::is_same<decltype(pl::begin(non_const)),
                      std::list<int>::iterator>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::cbegin(nonConst)),
+        std::is_same<decltype(pl::cbegin(non_const)),
                      std::list<int>::const_iterator>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::end(nonConst)),
+        std::is_same<decltype(pl::end(non_const)),
                      std::list<int>::iterator>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::cend(nonConst)),
+        std::is_same<decltype(pl::cend(non_const)),
                      std::list<int>::const_iterator>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::rbegin(nonConst)),
+        std::is_same<decltype(pl::rbegin(non_const)),
                      std::list<int>::reverse_iterator>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::crbegin(nonConst)),
+        std::is_same<decltype(pl::crbegin(non_const)),
                      std::list<int>::const_reverse_iterator>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::rend(nonConst)),
+        std::is_same<decltype(pl::rend(non_const)),
                      std::list<int>::reverse_iterator>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::crend(nonConst)),
+        std::is_same<decltype(pl::crend(non_const)),
                      std::list<int>::const_reverse_iterator>::value);
 
     CHECK(pl::begin(l) == l.begin());
@@ -177,14 +177,14 @@ TEST_CASE("begin_end_list_test")
     CHECK(pl::rbegin(l) == l.rbegin());
     CHECK(pl::rend(l) == l.rend());
 
-    CHECK_UNARY(pl::test::isEqualToExpected(PL_CBEGIN_CEND(l)));
-    CHECK_UNARY(pl::test::isEqualToExpected(PL_CRBEGIN_CREND(reverse)));
+    CHECK_UNARY(pl::test::is_equal_to_expected(PL_CBEGIN_CEND(l)));
+    CHECK_UNARY(pl::test::is_equal_to_expected(PL_CRBEGIN_CREND(reverse)));
 }
 
 TEST_CASE("begin_end_init_list_test")
 {
     const std::initializer_list<int> il{1, 2, 3, 4, 5};
-    std::initializer_list<int>       nonConst{1, 2, 3, 4, 5};
+    std::initializer_list<int>       non_const{1, 2, 3, 4, 5};
     const std::initializer_list<int> reverse{5, 4, 3, 2, 1};
 
     PL_TEST_STATIC_ASSERT(
@@ -213,28 +213,28 @@ TEST_CASE("begin_end_init_list_test")
                      std::reverse_iterator<const int*>>::value);
 
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::begin(nonConst)),
+        std::is_same<decltype(pl::begin(non_const)),
                      std::initializer_list<int>::iterator>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::cbegin(nonConst)),
+        std::is_same<decltype(pl::cbegin(non_const)),
                      std::initializer_list<int>::const_iterator>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::end(nonConst)),
+        std::is_same<decltype(pl::end(non_const)),
                      std::initializer_list<int>::iterator>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::cend(nonConst)),
+        std::is_same<decltype(pl::cend(non_const)),
                      std::initializer_list<int>::const_iterator>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::rbegin(nonConst)),
+        std::is_same<decltype(pl::rbegin(non_const)),
                      std::reverse_iterator<const int*>>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::crbegin(nonConst)),
+        std::is_same<decltype(pl::crbegin(non_const)),
                      std::reverse_iterator<const int*>>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::rend(nonConst)),
+        std::is_same<decltype(pl::rend(non_const)),
                      std::reverse_iterator<const int*>>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::crend(nonConst)),
+        std::is_same<decltype(pl::crend(non_const)),
                      std::reverse_iterator<const int*>>::value);
 
     CHECK(pl::begin(il) == il.begin());
@@ -242,73 +242,73 @@ TEST_CASE("begin_end_init_list_test")
     CHECK(pl::rbegin(il) == std::make_reverse_iterator(il.end()));
     CHECK(pl::rend(il) == std::make_reverse_iterator(il.begin()));
 
-    CHECK_UNARY(pl::test::isEqualToExpected(PL_CBEGIN_CEND(il)));
-    CHECK_UNARY(pl::test::isEqualToExpected(PL_CRBEGIN_CREND(reverse)));
+    CHECK_UNARY(pl::test::is_equal_to_expected(PL_CBEGIN_CEND(il)));
+    CHECK_UNARY(pl::test::is_equal_to_expected(PL_CRBEGIN_CREND(reverse)));
 }
 
 TEST_CASE("begin_end_std_array_test")
 {
-    static constexpr std::size_t arySiz{5U};
+    static constexpr std::size_t ary_siz{5U};
 
-    const std::array<int, arySiz> ary{{1, 2, 3, 4, 5}};
-    std::array<int, arySiz>       nonConst{{1, 2, 3, 4, 5}};
-    const std::array<int, arySiz> reverse{{5, 4, 3, 2, 1}};
+    const std::array<int, ary_siz> ary{{1, 2, 3, 4, 5}};
+    std::array<int, ary_siz>       non_const{{1, 2, 3, 4, 5}};
+    const std::array<int, ary_siz> reverse{{5, 4, 3, 2, 1}};
 
     PL_TEST_STATIC_ASSERT(
         std::is_same<decltype(pl::begin(ary)),
-                     std::array<int, arySiz>::const_iterator>::value);
+                     std::array<int, ary_siz>::const_iterator>::value);
     PL_TEST_STATIC_ASSERT(
         std::is_same<decltype(pl::cbegin(ary)),
-                     std::array<int, arySiz>::const_iterator>::value);
+                     std::array<int, ary_siz>::const_iterator>::value);
     PL_TEST_STATIC_ASSERT(
         std::is_same<decltype(pl::end(ary)),
-                     std::array<int, arySiz>::const_iterator>::value);
+                     std::array<int, ary_siz>::const_iterator>::value);
     PL_TEST_STATIC_ASSERT(
         std::is_same<decltype(pl::cend(ary)),
-                     std::array<int, arySiz>::const_iterator>::value);
+                     std::array<int, ary_siz>::const_iterator>::value);
     PL_TEST_STATIC_ASSERT(
         std::is_same<decltype(pl::rbegin(ary)),
-                     std::array<int, arySiz>::const_reverse_iterator>::value);
+                     std::array<int, ary_siz>::const_reverse_iterator>::value);
     PL_TEST_STATIC_ASSERT(
         std::is_same<decltype(pl::crbegin(ary)),
-                     std::array<int, arySiz>::const_reverse_iterator>::value);
+                     std::array<int, ary_siz>::const_reverse_iterator>::value);
     PL_TEST_STATIC_ASSERT(
         std::is_same<decltype(pl::rend(ary)),
-                     std::array<int, arySiz>::const_reverse_iterator>::value);
+                     std::array<int, ary_siz>::const_reverse_iterator>::value);
     PL_TEST_STATIC_ASSERT(
         std::is_same<decltype(pl::crend(ary)),
-                     std::array<int, arySiz>::const_reverse_iterator>::value);
+                     std::array<int, ary_siz>::const_reverse_iterator>::value);
 
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::begin(nonConst)),
-                     std::array<int, arySiz>::iterator>::value);
+        std::is_same<decltype(pl::begin(non_const)),
+                     std::array<int, ary_siz>::iterator>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::cbegin(nonConst)),
-                     std::array<int, arySiz>::const_iterator>::value);
+        std::is_same<decltype(pl::cbegin(non_const)),
+                     std::array<int, ary_siz>::const_iterator>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::end(nonConst)),
-                     std::array<int, arySiz>::iterator>::value);
+        std::is_same<decltype(pl::end(non_const)),
+                     std::array<int, ary_siz>::iterator>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::cend(nonConst)),
-                     std::array<int, arySiz>::const_iterator>::value);
+        std::is_same<decltype(pl::cend(non_const)),
+                     std::array<int, ary_siz>::const_iterator>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::rbegin(nonConst)),
-                     std::array<int, arySiz>::reverse_iterator>::value);
+        std::is_same<decltype(pl::rbegin(non_const)),
+                     std::array<int, ary_siz>::reverse_iterator>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::crbegin(nonConst)),
-                     std::array<int, arySiz>::const_reverse_iterator>::value);
+        std::is_same<decltype(pl::crbegin(non_const)),
+                     std::array<int, ary_siz>::const_reverse_iterator>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::rend(nonConst)),
-                     std::array<int, arySiz>::reverse_iterator>::value);
+        std::is_same<decltype(pl::rend(non_const)),
+                     std::array<int, ary_siz>::reverse_iterator>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::crend(nonConst)),
-                     std::array<int, arySiz>::const_reverse_iterator>::value);
+        std::is_same<decltype(pl::crend(non_const)),
+                     std::array<int, ary_siz>::const_reverse_iterator>::value);
 
     CHECK(pl::begin(ary) == ary.begin());
     CHECK(pl::end(ary) == ary.end());
     CHECK(pl::rbegin(ary) == ary.rbegin());
     CHECK(pl::rend(ary) == ary.rend());
 
-    CHECK_UNARY(pl::test::isEqualToExpected(PL_CBEGIN_CEND(ary)));
-    CHECK_UNARY(pl::test::isEqualToExpected(PL_CRBEGIN_CREND(reverse)));
+    CHECK_UNARY(pl::test::is_equal_to_expected(PL_CBEGIN_CEND(ary)));
+    CHECK_UNARY(pl::test::is_equal_to_expected(PL_CRBEGIN_CREND(reverse)));
 }
