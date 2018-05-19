@@ -51,7 +51,7 @@ bool isOk(
     IntType                            upperBound)
 {
     IntType result{rng.template generate<IntType>(lowerBound, upperBound)};
-    return pl::isBetween(result, lowerBound, upperBound);
+    return pl::is_between(result, lowerBound, upperBound);
 }
 } // anonymous namespace
 } // namespace test

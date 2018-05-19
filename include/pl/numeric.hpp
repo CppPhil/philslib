@@ -40,7 +40,7 @@ namespace pl {
  * \note Only pass in numbers.
 **/
 template <typename Numeric>
-constexpr bool isEven(Numeric numeric)
+constexpr bool is_even(Numeric numeric)
 {
     return ((numeric & Numeric{1}) == Numeric{});
 }
@@ -52,25 +52,26 @@ constexpr bool isEven(Numeric numeric)
  * \note Only pass in numbers.
 **/
 template <typename Numeric>
-constexpr bool isOdd(Numeric numeric)
+constexpr bool is_odd(Numeric numeric)
 {
-    return not::pl::isEven(numeric);
+    return not::pl::is_even(numeric);
 }
 
 /*!
- * \brief Checks if checkMe is within lowerBound and upperBound.
- * \param checkMe The number to check.
- * \param lowerBound The lower bound.
- * \param upperBound The upper bound.
- * \return true if checkMe is >= lowerBound and checkMe is also <= upperBound;
+ * \brief Checks if check_me is within lower_bound and upper_bound.
+ * \param check_me The number to check.
+ * \param lower_bound The lower bound.
+ * \param upper_bound The upper bound.
+ * \return true if check_me is >= lower_bound
+ *              and check_me is also <= upper_bound;
  *         false otherwise.
- * \warning lowerBound must be <= upperBound
+ * \warning lower_bound must be <= upper_bound
 **/
 template <typename Numeric>
 constexpr bool
-isBetween(Numeric checkMe, Numeric lowerBound, Numeric upperBound)
+is_between(Numeric check_me, Numeric lower_bound, Numeric upper_bound)
 {
-    return ((checkMe >= lowerBound) and (checkMe <= upperBound));
+    return ((check_me >= lower_bound) and (check_me <= upper_bound));
 }
 } // namespace pl
 #endif // INCG_PL_NUMERIC_HPP

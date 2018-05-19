@@ -47,13 +47,13 @@
 
 TEST_CASE("no_macro_substitution_test")
 {
-    constexpr auto                                minValue
+    constexpr auto                                min_value
         = std::numeric_limits<std::uint32_t>::min PL_NO_MACRO_SUBSTITUTION();
-    constexpr auto                                maxValue
+    constexpr auto                                max_value
         = std::numeric_limits<std::uint32_t>::max PL_NO_MACRO_SUBSTITUTION();
 
-    CHECK(minValue == 0U);
-    CHECK(maxValue == 0xFFFFFFFFU);
+    CHECK(min_value == 0U);
+    CHECK(max_value == 0xFFFFFFFFU);
 
     int i{5};
     int j{7};
