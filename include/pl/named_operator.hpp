@@ -43,7 +43,7 @@ template <typename BinaryCallable, typename Type>
 struct binary_callable_with_value {
     /*!
      * \brief Constructor.
-     * \param p_BinaryCallable The BinaryCallable.
+     * \param p_binary_callable The BinaryCallable.
      * \param p_value The left hand side object.
     **/
     constexpr binary_callable_with_value(
