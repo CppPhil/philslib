@@ -44,19 +44,19 @@
 namespace pl {
 namespace test {
 namespace {
-using Oi1   = std::ostream_iterator<int>;
-using Ra1   = unsigned char*;
-using Ra2   = std::vector<float>::const_iterator;
-using Bidi1 = std::list<int>::const_iterator;
-using Fw1   = std::forward_list<std::vector<double>>::iterator;
-using InIt1 = std::istream_iterator<unsigned long>;
+using oi1    = std::ostream_iterator<int>;
+using ra1    = unsigned char*;
+using ra2    = std::vector<float>::const_iterator;
+using bidi1  = std::list<int>::const_iterator;
+using fw1    = std::forward_list<std::vector<double>>::iterator;
+using in_it1 = std::istream_iterator<unsigned long>;
 } // anonymous namespace
 } // namespace test
 } // namespace pl
 
 TEST_CASE("is_output_iterator_positive_test")
 {
-    PL_TEST_STATIC_ASSERT(pl::meta::is_output_iterator<pl::test::Oi1>::value);
+    PL_TEST_STATIC_ASSERT(pl::meta::is_output_iterator<pl::test::oi1>::value);
 
     CHECK_UNARY(true);
 }
@@ -64,15 +64,15 @@ TEST_CASE("is_output_iterator_positive_test")
 TEST_CASE("is_output_iterator_negative_test")
 {
     PL_TEST_STATIC_ASSERT(
-        not pl::meta::is_output_iterator<pl::test::Ra1>::value);
+        not pl::meta::is_output_iterator<pl::test::ra1>::value);
     PL_TEST_STATIC_ASSERT(
-        not pl::meta::is_output_iterator<pl::test::Ra2>::value);
+        not pl::meta::is_output_iterator<pl::test::ra2>::value);
     PL_TEST_STATIC_ASSERT(
-        not pl::meta::is_output_iterator<pl::test::Bidi1>::value);
+        not pl::meta::is_output_iterator<pl::test::bidi1>::value);
     PL_TEST_STATIC_ASSERT(
-        not pl::meta::is_output_iterator<pl::test::Fw1>::value);
+        not pl::meta::is_output_iterator<pl::test::fw1>::value);
     PL_TEST_STATIC_ASSERT(
-        not pl::meta::is_output_iterator<pl::test::InIt1>::value);
+        not pl::meta::is_output_iterator<pl::test::in_it1>::value);
 
     CHECK_UNARY(true);
 }
@@ -80,9 +80,9 @@ TEST_CASE("is_output_iterator_negative_test")
 TEST_CASE("is_random_access_iterator_positive_test")
 {
     PL_TEST_STATIC_ASSERT(
-        pl::meta::is_random_access_iterator<pl::test::Ra1>::value);
+        pl::meta::is_random_access_iterator<pl::test::ra1>::value);
     PL_TEST_STATIC_ASSERT(
-        pl::meta::is_random_access_iterator<pl::test::Ra1>::value);
+        pl::meta::is_random_access_iterator<pl::test::ra1>::value);
 
     CHECK_UNARY(true);
 }
@@ -90,13 +90,13 @@ TEST_CASE("is_random_access_iterator_positive_test")
 TEST_CASE("is_random_access_iterator_negative_test")
 {
     PL_TEST_STATIC_ASSERT(
-        not pl::meta::is_random_access_iterator<pl::test::Oi1>::value);
+        not pl::meta::is_random_access_iterator<pl::test::oi1>::value);
     PL_TEST_STATIC_ASSERT(
-        not pl::meta::is_random_access_iterator<pl::test::Bidi1>::value);
+        not pl::meta::is_random_access_iterator<pl::test::bidi1>::value);
     PL_TEST_STATIC_ASSERT(
-        not pl::meta::is_random_access_iterator<pl::test::Fw1>::value);
+        not pl::meta::is_random_access_iterator<pl::test::fw1>::value);
     PL_TEST_STATIC_ASSERT(
-        not pl::meta::is_random_access_iterator<pl::test::InIt1>::value);
+        not pl::meta::is_random_access_iterator<pl::test::in_it1>::value);
 
     CHECK_UNARY(true);
 }
@@ -104,11 +104,11 @@ TEST_CASE("is_random_access_iterator_negative_test")
 TEST_CASE("is_bidirectional_iterator_positive_test")
 {
     PL_TEST_STATIC_ASSERT(
-        pl::meta::is_bidirectional_iterator<pl::test::Ra1>::value);
+        pl::meta::is_bidirectional_iterator<pl::test::ra1>::value);
     PL_TEST_STATIC_ASSERT(
-        pl::meta::is_bidirectional_iterator<pl::test::Ra2>::value);
+        pl::meta::is_bidirectional_iterator<pl::test::ra2>::value);
     PL_TEST_STATIC_ASSERT(
-        pl::meta::is_bidirectional_iterator<pl::test::Bidi1>::value);
+        pl::meta::is_bidirectional_iterator<pl::test::bidi1>::value);
 
     CHECK_UNARY(true);
 }
@@ -116,22 +116,22 @@ TEST_CASE("is_bidirectional_iterator_positive_test")
 TEST_CASE("is_bidirectional_iterator_negative_test")
 {
     PL_TEST_STATIC_ASSERT(
-        not pl::meta::is_bidirectional_iterator<pl::test::Oi1>::value);
+        not pl::meta::is_bidirectional_iterator<pl::test::oi1>::value);
     PL_TEST_STATIC_ASSERT(
-        not pl::meta::is_bidirectional_iterator<pl::test::Fw1>::value);
+        not pl::meta::is_bidirectional_iterator<pl::test::fw1>::value);
     PL_TEST_STATIC_ASSERT(
-        not pl::meta::is_bidirectional_iterator<pl::test::InIt1>::value);
+        not pl::meta::is_bidirectional_iterator<pl::test::in_it1>::value);
 
     CHECK_UNARY(true);
 }
 
 TEST_CASE("is_forward_iterator_positive_test")
 {
-    PL_TEST_STATIC_ASSERT(pl::meta::is_forward_iterator<pl::test::Ra1>::value);
-    PL_TEST_STATIC_ASSERT(pl::meta::is_forward_iterator<pl::test::Ra2>::value);
+    PL_TEST_STATIC_ASSERT(pl::meta::is_forward_iterator<pl::test::ra1>::value);
+    PL_TEST_STATIC_ASSERT(pl::meta::is_forward_iterator<pl::test::ra2>::value);
     PL_TEST_STATIC_ASSERT(
-        pl::meta::is_forward_iterator<pl::test::Bidi1>::value);
-    PL_TEST_STATIC_ASSERT(pl::meta::is_forward_iterator<pl::test::Fw1>::value);
+        pl::meta::is_forward_iterator<pl::test::bidi1>::value);
+    PL_TEST_STATIC_ASSERT(pl::meta::is_forward_iterator<pl::test::fw1>::value);
 
     CHECK_UNARY(true);
 }
@@ -139,20 +139,20 @@ TEST_CASE("is_forward_iterator_positive_test")
 TEST_CASE("is_forward_iterator_negative_test")
 {
     PL_TEST_STATIC_ASSERT(
-        not pl::meta::is_forward_iterator<pl::test::Oi1>::value);
+        not pl::meta::is_forward_iterator<pl::test::oi1>::value);
     PL_TEST_STATIC_ASSERT(
-        not pl::meta::is_forward_iterator<pl::test::InIt1>::value);
+        not pl::meta::is_forward_iterator<pl::test::in_it1>::value);
 
     CHECK_UNARY(true);
 }
 
 TEST_CASE("is_input_iterator_positive_test")
 {
-    PL_TEST_STATIC_ASSERT(pl::meta::is_input_iterator<pl::test::Ra1>::value);
-    PL_TEST_STATIC_ASSERT(pl::meta::is_input_iterator<pl::test::Ra2>::value);
-    PL_TEST_STATIC_ASSERT(pl::meta::is_input_iterator<pl::test::Bidi1>::value);
-    PL_TEST_STATIC_ASSERT(pl::meta::is_input_iterator<pl::test::Fw1>::value);
-    PL_TEST_STATIC_ASSERT(pl::meta::is_input_iterator<pl::test::InIt1>::value);
+    PL_TEST_STATIC_ASSERT(pl::meta::is_input_iterator<pl::test::ra1>::value);
+    PL_TEST_STATIC_ASSERT(pl::meta::is_input_iterator<pl::test::ra2>::value);
+    PL_TEST_STATIC_ASSERT(pl::meta::is_input_iterator<pl::test::bidi1>::value);
+    PL_TEST_STATIC_ASSERT(pl::meta::is_input_iterator<pl::test::fw1>::value);
+    PL_TEST_STATIC_ASSERT(pl::meta::is_input_iterator<pl::test::in_it1>::value);
 
     CHECK_UNARY(true);
 }
@@ -160,7 +160,7 @@ TEST_CASE("is_input_iterator_positive_test")
 TEST_CASE("is_input_iterator_negative_test")
 {
     PL_TEST_STATIC_ASSERT(
-        not pl::meta::is_input_iterator<pl::test::Oi1>::value);
+        not pl::meta::is_input_iterator<pl::test::oi1>::value);
 
     CHECK_UNARY(true);
 }

@@ -36,7 +36,7 @@
 #include "../../../include/pl/meta/negation.hpp" // pl::meta::negation
 #include "../../include/static_assert.hpp"       // PL_TEST_STATIC_ASSERT
 #include <ciso646>                               // not
-#include <type_traits>                           // std::is_same, std::is_floatintg_point, std::is_integral, std::is_trivially_constructible
+#include <type_traits>                           // std::is_same, std::is_floating_point, std::is_integral, std::is_trivially_constructible
 
 TEST_CASE("negation_positive_test")
 {

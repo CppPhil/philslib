@@ -43,21 +43,21 @@
 namespace pl {
 namespace test {
 namespace {
-using Ty1 = std::initializer_list<int>;
-using Ty2 = std::initializer_list<double>;
-using Ty3 = std::initializer_list<std::string>;
-using Ty4 = std::string;
-using Ty5 = int;
-using Ty6 = std::vector<std::string>;
+using ty1 = std::initializer_list<int>;
+using ty2 = std::initializer_list<double>;
+using ty3 = std::initializer_list<std::string>;
+using ty4 = std::string;
+using ty5 = int;
+using ty6 = std::vector<std::string>;
 } // anonymous namespace
 } // namespace test
 } // namespace pl
 
 TEST_CASE("is_initializer_list_positive_tests")
 {
-    PL_TEST_STATIC_ASSERT(pl::meta::is_initializer_list<pl::test::Ty1>::value);
-    PL_TEST_STATIC_ASSERT(pl::meta::is_initializer_list<pl::test::Ty2>::value);
-    PL_TEST_STATIC_ASSERT(pl::meta::is_initializer_list<pl::test::Ty3>::value);
+    PL_TEST_STATIC_ASSERT(pl::meta::is_initializer_list<pl::test::ty1>::value);
+    PL_TEST_STATIC_ASSERT(pl::meta::is_initializer_list<pl::test::ty2>::value);
+    PL_TEST_STATIC_ASSERT(pl::meta::is_initializer_list<pl::test::ty3>::value);
 
     CHECK_UNARY(true);
 }
@@ -65,11 +65,11 @@ TEST_CASE("is_initializer_list_positive_tests")
 TEST_CASE("is_initializer_list_negative_tests")
 {
     PL_TEST_STATIC_ASSERT(
-        not pl::meta::is_initializer_list<pl::test::Ty4>::value);
+        not pl::meta::is_initializer_list<pl::test::ty4>::value);
     PL_TEST_STATIC_ASSERT(
-        not pl::meta::is_initializer_list<pl::test::Ty5>::value);
+        not pl::meta::is_initializer_list<pl::test::ty5>::value);
     PL_TEST_STATIC_ASSERT(
-        not pl::meta::is_initializer_list<pl::test::Ty6>::value);
+        not pl::meta::is_initializer_list<pl::test::ty6>::value);
 
     CHECK_UNARY(true);
 }

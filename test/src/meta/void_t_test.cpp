@@ -52,14 +52,14 @@ struct is_prefix_incrementable<Ty,
     : public std::true_type {
 };
 
-struct PrefixIncrementable {
-    PrefixIncrementable& operator++() noexcept { return *this; }
+struct prefix_incrementable {
+    prefix_incrementable& operator++() noexcept { return *this; }
 };
 
-struct PostfixIncrementable {
+struct postfix_incrementable {
 };
 
-PostfixIncrementable operator++(PostfixIncrementable& a, int)noexcept
+postfix_incrementable operator++(postfix_incrementable& a, int)noexcept
 {
     return a;
 }
@@ -69,8 +69,8 @@ PostfixIncrementable operator++(PostfixIncrementable& a, int)noexcept
 TEST_CASE("void_t_test")
 {
     // avoid unused function warnings.
-    test::PrefixIncrementable  prefixIncrementable{};
-    test::PostfixIncrementable postfixIncrementable{};
+    test::prefix_incrementable  prefixIncrementable{};
+    test::postfix_incrementable postfixIncrementable{};
     ++prefixIncrementable;
     postfixIncrementable++;
 
@@ -83,14 +83,15 @@ TEST_CASE("void_t_test")
                      std::false_type>::value);
 
     PL_TEST_STATIC_ASSERT(
-        std::is_same<test::is_prefix_incrementable<test::PrefixIncrementable>::
+        std::is_same<test::is_prefix_incrementable<test::prefix_incrementable>::
                          type,
                      std::true_type>::value);
 
     PL_TEST_STATIC_ASSERT(
-        std::is_same<test::is_prefix_incrementable<test::PostfixIncrementable>::
-                         type,
-                     std::false_type>::value);
+        std::
+            is_same<test::is_prefix_incrementable<test::postfix_incrementable>::
+                        type,
+                    std::false_type>::value);
 
     CHECK_UNARY(true);
 }
