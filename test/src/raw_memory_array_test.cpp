@@ -34,11 +34,11 @@
 #pragma GCC diagnostic pop
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../include/pl/algo/ranged_algorithms.hpp" // pl::algo::all_of
-#include "../../include/pl/as_const.hpp"               // pl::asConst
-#include "../../include/pl/byte.hpp"                   // pl::Byte
-#include "../../include/pl/iterate_reversed.hpp"       // pl::iterateReversed
-#include "../../include/pl/raw_memory_array.hpp"       // pl::RawMemoryArray
-#include "../include/freeer.hpp"                       // pl::test::Freeer
+#include "../../include/pl/as_const.hpp"               // pl::as_const
+#include "../../include/pl/byte.hpp"                   // pl::byte
+#include "../../include/pl/iterate_reversed.hpp"       // pl::iterate_reversed
+#include "../../include/pl/raw_memory_array.hpp"       // pl::raw_memory_array
+#include "../include/freeer.hpp"                       // pl::test::freeer
 #include <algorithm>                                   // std::all_of
 #include <cstddef>                                     // std::size_t
 #include <cstdlib>                                     // std::calloc
@@ -50,29 +50,29 @@ TEST_CASE("raw_memory_array_test")
 {
     using namespace std::literals::string_literals;
 
-    using size_type = pl::RawMemoryArray<std::string>::size_type;
+    using size_type = pl::raw_memory_array<std::string>::size_type;
 
-    static constexpr std::size_t strSiz{sizeof(std::string)};
-    static constexpr std::size_t amtOfStrings{10U};
-    static constexpr std::size_t byteCount{strSiz * amtOfStrings};
+    static constexpr std::size_t str_siz{sizeof(std::string)};
+    static constexpr std::size_t amt_of_strings{10U};
+    static constexpr std::size_t byte_count{str_siz * amt_of_strings};
 
-    std::unique_ptr<pl::byte, pl::test::freeer> memoryHolder1{
-        static_cast<pl::byte*>(std::calloc(amtOfStrings, strSiz)),
+    std::unique_ptr<pl::byte, pl::test::freeer> memory_holder1{
+        static_cast<pl::byte*>(std::calloc(amt_of_strings, str_siz)),
         pl::test::freeer{}};
-    void* const                     memory1{memoryHolder1.get()};
-    pl::RawMemoryArray<std::string> ary1{memory1, byteCount};
+    void* const                       memory1{memory_holder1.get()};
+    pl::raw_memory_array<std::string> ary1{memory1, byte_count};
 
-    std::unique_ptr<pl::byte, pl::test::freeer> memoryHolder2{
-        static_cast<pl::byte*>(std::calloc(amtOfStrings, strSiz)),
+    std::unique_ptr<pl::byte, pl::test::freeer> memory_holder2{
+        static_cast<pl::byte*>(std::calloc(amt_of_strings, str_siz)),
         pl::test::freeer{}};
-    void* const                     memory2{memoryHolder2.get()};
-    pl::RawMemoryArray<std::string> ary2{memory2, byteCount, "Text"s};
+    void* const                       memory2{memory_holder2.get()};
+    pl::raw_memory_array<std::string> ary2{memory2, byte_count, "Text"s};
 
-    pl::RawMemoryArray<std::string> empty{nullptr, 0U};
+    pl::raw_memory_array<std::string> empty{nullptr, 0U};
 
     SUBCASE("at")
     {
-        const pl::RawMemoryArray<std::string>& r{ary2};
+        const pl::raw_memory_array<std::string>& r{ary2};
 
         REQUIRE(ary1.size() == ary2.size());
 
@@ -113,10 +113,10 @@ TEST_CASE("raw_memory_array_test")
         CHECK(static_cast<void*>(ary1.data()) == memory1);
         CHECK(static_cast<void*>(ary2.data()) == memory2);
         CHECK(
-            static_cast<const void*>(ary1.constData())
+            static_cast<const void*>(ary1.const_data())
             == static_cast<const void*>(memory1));
         CHECK(
-            static_cast<const void*>(ary2.constData())
+            static_cast<const void*>(ary2.const_data())
             == static_cast<const void*>(memory2));
         CHECK(empty.data() == nullptr);
     }
@@ -132,7 +132,7 @@ TEST_CASE("raw_memory_array_test")
             return s == "Test"s;
         }));
 
-        const pl::RawMemoryArray<std::string>& r{ary2};
+        const pl::raw_memory_array<std::string>& r{ary2};
 
         for (const std::string& s : r) {
             CHECK(s == "Text"s);
@@ -166,11 +166,11 @@ TEST_CASE("raw_memory_array_test")
 
     SUBCASE("size")
     {
-        CHECK(ary1.size() == amtOfStrings);
-        CHECK(ary2.size() == amtOfStrings);
+        CHECK(ary1.size() == amt_of_strings);
+        CHECK(ary2.size() == amt_of_strings);
         CHECK(empty.size() == 0U);
-        CHECK(ary1.max_size() == amtOfStrings);
-        CHECK(ary2.max_size() == amtOfStrings);
+        CHECK(ary1.max_size() == amt_of_strings);
+        CHECK(ary2.max_size() == amt_of_strings);
         CHECK(empty.max_size() == 0U);
     }
 
