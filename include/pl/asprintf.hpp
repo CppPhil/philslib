@@ -117,20 +117,20 @@ PL_NODISCARD int vasprintf(
     std::va_list args2{};
     va_copy(args2, ap);
 
-    const auto errCode = std::vsnprintf(nullptr, 0, fmt, ap);
+    const auto err_code = std::vsnprintf(nullptr, 0, fmt, ap);
 
-    if (errCode < 0) {
-        return errCode;
+    if (err_code < 0) {
+        return err_code;
     }
 
-    const auto bytesToAllocate = 1U + static_cast<std::size_t>(errCode);
+    const auto bytes_to_allocate = 1U + static_cast<std::size_t>(err_code);
 
-    *strp = std::make_unique<char[]>(bytesToAllocate);
-    const auto retVal
-        = std::vsnprintf(strp->get(), bytesToAllocate, fmt, args2);
+    *strp = std::make_unique<char[]>(bytes_to_allocate);
+    const auto ret_val
+        = std::vsnprintf(strp->get(), bytes_to_allocate, fmt, args2);
     va_end(args2);
 
-    return retVal;
+    return ret_val;
 }
 
 PL_NODISCARD int vasprintf(
@@ -141,22 +141,22 @@ PL_NODISCARD int vasprintf(
     std::va_list args2{};
     va_copy(args2, ap);
 
-    const auto errCode = std::vsnprintf(nullptr, 0, fmt, ap);
+    const auto err_code = std::vsnprintf(nullptr, 0, fmt, ap);
 
-    if (errCode < 0) {
-        return errCode;
+    if (err_code < 0) {
+        return err_code;
     }
 
-    const auto bytesToAllocate = 1U + static_cast<std::size_t>(errCode);
+    const auto bytes_to_allocate = 1U + static_cast<std::size_t>(err_code);
 
-    strp->resize(bytesToAllocate);
-    const auto retVal = std::vsnprintf(
-        std::addressof((*strp)[0]), bytesToAllocate, fmt, args2);
+    strp->resize(bytes_to_allocate);
+    const auto ret_val = std::vsnprintf(
+        std::addressof((*strp)[0]), bytes_to_allocate, fmt, args2);
 
     va_end(args2);
-    strp->resize(bytesToAllocate - 1);
+    strp->resize(bytes_to_allocate - 1);
 
-    return retVal;
+    return ret_val;
 }
 
 PL_NODISCARD int asprintf(
@@ -167,10 +167,10 @@ PL_NODISCARD int asprintf(
     std::va_list args1{};
     va_start(args1, fmt);
 
-    const auto retVal = ::pl::vasprintf(strp, fmt, args1);
+    const auto ret_val = ::pl::vasprintf(strp, fmt, args1);
     va_end(args1);
 
-    return retVal;
+    return ret_val;
 }
 
 PL_NODISCARD int asprintf(
@@ -181,10 +181,10 @@ PL_NODISCARD int asprintf(
     std::va_list args1{};
     va_start(args1, fmt);
 
-    const auto retVal = ::pl::vasprintf(strp, fmt, args1);
+    const auto ret_val = ::pl::vasprintf(strp, fmt, args1);
     va_end(args1);
 
-    return retVal;
+    return ret_val;
 }
 } // anonymous namespace
 } // namespace pl

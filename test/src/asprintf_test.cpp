@@ -41,7 +41,7 @@
 
 TEST_CASE("asprintf_unique_ptr_test")
 {
-    static constexpr int expectedBytesWritten{7};
+    static constexpr int expected_bytes_written{7};
 
     std::unique_ptr<char[]> up{nullptr};
 
@@ -50,16 +50,16 @@ TEST_CASE("asprintf_unique_ptr_test")
     REQUIRE(ret >= 0);
     REQUIRE(up != nullptr);
 
-    CHECK(ret == expectedBytesWritten);
+    CHECK(ret == expected_bytes_written);
     CHECK(
         std::strlen(up.get())
-        == static_cast<std::size_t>(expectedBytesWritten));
+        == static_cast<std::size_t>(expected_bytes_written));
     CHECK(std::strcmp(up.get(), "Text 0F") == 0);
 }
 
 TEST_CASE("asprintf_string_test")
 {
-    static constexpr int  expectedBytesWritten{21};
+    static constexpr int  expected_bytes_written{21};
     static constexpr char str[]{"Hello World"};
 
     std::string string{};
@@ -69,10 +69,10 @@ TEST_CASE("asprintf_string_test")
     REQUIRE(ret >= 0);
     REQUIRE_UNARY_FALSE(string.empty());
 
-    CHECK(ret == expectedBytesWritten);
+    CHECK(ret == expected_bytes_written);
     CHECK(
         string.size()
-        == static_cast<std::string::size_type>(expectedBytesWritten));
+        == static_cast<std::string::size_type>(expected_bytes_written));
     CHECK(string == "String: \"Hello World\"");
 
     ret = pl::asprintf(&string, "%.*s", 6, "Sample Text");
