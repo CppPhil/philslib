@@ -26,7 +26,7 @@
 
 /*!
  * \file random_number_generator.hpp
- * \brief Exports the RandomNumberGenerator type.
+ * \brief Exports the random_number_generator type.
 **/
 #ifndef INCG_PL_RANDOM_NUMBER_GENERATOR_HPP
 #define INCG_PL_RANDOM_NUMBER_GENERATOR_HPP
@@ -46,17 +46,17 @@
 
 namespace pl {
 namespace detail {
-static constexpr std::size_t largeUrbgThreshold = 50U;
+static constexpr std::size_t large_urbg_threshold = 50U;
 
 template <typename Urbg, bool IsLarge>
-class UrbgStorageImpl {
+class urbg_storage_impl {
 public:
-    using this_type    = UrbgStorageImpl;
+    using this_type    = urbg_storage_impl;
     using element_type = Urbg;
 
     // assume isLarge == true
 
-    explicit UrbgStorageImpl(std::random_device::result_type seed)
+    explicit urbg_storage_impl(std::random_device::result_type seed)
         : m_urbg{std::make_unique<element_type>(seed)}
     {
     }
@@ -72,17 +72,17 @@ private:
 };
 
 template <typename Urbg>
-class UrbgStorageImpl<Urbg, false> {
+class urbg_storage_impl<Urbg, false> {
 public:
-    using this_type    = UrbgStorageImpl;
+    using this_type    = urbg_storage_impl;
     using element_type = Urbg;
 
-    explicit UrbgStorageImpl(std::random_device::result_type seed)
+    explicit urbg_storage_impl(std::random_device::result_type seed)
         : m_urbg{seed}
     {
     }
 
-    UrbgStorageImpl(const this_type&) = delete;
+    urbg_storage_impl(const this_type&) = delete;
 
     this_type& operator=(const this_type&) = delete;
 
@@ -97,11 +97,12 @@ private:
 };
 
 template <typename Urbg>
-class UrbgStorage
-    : public UrbgStorageImpl<Urbg, sizeof(Urbg) >= largeUrbgThreshold> {
+class urbg_storage
+    : public urbg_storage_impl<Urbg, sizeof(Urbg) >= large_urbg_threshold> {
 public:
-    using this_type = UrbgStorage;
-    using base_type = UrbgStorageImpl<Urbg, sizeof(Urbg) >= largeUrbgThreshold>;
+    using this_type = urbg_storage;
+    using base_type
+        = urbg_storage_impl<Urbg, sizeof(Urbg) >= large_urbg_threshold>;
     using element_type = typename base_type::element_type;
 
     using base_type::base_type;
@@ -172,30 +173,30 @@ using distribution_of_t = typename distribution_of<Type>::type;
 /*!
  * \brief A random number generator type.
  *        Not thread-safe.
- *        It is recommended to have one RandomNumberGenerator declared as
- *        thread_local to get one RandomNumberGenerator per thread.
- *        Alternatively a single RandomNumberGenerator may be placed in a
+ *        It is recommended to have one random_number_generator declared as
+ *        thread_local to get one random_number_generator per thread.
+ *        Alternatively a single random_number_generator may be placed in a
  *        Monitor, which is then accessed from multiple threads incurring
  *        locking overhead.
  *        Generates non-deterministic random numbers.
  *        By default uses the std::mt19937 engine.
 **/
 template <typename Engine = std::mt19937>
-class RandomNumberGenerator {
+class random_number_generator {
 public:
-    using this_type    = RandomNumberGenerator;
+    using this_type    = random_number_generator;
     using element_type = Engine;
 
     /*!
-     * \brief Creates a RandomNumberGenerator.
+     * \brief Creates a random_number_generator.
      *        Initializes the underlying random_device and uses it
      *        to seed the engine.
     **/
-    RandomNumberGenerator() : m_randomDevice{}, m_urbg{m_randomDevice()} {}
+    random_number_generator() : m_random_device{}, m_urbg{m_random_device()} {}
     /*!
      * \brief this type is non-copyable.
     **/
-    RandomNumberGenerator(const this_type&) = delete;
+    random_number_generator(const this_type&) = delete;
 
     /*!
      * \brief this type is non-copyable.
@@ -228,30 +229,30 @@ public:
                                            bool>::value,
                               Numeric>
     {
-        return generateImpl<Numeric>(
+        return generate_impl<Numeric>(
             begin, end, typename std::is_floating_point<Numeric>::type{});
     }
 
     /*!
      * \brief Generates a random boolean value.
-     * \param trueChance the chance to generate true, defaults to 0.5.
+     * \param true_chance the chance to generate true, defaults to 0.5.
      * \return the boolean value generated.
     **/
     template <typename Bool>
-    auto generate(double trueChance = 0.5) -> std::
+    auto generate(double true_chance = 0.5) -> std::
         enable_if_t<std::is_same<meta::remove_cvref_t<Bool>, bool>::value, bool>
     {
-        std::bernoulli_distribution dist{trueChance};
+        std::bernoulli_distribution dist{true_chance};
         return dist(m_urbg.get());
     }
 
     /*!
      * \brief Member function to shuffle a range randomly using the
-     *        std::shuffle algorithm with this RandomNumberGenerator's
+     *        std::shuffle algorithm with this random_number_generator's
      *        engine. Shuffles the range [begin,end).
      * \param begin The begin iterator of the half open range to shuffle.
      * \param end The end iterator of the half open range to shuffle.
-     * \return A reference to this RandomNumberGenerator.
+     * \return A reference to this random_number_generator.
     **/
     template <typename RandomAccessIterator>
     this_type& shuffle(RandomAccessIterator begin, RandomAccessIterator end)
@@ -263,7 +264,7 @@ public:
     /*!
      * \brief Shuffles 'container'.
      * \param container The Container to shuffle.
-     * \return A reference to this RandomNumberGenerator.
+     * \return A reference to this random_number_generator.
     **/
     template <typename Container>
     this_type& shuffle(PL_INOUT Container& container)
@@ -273,7 +274,7 @@ public:
 
 private:
     template <typename Numeric>
-    Numeric generateImpl(
+    Numeric generate_impl(
         meta::identity_t<Numeric> begin,
         meta::identity_t<Numeric> end,
         std::true_type)
@@ -284,7 +285,7 @@ private:
     }
 
     template <typename Numeric>
-    Numeric generateImpl(
+    Numeric generate_impl(
         meta::identity_t<Numeric> begin,
         meta::identity_t<Numeric> end,
         std::false_type)
@@ -294,8 +295,8 @@ private:
         return dist(m_urbg.get());
     }
 
-    std::random_device                m_randomDevice;
-    detail::UrbgStorage<element_type> m_urbg;
+    std::random_device                 m_random_device;
+    detail::urbg_storage<element_type> m_urbg;
 };
 } // namespace pl
 #endif // INCG_PL_RANDOM_NUMBER_GENERATOR_HPP

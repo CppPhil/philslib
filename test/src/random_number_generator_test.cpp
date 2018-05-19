@@ -33,9 +33,9 @@
 #if PL_COMPILER == PL_COMPILER_GCC
 #pragma GCC diagnostic pop
 #endif                                         // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/pl/named_operator.hpp" // pl::makeNamedOperator
-#include "../../include/pl/numeric.hpp"        // pl::isBetween
-#include "../../include/pl/random_number_generator.hpp" // pl::RandomNumberGenerator
+#include "../../include/pl/named_operator.hpp" // pl::make_named_operator
+#include "../../include/pl/numeric.hpp"        // pl::is_between
+#include "../../include/pl/random_number_generator.hpp" // pl::random_number_generator
 #include <algorithm>                                    // std::find
 #include <cstdint>                                      // std::uint16_t, std::int16_t, std::uint32_t, std::int32_t, std::uint64_t, std::int64_t, ...
 #include <iterator>                                     // std::begin, std::end
@@ -45,13 +45,13 @@ namespace pl {
 namespace test {
 namespace {
 template <typename Engine, typename IntType>
-bool isOk(
-    pl::RandomNumberGenerator<Engine>& rng,
-    IntType                            lowerBound,
-    IntType                            upperBound)
+bool is_ok(
+    pl::random_number_generator<Engine>& rng,
+    IntType                              lower_bound,
+    IntType                              upper_bound)
 {
-    IntType result{rng.template generate<IntType>(lowerBound, upperBound)};
-    return pl::is_between(result, lowerBound, upperBound);
+    IntType result{rng.template generate<IntType>(lower_bound, upper_bound)};
+    return pl::is_between(result, lower_bound, upper_bound);
 }
 } // anonymous namespace
 } // namespace test
@@ -59,24 +59,24 @@ bool isOk(
 
 TEST_CASE("random_number_generator_test")
 {
-    static constexpr std::uint16_t uint16Lower{UINT16_C(0)};
-    static constexpr std::uint16_t uint16Upper{UINT16_C(5)};
-    static constexpr std::int16_t  int16Lower{INT16_C(-50)};
-    static constexpr std::int16_t  int16Upper{INT16_C(300)};
-    static constexpr std::uint32_t uint32Lower{UINT32_C(7)};
-    static constexpr std::uint32_t uint32Upper{UINT32_MAX};
-    static constexpr std::int32_t  int32Lower{INT32_MIN};
-    static constexpr std::int32_t  int32Upper{INT32_C(5555)};
-    static constexpr std::uint64_t uint64Lower{UINT64_C(3)};
-    static constexpr std::uint64_t uint64Upper{UINT64_C(99999999)};
-    static constexpr std::int64_t  int64Lower{INT64_MIN};
-    static constexpr std::int64_t  int64Upper{INT64_MAX};
-    const float                    fLower{0.0F};
-    const float                    fUpper{5.0F};
-    const double                   dLower{20.85};
-    const double                   dUpper{50.0};
-    const long double              ldLower{33.3333L};
-    const long double              ldUpper{70.0001L};
+    static constexpr std::uint16_t uint16_lower{UINT16_C(0)};
+    static constexpr std::uint16_t uint16_upper{UINT16_C(5)};
+    static constexpr std::int16_t  int16_lower{INT16_C(-50)};
+    static constexpr std::int16_t  int16_upper{INT16_C(300)};
+    static constexpr std::uint32_t uint32_lower{UINT32_C(7)};
+    static constexpr std::uint32_t uint32_upper{UINT32_MAX};
+    static constexpr std::int32_t  int32_lower{INT32_MIN};
+    static constexpr std::int32_t  int32_upper{INT32_C(5555)};
+    static constexpr std::uint64_t uint64_lower{UINT64_C(3)};
+    static constexpr std::uint64_t uint64_upper{UINT64_C(99999999)};
+    static constexpr std::int64_t  int64_lower{INT64_MIN};
+    static constexpr std::int64_t  int64_upper{INT64_MAX};
+    const float                    f_lower{0.0F};
+    const float                    f_upper{5.0F};
+    const double                   d_lower{20.85};
+    const double                   d_upper{50.0};
+    const long double              ld_lower{33.3333L};
+    const long double              ld_upper{70.0001L};
 
     using namespace pl::named_operator;
 
@@ -86,46 +86,46 @@ TEST_CASE("random_number_generator_test")
               return std::find(std::begin(container), end, value) != end;
           });
 
-    pl::RandomNumberGenerator<>                mt19937{};
-    pl::RandomNumberGenerator<std::mt19937_64> mt19937_64{};
-    const auto useMt19937 = [&mt19937](auto lower, auto upper) {
-        return pl::test::isOk(mt19937, lower, upper);
+    pl::random_number_generator<>                mt19937{};
+    pl::random_number_generator<std::mt19937_64> mt19937_64{};
+    const auto use_mt19937 = [&mt19937](auto lower, auto upper) {
+        return pl::test::is_ok(mt19937, lower, upper);
     };
-    const auto useMt19937_64 = [&mt19937_64](auto lower, auto upper) {
-        return pl::test::isOk(mt19937_64, lower, upper);
+    const auto use_mt19937_64 = [&mt19937_64](auto lower, auto upper) {
+        return pl::test::is_ok(mt19937_64, lower, upper);
     };
 
-    CHECK_UNARY(useMt19937(uint16Lower, uint16Upper));
-    CHECK_UNARY(useMt19937(int16Lower, int16Upper));
-    CHECK_UNARY(useMt19937(uint32Lower, uint32Upper));
-    CHECK_UNARY(useMt19937(int32Lower, int32Upper));
-    CHECK_UNARY(useMt19937(uint64Lower, uint64Upper));
-    CHECK_UNARY(useMt19937(int64Lower, int64Upper));
-    CHECK_UNARY(useMt19937(fLower, fUpper));
-    CHECK_UNARY(useMt19937(dLower, dUpper));
-    CHECK_UNARY(useMt19937(ldLower, ldUpper));
+    CHECK_UNARY(use_mt19937(uint16_lower, uint16_upper));
+    CHECK_UNARY(use_mt19937(int16_lower, int16_upper));
+    CHECK_UNARY(use_mt19937(uint32_lower, uint32_upper));
+    CHECK_UNARY(use_mt19937(int32_lower, int32_upper));
+    CHECK_UNARY(use_mt19937(uint64_lower, uint64_upper));
+    CHECK_UNARY(use_mt19937(int64_lower, int64_upper));
+    CHECK_UNARY(use_mt19937(f_lower, f_upper));
+    CHECK_UNARY(use_mt19937(d_lower, d_upper));
+    CHECK_UNARY(use_mt19937(ld_lower, ld_upper));
 
-    CHECK_UNARY(useMt19937_64(uint16Lower, uint16Upper));
-    CHECK_UNARY(useMt19937_64(int16Lower, int16Upper));
-    CHECK_UNARY(useMt19937_64(uint32Lower, uint32Upper));
-    CHECK_UNARY(useMt19937_64(int32Lower, int32Upper));
-    CHECK_UNARY(useMt19937_64(uint64Lower, uint64Upper));
-    CHECK_UNARY(useMt19937_64(int64Lower, int64Upper));
-    CHECK_UNARY(useMt19937_64(fLower, fUpper));
-    CHECK_UNARY(useMt19937_64(dLower, dUpper));
-    CHECK_UNARY(useMt19937_64(ldLower, ldUpper));
+    CHECK_UNARY(use_mt19937_64(uint16_lower, uint16_upper));
+    CHECK_UNARY(use_mt19937_64(int16_lower, int16_upper));
+    CHECK_UNARY(use_mt19937_64(uint32_lower, uint32_upper));
+    CHECK_UNARY(use_mt19937_64(int32_lower, int32_upper));
+    CHECK_UNARY(use_mt19937_64(uint64_lower, uint64_upper));
+    CHECK_UNARY(use_mt19937_64(int64_lower, int64_upper));
+    CHECK_UNARY(use_mt19937_64(f_lower, f_upper));
+    CHECK_UNARY(use_mt19937_64(d_lower, d_upper));
+    CHECK_UNARY(use_mt19937_64(ld_lower, ld_upper));
 
-    const bool boolResult1{mt19937.generate<bool>(1.0)};
-    CHECK_UNARY(boolResult1);
+    const bool bool_result1{mt19937.generate<bool>(1.0)};
+    CHECK_UNARY(bool_result1);
 
-    const bool boolResult2{mt19937_64.generate<bool>(1.0)};
-    CHECK_UNARY(boolResult2);
+    const bool bool_result2{mt19937_64.generate<bool>(1.0)};
+    CHECK_UNARY(bool_result2);
 
-    const bool boolResult3{mt19937.generate<bool>(0.0)};
-    CHECK_UNARY_FALSE(boolResult3);
+    const bool bool_result3{mt19937.generate<bool>(0.0)};
+    CHECK_UNARY_FALSE(bool_result3);
 
-    const bool boolResult4{mt19937_64.generate<bool>(0.0)};
-    CHECK_UNARY_FALSE(boolResult4);
+    const bool bool_result4{mt19937_64.generate<bool>(0.0)};
+    CHECK_UNARY_FALSE(bool_result4);
 
     const std::vector<int> vector1{1, 2, 3, 4, 5, 6};
     std::vector<int>       copy{vector1};
