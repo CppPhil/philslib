@@ -33,7 +33,7 @@
 #if PL_COMPILER == PL_COMPILER_GCC
 #pragma GCC diagnostic pop
 #endif                               // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/pl/byte.hpp" // pl::Byte, pl::literals::integer_literals::operator""_byte
+#include "../../include/pl/byte.hpp" // pl::byte, pl::literals::integer_literals::operator""_byte
 #include "../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
 #include <climits>                      // CHAR_BIT
 #include <cstring>                      // std::memcmp
@@ -45,19 +45,19 @@ TEST_CASE("byte_test")
 
     PL_TEST_STATIC_ASSERT(CHAR_BIT == 8);
 
-    static constexpr auto minVal = 0x00_byte;
-    static constexpr auto maxVal = 0xFF_byte;
+    static constexpr auto min_val = 0x00_byte;
+    static constexpr auto max_val = 0xFF_byte;
 
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(minVal), const pl::byte>::value);
+        std::is_same<decltype(min_val), const pl::byte>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(maxVal), const pl::byte>::value);
+        std::is_same<decltype(max_val), const pl::byte>::value);
 
     PL_TEST_STATIC_ASSERT(sizeof(pl::byte) == sizeof(unsigned char));
 
     const unsigned char a{static_cast<unsigned char>('\x0')};
     const unsigned char b{static_cast<unsigned char>('\xFF')};
 
-    CHECK(std::memcmp(&minVal, &a, sizeof(pl::byte)) == 0);
-    CHECK(std::memcmp(&maxVal, &b, sizeof(pl::byte)) == 0);
+    CHECK(std::memcmp(&min_val, &a, sizeof(pl::byte)) == 0);
+    CHECK(std::memcmp(&max_val, &b, sizeof(pl::byte)) == 0);
 }
