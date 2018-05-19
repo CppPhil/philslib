@@ -117,7 +117,7 @@ inline PrintBytesAsHex::PrintBytesAsHex(
     PL_THROW_IF_NULL(m_dataToPrint);
 
     if (m_countBytes == 0U) {
-        throw InvalidSizeException{
+        throw invalid_size_exception{
             "countBytes in pl::PrintBytesAsHex constructor was 0."};
     }
 }
