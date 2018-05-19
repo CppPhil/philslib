@@ -53,7 +53,7 @@ constexpr
 inline
 #endif
     Numeric&
-    setBit(PL_INOUT Numeric& numeric, Numeric bit) noexcept
+    set_bit(PL_INOUT Numeric& numeric, Numeric bit) noexcept
 {
     static_assert(
         std::is_unsigned<Numeric>::value,
@@ -81,7 +81,7 @@ constexpr
 inline
 #endif
     Numeric&
-    clearBit(PL_INOUT Numeric& numeric, Numeric bit) noexcept
+    clear_bit(PL_INOUT Numeric& numeric, Numeric bit) noexcept
 {
     static_assert(
         std::is_unsigned<Numeric>::value,
@@ -114,7 +114,7 @@ constexpr
 inline
 #endif
     Numeric&
-    toggleBit(PL_INOUT Numeric& numeric, Numeric bit) noexcept
+    toggle_bit(PL_INOUT Numeric& numeric, Numeric bit) noexcept
 {
     static_assert(
         std::is_unsigned<Numeric>::value,
@@ -133,7 +133,7 @@ inline
  *          the number of bits in Numeric - 1.
 **/
 template <typename Numeric>
-constexpr bool isBitSet(Numeric numeric, Numeric bit) noexcept
+constexpr bool is_bit_set(Numeric numeric, Numeric bit) noexcept
 {
     static_assert(
         std::is_unsigned<Numeric>::value,
