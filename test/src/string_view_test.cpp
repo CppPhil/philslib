@@ -349,22 +349,22 @@ TEST_CASE("string_view_iterate_reversed_test")
     std::basic_ostringstream<char32_t> oss3{};
     std::wostringstream                oss4{};
 
-    for (char c : pl::iterateReversed(sv1)) {
+    for (char c : pl::iterate_reversed(sv1)) {
         oss1 << c;
     }
     CHECK(oss1.str() == "txet");
 
-    for (char16_t c : pl::iterateReversed(sv2)) {
+    for (char16_t c : pl::iterate_reversed(sv2)) {
         oss2 << c;
     }
     CHECK(oss2.str() == u"txet");
 
-    for (char32_t c : pl::iterateReversed(sv3)) {
+    for (char32_t c : pl::iterate_reversed(sv3)) {
         oss3 << c;
     }
     CHECK(oss3.str() == U"txet");
 
-    for (wchar_t c : pl::iterateReversed(sv4)) {
+    for (wchar_t c : pl::iterate_reversed(sv4)) {
         oss4 << c;
     }
     CHECK(oss4.str() == L"txet");
