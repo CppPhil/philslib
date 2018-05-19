@@ -33,15 +33,15 @@
 #if PL_COMPILER == PL_COMPILER_GCC
 #pragma GCC diagnostic pop
 #endif                                         // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/pl/checked_delete.hpp" // pl::checkedDeleteAndNull, pl::checkedArrayDeleteAndNull
+#include "../../include/pl/checked_delete.hpp" // pl::checked_delete_and_null, pl::checked_array_delete_and_null
 
 TEST_CASE("checked_delete_and_null_test")
 {
     int* p{new int{5}};
     int* a{new int[5U]{1, 2, 3, 4, 5}};
 
-    pl::checkedDeleteAndNull(p);
-    pl::checkedArrayDeleteAndNull(a);
+    pl::checked_delete_and_null(p);
+    pl::checked_array_delete_and_null(a);
 
     CHECK(p == nullptr);
     CHECK(a == nullptr);

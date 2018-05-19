@@ -48,10 +48,10 @@ namespace pl {
  *          object.
 **/
 template <typename Ty>
-inline void checkedDelete(PL_IN_OPT Ty* p) noexcept
+inline void checked_delete(PL_IN_OPT Ty* p) noexcept
 {
-    using incompleteTypeNotAllowed = unsigned char[sizeof(Ty) ? 1 : -1];
-    (void)sizeof(incompleteTypeNotAllowed);
+    using incomplete_type_not_allowed = unsigned char[sizeof(Ty) ? 1 : -1];
+    (void)sizeof(incomplete_type_not_allowed);
     delete p;
 }
 
@@ -66,38 +66,38 @@ inline void checkedDelete(PL_IN_OPT Ty* p) noexcept
  *          pointed to C-style array.
  */
 template <typename Ty>
-inline void checkedArrayDelete(PL_IN_OPT Ty* p) noexcept
+inline void checked_array_delete(PL_IN_OPT Ty* p) noexcept
 {
-    using incompleteTypeNotAllowed = unsigned char[sizeof(Ty) ? 1 : -1];
-    (void)sizeof(incompleteTypeNotAllowed);
+    using incomplete_type_not_allowed = unsigned char[sizeof(Ty) ? 1 : -1];
+    (void)sizeof(incomplete_type_not_allowed);
     delete[] p;
 }
 
 /*!
- * \brief Calls pl::checkedDelete on the pointer passed in and then nulls the
+ * \brief Calls pl::checked_delete on the pointer passed in and then nulls the
  *        pointer.
- * \param p A reference to the pointer to call pl::checkedDelete on and then
+ * \param p A reference to the pointer to call pl::checked_delete on and then
  *          null.
- * \see pl::checkedDelete
+ * \see pl::checked_delete
  */
 template <typename Ty>
-inline void checkedDeleteAndNull(PL_INOUT Ty*& p) noexcept
+inline void checked_delete_and_null(PL_INOUT Ty*& p) noexcept
 {
-    ::pl::checkedDelete(p);
+    ::pl::checked_delete(p);
     p = nullptr;
 }
 
 /*!
- * \brief Calls pl::checkedArrayDelete on the pointer passed in and then nulls
+ * \brief Calls pl::checked_array_delete on the pointer passed in and then nulls
  *        the pointer.
- * \param p A reference to the pointer to caall pl::checkedArrayDelete on and
+ * \param p A reference to the pointer to caall pl::checked_array_delete on and
  *          then null.
- * \see pl::checkedArrayDelete
+ * \see pl::checked_array_delete
  */
 template <typename Ty>
-inline void checkedArrayDeleteAndNull(PL_INOUT Ty*& p) noexcept
+inline void checked_array_delete_and_null(PL_INOUT Ty*& p) noexcept
 {
-    ::pl::checkedArrayDelete(p);
+    ::pl::checked_array_delete(p);
     p = nullptr;
 }
 } // namespace pl
