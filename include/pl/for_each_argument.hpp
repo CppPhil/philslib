@@ -26,7 +26,7 @@
 
 /*!
  * \file for_each_argument.hpp
- * \brief Exports the forEachArgument function template.
+ * \brief Exports the for_each_argument function template.
 **/
 #ifndef INCG_PL_FOR_EACH_ARGUMENT_HPP
 #define INCG_PL_FOR_EACH_ARGUMENT_HPP
@@ -46,12 +46,9 @@ namespace pl {
  *        parameter pack individually one after the other.
  * \return A copy of 'callable'.
  * \note 'callable' should be cheap to copy.
- * \example pl::forEachArgument([](const auto &e) { std::cout << e << ' ';},
- *                              1, 2.1, "hello", .3F, 44U, std::string{ "world"
- *                              });
 **/
 template <typename Callable, typename... Args>
-Callable forEachArgument(Callable callable, PL_IN Args&&... args)
+inline Callable for_each_argument(Callable callable, PL_IN Args&&... args)
 {
     (void)std::initializer_list<int>{
         ((void)::pl::invoke(callable, std::forward<Args>(args)), 0)...};

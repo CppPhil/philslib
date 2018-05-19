@@ -39,5 +39,5 @@
 
 TEST_CASE("glue_test")
 {
-    CHECK(std::strcmp(PL_STRINGIFY(PL_GLUE(hello, World)), "helloWorld") == 0);
+    CHECK(std::strcmp(PL_STRINGIFY(PL_GLUE(hello, world)), "helloworld") == 0);
 }

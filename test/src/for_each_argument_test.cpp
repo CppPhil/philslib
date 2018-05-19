@@ -33,21 +33,21 @@
 #if PL_COMPILER == PL_COMPILER_GCC
 #pragma GCC diagnostic pop
 #endif // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/pl/for_each_argument.hpp" // pl::forEachArgument
+#include "../../include/pl/for_each_argument.hpp" // pl::for_each_argument
 
 namespace pl {
 namespace test {
 namespace {
-int g_intVal{0};
+int g_int_val{0};
 } // anonymous namespace
 
-void f(int v) { g_intVal += v; }
-struct Struct {
-    void memFun() const { ++g_intVal; }
+void f(int v) { g_int_val += v; }
+struct structure {
+    void mem_fun() const { ++g_int_val; }
     void operator()(int v)
     {
-        g_intVal += v;
-        m_val = g_intVal;
+        g_int_val += v;
+        m_val = g_int_val;
     }
 
     int m_val = 0;
@@ -59,49 +59,50 @@ TEST_CASE("for_each_argument_test")
 {
     void (*fp)(int){&pl::test::f};
 
-    void (pl::test::Struct::*memFunPtr)() const {&pl::test::Struct::memFun};
+    void (pl::test::structure::*mem_fun_ptr)()
+        const {&pl::test::structure::mem_fun};
 
-    int pl::test::Struct::*memObjPtr{&pl::test::Struct::m_val};
+    int pl::test::structure::*mem_obj_ptr{&pl::test::structure::m_val};
 
-    pl::test::Struct functor{};
+    pl::test::structure functor{};
 
-    auto lambda = [](int value) { pl::test::g_intVal += value; };
+    auto lambda = [](int value) { pl::test::g_int_val += value; };
 
-    pl::test::g_intVal = 0;
+    pl::test::g_int_val = 0;
 
     SUBCASE("function_pointer_test")
     {
-        const auto retVal = pl::forEachArgument(fp, 1, 2, 3, 4, 5);
-        CHECK(pl::test::g_intVal == 15);
-        CHECK(retVal == fp);
+        const auto ret_val = pl::for_each_argument(fp, 1, 2, 3, 4, 5);
+        CHECK(pl::test::g_int_val == 15);
+        CHECK(ret_val == fp);
     }
 
     SUBCASE("member_function_pointer_test")
     {
-        const auto retVal = pl::forEachArgument(
-            memFunPtr, functor, &functor, pl::test::Struct{});
-        CHECK(pl::test::g_intVal == 3);
-        CHECK(retVal == memFunPtr);
+        const auto ret_val = pl::for_each_argument(
+            mem_fun_ptr, functor, &functor, pl::test::structure{});
+        CHECK(pl::test::g_int_val == 3);
+        CHECK(ret_val == mem_fun_ptr);
     }
 
     SUBCASE("member_object_pointer_test")
     {
-        const auto retVal = pl::forEachArgument(
-            memObjPtr, functor, &functor, pl::test::Struct{});
-        CHECK(pl::test::g_intVal == 0);
-        CHECK(retVal == memObjPtr);
+        const auto ret_val = pl::for_each_argument(
+            mem_obj_ptr, functor, &functor, pl::test::structure{});
+        CHECK(pl::test::g_int_val == 0);
+        CHECK(ret_val == mem_obj_ptr);
     }
 
     SUBCASE("functor_test")
     {
-        const auto retVal = pl::forEachArgument(functor, 1, 2, 3);
-        CHECK(pl::test::g_intVal == 6);
-        CHECK(retVal.m_val == 6);
+        const auto ret_val = pl::for_each_argument(functor, 1, 2, 3);
+        CHECK(pl::test::g_int_val == 6);
+        CHECK(ret_val.m_val == 6);
     }
 
     SUBCASE("lambda_test")
     {
-        pl::forEachArgument(lambda, 4, 5, 6);
-        CHECK(pl::test::g_intVal == 15);
+        pl::for_each_argument(lambda, 4, 5, 6);
+        CHECK(pl::test::g_int_val == 15);
     }
 }
