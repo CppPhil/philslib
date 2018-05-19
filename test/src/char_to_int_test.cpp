@@ -34,7 +34,7 @@
 #pragma GCC diagnostic pop
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../include/pl/algo/ranged_algorithms.hpp" // pl::algo::transform
-#include "../../include/pl/char_to_int.hpp"            // pl::charToInt
+#include "../../include/pl/char_to_int.hpp"            // pl::char_to_int
 #include <array>                                       // std::array
 #include <cstddef>                                     // std::size_t
 #include <cstdint>                                     // std::uint8_t
@@ -52,7 +52,7 @@ TEST_CASE("char_to_int_test")
 
     std::array<std::uint8_t, digits> result{{0U}};
 
-    pl::algo::transform(characters, std::begin(result), &pl::charToInt);
+    pl::algo::transform(characters, std::begin(result), &pl::char_to_int);
 
     CHECK(result == integers);
 }
