@@ -46,14 +46,14 @@ std::uint64_t f(std::uint64_t v, std::uint64_t multiplier)
 }
 
 std::uint64_t f(std::uint64_t v) { return f(v, 2U); }
-class TestClass {
+class test_class {
 public:
-    explicit TestClass(std::uint64_t v) : m_v{v} {}
-    std::uint64_t memFun(std::uint64_t v) const { return f(v, m_v); }
-    std::uint64_t                      m_v;
+    explicit test_class(std::uint64_t v) : m_v{v} {}
+    std::uint64_t mem_fun(std::uint64_t v) const { return f(v, m_v); }
+    std::uint64_t                       m_v;
 };
 
-class Functor {
+class functor {
 public:
     std::uint64_t operator()(std::uint64_t v) const { return f(v); }
 };
@@ -77,39 +77,39 @@ TEST_CASE("invoke_test_member_function_pointer")
     static constexpr std::uint64_t multiplier{3U};
     static constexpr std::uint64_t expected{21U};
 
-    std::uint64_t (pl::test::TestClass::*memberFunctionPointer)(std::uint64_t)
-        const {&pl::test::TestClass::memFun};
+    std::uint64_t (pl::test::test_class::*member_function_pointer)(
+        std::uint64_t) const {&pl::test::test_class::mem_fun};
 
-    pl::test::TestClass  object{multiplier};
-    pl::test::TestClass* pObject{&object};
+    pl::test::test_class  object{multiplier};
+    pl::test::test_class* p_object{&object};
 
-    CHECK(pl::invoke(memberFunctionPointer, object, arg) == expected);
-    CHECK(pl::invoke(memberFunctionPointer, pObject, arg) == expected);
+    CHECK(pl::invoke(member_function_pointer, object, arg) == expected);
+    CHECK(pl::invoke(member_function_pointer, p_object, arg) == expected);
 }
 
 TEST_CASE("invoke_test_member_object_pointer")
 {
     static constexpr std::uint64_t v{5U};
 
-    std::uint64_t pl::test::TestClass::*memberObjectPointer{
-        &pl::test::TestClass::m_v};
+    std::uint64_t pl::test::test_class::*member_object_pointer{
+        &pl::test::test_class::m_v};
 
-    pl::test::TestClass  object{v};
-    pl::test::TestClass* pObject{&object};
+    pl::test::test_class  object{v};
+    pl::test::test_class* p_object{&object};
 
-    CHECK(pl::invoke(memberObjectPointer, object) == v);
-    CHECK(pl::invoke(memberObjectPointer, pObject) == v);
+    CHECK(pl::invoke(member_object_pointer, object) == v);
+    CHECK(pl::invoke(member_object_pointer, p_object) == v);
 }
 
 TEST_CASE("invoke_test_functor")
 {
-    using BinaryFunctionPointer
+    using binary_function_pointer
         = std::uint64_t (*)(std::uint64_t, std::uint64_t);
 
-    pl::test::Functor functor{};
+    pl::test::functor functor{};
     const auto lambda = [](std::uint64_t v) { return v * 5U; };
     const auto                           bind = std::bind(
-        static_cast<BinaryFunctionPointer>(&pl::test::f),
+        static_cast<binary_function_pointer>(&pl::test::f),
         std::placeholders::_1,
         25U);
 

@@ -35,48 +35,48 @@
 namespace pl {
 namespace detail {
 template <int Bits>
-struct IntImpl;
+struct int_impl;
 
 template <>
-struct IntImpl<8> {
+struct int_impl<8> {
     using type = std::int8_t;
 };
 
 template <>
-struct IntImpl<16> {
+struct int_impl<16> {
     using type = std::int16_t;
 };
 
 template <>
-struct IntImpl<32> {
+struct int_impl<32> {
     using type = std::int32_t;
 };
 
 template <>
-struct IntImpl<64> {
+struct int_impl<64> {
     using type = std::int64_t;
 };
 
 template <int Bits>
-struct UintImpl;
+struct uint_impl;
 
 template <>
-struct UintImpl<8> {
+struct uint_impl<8> {
     using type = std::uint8_t;
 };
 
 template <>
-struct UintImpl<16> {
+struct uint_impl<16> {
     using type = std::uint16_t;
 };
 
 template <>
-struct UintImpl<32> {
+struct uint_impl<32> {
     using type = std::uint32_t;
 };
 
 template <>
-struct UintImpl<64> {
+struct uint_impl<64> {
     using type = std::uint64_t;
 };
 } // namespace detail
@@ -86,13 +86,13 @@ struct UintImpl<64> {
  * \note The only valid values for the template parameter are 8, 16, 32 and 64.
 **/
 template <int Bits>
-using Int = typename detail::IntImpl<Bits>::type;
+using int_t = typename detail::int_impl<Bits>::type;
 
 /*!
  * \brief Fixed size unsigned integer type.
  * \note The only valid values for the template parameter are 8, 16, 32 and 64.
 **/
 template <int Bits>
-using Uint = typename detail::UintImpl<Bits>::type;
+using uint_t = typename detail::uint_impl<Bits>::type;
 } // namespace pl
 #endif // INCG_PL_INTEGER_HPP

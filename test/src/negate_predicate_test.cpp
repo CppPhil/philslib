@@ -49,7 +49,7 @@ public:
     bool                    m_v;
 };
 
-class Functor {
+class functor {
 public:
     bool operator()(int a, int b) const { return a != b; }
 };
@@ -115,9 +115,9 @@ TEST_CASE("negate_predicate_member_object_pointer_test")
 
 TEST_CASE("negate_predicate_functor_test")
 {
-    pl::test::Functor        functor{};
-    pl::test::Functor&       r{functor};
-    const pl::test::Functor& cr{functor};
+    pl::test::functor        functor{};
+    pl::test::functor&       r{functor};
+    const pl::test::functor& cr{functor};
 
     CHECK_UNARY(pl::negatePredicate(r)(5, 5));
     CHECK_UNARY_FALSE(pl::negatePredicate(r)(5, 6));
