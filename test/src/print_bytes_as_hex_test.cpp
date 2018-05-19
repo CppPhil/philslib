@@ -96,7 +96,7 @@ TEST_CASE("print_bytes_as_hex_test")
         std::uint32_t i{};
         PL_TEST_STATIC_ASSERT(sizeof(i) <= sizeof(array));
         pl::test::reverse_copy(
-            std::cbegin(array), std::cend(array) - 1, pl::asBytes(i));
+            std::cbegin(array), std::cend(array) - 1, pl::as_bytes(i));
         oss << pl::PrintBytesAsHex{&i, sizeof(i), "-"};
         CHECK(oss.str() == "DE-C0-AD-DE");
     }

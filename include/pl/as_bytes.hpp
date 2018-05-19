@@ -26,12 +26,12 @@
 
 /*!
  * \file as_bytes.hpp
- * \brief Exports the asBytes function.
+ * \brief Exports the as_bytes function.
 **/
 #ifndef INCG_PL_AS_BYTES_HPP
 #define INCG_PL_AS_BYTES_HPP
 #include "annotations.hpp"            // PL_IN
-#include "byte.hpp"                   // pl::Byte
+#include "byte.hpp"                   // pl::byte
 #include "unrelated_pointer_cast.hpp" // pl::unrelated_pointer_cast
 #include <memory>                     // std::addressof
 
@@ -39,12 +39,12 @@ namespace pl {
 /*!
  * \brief Allows the user to view an object as just raw bytes.
  * \param object The object to be viewed as raw bytes.
- * \return The address of the beginning of object as Byte *.
+ * \return The address of the beginning of object as byte*.
  * \note This overload deals with non-const objects.
  * \note The pointer returned will never be nullptr.
 **/
 template <typename Type>
-constexpr byte* asBytes(PL_IN Type& object) noexcept
+constexpr byte* as_bytes(PL_IN Type& object) noexcept
 {
     return ::pl::unrelated_pointer_cast<byte*>(std::addressof(object));
 }
@@ -52,12 +52,12 @@ constexpr byte* asBytes(PL_IN Type& object) noexcept
 /*!
  * \brief Allows the user to view an object as just raw bytes.
  * \param object The object to be viewed as raw bytes.
- * \return The address of the beginning of object as const Byte *.
+ * \return The address of the beginning of object as const byte*.
  * \note This overload deals with const objects.
  * \note The pointer returned will never be nullptr.
 **/
 template <typename Type>
-constexpr const byte* asBytes(PL_IN const Type& object) noexcept
+constexpr const byte* as_bytes(PL_IN const Type& object) noexcept
 {
     return ::pl::unrelated_pointer_cast<const byte*>(std::addressof(object));
 }
@@ -66,6 +66,6 @@ constexpr const byte* asBytes(PL_IN const Type& object) noexcept
  * \brief Rvalues are not allowed.
 **/
 template <typename Type>
-void asBytes(PL_IN const Type&&) noexcept = delete;
+void as_bytes(PL_IN const Type&&) noexcept = delete;
 } // namespace pl
 #endif // INCG_PL_AS_BYTES_HPP

@@ -46,17 +46,17 @@
 **/
 
 /*!
- * \def PL_PRINTF_FUNCTION(formatStrPos, varArgsPos)
+ * \def PL_PRINTF_FUNCTION(format_str_pos, var_args_pos)
  * \brief Annotates a function as a printf-style function.
  * \note This allows GCC and clang to issue warnings if the arguments
  *       and the format string do not match.
  *
  * Annotates a function as a printf-style function. To be placed
  * after the parameter list in a function declaration.
- * formatStrPos is the parameter (starting at 1) which will hold the
- * format string, varArgsPos is the parameter which will be the C-style
+ * format_str_pos is the parameter (starting at 1) which will hold the
+ * format string, var_args_pos is the parameter which will be the C-style
  * varargs. If implementing a vprintf-style function taking a std::va_list
- * argument use 0 as the varArgsPos.
+ * argument use 0 as the var_args_pos.
  * Note that if used on non-static member functions the this pointer
  * will be considered to be the first argument!
 **/
@@ -126,8 +126,8 @@
 #define PL_FALLTHROUGH /* nothing */
 #define PL_NODISCARD   /* nothing */
 #endif
-#define PL_PRINTF_FUNCTION(formatStrPos, varArgsPos) \
-    __attribute__((format(printf, formatStrPos, varArgsPos)))
+#define PL_PRINTF_FUNCTION(format_str_pos, var_args_pos) \
+    __attribute__((format(printf, format_str_pos, var_args_pos)))
 #elif PL_COMPILER == PL_COMPILER_CLANG
 #if PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(3, 5, 0)
 #define PL_FALLTHROUGH [[clang::fallthrough]];
@@ -140,8 +140,8 @@
 #else
 #define PL_NODISCARD /* nothing */
 #endif
-#define PL_PRINTF_FUNCTION(formatStrPos, varArgsPos) \
-    __attribute__((format(printf, formatStrPos, varArgsPos)))
+#define PL_PRINTF_FUNCTION(format_str_pos, var_args_pos) \
+    __attribute__((format(printf, format_str_pos, var_args_pos)))
 #elif PL_COMPILER == PL_COMPILER_MSVC
 #if (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0)) \
     && !defined(PL_NO_CPP17)
@@ -151,15 +151,15 @@
 #define PL_FALLTHROUGH /* nothing */
 #define PL_NODISCARD   /* nothing */
 #endif
-#define PL_PRINTF_FUNCTION(formatStrPos, varArgsPos) /* nothing */
+#define PL_PRINTF_FUNCTION(format_str_pos, var_args_pos) /* nothing */
 #elif PL_COMPILER == PL_COMPILER_ICC
-#define PL_FALLTHROUGH                               /* nothing */
-#define PL_NODISCARD                                 /* nothing */
-#define PL_PRINTF_FUNCTION(formatStrPos, varArgsPos) /* nothing */
+#define PL_FALLTHROUGH                                   /* nothing */
+#define PL_NODISCARD                                     /* nothing */
+#define PL_PRINTF_FUNCTION(format_str_pos, var_args_pos) /* nothing */
 #else
-#define PL_FALLTHROUGH                               /* nothing */
-#define PL_NODISCARD                                 /* nothing */
-#define PL_PRINTF_FUNCTION(formatStrPos, varArgsPos) /* nothing */
+#define PL_FALLTHROUGH                                   /* nothing */
+#define PL_NODISCARD                                     /* nothing */
+#define PL_PRINTF_FUNCTION(format_str_pos, var_args_pos) /* nothing */
 #endif
 
 /*!

@@ -40,7 +40,7 @@ namespace pl {
  * \return A const & to ty.
 **/
 template <typename Ty>
-constexpr std::add_const_t<Ty>& asConst(PL_IN Ty& ty) noexcept
+constexpr std::add_const_t<Ty>& as_const(PL_IN Ty& ty) noexcept
 {
     return ty;
 }
@@ -49,6 +49,6 @@ constexpr std::add_const_t<Ty>& asConst(PL_IN Ty& ty) noexcept
  * \brief asConst may not be called with rvalues.
 **/
 template <typename Ty>
-void asConst(PL_IN const Ty&&) = delete;
+void as_const(PL_IN const Ty&&) = delete;
 } // namespace pl
 #endif // INCG_PL_AS_CONST_HPP

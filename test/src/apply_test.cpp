@@ -40,10 +40,10 @@
 namespace pl {
 namespace test {
 namespace {
-int nullaryFunction() noexcept { return 5; }
-int unaryFunction(int i) noexcept { return i * 2; }
+int nullary_function() noexcept { return 5; }
+int unary_function(int i) noexcept { return i * 2; }
 template <typename Ty>
-Ty unaryFunctionTemplate(Ty ty)
+Ty unary_function_template(Ty ty)
 {
     return ty;
 }
@@ -51,10 +51,10 @@ Ty unaryFunctionTemplate(Ty ty)
 class type {
 public:
     explicit type(int i) noexcept : data{i} {}
-    int               nullaryMemFun() const noexcept { return 5; }
-    int unaryMemFun(int i) const noexcept { return 7 + i; }
+    int               nullary_mem_fun() const noexcept { return 5; }
+    int unary_mem_fun(int i) const noexcept { return 7 + i; }
     template <typename Ty>
-    Ty unaryMemFunTemplate(Ty ty) const
+    Ty unary_mem_fun_template(Ty ty) const
     {
         return ty;
     }
@@ -62,15 +62,15 @@ public:
     int data;
 };
 
-struct NullaryFunctor {
+struct nullary_functor {
     int operator()() const noexcept { return 27; }
 };
 
-struct UnaryFunctor {
+struct unary_functor {
     int operator()(int i) const noexcept { return i / 2; }
 };
 
-struct GenericFunctor {
+struct generic_functor {
     template <typename Ty>
     Ty operator()(Ty ty) const
     {
@@ -86,41 +86,42 @@ TEST_CASE("apply_test")
     const pl::test::type        obj{20};
     const pl::test::type* const ptr{&obj};
 
-    auto nullaryLambda = [] { return 50; };
-    auto unaryLambda   = [](int i) { return i * i; };
-    auto genericLambda = [](auto val) { return val * 5; };
+    const auto nullary_lambda = [] { return 50; };
+    const auto unary_lambda   = [](int i) { return i * i; };
+    const auto generic_lambda = [](auto val) { return val * 5; };
 
     SUBCASE("function_pointers")
     {
-        CHECK(pl::apply(&pl::test::nullaryFunction, std::make_tuple()) == 5);
-        CHECK(pl::apply(&pl::test::unaryFunction, std::make_tuple(3)) == 6);
+        CHECK(pl::apply(&pl::test::nullary_function, std::make_tuple()) == 5);
+        CHECK(pl::apply(&pl::test::unary_function, std::make_tuple(3)) == 6);
         CHECK(
-            pl::apply(&pl::test::unaryFunctionTemplate<int>, std::make_tuple(4))
+            pl::apply(
+                &pl::test::unary_function_template<int>, std::make_tuple(4))
             == 4);
     }
 
     SUBCASE("member_function_pointers")
     {
         CHECK(
-            pl::apply(&pl::test::type::nullaryMemFun, std::make_tuple(obj))
+            pl::apply(&pl::test::type::nullary_mem_fun, std::make_tuple(obj))
             == 5);
         CHECK(
-            pl::apply(&pl::test::type::nullaryMemFun, std::make_tuple(ptr))
+            pl::apply(&pl::test::type::nullary_mem_fun, std::make_tuple(ptr))
             == 5);
         CHECK(
-            pl::apply(&pl::test::type::unaryMemFun, std::make_tuple(obj, 3))
+            pl::apply(&pl::test::type::unary_mem_fun, std::make_tuple(obj, 3))
             == 10);
         CHECK(
-            pl::apply(&pl::test::type::unaryMemFun, std::make_tuple(ptr, 3))
+            pl::apply(&pl::test::type::unary_mem_fun, std::make_tuple(ptr, 3))
             == 10);
         CHECK(
             pl::apply(
-                &pl::test::type::unaryMemFunTemplate<int>,
+                &pl::test::type::unary_mem_fun_template<int>,
                 std::make_tuple(obj, 4))
             == 4);
         CHECK(
             pl::apply(
-                &pl::test::type::unaryMemFunTemplate<int>,
+                &pl::test::type::unary_mem_fun_template<int>,
                 std::make_tuple(ptr, 4))
             == 4);
     }
@@ -133,19 +134,19 @@ TEST_CASE("apply_test")
 
     SUBCASE("functors")
     {
-        CHECK(pl::apply(pl::test::NullaryFunctor{}, std::make_tuple()) == 27);
-        CHECK(pl::apply(pl::test::UnaryFunctor{}, std::make_tuple(4)) == 2);
+        CHECK(pl::apply(pl::test::nullary_functor{}, std::make_tuple()) == 27);
+        CHECK(pl::apply(pl::test::unary_functor{}, std::make_tuple(4)) == 2);
         CHECK(
             pl::apply(
-                pl::test::GenericFunctor{},
+                pl::test::generic_functor{},
                 std::make_tuple(std::string{"text"}))
             == "text");
     }
 
     SUBCASE("lambdas")
     {
-        CHECK(pl::apply(nullaryLambda, std::make_tuple()) == 50);
-        CHECK(pl::apply(unaryLambda, std::make_tuple(5)) == 25);
-        CHECK(pl::apply(genericLambda, std::make_tuple(20)) == 100);
+        CHECK(pl::apply(nullary_lambda, std::make_tuple()) == 50);
+        CHECK(pl::apply(unary_lambda, std::make_tuple(5)) == 25);
+        CHECK(pl::apply(generic_lambda, std::make_tuple(20)) == 100);
     }
 }

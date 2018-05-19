@@ -95,15 +95,15 @@ TEST_CASE("raw_memory_array_test")
 
     SUBCASE("front")
     {
-        CHECK(pl::asConst(ary1).front() == ""s);
+        CHECK(pl::as_const(ary1).front() == ""s);
         CHECK(ary2.front() == "Text"s);
         ary1.front() = "Test"s;
-        CHECK(pl::asConst(ary1).front() == "Test"s);
+        CHECK(pl::as_const(ary1).front() == "Test"s);
     }
 
     SUBCASE("back")
     {
-        CHECK(pl::asConst(ary2).back() == "Text"s);
+        CHECK(pl::as_const(ary2).back() == "Text"s);
         ary2.back() = "Another text"s;
         CHECK(ary2.back() == "Another text"s);
     }
@@ -152,7 +152,7 @@ TEST_CASE("raw_memory_array_test")
                     return s == "Test"s;
                 }));
 
-        for (const std::string& s : pl::iterateReversed(pl::asConst(ary1))) {
+        for (const std::string& s : pl::iterateReversed(pl::as_const(ary1))) {
             CHECK_UNARY(s.empty());
         }
     }

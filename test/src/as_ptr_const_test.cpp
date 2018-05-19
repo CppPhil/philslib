@@ -33,7 +33,7 @@
 #if PL_COMPILER == PL_COMPILER_GCC
 #pragma GCC diagnostic pop
 #endif                                       // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/pl/as_ptr_const.hpp" // pl::asPtrConst
+#include "../../include/pl/as_ptr_const.hpp" // pl::as_ptr_const
 #include "../include/static_assert.hpp"      // PL_TEST_STATIC_ASSERT
 #include <ciso646>                           // not
 #include <type_traits> // std::is_same, std::remove_pointer_t, std::is_const
@@ -57,16 +57,16 @@ TEST_CASE("as_ptr_const_with_nonconst_test")
     int* const p2{&i};
 
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::asPtrConst(p1)), const int*>::value);
+        std::is_same<decltype(pl::as_ptr_const(p1)), const int*>::value);
     PL_TEST_STATIC_ASSERT(
-        not std::is_same<decltype(pl::asPtrConst(p1)), int*>::value);
-    CHECK(p1 == pl::asPtrConst(p1));
+        not std::is_same<decltype(pl::as_ptr_const(p1)), int*>::value);
+    CHECK(p1 == pl::as_ptr_const(p1));
 
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::asPtrConst(p2)), const int*>::value);
+        std::is_same<decltype(pl::as_ptr_const(p2)), const int*>::value);
     PL_TEST_STATIC_ASSERT(
-        not std::is_same<decltype(pl::asPtrConst(p2)), int* const>::value);
-    CHECK(p2 == pl::asPtrConst(p2));
+        not std::is_same<decltype(pl::as_ptr_const(p2)), int* const>::value);
+    CHECK(p2 == pl::as_ptr_const(p2));
 }
 
 TEST_CASE("as_ptr_const_with_const_test")
@@ -76,15 +76,15 @@ TEST_CASE("as_ptr_const_with_const_test")
     const int* const p2{&i};
 
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::asPtrConst(p1)), const int*>::value);
-    CHECK(p1 == pl::asPtrConst(p1));
+        std::is_same<decltype(pl::as_ptr_const(p1)), const int*>::value);
+    CHECK(p1 == pl::as_ptr_const(p1));
 
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::asPtrConst(p2)), const int*>::value);
+        std::is_same<decltype(pl::as_ptr_const(p2)), const int*>::value);
     PL_TEST_STATIC_ASSERT(
-        not std::is_same<decltype(pl::asPtrConst(p2)),
+        not std::is_same<decltype(pl::as_ptr_const(p2)),
                          const int* const>::value);
-    CHECK(p2 == pl::asPtrConst(p2));
+    CHECK(p2 == pl::as_ptr_const(p2));
 }
 
 TEST_CASE("as_ptr_const_is_low_level_const_qualified_test")
@@ -95,18 +95,18 @@ TEST_CASE("as_ptr_const_is_low_level_const_qualified_test")
 
     PL_TEST_STATIC_ASSERT(
         std::is_const<std::remove_pointer_t<decltype(
-            pl::asPtrConst(p1))>>::value);
+            pl::as_ptr_const(p1))>>::value);
     PL_TEST_STATIC_ASSERT(
         std::is_const<std::remove_pointer_t<decltype(
-            pl::asPtrConst(p2))>>::value);
+            pl::as_ptr_const(p2))>>::value);
 
     PL_TEST_STATIC_ASSERT(
-        not std::is_const<decltype(pl::asPtrConst(p1))>::value);
+        not std::is_const<decltype(pl::as_ptr_const(p1))>::value);
     PL_TEST_STATIC_ASSERT(
-        not std::is_const<decltype(pl::asPtrConst(p2))>::value);
+        not std::is_const<decltype(pl::as_ptr_const(p2))>::value);
 
-    CHECK(&i == pl::asPtrConst(p1));
-    CHECK(&i == pl::asPtrConst(p2));
+    CHECK(&i == pl::as_ptr_const(p1));
+    CHECK(&i == pl::as_ptr_const(p2));
 }
 
 TEST_CASE("as_ptr_const_overload_test")
@@ -115,6 +115,6 @@ TEST_CASE("as_ptr_const_overload_test")
     pl::test::type* ptr{&obj};
 
     CHECK(ptr->get() == 1);
-    CHECK(pl::asPtrConst(ptr)->get() == 2);
-    CHECK(pl::asPtrConst(&obj)->get() == 2);
+    CHECK(pl::as_ptr_const(ptr)->get() == 2);
+    CHECK(pl::as_ptr_const(&obj)->get() == 2);
 }

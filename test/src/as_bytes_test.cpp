@@ -33,7 +33,7 @@
 #if PL_COMPILER == PL_COMPILER_GCC
 #pragma GCC diagnostic pop
 #endif                                   // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/pl/as_bytes.hpp" // pl::asBytes
+#include "../../include/pl/as_bytes.hpp" // pl::as_bytes
 #include "../include/static_assert.hpp"  // PL_TEST_STATIC_ASSERT
 #include <cstddef>                       // std::size_t
 #include <cstdint>                       // std::uint32_t
@@ -42,20 +42,20 @@
 
 TEST_CASE("as_bytes_buffer_test")
 {
-    static constexpr std::size_t byteSize{5U};
+    static constexpr std::size_t byte_size{5U};
     static constexpr char        buf1[]{"\xAA\xBB\xCC\xDD"};
     char                         buf2[]{"\xDE\xAD\xC0\xDE"};
 
-    PL_TEST_STATIC_ASSERT(sizeof(buf1) == byteSize);
-    PL_TEST_STATIC_ASSERT(sizeof(buf2) == byteSize);
+    PL_TEST_STATIC_ASSERT(sizeof(buf1) == byte_size);
+    PL_TEST_STATIC_ASSERT(sizeof(buf2) == byte_size);
 
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::asBytes(buf1)), const pl::byte*>::value);
+        std::is_same<decltype(pl::as_bytes(buf1)), const pl::byte*>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::asBytes(buf2)), pl::byte*>::value);
+        std::is_same<decltype(pl::as_bytes(buf2)), pl::byte*>::value);
 
-    const pl::byte* p1{pl::asBytes(buf1)};
-    pl::byte*       p2{pl::asBytes(buf2)};
+    const pl::byte* p1{pl::as_bytes(buf1)};
+    pl::byte*       p2{pl::as_bytes(buf2)};
 
     REQUIRE(p1 != nullptr);
     REQUIRE(p2 != nullptr);
@@ -75,14 +75,14 @@ TEST_CASE("as_bytes_buffer_test")
 
 TEST_CASE("as_bytes_int_test")
 {
-    static constexpr std::size_t byteSize{4U};
+    static constexpr std::size_t byte_size{4U};
 
     std::uint32_t v{};
-    PL_TEST_STATIC_ASSERT(sizeof(v) == byteSize);
+    PL_TEST_STATIC_ASSERT(sizeof(v) == byte_size);
 
-    std::memcpy(&v, "\xDE\xAD\xC0\xDE", byteSize);
+    std::memcpy(&v, "\xDE\xAD\xC0\xDE", byte_size);
 
-    const pl::byte* p{pl::asBytes(v)};
+    const pl::byte* p{pl::as_bytes(v)};
 
     REQUIRE(p != nullptr);
 

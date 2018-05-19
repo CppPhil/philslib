@@ -33,7 +33,7 @@
 #if PL_COMPILER == PL_COMPILER_GCC
 #pragma GCC diagnostic pop
 #endif                                   // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/pl/as_const.hpp" // pl::asConst
+#include "../../include/pl/as_const.hpp" // pl::as_const
 #include "../include/static_assert.hpp"  // PL_TEST_STATIC_ASSERT
 #include <string>                        // std::string
 #include <type_traits> // std::remove_reference_t, std::is_const, std::is_same
@@ -52,15 +52,15 @@ public:
 
 TEST_CASE("as_const_test")
 {
-    pl::test::test_type testObj{};
+    pl::test::test_type test_obj{};
 
     PL_TEST_STATIC_ASSERT(
         std::is_const<std::remove_reference_t<decltype(
-            pl::asConst(testObj))>>::value);
+            pl::as_const(test_obj))>>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::asConst(testObj)),
+        std::is_same<decltype(pl::as_const(test_obj)),
                      const pl::test::test_type&>::value);
 
-    CHECK(testObj.f() == "non-const");
-    CHECK(pl::asConst(testObj).f() == "const");
+    CHECK(test_obj.f() == "non-const");
+    CHECK(pl::as_const(test_obj).f() == "const");
 }

@@ -26,7 +26,7 @@
 
 /*!
  * \file as_ptr_const.hpp
- * \brief Exports the asPtrConst function template.
+ * \brief Exports the as_ptr_const function template.
 **/
 #ifndef INCG_PL_AS_PTR_CONST_HPP
 #define INCG_PL_AS_PTR_CONST_HPP
@@ -42,7 +42,7 @@ namespace pl {
  *         to by 'p'.
 **/
 template <typename Ty>
-constexpr std::add_const_t<Ty>* asPtrConst(PL_IN_OPT Ty* p) noexcept
+constexpr std::add_const_t<Ty>* as_ptr_const(PL_IN_OPT Ty* p) noexcept
 {
     return p;
 }

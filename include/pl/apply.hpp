@@ -48,34 +48,34 @@ namespace detail {
  * \brief Implementation function of apply; not to be used directly!
 **/
 template <typename Callable, typename TupleLike, std::size_t... Indices>
-constexpr auto applyImpl(
+inline auto apply_impl(
     PL_IN Callable&& callable,
-    PL_IN TupleLike&& tupleLike,
+    PL_IN TupleLike&& tuple_like,
     std::index_sequence<Indices...>) -> decltype(auto)
 {
     return ::pl::invoke(
         std::forward<Callable>(callable),
-        std::get<Indices>(std::forward<TupleLike>(tupleLike))...);
+        std::get<Indices>(std::forward<TupleLike>(tuple_like))...);
 }
 } // namespace detail
 
 /*!
  * \brief Invokes the callable object 'callable' with a tuple of arguments.
  * \param callable The callable object to be invoked.
- * \param tupleLike The tuple whose elements to be used as arguments to
- *                  'callable'
+ * \param tuple_like The tuple whose elements to be used as arguments to
+ *                   'callable'
  * \return The result that was returned by 'callable'.
- * \note The 'tupleLike' need not be std::tuple, and instead may be anything
+ * \note 'tuple_like' need not be std::tuple, and instead may be anything
  *       that supports std::get and std::tuple_size; in particular,
  *       std::array and std::pair may be used.
 **/
 template <typename Callable, typename TupleLike>
-constexpr auto apply(PL_IN Callable&& callable, PL_IN TupleLike&& tupleLike)
+inline auto apply(PL_IN Callable&& callable, PL_IN TupleLike&& tuple_like)
     -> decltype(auto)
 {
-    return detail::applyImpl(
+    return detail::apply_impl(
         std::forward<Callable>(callable),
-        std::forward<TupleLike>(tupleLike),
+        std::forward<TupleLike>(tuple_like),
         std::make_index_sequence<std::tuple_size<std::decay_t<TupleLike>>::
                                      value>{});
 }

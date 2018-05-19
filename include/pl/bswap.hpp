@@ -51,7 +51,7 @@ namespace pl {
 template <typename Type>
 inline Type bswap(Type ty) noexcept
 {
-    auto       begin = ::pl::asBytes(ty);
+    auto       begin = ::pl::as_bytes(ty);
     const auto end   = begin + sizeof(Type);
 
     std::reverse(begin, end);

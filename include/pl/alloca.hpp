@@ -38,8 +38,8 @@
 #endif
 
 /*!
- * \def PL_ALLOCA(countBytes)
- * \brief Allocates 'countBytes' bytes of raw memory that is local to the
+ * \def PL_ALLOCA(count_bytes)
+ * \brief Allocates 'count_bytes' bytes of raw memory that is local to the
  *        current function. That memory is allocated from the stack.
  *        The memory allocated is automatically deallocated when the
  *        current function returns to its caller.
@@ -52,19 +52,19 @@
  *          inlined function that uses PL_ALLOCA in a loop or in a recursive
  *          function. If the program causes stack overflow, the behavior of
  *          the program is undefined.
- *          Make sure that the 'countBytes' supplied is safe, i.e. not
+ *          Make sure that the 'count_bytes' supplied is safe, i.e. not
  *          supplied by the user or some external source.
 **/
 
 #if PL_OS == PL_OS_LINUX || PL_OS == PL_OS_MAC
-#define PL_ALLOCA(countBytes) alloca(countBytes)
+#define PL_ALLOCA(count_bytes) alloca(count_bytes)
 #elif PL_OS == PL_OS_WINDOWS
-#define PL_ALLOCA(countBytes) _alloca(countBytes)
+#define PL_ALLOCA(count_bytes) _alloca(count_bytes)
 #elif PL_OS == PL_OS_OTHER
 #ifdef MY_ALLOCA
-#define PL_ALLOCA(countBytes) MY_ALLOCA(countBytes)
+#define PL_ALLOCA(count_bytes) MY_ALLOCA(count_bytes)
 #else
-#warning "Unknown OS. Please define MY_ALLOCA(countBytes) to use PL_ALLOCA"
+#warning "Unknown OS. Please define MY_ALLOCA(count_bytes) to use PL_ALLOCA"
 #endif
 #endif
 #endif // INCG_PL_ALLOCA_HPP
