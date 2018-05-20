@@ -513,16 +513,16 @@ public:
 
     /*!
      * \brief Checks if the string view begins with the given prefix.
-     * \param stringView A character sequence to compare to the start of the
-     *                   string view
+     * \param string_view A character sequence to compare to the start of the
+     *                    string view
      * \return true if the string view begins with the provided prefix, false
      *         otherwise.
     **/
-    constexpr bool starts_with(this_type stringView) const noexcept
+    constexpr bool starts_with(this_type string_view) const noexcept
     {
-        return size() >= stringView.size()
+        return size() >= string_view.size()
                and traits_type::compare(
-                       data(), stringView.data(), stringView.size())
+                       data(), string_view.data(), string_view.size())
                        == 0;
     }
 
@@ -540,18 +540,18 @@ public:
 
     /*!
      * \brief Checks if the string view ends with the given suffix.
-     * \param stringView A character sequence to compare to the end of the
-     *                   string view
+     * \param string_view A character sequence to compare to the end of the
+     *                    string view
      * \return true if the string view ends with the provided suffix,
      *         false otherwise.
     **/
-    constexpr bool ends_with(this_type stringView) const noexcept
+    constexpr bool ends_with(this_type string_view) const noexcept
     {
-        return size() >= stringView.size()
+        return size() >= string_view.size()
                and traits_type::compare(
-                       data() + size() - stringView.size(),
-                       stringView.data(),
-                       stringView.size())
+                       data() + size() - string_view.size(),
+                       string_view.data(),
+                       string_view.size())
                        == 0;
     }
 
