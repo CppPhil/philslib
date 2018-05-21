@@ -196,6 +196,7 @@ include/pl/string_view.hpp: string view type for null-terminated strings with a 
 include/pl/stringify.hpp: The classic stringification macro.  
 include/pl/timer.hpp: Simple timer class to measure durations of time.  
 include/pl/toggle_bool.hpp: Function to invert the value of a bool object.  
+include/pl/type_traits.hpp: Includes the standard library `<type_traits>` and defines the C++14 style template aliases for the type traits for standard library implementations that don't offer them.  
 include/pl/unrelated_pointer_cast.hpp: Function template for unrelated pointer casts, leaving reinterpret_cast for just integer to pointer and pointer to integer conversions.  
 include/pl/unused.hpp: Macro to suppress warnings about objects being unused.  
 include/pl/vla.hpp: Macro to be able to define VLAs by using alloca.  
