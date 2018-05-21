@@ -33,9 +33,9 @@
 #include "annotations.hpp" // PL_IN
 #include "compiler.hpp"    // PL_COMPILER, PL_COMPILER_MSVC
 #include "invoke.hpp"      // pl::invoke
+#include "type_traits.hpp" // pl::decay_t
 #include <cstddef>         // std::size_t
 #include <tuple>           // std::get, std::tuple_size
-#include <type_traits>     // std::decay
 #include <utility> // std::index_sequence, std::make_index_sequence, std::forward
 
 #if PL_COMPILER == PL_COMPILER_MSVC
@@ -76,8 +76,7 @@ inline auto apply(PL_IN Callable&& callable, PL_IN TupleLike&& tuple_like)
     return detail::apply_impl(
         std::forward<Callable>(callable),
         std::forward<TupleLike>(tuple_like),
-        std::make_index_sequence<std::tuple_size<
-            typename std::decay<TupleLike>::type>::value>{});
+        std::make_index_sequence<std::tuple_size<decay_t<TupleLike>>::value>{});
 }
 } // namespace pl
 #if PL_COMPILER == PL_COMPILER_MSVC

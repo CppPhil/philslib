@@ -30,7 +30,8 @@
 **/
 #ifndef INCG_PL_META_DISJUNCTION_HPP
 #define INCG_PL_META_DISJUNCTION_HPP
-#include <type_traits> // std::false_type, std::conditional
+#include "../type_traits.hpp" // pl::conditional_t
+#include <type_traits>        // std::false_type
 
 namespace pl {
 namespace meta {
@@ -56,9 +57,9 @@ struct disjunction<Trait1> : public Trait1 {
 **/
 template <typename Trait1, typename... Traits>
 struct disjunction<Trait1, Traits...>
-    : public std::conditional<bool(Trait1::value),
-                              Trait1,
-                              disjunction<Traits...>>::type {
+    : public conditional_t<bool(Trait1::value),
+                           Trait1,
+                           disjunction<Traits...>> {
 };
 } // namespace meta
 } // namespace pl

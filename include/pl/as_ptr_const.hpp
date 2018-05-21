@@ -31,7 +31,7 @@
 #ifndef INCG_PL_AS_PTR_CONST_HPP
 #define INCG_PL_AS_PTR_CONST_HPP
 #include "annotations.hpp" // PL_IN_OPT
-#include <type_traits>     // std::add_const
+#include "type_traits.hpp" // pl::add_const_t
 
 namespace pl {
 /*!
@@ -42,8 +42,7 @@ namespace pl {
  *         to by 'p'.
 **/
 template <typename Ty>
-constexpr typename std::add_const<Ty>::type* as_ptr_const(
-    PL_IN_OPT Ty* p) noexcept
+constexpr add_const_t<Ty>* as_ptr_const(PL_IN_OPT Ty* p) noexcept
 {
     return p;
 }

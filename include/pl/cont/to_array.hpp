@@ -31,9 +31,9 @@
 #ifndef INCG_PL_CONT_TO_ARRAY_HPP
 #define INCG_PL_CONT_TO_ARRAY_HPP
 #include "../annotations.hpp" // PL_IN
+#include "../type_traits.hpp" // pl::remove_cv_t
 #include <array>              // std::array
 #include <cstddef>            // std::size_t
-#include <type_traits>        // std::remove_cv
 #include <utility>            // std::index_sequence
 
 namespace pl {
@@ -42,8 +42,8 @@ namespace detail {
 /*!
  * \brief Implementation function of to_array, not to be used directly.
 **/
-template <typename Ty, std::size_t Size, std::size_t... Indices>
-constexpr std::array<typename std::remove_cv<Ty>::type, Size> to_array_impl(
+template <typename Ty, std::size_t          Size, std::size_t... Indices>
+constexpr std::array<remove_cv_t<Ty>, Size> to_array_impl(
     PL_IN Ty (&array)[Size],
     std::index_sequence<Indices...>)
 {
@@ -61,9 +61,8 @@ constexpr std::array<typename std::remove_cv<Ty>::type, Size> to_array_impl(
  * The elements of the std::array are copy-initialized from the
  * corresponding element of 'array'.
 **/
-template <typename Ty, std::size_t                            Size>
-constexpr std::array<typename std::remove_cv<Ty>::type, Size> to_array(
-    PL_IN Ty (&array)[Size])
+template <typename Ty, std::size_t          Size>
+constexpr std::array<remove_cv_t<Ty>, Size> to_array(PL_IN Ty (&array)[Size])
 {
     return detail::to_array_impl(array, std::make_index_sequence<Size>{});
 }
