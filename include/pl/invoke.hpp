@@ -34,7 +34,7 @@
 #include "compiler.hpp"    // PL_COMPILER, PL_COMPILER_MSVC
 #include <ciso646>         // not
 #include <functional>      // std::mem_fn
-#include <type_traits> // std::is_member_pointer, std::decay_t, std::true_type, std::false_type
+#include <type_traits> // std::is_member_pointer, std::decay, std::true_type, std::false_type
 #include <utility> // std::forward
 
 namespace pl {
@@ -86,12 +86,14 @@ template <typename Callable, typename... Args>
 inline auto invoke(PL_IN Callable&& callable, PL_IN Args&&... args) noexcept(
     noexcept(
         ::pl::detail::invoke_impl(
-            typename std::is_member_pointer<std::decay_t<Callable>>::type{},
+            typename std::is_member_pointer<
+                typename std::decay<Callable>::type>::type{},
             std::forward<Callable>(callable),
             std::forward<Args>(args)...))) -> decltype(auto)
 {
     return ::pl::detail::invoke_impl(
-        typename std::is_member_pointer<std::decay_t<Callable>>::type{},
+        typename std::is_member_pointer<
+            typename std::decay<Callable>::type>::type{},
         std::forward<Callable>(callable),
         std::forward<Args>(args)...);
 }

@@ -41,7 +41,7 @@
 #include <ostream>               // std::basic_ostream
 #include <stdexcept>             // std::out_of_range
 #include <string>                // std::char_Traits, std::basic_string
-#include <type_traits> // std::is_same, std::is_pointer, std::remove_const_t, std::remove_pointer_t
+#include <type_traits> // std::is_same, std::is_pointer, std::remove_const, std::remove_pointer
 
 #if PL_COMPILER == PL_COMPILER_MSVC
 #pragma warning(push)
@@ -144,14 +144,14 @@ public:
     **/
     template <
         typename Ty,
-        typename = std::
-            enable_if_t<std::is_pointer<meta::remove_cvref_t<Ty>>::value
-                        and std::
-                                is_same<std::
-                                            remove_const_t<std::
-                                                               remove_pointer_t<meta::
-                                                                                    remove_cvref_t<Ty>>>,
-                                        value_type>::value>>
+        typename = typename std::
+            enable_if<std::is_pointer<meta::remove_cvref_t<Ty>>::value
+                      and std::is_same<
+                              typename std::remove_const<
+                                  typename std::
+                                      remove_pointer<meta::remove_cvref_t<Ty>>::
+                                          type>::type,
+                              value_type>::value>::type>
     PL_IMPLICIT constexpr basic_string_view(
         PL_IN PL_NULL_TERMINATED(Ty&&) string) noexcept
         : m_data{string},

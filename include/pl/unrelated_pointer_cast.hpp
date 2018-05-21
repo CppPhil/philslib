@@ -31,7 +31,7 @@
 #ifndef INCG_PL_UNRELATED_POINTER_CAST_HPP
 #define INCG_PL_UNRELATED_POINTER_CAST_HPP
 #include "annotations.hpp" // PL_IN_OPT
-#include <type_traits> // std::is_pointer, std::is_const, std::remove_pointer_t
+#include <type_traits> // std::is_pointer, std::is_const, std::remove_pointer
 
 namespace pl {
 /*!
@@ -124,7 +124,7 @@ constexpr CastTo unrelated_pointer_cast(PL_IN_OPT const void* p) noexcept
         "The type to cast to must be a raw pointer type in "
         "pl::unrelated_pointer_cast (const)");
     static_assert(
-        std::is_const<std::remove_pointer_t<CastTo>>::value,
+        std::is_const<typename std::remove_pointer<CastTo>::type>::value,
         "The type to cast to must have low level constness in "
         "pl::unrelated_pointer_cast (const)");
 

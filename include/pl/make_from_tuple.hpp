@@ -33,7 +33,7 @@
 #include "annotations.hpp" // PL_IN
 #include <cstddef>         // std::size_t
 #include <tuple>           // std::get, std::tuple_size
-#include <type_traits>     // std::decay_t
+#include <type_traits>     // std::decay
 #include <utility> // std::integer_sequence, std::make_index_sequence, std::forward
 
 namespace pl {
@@ -67,8 +67,8 @@ constexpr Ty make_from_tuple(PL_IN TupleLike&& tuple_like)
 {
     return detail::make_from_tuple_impl<Ty>(
         std::forward<TupleLike>(tuple_like),
-        std::make_index_sequence<std::tuple_size<std::decay_t<TupleLike>>::
-                                     value>{});
+        std::make_index_sequence<std::tuple_size<
+            typename std::decay<TupleLike>::type>::value>{});
 }
 } // namespace pl
 #endif // INCG_PL_MAKE_FROM_TUPLE_HPP

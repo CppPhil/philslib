@@ -34,7 +34,7 @@
 #define INCG_PL_META_IS_REFERENCE_WRAPPER_HPP
 #include "negation.hpp" // pl::meta::negation
 #include <functional>   // std::reference_wrapper
-#include <type_traits>  // std::false_type, std::true_type, std::decay_t
+#include <type_traits>  // std::false_type, std::true_type, std::decay
 
 namespace pl {
 namespace meta {
@@ -66,7 +66,7 @@ struct is_reference_wrapper<std::reference_wrapper<Ty>>
 **/
 template <typename Type>
 using is_not_reference_wrapper
-    = negation<is_reference_wrapper<std::decay_t<Type>>>;
+    = negation<is_reference_wrapper<typename std::decay<Type>::type>>;
 } // namespace meta
 } // namespace pl
 #endif // INCG_PL_META_IS_REFERENCE_WRAPPER_HPP

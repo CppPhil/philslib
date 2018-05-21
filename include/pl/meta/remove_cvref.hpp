@@ -30,7 +30,7 @@
 **/
 #ifndef INCG_PL_META_REMOVE_CVREF_HPP
 #define INCG_PL_META_REMOVE_CVREF_HPP
-#include <type_traits> // std::remove_cv, std::remove_reference_t
+#include <type_traits> // std::remove_cv, std::remove_reference
 
 namespace pl {
 namespace meta {
@@ -41,7 +41,8 @@ namespace meta {
  * and will have its const and volatile type qualifiers removed.
 **/
 template <typename Type>
-struct remove_cvref : public std::remove_cv<std::remove_reference_t<Type>> {
+struct remove_cvref
+    : public std::remove_cv<typename std::remove_reference<Type>::type> {
 };
 
 /*!

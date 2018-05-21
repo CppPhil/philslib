@@ -33,7 +33,7 @@
 #define INCG_PL_BITMASK_HPP
 #include "annotations.hpp" // PL_INOUT
 #include "compiler.hpp" // PL_COMPILER, PL_COMPILER_MSVC, PL_COMPILER_VERSION, PL_COMPILER_VERSION_CHECK
-#include <type_traits> // std::underlying_type_t
+#include <type_traits> // std::underlying_type
 
 /*!
  * \def PL_ENABLE_BITMASK_OPERATORS(scoped_enum)
@@ -71,35 +71,35 @@
 #define PL_ENABLE_BITMASK_OPERATORS(scoped_enum)                          \
     constexpr scoped_enum operator|(scoped_enum lhs, scoped_enum rhs)     \
     {                                                                     \
-        using Underlying = std::underlying_type_t<scoped_enum>;           \
+        using Underlying = std::underlying_type<scoped_enum>::type;       \
         return static_cast<scoped_enum>(                                  \
             static_cast<Underlying>(lhs) | static_cast<Underlying>(rhs)); \
     }                                                                     \
                                                                           \
     constexpr scoped_enum operator&(scoped_enum lhs, scoped_enum rhs)     \
     {                                                                     \
-        using Underlying = std::underlying_type_t<scoped_enum>;           \
+        using Underlying = std::underlying_type<scoped_enum>::type;       \
         return static_cast<scoped_enum>(                                  \
             static_cast<Underlying>(lhs) & static_cast<Underlying>(rhs)); \
     }                                                                     \
                                                                           \
     constexpr scoped_enum operator^(scoped_enum lhs, scoped_enum rhs)     \
     {                                                                     \
-        using Underlying = std::underlying_type_t<scoped_enum>;           \
+        using Underlying = std::underlying_type<scoped_enum>::type;       \
         return static_cast<scoped_enum>(                                  \
             static_cast<Underlying>(lhs) ^ static_cast<Underlying>(rhs)); \
     }                                                                     \
                                                                           \
     constexpr scoped_enum operator~(scoped_enum lhs)                      \
     {                                                                     \
-        using Underlying = std::underlying_type_t<scoped_enum>;           \
+        using Underlying = std::underlying_type<scoped_enum>::type;       \
         return static_cast<scoped_enum>(~static_cast<Underlying>(lhs));   \
     }                                                                     \
                                                                           \
     constexpr scoped_enum& operator|=(                                    \
         PL_INOUT scoped_enum& lhs, scoped_enum rhs)                       \
     {                                                                     \
-        using Underlying = std::underlying_type_t<scoped_enum>;           \
+        using Underlying = std::underlying_type<scoped_enum>::type;       \
         lhs              = static_cast<scoped_enum>(                      \
             static_cast<Underlying>(lhs) | static_cast<Underlying>(rhs)); \
         return lhs;                                                       \
@@ -108,7 +108,7 @@
     constexpr scoped_enum& operator&=(                                    \
         PL_INOUT scoped_enum& lhs, scoped_enum rhs)                       \
     {                                                                     \
-        using Underlying = std::underlying_type_t<scoped_enum>;           \
+        using Underlying = std::underlying_type<scoped_enum>::type;       \
         lhs              = static_cast<scoped_enum>(                      \
             static_cast<Underlying>(lhs) & static_cast<Underlying>(rhs)); \
         return lhs;                                                       \
@@ -117,7 +117,7 @@
     constexpr scoped_enum& operator^=(                                    \
         PL_INOUT scoped_enum& lhs, scoped_enum rhs)                       \
     {                                                                     \
-        using Underlying = std::underlying_type_t<scoped_enum>;           \
+        using Underlying = std::underlying_type<scoped_enum>::type;       \
         lhs              = static_cast<scoped_enum>(                      \
             static_cast<Underlying>(lhs) ^ static_cast<Underlying>(rhs)); \
         return lhs;                                                       \
@@ -126,34 +126,34 @@
 #define PL_ENABLE_BITMASK_OPERATORS(scoped_enum)                               \
     constexpr scoped_enum operator|(scoped_enum lhs, scoped_enum rhs)          \
     {                                                                          \
-        using Underlying = std::underlying_type_t<scoped_enum>;                \
+        using Underlying = std::underlying_type<scoped_enum>::type;            \
         return static_cast<scoped_enum>(                                       \
             static_cast<Underlying>(lhs) | static_cast<Underlying>(rhs));      \
     }                                                                          \
                                                                                \
     constexpr scoped_enum operator&(scoped_enum lhs, scoped_enum rhs)          \
     {                                                                          \
-        using Underlying = std::underlying_type_t<scoped_enum>;                \
+        using Underlying = std::underlying_type<scoped_enum>::type;            \
         return static_cast<scoped_enum>(                                       \
             static_cast<Underlying>(lhs) & static_cast<Underlying>(rhs));      \
     }                                                                          \
                                                                                \
     constexpr scoped_enum operator^(scoped_enum lhs, scoped_enum rhs)          \
     {                                                                          \
-        using Underlying = std::underlying_type_t<scoped_enum>;                \
+        using Underlying = std::underlying_type<scoped_enum>::type;            \
         return static_cast<scoped_enum>(                                       \
             static_cast<Underlying>(lhs) ^ static_cast<Underlying>(rhs));      \
     }                                                                          \
                                                                                \
     constexpr scoped_enum operator~(scoped_enum lhs)                           \
     {                                                                          \
-        using Underlying = std::underlying_type_t<scoped_enum>;                \
+        using Underlying = std::underlying_type<scoped_enum>::type;            \
         return static_cast<scoped_enum>(~static_cast<Underlying>(lhs));        \
     }                                                                          \
                                                                                \
     inline scoped_enum& operator|=(PL_INOUT scoped_enum& lhs, scoped_enum rhs) \
     {                                                                          \
-        using Underlying = std::underlying_type_t<scoped_enum>;                \
+        using Underlying = std::underlying_type<scoped_enum>::type;            \
         lhs              = static_cast<scoped_enum>(                           \
             static_cast<Underlying>(lhs) | static_cast<Underlying>(rhs));      \
         return lhs;                                                            \
@@ -161,7 +161,7 @@
                                                                                \
     inline scoped_enum& operator&=(PL_INOUT scoped_enum& lhs, scoped_enum rhs) \
     {                                                                          \
-        using Underlying = std::underlying_type_t<scoped_enum>;                \
+        using Underlying = std::underlying_type<scoped_enum>::type;            \
         lhs              = static_cast<scoped_enum>(                           \
             static_cast<Underlying>(lhs) & static_cast<Underlying>(rhs));      \
         return lhs;                                                            \
@@ -169,7 +169,7 @@
                                                                                \
     inline scoped_enum& operator^=(PL_INOUT scoped_enum& lhs, scoped_enum rhs) \
     {                                                                          \
-        using Underlying = std::underlying_type_t<scoped_enum>;                \
+        using Underlying = std::underlying_type<scoped_enum>::type;            \
         lhs              = static_cast<scoped_enum>(                           \
             static_cast<Underlying>(lhs) ^ static_cast<Underlying>(rhs));      \
         return lhs;                                                            \

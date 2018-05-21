@@ -36,7 +36,7 @@
 #include <ciso646>         // not
 #include <cstddef>         // std::nullptr_t, std::size_t
 #include <functional>      // std::hash
-#include <type_traits> // std::enable_if_t, std::is_convertible, std::add_lvalue_reference_t
+#include <type_traits> // std::enable_if, std::is_convertible, std::add_lvalue_reference
 #include <utility> // std::swap
 
 #if PL_COMPILER == PL_COMPILER_MSVC
@@ -95,9 +95,9 @@ public:
      * \warning Do not replace the second template type parameter!
     **/
     template <typename WatchedType2,
-              typename
-              = std::enable_if_t<std::is_convertible<WatchedType2*,
-                                                     element_type*>::value>>
+              typename = typename ::std::
+                  enable_if<std::is_convertible<WatchedType2*,
+                                                element_type*>::value>::type>
     PL_IMPLICIT observer_ptr(observer_ptr<WatchedType2> other) noexcept
         : m_p{other.get()}
     {
@@ -182,7 +182,8 @@ public:
      * \return Returns the object watched by *this, equivalent to *get().
      * \warning The behavior is undefined if get() == nullptr.
     **/
-    constexpr std::add_lvalue_reference_t<element_type> operator*() const
+    constexpr typename std::add_lvalue_reference<element_type>::type operator*()
+        const
     {
         PL_DBG_CHECK_PRE(this->operator bool());
         return *get();
