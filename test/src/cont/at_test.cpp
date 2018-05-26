@@ -153,6 +153,8 @@ TEST_CASE("at_constexpr_array_test")
 }
 #endif
 
+#if (PL_COMPILER != PL_COMPILER_GCC) \
+    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(6, 4, 0))
 TEST_CASE("at_constexpr_std_array_test")
 {
     static constexpr std::array<int, 5u> a{{1, 2, 3, 4, 5}};
@@ -164,6 +166,7 @@ TEST_CASE("at_constexpr_std_array_test")
 
     CHECK_UNARY(true);
 }
+#endif
 
 TEST_CASE("at_constexpr_initializer_list_test")
 {
