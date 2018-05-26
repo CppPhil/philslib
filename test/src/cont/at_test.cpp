@@ -140,6 +140,8 @@ TEST_CASE("at_test")
     }
 }
 
+#if (PL_COMPILER != PL_COMPILER_GCC) \
+    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(6, 4, 0))
 TEST_CASE("at_constexpr_array_test")
 {
     static constexpr int a[]{1, 2, 3};
@@ -149,6 +151,7 @@ TEST_CASE("at_constexpr_array_test")
 
     CHECK_UNARY(true);
 }
+#endif
 
 TEST_CASE("at_constexpr_std_array_test")
 {
