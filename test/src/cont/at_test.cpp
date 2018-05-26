@@ -168,6 +168,8 @@ TEST_CASE("at_constexpr_std_array_test")
 }
 #endif
 
+#if (PL_COMPILER == PL_COMPILER_GCC) \
+    && (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(6, 4, 0))
 TEST_CASE("at_constexpr_initializer_list_test")
 {
     static constexpr std::initializer_list<int> il{1, 2, 3};
@@ -177,3 +179,4 @@ TEST_CASE("at_constexpr_initializer_list_test")
 
     CHECK_UNARY(true);
 }
+#endif
