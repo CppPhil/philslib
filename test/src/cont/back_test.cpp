@@ -117,6 +117,8 @@ TEST_CASE("back_constexpr_array_test")
     CHECK_UNARY(true);
 }
 
+#if (PL_COMPILER != PL_COMPILER_GCC) \
+    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(6, 4, 0))
 TEST_CASE("back_constexpr_std_array_test")
 {
     static constexpr std::array<int, 5U> a{{1, 2, 3, 4, 5}};
@@ -124,7 +126,9 @@ TEST_CASE("back_constexpr_std_array_test")
 
     CHECK_UNARY(true);
 }
+#endif
 
+#if PL_COMPILER == PL_COMPILER_GCC
 TEST_CASE("back_constexpr_initializer_list_test")
 {
     static constexpr std::initializer_list<int> il{
@@ -133,3 +137,4 @@ TEST_CASE("back_constexpr_initializer_list_test")
 
     CHECK_UNARY(true);
 }
+#endif
