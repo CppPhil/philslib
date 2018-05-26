@@ -183,8 +183,6 @@ TEST_CASE("initializer_list_front_test")
     CHECK(pl::cont::front(il2) == "text"s);
 }
 
-#if (PL_COMPILER != PL_COMPILER_GCC) \
-    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(6, 4, 0))
 TEST_CASE("front_constexpr_array_test")
 {
     static constexpr int a[]{1, 2, 3, 4};
@@ -192,8 +190,9 @@ TEST_CASE("front_constexpr_array_test")
 
     CHECK_UNARY(true);
 }
-#endif
 
+#if (PL_COMPILER != PL_COMPILER_GCC) \
+    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(6, 4, 0))
 TEST_CASE("front_constexpr_std_array_test")
 {
     static constexpr std::array<int, 3U> a{{1, 2, 3}};
@@ -201,6 +200,7 @@ TEST_CASE("front_constexpr_std_array_test")
 
     CHECK_UNARY(true);
 }
+#endif
 
 TEST_CASE("front_constexpr_initializer_list_test")
 {
