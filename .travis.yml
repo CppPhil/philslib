@@ -84,7 +84,7 @@ matrix:
           sources: *apt_sources
     
     # Clang 6.0
-    - env: COMPILER=clang++6.0
+    - env: COMPILER=clang++-6.0
       addons: &clang60
         apt:
           packages: ["clang-6.0", "g++-6-multilib", "libc6-dbg", "libc6-dbg:i386", "linux-libc-dev", "linux-libc-dev:i386", "g++-6"]
