@@ -11,6 +11,7 @@ notifications:
 
 addons:
   apt:
+    update: true
     sources: &apt_sources
       - ubuntu-toolchain-r-test
       - llvm-toolchain-trusty
