@@ -60,6 +60,8 @@ TEST_CASE("list_front_test")
     CHECK(pl::cont::front(list2) == 3);
 }
 
+#if (PL_COMPILER != PL_COMPILER_GCC) \
+    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(6, 4, 0))
 TEST_CASE("std_array_front_test")
 {
     static constexpr std::size_t size{3U};
@@ -75,6 +77,7 @@ TEST_CASE("std_array_front_test")
     CHECK(pl::cont::front(array1) == 1U);
     CHECK(pl::cont::front(array2) == 4U);
 }
+#endif
 
 TEST_CASE("deque_front_test")
 {
