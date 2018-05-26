@@ -48,6 +48,8 @@ TEST_CASE("size_t_udl_test")
     PL_TEST_STATIC_ASSERT(std::is_same<decltype(a), const std::size_t>::value);
     PL_TEST_STATIC_ASSERT(std::is_same<decltype(b), std::size_t>::value);
 
+    PL_TEST_STATIC_ASSERT(a == 0U);
+
     std::size_t c{static_cast<std::size_t>(0U)};
     CHECK(std::memcmp(&a, &c, sizeof(c)) == 0);
     c = static_cast<std::size_t>(25U);

@@ -182,3 +182,27 @@ TEST_CASE("initializer_list_front_test")
     CHECK(pl::cont::front(il) == 1);
     CHECK(pl::cont::front(il2) == "text"s);
 }
+
+TEST_CASE("front_constexpr_array_test")
+{
+    static constexpr int a[]{1, 2, 3, 4};
+    PL_TEST_STATIC_ASSERT(pl::cont::front(a) == 1);
+
+    CHECK_UNARY(true);
+}
+
+TEST_CASE("front_constexpr_std_array_test")
+{
+    static constexpr std::array<int, 3U> a{{1, 2, 3}};
+    PL_TEST_STATIC_ASSERT(pl::cont::front(a) == 1);
+
+    CHECK_UNARY(true);
+}
+
+TEST_CASE("front_constexpr_initializer_list_test")
+{
+    static constexpr std::initializer_list<int> il{1, 2, 3, 4, 5, 6};
+    PL_TEST_STATIC_ASSERT(pl::cont::front(il) == 1);
+
+    CHECK_UNARY(true);
+}

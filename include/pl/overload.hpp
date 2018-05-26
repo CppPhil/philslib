@@ -88,7 +88,7 @@ public:
  * \note The parameter list may not be empty.
 **/
 template <typename... Lambdas>
-auto overload(PL_IN Lambdas&&... lambdas)
+inline auto overload(PL_IN Lambdas&&... lambdas)
 {
     static_assert(
         sizeof...(Lambdas) > 0,

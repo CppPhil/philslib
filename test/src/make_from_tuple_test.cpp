@@ -35,6 +35,7 @@
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../include/pl/cont/make_array.hpp" // pl::cont::make_array
 #include "../../include/pl/make_from_tuple.hpp" // pl::make_from_tuple
+#include "../include/static_assert.hpp"         // PL_TEST_STATIC_ASSERT
 #include <array>                                // std::array
 #include <cstdint>                              // std::uint32_t, UINT32_C
 #include <string> // std::string, std::to_string, std::literals::string_literals::operator""s
@@ -73,6 +74,13 @@ private:
     std::uint32_t m_i;
     void*         m_p;
 };
+
+class type {
+public:
+    constexpr type(int p_i, int p_j) : i{p_i}, j{p_j} {}
+    int i;
+    int j;
+};
 } // anonymous namespace
 } // namespace test
 } // namespace pl
@@ -101,4 +109,14 @@ TEST_CASE("make_from_tuple_test")
     CHECK(c.s() == "7"s);
     CHECK(c.i() == UINT32_C(500));
     CHECK(c.p() == nullptr);
+}
+
+TEST_CASE("make_from_tuple_constexpr_test")
+{
+    static constexpr auto obj
+        = pl::make_from_tuple<pl::test::type>(std::make_tuple(1, 2));
+    PL_TEST_STATIC_ASSERT(obj.i == 1);
+    PL_TEST_STATIC_ASSERT(obj.j == 2);
+
+    CHECK_UNARY(true);
 }

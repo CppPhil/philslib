@@ -35,6 +35,7 @@
 #endif                                     // PL_COMPILER == PL_COMPILER_GCC
 #include "../../../include/pl/cont/at.hpp" // pl::cont::at
 #include "../../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
+#include <array>                           // std::array
 #include <initializer_list>                // std::intializer_list
 #include <string>                          // std::string
 #include <type_traits>                     // std::is_same
@@ -137,4 +138,36 @@ TEST_CASE("at_test")
             pl::cont::at(empty_init_list, static_cast<std::size_t>(-1)),
             std::out_of_range);
     }
+}
+
+TEST_CASE("at_constexpr_array_test")
+{
+    static constexpr int a[]{1, 2, 3};
+    PL_TEST_STATIC_ASSERT(pl::cont::at(a, 0) == 1);
+    PL_TEST_STATIC_ASSERT(pl::cont::at(a, 1) == 2);
+    PL_TEST_STATIC_ASSERT(pl::cont::at(a, 2) == 3);
+
+    CHECK_UNARY(true);
+}
+
+TEST_CASE("at_constexpr_std_array_test")
+{
+    static constexpr std::array<int, 5u> a{{1, 2, 3, 4, 5}};
+    PL_TEST_STATIC_ASSERT(pl::cont::at(a, 0) == 1);
+    PL_TEST_STATIC_ASSERT(pl::cont::at(a, 1) == 2);
+    PL_TEST_STATIC_ASSERT(pl::cont::at(a, 2) == 3);
+    PL_TEST_STATIC_ASSERT(pl::cont::at(a, 3) == 4);
+    PL_TEST_STATIC_ASSERT(pl::cont::at(a, 4) == 5);
+
+    CHECK_UNARY(true);
+}
+
+TEST_CASE("at_constexpr_initializer_list_test")
+{
+    static constexpr std::initializer_list<int> il{1, 2, 3};
+    PL_TEST_STATIC_ASSERT(pl::cont::at(il, 0) == 1);
+    PL_TEST_STATIC_ASSERT(pl::cont::at(il, 1) == 2);
+    PL_TEST_STATIC_ASSERT(pl::cont::at(il, 2) == 3);
+
+    CHECK_UNARY(true);
 }

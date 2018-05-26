@@ -132,3 +132,19 @@ TEST_CASE("c_array_data_test")
     CHECK(pl::cont::data(c_array1) == static_cast<char*>(c_array1));
     CHECK(pl::cont::data(c_array2) == static_cast<const char*>(c_array2));
 }
+
+TEST_CASE("data_constexpr_array_test")
+{
+    static constexpr int a[]{1, 2, 3, 4, 5};
+    PL_TEST_STATIC_ASSERT(pl::cont::data(a) == a);
+
+    CHECK_UNARY(true);
+}
+
+TEST_CASE("data_constexpr_initializer_list_test")
+{
+    static constexpr std::initializer_list<int> il{1, 2, 3};
+    PL_TEST_STATIC_ASSERT(pl::cont::data(il) == il.begin());
+
+    CHECK_UNARY(true);
+}

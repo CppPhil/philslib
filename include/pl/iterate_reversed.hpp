@@ -115,7 +115,8 @@ private:
  * \note This overload handles non-const containers.
 **/
 template <typename Container>
-detail::rev_for_adapter<Container> iterate_reversed(PL_IN Container& container)
+inline detail::rev_for_adapter<Container> iterate_reversed(
+    PL_IN Container& container)
 {
     return detail::rev_for_adapter<Container>{container};
 }
@@ -129,7 +130,7 @@ detail::rev_for_adapter<Container> iterate_reversed(PL_IN Container& container)
  * \note This overload handles const containers.
 **/
 template <typename Container>
-detail::rev_for_adapter_const<Container> iterate_reversed(
+inline detail::rev_for_adapter_const<Container> iterate_reversed(
     PL_IN const Container& container)
 {
     return detail::rev_for_adapter_const<Container>{container};

@@ -77,3 +77,16 @@ TEST_CASE("to_array_one_element_test")
     REQUIRE(array.size() == 1U);
     CHECK(array[0U] == std::string{"Hello World"});
 }
+
+TEST_CASE("to_array_constexpr_test")
+{
+    static constexpr int  a[]{1, 2, 3, 4, 5};
+    static constexpr auto std_array = pl::cont::to_array(a);
+    PL_TEST_STATIC_ASSERT(std_array[0U] == 1);
+    PL_TEST_STATIC_ASSERT(std_array[1U] == 2);
+    PL_TEST_STATIC_ASSERT(std_array[2U] == 3);
+    PL_TEST_STATIC_ASSERT(std_array[3U] == 4);
+    PL_TEST_STATIC_ASSERT(std_array[4U] == 5);
+
+    CHECK_UNARY(true);
+}

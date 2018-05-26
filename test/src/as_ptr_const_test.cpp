@@ -118,3 +118,11 @@ TEST_CASE("as_ptr_const_overload_test")
     CHECK(pl::as_ptr_const(ptr)->get() == 2);
     CHECK(pl::as_ptr_const(&obj)->get() == 2);
 }
+
+TEST_CASE("as_ptr_const_constexpr_test")
+{
+    static constexpr void* p{nullptr};
+    PL_TEST_STATIC_ASSERT(pl::as_ptr_const(p) == nullptr);
+
+    CHECK_UNARY(true);
+}

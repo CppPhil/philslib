@@ -35,6 +35,7 @@
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../include/pl/algo/ranged_algorithms.hpp" // pl::algo::transform
 #include "../../include/pl/char_to_int.hpp"            // pl::char_to_int
+#include "../include/static_assert.hpp"                // PL_TEST_STATIC_ASSERT
 #include <array>                                       // std::array
 #include <cstddef>                                     // std::size_t
 #include <cstdint>                                     // std::uint8_t
@@ -55,4 +56,20 @@ TEST_CASE("char_to_int_test")
     pl::algo::transform(characters, std::begin(result), &pl::char_to_int);
 
     CHECK(result == integers);
+}
+
+TEST_CASE("char_to_int_constexpr_test")
+{
+    PL_TEST_STATIC_ASSERT(pl::char_to_int('1') == 1);
+    PL_TEST_STATIC_ASSERT(pl::char_to_int('2') == 2);
+    PL_TEST_STATIC_ASSERT(pl::char_to_int('3') == 3);
+    PL_TEST_STATIC_ASSERT(pl::char_to_int('4') == 4);
+    PL_TEST_STATIC_ASSERT(pl::char_to_int('5') == 5);
+    PL_TEST_STATIC_ASSERT(pl::char_to_int('6') == 6);
+    PL_TEST_STATIC_ASSERT(pl::char_to_int('7') == 7);
+    PL_TEST_STATIC_ASSERT(pl::char_to_int('8') == 8);
+    PL_TEST_STATIC_ASSERT(pl::char_to_int('9') == 9);
+    PL_TEST_STATIC_ASSERT(pl::char_to_int('0') == 0);
+
+    CHECK_UNARY(true);
 }

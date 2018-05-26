@@ -171,3 +171,12 @@ TEST_CASE("observer_ptr_test")
         CHECK(const_observer_ptr == pointer);
     }
 }
+
+TEST_CASE("observer_ptr_constexpr_test")
+{
+    static constexpr pl::observer_ptr<int> op{nullptr};
+    PL_TEST_STATIC_ASSERT(op.get() == nullptr);
+    PL_TEST_STATIC_ASSERT(not op.operator bool());
+
+    CHECK_UNARY(true);
+}

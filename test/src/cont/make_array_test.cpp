@@ -102,3 +102,15 @@ TEST_CASE("test_make_array_desired_type")
     CHECK(array2[1U] == 2LL);
     CHECK(array2[2U] == 5LL);
 }
+
+TEST_CASE("make_array_constexpr_test")
+{
+    static constexpr auto a = pl::cont::make_array(1, 2, 3, 4, 5);
+    PL_TEST_STATIC_ASSERT(a[0U] == 1);
+    PL_TEST_STATIC_ASSERT(a[1U] == 2);
+    PL_TEST_STATIC_ASSERT(a[2U] == 3);
+    PL_TEST_STATIC_ASSERT(a[3U] == 4);
+    PL_TEST_STATIC_ASSERT(a[4U] == 5);
+
+    CHECK_UNARY(true);
+}

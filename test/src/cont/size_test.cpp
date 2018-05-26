@@ -34,6 +34,7 @@
 #pragma GCC diagnostic pop
 #endif                                       // PL_COMPILER == PL_COMPILER_GCC
 #include "../../../include/pl/cont/size.hpp" // pl::cont::size
+#include "../../include/static_assert.hpp"   // PL_TEST_STATIC_ASSERT
 #include <array>                             // std::array
 #include <bitset>                            // std::bitset
 #include <cstddef>                           // std::size_t
@@ -268,4 +269,30 @@ TEST_CASE("initializer_list_size_test")
     CHECK(pl::cont::size(init_list1) == 2U);
     CHECK(pl::cont::size(init_list2) == 4U);
     CHECK(pl::cont::size(init_list3) == 0U);
+}
+
+TEST_CASE("size_constexpr_array_test")
+{
+    static constexpr int a[]{1, 2, 3, 4, 5};
+    PL_TEST_STATIC_ASSERT(pl::cont::size(a) == 5U);
+
+    CHECK_UNARY(true);
+}
+
+TEST_CASE("size_constexpr_std_array_test")
+{
+    static constexpr std::array<int, 3U> a{{1, 2, 3}};
+    PL_TEST_STATIC_ASSERT(pl::cont::size(a) == 3U);
+
+    CHECK_UNARY(true);
+}
+
+TEST_CASE("size_constexpr_initializer_list_test")
+{
+    static constexpr std::initializer_list<int> il{};
+    static constexpr std::initializer_list<int> il2{1, 2, 3, 4};
+    PL_TEST_STATIC_ASSERT(pl::cont::size(il) == 0U);
+    PL_TEST_STATIC_ASSERT(pl::cont::size(il2) == 4U);
+
+    CHECK_UNARY(true);
 }

@@ -85,8 +85,8 @@ private:
  *         passed into the parameter.
 **/
 template <typename Predicate>
-detail::negated_predicate<meta::remove_cvref_t<Predicate>> negate_predicate(
-    PL_IN Predicate&& predicate)
+inline detail::negated_predicate<meta::remove_cvref_t<Predicate>>
+negate_predicate(PL_IN Predicate&& predicate)
 {
     return detail::negated_predicate<meta::remove_cvref_t<Predicate>>{
         std::forward<Predicate>(predicate)};
