@@ -100,7 +100,7 @@ TEST_CASE("empty_constexpr_array_test")
 
 TEST_CASE("empty_constexpr_std_array_test")
 {
-    static constexpr std::array<int, 0U> a1;
+    static constexpr std::array<int, 0U> a1{};
     static constexpr std::array<int, 1U> a2{{1}};
     PL_TEST_STATIC_ASSERT(pl::cont::empty(a1));
     PL_TEST_STATIC_ASSERT(not pl::cont::empty(a2));
