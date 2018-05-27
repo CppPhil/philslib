@@ -202,6 +202,7 @@ TEST_CASE("front_constexpr_std_array_test")
 }
 #endif
 
+#if PL_COMPILER == PL_COMPILER_GCC
 TEST_CASE("front_constexpr_initializer_list_test")
 {
     static constexpr std::initializer_list<int> il{1, 2, 3, 4, 5, 6};
@@ -209,3 +210,4 @@ TEST_CASE("front_constexpr_initializer_list_test")
 
     CHECK_UNARY(true);
 }
+#endif
