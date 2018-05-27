@@ -108,6 +108,7 @@ TEST_CASE("empty_constexpr_std_array_test")
     CHECK_UNARY(true);
 }
 
+#if PL_COMPILER != PL_COMPILER_MSVC
 TEST_CASE("empty_constexpr_initializer_list_test")
 {
     static constexpr std::initializer_list<int> il1{};
@@ -117,3 +118,4 @@ TEST_CASE("empty_constexpr_initializer_list_test")
 
     CHECK_UNARY(true);
 }
+#endif
