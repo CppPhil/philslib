@@ -141,6 +141,7 @@ TEST_CASE("data_constexpr_array_test")
     CHECK_UNARY(true);
 }
 
+#if PL_COMPILER != PL_COMPILER_MSVC
 TEST_CASE("data_constexpr_initializer_list_test")
 {
     static constexpr std::initializer_list<int> il{1, 2, 3};
@@ -148,3 +149,4 @@ TEST_CASE("data_constexpr_initializer_list_test")
 
     CHECK_UNARY(true);
 }
+#endif
