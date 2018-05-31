@@ -175,17 +175,6 @@ public:
     }
 
     /*!
-     * \brief Deleted constructor from a basic_string rvalue. This is added
-     *        for safety as constructing a view to a temporary string always
-     *        creates a dangling string view.
-    **/
-    template <typename Allocator>
-    PL_IMPLICIT constexpr basic_string_view(
-        PL_IN const
-            std::basic_string<value_type, traits_type, Allocator>&&) noexcept
-        = delete;
-
-    /*!
      * \brief Constructs from a character array.
      * \param array The character array to view.
      * \note Constant complexity.
