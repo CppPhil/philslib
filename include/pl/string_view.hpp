@@ -578,7 +578,7 @@ std::basic_ostream<CharT, Traits>& operator<<(
     PL_INOUT std::basic_ostream<CharT, Traits>& os,
     basic_string_view<CharT, Traits>            string)
 {
-    return os.write(string.data(), static_cast<std::streamsize>(string.size()));
+    return os << string.data();
 }
 
 template <typename CharT, typename Traits>
