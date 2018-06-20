@@ -157,7 +157,7 @@ include/pl/assert.hpp: Assertion macros for pre- and postconditions to ease cont
 include/pl/begin_end.hpp: An implementation of the non-member functions to fetch iterators. Also provides convenience macros to call iterator based algorithms with 'containers'.  
 include/pl/begin_end_macro.hpp: Macros to facilitate definition of other macros so they must be used with a semicolon, providing a more 'natural' syntax.  
 include/pl/bitmask.hpp: Macro to allow the usage of bitwise operators with scoped enums.  
-include/pl/bits.hpp: Convenience function for some bitwise operations.  
+include/pl/bit.hpp: Convenience function for some bitwise operations and bit_cast from C++20.  
 include/pl/bswap.hpp: A portable bswap.  
 include/pl/byte.hpp: A 'byte' type alias.  
 include/pl/char_to_int.hpp: Function to convert a decimal 'character' value to a 'numeric' value.  

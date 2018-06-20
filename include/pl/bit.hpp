@@ -25,14 +25,17 @@
  */
 
 /*!
- * \file bits.hpp
+ * \file bit.hpp
  * \brief This header defines various functions for bitwise operations.
 **/
-#ifndef INCG_PL_BITS_HPP
-#define INCG_PL_BITS_HPP
+#ifndef INCG_PL_BIT_HPP
+#define INCG_PL_BIT_HPP
 #include "annotations.hpp" // PL_INOUT
 #include "compiler.hpp" // PL_COMPILER, PL_COMPILER_MSVC, PL_COMPILER_VERSION, PL_COMPILER_VERSION_CHECK
-#include <type_traits> // std::is_unsigned
+#include "type_traits.hpp" // pl::remove_const_t
+#include <cstring>         // std::memcpy
+#include <memory>          // std::addressof
+#include <type_traits>     // std::is_unsigned, std::is_trivially_copyable
 
 namespace pl {
 /*!
@@ -141,5 +144,41 @@ constexpr bool is_bit_set(Numeric numeric, Numeric bit) noexcept
 
     return ((numeric & (static_cast<Numeric>(1U) << bit)) != 0);
 }
+
+/*!
+ * \brief Obtain a value of type To by reinterpreting the object representation
+ *        of from.
+ * \param from The object to create a binary reinterpretation of as type To.
+ * \return The resulting object of type To.
+ * \note To and From must have the same size and must both be trivially
+ *       copyable.
+ *
+ * Obtain a value of type To by reinterpreting the object representation of
+ * from. Every bit in the value representation of the returned To object is
+ * equal to the corresponding bit in the object representation of from. The
+ * values of padding bits in the returned To object are unspecified.
+ * If there is no value of type To corresponding to the value representation
+ * produced, the behavior is undefined. If there are multiple such values, which
+ * value is produced is unspecified.
+ **/
+template <typename To, typename From>
+inline To bit_cast(const From& from) noexcept
+{
+    static_assert(
+        sizeof(To) == sizeof(From),
+        "To and From must have the same byte size.");
+    static_assert(
+        alignof(To) == alignof(From),
+        "To and From must have the same alignment requirements.");
+    static_assert(
+        std::is_trivially_copyable<To>::value, "To is not trivially copyable!");
+    static_assert(
+        std::is_trivially_copyable<From>::value,
+        "From is not trivially copyable!");
+
+    remove_const_t<To> to;
+    std::memcpy(std::addressof(to), std::addressof(from), sizeof(To));
+    return to;
+}
 } // namespace pl
-#endif // INCG_PL_BITS_HPP
+#endif // INCG_PL_BIT_HPP

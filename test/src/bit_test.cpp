@@ -32,10 +32,10 @@
 #include "../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
 #pragma GCC diagnostic pop
-#endif                               // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/pl/bits.hpp" // pl::set_bit, pl::clear_bit, pl::toggle_bit, pl::is_bit_set
-#include <climits>                   // CHAR_BIT
-#include <cstdint>                   // std::uint8_t
+#endif // PL_COMPILER == PL_COMPILER_GCC
+#include "../../include/pl/bit.hpp" // pl::set_bit, pl::clear_bit, pl::toggle_bit, pl::is_bit_set, pl::bit_cast
+#include <climits> // CHAR_BIT
+#include <cstdint> // std::uint8_t
 
 TEST_CASE("bits_test")
 {
@@ -62,4 +62,10 @@ TEST_CASE("bits_test")
     CHECK_UNARY(pl::is_bit_set(val, low_bit));
     CHECK(pl::toggle_bit(val, low_bit) == 0b000'0000);
     CHECK_UNARY_FALSE(pl::is_bit_set(val, low_bit));
+}
+
+TEST_CASE("bit_cast")
+{
+    const std::uint32_t v{pl::bit_cast<std::uint32_t>(2.0F)};
+    CHECK(v == UINT32_C(0x40000000));
 }
