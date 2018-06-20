@@ -30,7 +30,7 @@
 **/
 #ifndef INCG_PL_BIT_HPP
 #define INCG_PL_BIT_HPP
-#include "annotations.hpp" // PL_INOUT
+#include "annotations.hpp" // PL_INOUT, PL_IN
 #include "compiler.hpp" // PL_COMPILER, PL_COMPILER_MSVC, PL_COMPILER_VERSION, PL_COMPILER_VERSION_CHECK
 #include "type_traits.hpp" // pl::remove_const_t
 #include <cstring>         // std::memcpy
@@ -162,7 +162,7 @@ constexpr bool is_bit_set(Numeric numeric, Numeric bit) noexcept
  * value is produced is unspecified.
  **/
 template <typename To, typename From>
-inline To bit_cast(const From& from) noexcept
+inline To bit_cast(PL_IN const From& from) noexcept
 {
     static_assert(
         sizeof(To) == sizeof(From),
