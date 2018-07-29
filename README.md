@@ -162,6 +162,7 @@ include/pl/bswap.hpp: A portable bswap.
 include/pl/byte.hpp: A 'byte' type alias.  
 include/pl/char_to_int.hpp: Function to convert a decimal 'character' value to a 'numeric' value.  
 include/pl/checked_delete.hpp: Functions to call delete / delete[] that avoid undefined behavior if the pointed to type is incomplete. Also provides functions that null the pointer after calling delete / delete[].  
+include/pl/cheshire_cat.hpp: Class template providing a cheshire cat implementation without dynamic memory allocation.  
 include/pl/compiler.hpp: Compiler detection and version checking macros.  
 include/pl/concept_poly.hpp: A class template for concept based polymorphism.  
 include/pl/current_function.hpp: Portable macro to get the 'prettiest' string for the current function.  
