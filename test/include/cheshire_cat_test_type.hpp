@@ -61,7 +61,7 @@ public:
 private:
     class implementation;
 
-    pl::cheshire_cat<implementation, /* bytes */ 40U, /* alignment */ 8U> m_cc;
+    pl::cheshire_cat<implementation, /* bytes */ 48U, /* alignment */ 8U> m_cc;
 };
 
 void swap(cheshire_cat_test_type& a, cheshire_cat_test_type& b) noexcept;
