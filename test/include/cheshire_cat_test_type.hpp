@@ -40,13 +40,13 @@ public:
 
     cheshire_cat_test_type(std::uint32_t a, pl::string_view sv) noexcept;
 
-    cheshire_cat_test_type(const this_type& other);
+    cheshire_cat_test_type(const this_type&);
 
-    cheshire_cat_test_type(this_type&& other) noexcept;
+    cheshire_cat_test_type(this_type&&) noexcept;
 
-    this_type& operator=(const this_type& other);
+    this_type& operator=(const this_type&);
 
-    this_type& operator=(this_type&& other) noexcept;
+    this_type& operator=(this_type&&) noexcept;
 
     ~cheshire_cat_test_type();
 

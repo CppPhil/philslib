@@ -121,11 +121,7 @@ public:
     /*!
      * \brief Default constructs the element_type.
     **/
-    cheshire_cat() noexcept(
-        std::is_nothrow_default_constructible<element_type>::value)
-        : m_storage
-    {
-    }
+    cheshire_cat() : m_storage {}
 #ifndef __cpp_lib_launder
     , m_ptr {}
 #endif
@@ -137,32 +133,18 @@ public:
      * \brief Copy constructor.
      * \param other The other cheshire_cat to copy construct from.
     **/
-    cheshire_cat(const this_type& other) noexcept(
-        std::is_nothrow_copy_constructible<element_type>::value)
-        : cheshire_cat{*other}
-    {
-    }
-
+    cheshire_cat(const this_type& other) : cheshire_cat{*other} {}
     /*!
      * \brief Move constructor.
      * \param other The other cheshire_cat to move construct from.
      * \note 'other' will be left in its moved-from state.
     **/
-    cheshire_cat(this_type&& other) noexcept(
-        std::is_nothrow_move_constructible<element_type>::value)
-        : cheshire_cat{*other}
-    {
-    }
-
+    cheshire_cat(this_type&& other) noexcept : cheshire_cat{*other} {}
     /*!
      * \brief Creates a cheshire_cat from an lvalue element_type.
      * \param value The lvalue element_type to construct from.
     **/
-    explicit cheshire_cat(const_reference value) noexcept(
-        std::is_nothrow_copy_constructible<element_type>::value)
-        : m_storage
-    {
-    }
+    explicit cheshire_cat(const_reference value) : m_storage {}
 #ifndef __cpp_lib_launder
     , m_ptr {}
 #endif
@@ -175,11 +157,7 @@ public:
      * \param value The rvalue element_type to construct from.
      * \note 'value' will be left in its moved-from state.
     **/
-    explicit cheshire_cat(element_type&& value) noexcept(
-        std::is_nothrow_move_constructible<element_type>::value)
-        : m_storage
-    {
-    }
+    explicit cheshire_cat(element_type&& value) noexcept : m_storage {}
 #ifndef __cpp_lib_launder
     , m_ptr {}
 #endif
@@ -196,9 +174,7 @@ public:
         typename... Args,
         typename
         = enable_if_t<std::is_constructible<element_type, Args...>::value>>
-    explicit cheshire_cat(in_place_t, Args&&... args) noexcept(
-        std::is_nothrow_constructible<element_type, Args&&...>::value)
-        : m_storage
+    explicit cheshire_cat(in_place_t, Args&&... args) : m_storage
     {
     }
 #ifndef __cpp_lib_launder
@@ -220,10 +196,10 @@ public:
               = enable_if_t<std::is_constructible<element_type,
                                                   std::initializer_list<Ty>&,
                                                   Args&&...>::value>>
-    explicit cheshire_cat(in_place_t, std::initializer_list<Ty> il, Args&&... args) noexcept(
-        std::is_nothrow_constructible<element_type,
-                                      std::initializer_list<Ty>&,
-                                      Args&&...>::value)
+    explicit cheshire_cat(
+        in_place_t,
+        std::initializer_list<Ty> il,
+        Args&&... args)
         : m_storage
     {
     }
@@ -239,8 +215,7 @@ public:
      * \param other The other cheshire_cat to copy assign with.
      * \return A reference to this object.
     **/
-    this_type& operator=(const this_type& other) noexcept(
-        std::is_nothrow_copy_assignable<element_type>::value)
+    this_type& operator=(const this_type& other)
     {
         *this = *other;
         return *this;
@@ -252,8 +227,7 @@ public:
      * \return A reference to this object.
      * \note 'other' will be left in its moved-from state.
     **/
-    this_type& operator=(this_type&& other) noexcept(
-        std::is_nothrow_move_assignable<element_type>::value)
+    this_type& operator=(this_type&& other) noexcept
     {
         *this = *other;
         return *this;
@@ -264,8 +238,7 @@ public:
      * \param value The lvalue element_type to assign with.
      * \return A reference to this object.
     **/
-    this_type& operator=(const_reference value) noexcept(
-        std::is_nothrow_copy_assignable<element_type>::value)
+    this_type& operator=(const_reference value)
     {
         **this = value;
         return *this;
@@ -277,8 +250,7 @@ public:
      * \return A reference to this object.
      * \note 'value' will be left in its moved-from state.
     **/
-    this_type& operator=(element_type&& value) noexcept(
-        std::is_nothrow_move_assignable<element_type>::value)
+    this_type& operator=(element_type&& value) noexcept
     {
         **this = std::move(value);
         return *this;
@@ -287,11 +259,7 @@ public:
     /*!
      * \brief The destructor. Destroys the underlying element_type object.
     **/
-    ~cheshire_cat() noexcept(std::is_nothrow_destructible<element_type>::value)
-    {
-        destroy();
-    }
-
+    ~cheshire_cat() noexcept { destroy(); }
     /*!
      * \brief Returns a low level const qualified pointer to the element_type
      *        object.
@@ -366,11 +334,7 @@ public:
     }
 
 private:
-    void destroy() noexcept(std::is_nothrow_destructible<element_type>::value)
-    {
-        get()->~element_type();
-    }
-
+    void         destroy() noexcept { get()->~element_type(); }
     storage_type m_storage;
 #ifndef __cpp_lib_launder
     element_type* m_ptr;
