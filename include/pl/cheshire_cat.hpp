@@ -30,6 +30,7 @@
 **/
 #ifndef INCG_PL_CHESHIRE_CAT_HPP
 #define INCG_PL_CHESHIRE_CAT_HPP
+#include "annotations.hpp"  // PL_IN, PL_INOUT
 #include "type_traits.hpp"  // pl::enable_if_t
 #include <ciso646>          // and
 #include <cstddef>          // std::size_t, std::max_align_t
@@ -95,7 +96,7 @@ public:
 
 private:
     template <typename... Args>
-    void create(Args&&... args) noexcept(
+    void create(PL_INOUT Args&&... args) noexcept(
         std::is_nothrow_constructible<element_type, Args&&...>::value)
     {
         using incomplete_type_not_allowed
@@ -133,18 +134,18 @@ public:
      * \brief Copy constructor.
      * \param other The other cheshire_cat to copy construct from.
     **/
-    cheshire_cat(const this_type& other) : cheshire_cat{*other} {}
+    cheshire_cat(PL_IN const this_type& other) : cheshire_cat{*other} {}
     /*!
      * \brief Move constructor.
      * \param other The other cheshire_cat to move construct from.
      * \note 'other' will be left in its moved-from state.
     **/
-    cheshire_cat(this_type&& other) noexcept : cheshire_cat{*other} {}
+    cheshire_cat(PL_INOUT this_type&& other) noexcept : cheshire_cat{*other} {}
     /*!
      * \brief Creates a cheshire_cat from an lvalue element_type.
      * \param value The lvalue element_type to construct from.
     **/
-    explicit cheshire_cat(const_reference value) : m_storage {}
+    explicit cheshire_cat(PL_IN const_reference value) : m_storage {}
 #ifndef __cpp_lib_launder
     , m_ptr {}
 #endif
@@ -157,7 +158,7 @@ public:
      * \param value The rvalue element_type to construct from.
      * \note 'value' will be left in its moved-from state.
     **/
-    explicit cheshire_cat(element_type&& value) noexcept : m_storage {}
+    explicit cheshire_cat(PL_INOUT element_type&& value) noexcept : m_storage {}
 #ifndef __cpp_lib_launder
     , m_ptr {}
 #endif
@@ -174,7 +175,7 @@ public:
         typename... Args,
         typename
         = enable_if_t<std::is_constructible<element_type, Args...>::value>>
-    explicit cheshire_cat(in_place_t, Args&&... args) : m_storage
+    explicit cheshire_cat(in_place_t, PL_INOUT Args&&... args) : m_storage
     {
     }
 #ifndef __cpp_lib_launder
@@ -199,7 +200,7 @@ public:
     explicit cheshire_cat(
         in_place_t,
         std::initializer_list<Ty> il,
-        Args&&... args)
+        PL_INOUT                  Args&&... args)
         : m_storage
     {
     }
@@ -215,7 +216,7 @@ public:
      * \param other The other cheshire_cat to copy assign with.
      * \return A reference to this object.
     **/
-    this_type& operator=(const this_type& other)
+    this_type& operator=(PL_IN const this_type& other)
     {
         *this = *other;
         return *this;
@@ -227,7 +228,7 @@ public:
      * \return A reference to this object.
      * \note 'other' will be left in its moved-from state.
     **/
-    this_type& operator=(this_type&& other) noexcept
+    this_type& operator=(PL_INOUT this_type&& other) noexcept
     {
         *this = *other;
         return *this;
@@ -238,7 +239,7 @@ public:
      * \param value The lvalue element_type to assign with.
      * \return A reference to this object.
     **/
-    this_type& operator=(const_reference value)
+    this_type& operator=(PL_IN const_reference value)
     {
         **this = value;
         return *this;
@@ -250,7 +251,7 @@ public:
      * \return A reference to this object.
      * \note 'value' will be left in its moved-from state.
     **/
-    this_type& operator=(element_type&& value) noexcept
+    this_type& operator=(PL_INOUT element_type&& value) noexcept
     {
         **this = std::move(value);
         return *this;
@@ -349,8 +350,8 @@ private:
 **/
 template <typename ElementType, std::size_t BufferByteSize>
 inline void swap(
-    cheshire_cat<ElementType, BufferByteSize>& first,
-    cheshire_cat<ElementType, BufferByteSize>& second) noexcept
+    PL_INOUT cheshire_cat<ElementType, BufferByteSize>& first,
+    PL_INOUT cheshire_cat<ElementType, BufferByteSize>& second) noexcept
 {
     first.swap(second);
 }
