@@ -27,27 +27,39 @@
 /*!
  * \file to_array.hpp
  * \brief Exports the to_array function.
-**/
+ **/
 #ifndef INCG_PL_CONT_TO_ARRAY_HPP
 #define INCG_PL_CONT_TO_ARRAY_HPP
-#include "../annotations.hpp" // PL_IN
+#include "../annotations.hpp" // PL_IN, PL_INOUT
 #include "../type_traits.hpp" // pl::remove_cv_t
 #include <array>              // std::array
 #include <cstddef>            // std::size_t
-#include <utility>            // std::index_sequence
+#include <utility>            // std::index_sequence, std::move
 
 namespace pl {
 namespace cont {
 namespace detail {
 /*!
  * \brief Implementation function of to_array, not to be used directly.
-**/
-template <typename Ty, std::size_t          Size, std::size_t... Indices>
+ **/
+template<typename Ty, std::size_t Size, std::size_t... Indices>
 constexpr std::array<remove_cv_t<Ty>, Size> to_array_impl(
     PL_IN Ty (&array)[Size],
     std::index_sequence<Indices...>)
 {
     return {{array[Indices]...}};
+}
+
+/*!
+ * \brief Implementation function of to_array, not to be used directly.
+ **/
+template<typename Ty, std::size_t Size, std::size_t... Indices>
+constexpr std::array<remove_cv_t<Ty>, Size> to_array_impl(
+    PL_INOUT Ty(&&array)[Size],
+    std::index_sequence<Indices...>)
+
+{
+    return {{std::move(array[Indices])...}};
 }
 } // namespace detail
 
@@ -60,11 +72,29 @@ constexpr std::array<remove_cv_t<Ty>, Size> to_array_impl(
  * Creates a std::array from the built-in array 'array'.
  * The elements of the std::array are copy-initialized from the
  * corresponding element of 'array'.
-**/
-template <typename Ty, std::size_t          Size>
+ **/
+template<typename Ty, std::size_t Size>
 constexpr std::array<remove_cv_t<Ty>, Size> to_array(PL_IN Ty (&array)[Size])
 {
-    return detail::to_array_impl(array, std::make_index_sequence<Size>{});
+    return ::pl::cont::detail::to_array_impl(
+        array, std::make_index_sequence<Size>{});
+}
+
+/*!
+ * \brief Creates a std::array from a built-in array.
+ * \param array The built-in array to be used to initialize the std::array.
+ * \return A std::array object whose elements are move-initialized from
+ *         the corresponding element of 'array'.
+ *
+ * Creates a std::array from the built-in array 'array'.
+ * The elements of the std::array are move-initialized from the
+ * corresponding element of 'array'.
+ **/
+template<typename Ty, std::size_t Size>
+constexpr std::array<remove_cv_t<Ty>, Size> to_array(PL_INOUT Ty(&&array)[Size])
+{
+    return ::pl::cont::detail::to_array_impl(
+        std::move(array), std::make_index_sequence<Size>{});
 }
 } // namespace cont
 } // namespace pl
