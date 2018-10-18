@@ -31,6 +31,7 @@
 #ifndef INCG_PL_CONT_TO_ARRAY_HPP
 #define INCG_PL_CONT_TO_ARRAY_HPP
 #include "../annotations.hpp" // PL_IN, PL_INOUT
+#include "../compiler.hpp"    // PL_COMPILER, PL_COMPILER_MSVC
 #include "../type_traits.hpp" // pl::remove_cv_t
 #include <array>              // std::array
 #include <cstddef>            // std::size_t
@@ -50,6 +51,7 @@ constexpr std::array<remove_cv_t<Ty>, Size> to_array_impl(
     return {{array[Indices]...}};
 }
 
+#if PL_COMPILER != PL_COMPILER_MSVC
 /*!
  * \brief Implementation function of to_array, not to be used directly.
  **/
@@ -61,6 +63,7 @@ constexpr std::array<remove_cv_t<Ty>, Size> to_array_impl(
 {
     return {{std::move(array[Indices])...}};
 }
+#endif // PL_COMPILER != PL_COMPILER_MSVC
 } // namespace detail
 
 /*!
@@ -80,11 +83,13 @@ constexpr std::array<remove_cv_t<Ty>, Size> to_array(PL_IN Ty (&array)[Size])
         array, std::make_index_sequence<Size>{});
 }
 
+#if PL_COMPILER != PL_COMPILER_MSVC
 /*!
  * \brief Creates a std::array from a built-in array.
  * \param array The built-in array to be used to initialize the std::array.
  * \return A std::array object whose elements are move-initialized from
  *         the corresponding element of 'array'.
+ * \note Not available when using MSVC.
  *
  * Creates a std::array from the built-in array 'array'.
  * The elements of the std::array are move-initialized from the
@@ -96,6 +101,7 @@ constexpr std::array<remove_cv_t<Ty>, Size> to_array(PL_INOUT Ty(&&array)[Size])
     return ::pl::cont::detail::to_array_impl(
         std::move(array), std::make_index_sequence<Size>{});
 }
+#endif // PL_COMPILER != PL_COMPILER_MSVC
 } // namespace cont
 } // namespace pl
 #endif // INCG_PL_CONT_TO_ARRAY_HPP

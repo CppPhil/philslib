@@ -105,6 +105,7 @@ TEST_CASE("to_array_c_string_literal_test")
     CHECK(stdArray2.front() == '\0');
 }
 
+#if PL_COMPILER != PL_COMPILER_MSVC
 TEST_CASE("to_array_rvalue_test")
 {
     const auto stdArray1 = pl::cont::to_array({1, 2, 3});
@@ -118,3 +119,5 @@ TEST_CASE("to_array_rvalue_test")
     REQUIRE(stdArray2.size() == 1U);
     CHECK(*(stdArray2.front()) == 20);
 }
+#endif // PL_COMPILER != PL_COMPILER_MSVC
+
