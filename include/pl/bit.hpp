@@ -27,7 +27,7 @@
 /*!
  * \file bit.hpp
  * \brief This header defines various functions for bitwise operations.
-**/
+ **/
 #ifndef INCG_PL_BIT_HPP
 #define INCG_PL_BIT_HPP
 #include "annotations.hpp" // PL_INOUT, PL_IN
@@ -35,7 +35,7 @@
 #include "type_traits.hpp" // pl::remove_const_t
 #include <cstring>         // std::memcpy
 #include <memory>          // std::addressof
-#include <type_traits>     // std::is_unsigned, std::is_trivially_copyable
+#include <type_traits> // std::is_unsigned, std::is_trivially_copyable, std::is_trivial
 
 namespace pl {
 /*!
@@ -47,8 +47,8 @@ namespace pl {
  *          of bits in Numeric - 1.
  * \note When using MSVC the function is only constexpr enabled with msvc17
  *       and newer.
-**/
-template <typename Numeric>
+ **/
+template<typename Numeric>
 #if (PL_COMPILER != PL_COMPILER_MSVC) \
     || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
 constexpr
@@ -75,8 +75,8 @@ inline
  *          Numeric - 1.
  * \note When using MSVC the function is only constexpr enabled with msvc17
  *       and newer.
-**/
-template <typename Numeric>
+ **/
+template<typename Numeric>
 #if (PL_COMPILER != PL_COMPILER_MSVC) \
     || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
 constexpr
@@ -108,8 +108,8 @@ inline
  * numeric (first parameter). If the bit bit in numeric is 1 it will be
  * 0 after having executed this function. If the bit bit in numeric is 0 it
  * will be 1 after having executed this function.
-**/
-template <typename Numeric>
+ **/
+template<typename Numeric>
 #if (PL_COMPILER != PL_COMPILER_MSVC) \
     || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
 constexpr
@@ -134,8 +134,8 @@ inline
  * \return true if the bit bit in numeric is set; false otherwise.
  * \warning Do not pass a value into the parameter bit that is larger than
  *          the number of bits in Numeric - 1.
-**/
-template <typename Numeric>
+ **/
+template<typename Numeric>
 constexpr bool is_bit_set(Numeric numeric, Numeric bit) noexcept
 {
     static_assert(
@@ -161,7 +161,7 @@ constexpr bool is_bit_set(Numeric numeric, Numeric bit) noexcept
  * produced, the behavior is undefined. If there are multiple such values, which
  * value is produced is unspecified.
  **/
-template <typename To, typename From>
+template<typename To, typename From>
 inline To bit_cast(PL_IN const From& from) noexcept
 {
     static_assert(
@@ -170,8 +170,7 @@ inline To bit_cast(PL_IN const From& from) noexcept
     static_assert(
         alignof(To) == alignof(From),
         "To and From must have the same alignment requirements.");
-    static_assert(
-        std::is_trivially_copyable<To>::value, "To is not trivially copyable!");
+    static_assert(std::is_trivial<To>::value, "To is not trivial!");
     static_assert(
         std::is_trivially_copyable<From>::value,
         "From is not trivially copyable!");
