@@ -32,16 +32,18 @@
 #include "../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
 #pragma GCC diagnostic pop
-#endif                                  // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/pl/bswap.hpp"   // pl::bswap
-#include "../../include/pl/byte.hpp"    // pl::byte
+#endif                                // PL_COMPILER == PL_COMPILER_GCC
+#include "../../include/pl/bswap.hpp" // pl::bswap
+#include "../../include/pl/byte.hpp"  // pl::byte
+#include "../../include/pl/cont/make_array.hpp" // pl::cont::make_array
+#include "../../include/pl/packed.hpp"  // PL_PACKED_START, PL_PACKED_END
 #include "../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
 #include <array>                        // std::array
 #include <cstddef>                      // std::size_t
 #include <cstdint>                      // std::uint32_t
 #include <cstring>                      // std::memcpy, std::memcmp
 
-TEST_CASE("bswap_test")
+TEST_CASE("bswap_basic_test")
 {
     static constexpr std::size_t byte_size{4U};
 
@@ -69,4 +71,162 @@ TEST_CASE("bswap_test")
     CHECK(std::memcmp(&val, le.data(), byte_size) == 0);
     val = pl::bswap(val);
     CHECK(std::memcmp(&val, be.data(), byte_size) == 0);
+}
+
+TEST_CASE("bswap_uchar_test")
+{
+    static constexpr unsigned char val{static_cast<unsigned char>('\x7E')};
+    static constexpr unsigned char expected{static_cast<unsigned char>('\x7E')};
+    CHECK(pl::bswap(val) == expected);
+}
+
+TEST_CASE("bswap_schar_test")
+{
+    static constexpr signed char val{static_cast<signed char>('\x7E')};
+    static constexpr signed char expected{static_cast<signed char>('\x7E')};
+    CHECK(pl::bswap(val) == expected);
+}
+
+TEST_CASE("bswap_char_test")
+{
+    static constexpr char val{'\x7E'};
+    static constexpr char expected{'\x7E'};
+    CHECK(pl::bswap(val) == expected);
+}
+
+TEST_CASE("bswap_u8_test")
+{
+    static constexpr std::uint8_t val{UINT8_C(0x7E)};
+    CHECK(pl::bswap(val) == UINT8_C(0x7E));
+}
+
+using namespace pl::literals::integer_literals;
+
+TEST_CASE("bswap_u16_test")
+{
+    static constexpr auto data     = pl::cont::make_array(0x7E_byte, 0x90_byte);
+    static constexpr auto expected = pl::cont::make_array(0x90_byte, 0x7E_byte);
+
+    std::uint16_t val;
+    std::memcpy(&val, data.data(), sizeof(val));
+    val = pl::bswap(val);
+    CHECK(std::memcmp(&val, expected.data(), sizeof(val)) == 0);
+}
+
+TEST_CASE("bswap_u32_test")
+{
+    static constexpr auto data
+        = pl::cont::make_array(0x7E_byte, 0x90_byte, 0x5A_byte, 0xF7_byte);
+    static constexpr auto expected
+        = pl::cont::make_array(0xF7_byte, 0x5A_byte, 0x90_byte, 0x7E_byte);
+
+    std::uint32_t val;
+    std::memcpy(&val, data.data(), sizeof(val));
+    val = pl::bswap(val);
+    CHECK(std::memcmp(&val, expected.data(), sizeof(val)) == 0);
+}
+
+TEST_CASE("bswap_u64_test")
+{
+    static constexpr auto data = pl::cont::make_array(
+        0x7E_byte,
+        0x90_byte,
+        0x5A_byte,
+        0xF7_byte,
+        0xDE_byte,
+        0xAD_byte,
+        0xC0_byte,
+        0xDE_byte);
+    static constexpr auto expected = pl::cont::make_array(
+        0xDE_byte,
+        0xC0_byte,
+        0xAD_byte,
+        0xDE_byte,
+        0xF7_byte,
+        0x5A_byte,
+        0x90_byte,
+        0x7E_byte);
+
+    std::uint64_t val;
+    std::memcpy(&val, data.data(), sizeof(val));
+    val = pl::bswap(val);
+    CHECK(std::memcmp(&val, expected.data(), sizeof(val)) == 0);
+}
+
+TEST_CASE("bswap_i8_test")
+{
+    static constexpr std::int8_t val{INT8_C(0x7E)};
+    CHECK(pl::bswap(val) == INT8_C(0x7E));
+}
+
+using namespace pl::literals::integer_literals;
+
+TEST_CASE("bswap_i16_test")
+{
+    static constexpr auto data     = pl::cont::make_array(0x7E_byte, 0x90_byte);
+    static constexpr auto expected = pl::cont::make_array(0x90_byte, 0x7E_byte);
+
+    std::int16_t val;
+    std::memcpy(&val, data.data(), sizeof(val));
+    val = pl::bswap(val);
+    CHECK(std::memcmp(&val, expected.data(), sizeof(val)) == 0);
+}
+
+TEST_CASE("bswap_i32_test")
+{
+    static constexpr auto data
+        = pl::cont::make_array(0x7E_byte, 0x90_byte, 0x5A_byte, 0xF7_byte);
+    static constexpr auto expected
+        = pl::cont::make_array(0xF7_byte, 0x5A_byte, 0x90_byte, 0x7E_byte);
+
+    std::int32_t val;
+    std::memcpy(&val, data.data(), sizeof(val));
+    val = pl::bswap(val);
+    CHECK(std::memcmp(&val, expected.data(), sizeof(val)) == 0);
+}
+
+TEST_CASE("bswap_64_test")
+{
+    static constexpr auto data = pl::cont::make_array(
+        0x7E_byte,
+        0x90_byte,
+        0x5A_byte,
+        0xF7_byte,
+        0xDE_byte,
+        0xAD_byte,
+        0xC0_byte,
+        0xDE_byte);
+    static constexpr auto expected = pl::cont::make_array(
+        0xDE_byte,
+        0xC0_byte,
+        0xAD_byte,
+        0xDE_byte,
+        0xF7_byte,
+        0x5A_byte,
+        0x90_byte,
+        0x7E_byte);
+
+    std::int64_t val;
+    std::memcpy(&val, data.data(), sizeof(val));
+    val = pl::bswap(val);
+    CHECK(std::memcmp(&val, expected.data(), sizeof(val)) == 0);
+}
+
+namespace {
+PL_PACKED_START
+struct buf {
+    char text[20];
+};
+PL_PACKED_END
+} // anonymous namespace
+
+TEST_CASE("bswap_struct")
+{
+    static constexpr char expected[20]
+        = {'\0', '\0', '\0', '\0', '\0', '\0', 't', 's', 'e', 't',
+           ' ',  'a',  ' ',  's',  'i',  ' ',  's', 'i', 'h', 't'};
+    static constexpr buf a{"this is a test"};
+
+    const buf res{pl::bswap(a)};
+    CHECK(std::memcmp(&res, expected, 20) == 0);
 }
