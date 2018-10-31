@@ -39,7 +39,6 @@ namespace pl {
 namespace test {
 namespace {
 int g_int_val{0};
-} // anonymous namespace
 
 void f(int v) { g_int_val += v; }
 struct structure {
@@ -52,6 +51,7 @@ struct structure {
 
     int m_val = 0;
 };
+} // anonymous namespace
 } // namespace test
 } // namespace pl
 
