@@ -169,12 +169,14 @@ include/pl/current_function.hpp: Portable macro to get the 'prettiest' string fo
 include/pl/eprintf.hpp: printf that prints to stderr.  
 include/pl/except.hpp: Exception related utilities.  
 include/pl/for_each_argument.hpp: Function template to call a callable with every element of a template parameter pack.  
+include/pl/fwd.hpp: Function like macro to perfectly forward an object, deducing the type. Useful for generic lambda expressions.  
 include/pl/glue.hpp: The classic token pasting GLUE macro.  
 include/pl/hash.hpp: Utility function to combine hashes to ease definition of std::hash specializations for UDTs.  
 include/pl/inline.hpp: Portable macros to force and prevent function inlining.  
 include/pl/integer.hpp: Fixed size integer types as template aliases.  
 include/pl/invoke.hpp: The invoke function from C++17.  
 include/pl/iterate_reversed.hpp: Adaptor to iterate in reverse order using a range based for loop.  
+include/pl/lift.hpp: Function like macro to 'lift' an overload set into an overload set object.  
 include/pl/make_from_tuple.hpp: Function template to invoke a constructor by 'unpacking' a tuple, like make_from_tuple from C++17.  
 include/pl/memxor.hpp: Function to bytewise xor-assign one range of memory to another.  
 include/pl/named_operator.hpp: Function to define named operators.  
