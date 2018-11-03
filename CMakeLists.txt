@@ -40,6 +40,15 @@ if (NOT CMAKE_BUILD_TYPE MATCHES Debug)
 	target_compile_definitions(${LIBRARY_NAME} INTERFACE "NDEBUG")
 endif()
 
+# processor architecture
+if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER MATCHES ".*clang")
+	if(ARCH STREQUAL "x86")
+		target_compile_options(${LIBRARY_NAME} PRIVATE "-m32")
+	elseif(ARCH STREQUAL "x64")
+		target_compile_options(${LIBRARY_NAME} PRIVATE "-m64")
+	endif()
+endif()
+
 ### TEST
 if (PHILISLIB_BUILD_TESTS)
 	enable_testing()
@@ -95,13 +104,6 @@ if (PHILISLIB_BUILD_TESTS)
 	    # Optimization flags
 		target_compile_options(${UNIT_TEST_NAME} PRIVATE "$<$<CONFIG:DEBUG>:-O0>")
 		target_compile_options(${UNIT_TEST_NAME} PRIVATE "$<$<CONFIG:RELEASE>:-O3>")
-
-		# processor architecture
-		if(ARCH STREQUAL "x86")
-			target_compile_options(${UNIT_TEST_NAME} PRIVATE "-m32")
-	    elseif(ARCH STREQUAL "x64")
-			target_compile_options(${UNIT_TEST_NAME} PRIVATE "-m64")
-	    endif()
 	# [Apple]Clang Settings
 	elseif(CMAKE_CXX_COMPILER MATCHES ".*clang")
 		# Warning flags
@@ -113,12 +115,5 @@ if (PHILISLIB_BUILD_TESTS)
 		# Optimization flags
 		target_compile_options(${UNIT_TEST_NAME} PRIVATE "$<$<CONFIG:DEBUG>:-O0>")
 		target_compile_options(${UNIT_TEST_NAME} PRIVATE "$<$<CONFIG:RELEASE>:-O3>")
-
-		# processor architecture
-		if(ARCH STREQUAL "x86")
-			target_compile_options(${UNIT_TEST_NAME} PRIVATE "-m32")
-		elseif(ARCH STREQUAL "x64")
-			target_compile_options(${UNIT_TEST_NAME} PRIVATE "-m64")
-		endif()
 	endif()
 endif()
