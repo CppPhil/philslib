@@ -27,7 +27,7 @@
 /*!
  * \file string_view.hpp
  * \brief Exports the string_view facility.
-**/
+ **/
 #ifndef INCG_PL_STRING_VIEW_HPP
 #define INCG_PL_STRING_VIEW_HPP
 #include "annotations.hpp" // PL_NODISCARD, PL_IN, PL_OUT, PL_INOUT, PL_NULL_TERMINATED, PL_IMPLICIT
@@ -36,7 +36,7 @@
 #include "type_traits.hpp" // pl::remove_const_t, pl::remove_pointer_t, pl::enable_if_t
 #include <algorithm>   // std::min, std::copy_n
 #include <ciso646>     // and, not
-#include <cstddef>     // std::size_t, std::ptrdiff_t
+#include <cstddef>     // std::size_t, std::ptrdiff_t, std::nullptr_t
 #include <ios>         // std::streamsize
 #include <iterator>    // std::reverse_iterator
 #include <ostream>     // std::basic_ostream
@@ -51,25 +51,25 @@
 #endif                          // PL_COMPILER == PL_COMPILER_MSVC
 namespace pl {
 namespace detail {
-template <typename CharT>
+template<typename CharT>
 struct empty_string;
 
-template <>
+template<>
 struct empty_string<char> {
     static constexpr const char* value = "";
 };
 
-template <>
+template<>
 struct empty_string<char16_t> {
     static constexpr const char16_t* value = u"";
 };
 
-template <>
+template<>
 struct empty_string<char32_t> {
     static constexpr const char32_t* value = U"";
 };
 
-template <>
+template<>
 struct empty_string<wchar_t> {
     static constexpr const wchar_t* value = L"";
 };
@@ -88,8 +88,8 @@ struct empty_string<wchar_t> {
  *        a 'string', it is to be preferred over const std::string& like
  *        parameters in general in order to avoid copying overhead for
  *        C style strings.
-**/
-template <typename CharT, typename Traits = std::char_traits<CharT>>
+ **/
+template<typename CharT, typename Traits = std::char_traits<CharT>>
 class basic_string_view {
 public:
     using this_type              = basic_string_view;
@@ -111,25 +111,32 @@ public:
      *        an empty string stored in the data section. The string pointed
      *        to contains merely the null-terminator.
      *        The size of the string view after construction will be 0.
-    **/
+     **/
     constexpr basic_string_view() noexcept
-        : m_data{detail::empty_string<value_type>::value},
-          m_size{static_cast<std::size_t>(0U)}
+        : m_data{detail::empty_string<value_type>::value}
+        , m_size{static_cast<std::size_t>(0U)}
     {
     }
 
     /*!
      * \brief Copy constructor. Constructs a view of the same content as
      *        the view passed into the parameter.
-    **/
+     **/
     constexpr basic_string_view(PL_IN const this_type&) noexcept = default;
 
     /*!
      * \brief Replaces this view with the one passed into the parameter.
      * \return A reference to this object.
      * \note Constant complexity.
-    **/
+     **/
     this_type& operator=(PL_IN const this_type&) noexcept = default;
+
+    /*!
+     * \brief Creates an empty basic_string_view from a nullptr literal.
+     **/
+    constexpr basic_string_view(std::nullptr_t) noexcept : basic_string_view{}
+    {
+    }
 
     /*!
      * \brief Constructs a view of the null-terminated character string pointed
@@ -142,20 +149,24 @@ public:
      * \warning The behavior is undefined if
      *          [string, string + Traits::length(string)) is not a valid range.
      * \note Complexity is linear in Traits::length(string).
-    **/
-    template <
+     *       If the pointer passed in is a null pointer the string view created
+     *       will be empty.
+     **/
+    template<
         typename Ty,
-        typename
-        = enable_if_t<std::is_pointer<meta::remove_cvref_t<Ty>>::value
-                      and std::
-                              is_same<remove_const_t<remove_pointer_t<meta::
-                                                                          remove_cvref_t<Ty>>>,
-                                      value_type>::value>>
-    PL_IMPLICIT constexpr basic_string_view(
-        PL_IN PL_NULL_TERMINATED(Ty&&) string) noexcept
-        : m_data{string},
-          m_size{traits_type::length(string)}
+        typename = enable_if_t<
+            std::is_pointer<meta::remove_cvref_t<Ty>>::value
+            and std::is_same<
+                    remove_const_t<remove_pointer_t<meta::remove_cvref_t<Ty>>>,
+                    value_type>::value>>
+    PL_IMPLICIT constexpr basic_string_view(PL_IN PL_NULL_TERMINATED(Ty&&)
+                                                string) noexcept
+        : basic_string_view{}
     {
+        if (string != nullptr) {
+            m_data = string;
+            m_size = traits_type::length(string);
+        }
     }
 
     /*!
@@ -165,12 +176,12 @@ public:
      * \note Constant complexity.
      * \warning The std::basic_string must contain a valid null-terminated
      *          string and may not contain embedded null-characters!
-    **/
-    template <typename Allocator>
+     **/
+    template<typename Allocator>
     PL_IMPLICIT constexpr basic_string_view(
         PL_IN const std::basic_string<value_type, traits_type, Allocator>&
-                    string) noexcept : m_data{string.data()},
-                               m_size{string.size()}
+                    string) noexcept
+        : m_data{string.data()}, m_size{string.size()}
     {
     }
 
@@ -181,12 +192,11 @@ public:
      * \warning 'array' must be initialized and must contain a valid
      *          null-terminated string. Furthermore 'array' may not contain
      *          any embedded null characters.
-    **/
-    template <std::size_t Size>
+     **/
+    template<std::size_t Size>
     constexpr basic_string_view(
         PL_IN PL_NULL_TERMINATED(const value_type (&array)[Size])) noexcept
-        : m_data{array},
-          m_size{Size - 1U}
+        : m_data{array}, m_size{Size - 1U}
     {
     }
 
@@ -202,27 +212,33 @@ public:
      *       This constructor is provided so that you can provide the size if
      *       you already know it, preventing overhead from calling
      *       Traits::length.
+     *       If the pointer 'string' passed in is a null pointer the string
+     *       view will be empty.
      * \warning The behavior is undefined if ['string', 'string' + 'size') is
      *          not a valid range.
-    **/
+     **/
     constexpr basic_string_view(
         PL_IN     PL_NULL_TERMINATED(const_pointer) string,
-        size_type size) noexcept : m_data{string},
-                                   m_size{size}
+        size_type size) noexcept
+        : basic_string_view{}
     {
+        if (string != nullptr) {
+            m_data = string;
+            m_size = size;
+        }
     }
 
     /*!
      * \brief Returns an iterator to the first character of the view.
      * \return const_iterator to the first character
      * \note Constant complexity.
-    **/
+     **/
     constexpr const_iterator begin() const noexcept { return cbegin(); }
     /*!
      * \brief Returns an iterator to the first character of the view.
      * \return const_iterator to the first character
      * \note Constant complexity.
-    **/
+     **/
     constexpr const_iterator cbegin() const noexcept { return data(); }
     /*!
      * \brief Returns an iterator to the character following the last character
@@ -231,7 +247,7 @@ public:
      * \note Constant complexity.
      * \warning The iterator returned acts as a placeholder, attempting to
      *          indirect through it results in undefined behavior.
-    **/
+     **/
     constexpr const_iterator end() const noexcept { return cend(); }
     /*!
      * \brief Returns an iterator to the character following the last character
@@ -240,7 +256,7 @@ public:
      * \note Constant complexity.
      * \warning The iterator returned acts as a placeholder, attempting to
      *          indirect through it results in undefined behavior.
-    **/
+     **/
     constexpr const_iterator cend() const noexcept { return cbegin() + size(); }
     /*!
      * \brief Returns a reverse iterator to the first character of the reversed
@@ -248,7 +264,7 @@ public:
      *        view.
      * \return const_reverse_iterator to the first character
      * \note Constant complexity.
-    **/
+     **/
     const_reverse_iterator rbegin() const noexcept { return crbegin(); }
     /*!
      * \brief Returns a reverse iterator to the first character of the reversed
@@ -256,7 +272,7 @@ public:
      *        view.
      * \return const_reverse_iterator to the first character
      * \note Constant complexity.
-    **/
+     **/
     const_reverse_iterator crbegin() const noexcept
     {
         return reverse_iterator{cend()};
@@ -272,7 +288,7 @@ public:
      * \warning The iterator returned character acts as a
      *          placeholder, attempting to indirect through it results
      *          in undefined behavior.
-    **/
+     **/
     const_reverse_iterator rend() const noexcept { return crend(); }
     /*!
      * \brief Returns a reverse iterator to the character following the last
@@ -284,7 +300,7 @@ public:
      * \warning The iterator returned character acts as a
      *          placeholder, attempting to indirect through it results
      *          in undefined behavior.
-    **/
+     **/
     const_reverse_iterator crend() const noexcept
     {
         return reverse_iterator{cbegin()};
@@ -295,13 +311,13 @@ public:
      *        i.e. std::distance(begin(), end()).
      * \return The number of CharT elements in the view.
      * \note Constant complexity.
-    **/
+     **/
     constexpr size_type size() const noexcept { return m_size; }
     /*!
      * \brief Checks if the view has no characters, i.e. whether size() == 0.
      * \return true if the view is empty, false otherwise.
      * \note Constant complexity.
-    **/
+     **/
     PL_NODISCARD constexpr bool empty() const noexcept
     {
         return size() == static_cast<std::size_t>(0U);
@@ -317,7 +333,7 @@ public:
      *       have to be null-terminated.
      * \warning No bounds checking is performed: the behavior is undefined
      *          if 'position' > size().
-    **/
+     **/
     constexpr const_reference operator[](size_type position) const noexcept
     {
         return data()[position];
@@ -333,7 +349,7 @@ public:
      * \note Constant complexity.
      *       at(size()) returns CharT() as all strings viewed have to be
      *       null-terminated.
-    **/
+     **/
     constexpr const_reference at(size_type position) const
     {
         if (position > size()) {
@@ -350,7 +366,7 @@ public:
      * \note Constant complexity.
      *       Returns CharT() if empty() == true as all strings viewed have to
      *       be null-terminated.
-    **/
+     **/
     constexpr const_reference front() const noexcept { return operator[](0U); }
     /*!
      * \brief Returns reference to the last character in the view.
@@ -358,7 +374,7 @@ public:
      *         operator[](size() - 1).
      * \note Constant complexity.
      * \warning The behavior is undefined if empty() == true.
-    **/
+     **/
     constexpr const_reference back() const noexcept
     {
         return operator[](size() - 1U);
@@ -372,7 +388,7 @@ public:
      * \note Constant complexity.
      *       Returns a pointer to a null-terminated string as all strings
      *       viewed have to be null-terminated.
-    **/
+     **/
     constexpr const_pointer data() const noexcept { return m_data; }
 /*!
  * \brief Moves the start of the view forward by 'characters_to_remove'
@@ -384,7 +400,7 @@ public:
  *       the view, leaving it pointing to an empty string.
  *       Using msvc this function will only be a constexpr function
  *       if msvc17 or newer is used.
-**/
+ **/
 #if (PL_COMPILER != PL_COMPILER_MSVC) \
     || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
     constexpr
@@ -392,9 +408,7 @@ public:
         void
         remove_prefix(size_type characters_to_remove) noexcept
     {
-        if (characters_to_remove > size()) {
-            characters_to_remove = size();
-        }
+        if (characters_to_remove > size()) { characters_to_remove = size(); }
 
         m_data += characters_to_remove;
         m_size -= characters_to_remove;
@@ -406,7 +420,7 @@ public:
  * \note Constant complexity.
  *       Using msvc this function will only be a constexpr function
  *       if msvc17 or newer is used.
-**/
+ **/
 #if (PL_COMPILER != PL_COMPILER_MSVC) \
     || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
     constexpr
@@ -427,8 +441,8 @@ public:
      *        object for this view.
      * \param allocator The allocator to use for the std::basic_string.
      * \return The resulting std::basic_string object.
-    **/
-    template <typename Allocator = std::allocator<CharT>>
+     **/
+    template<typename Allocator = std::allocator<CharT>>
     std::basic_string<value_type, traits_type, Allocator> to_string(
         PL_IN const Allocator& allocator = Allocator{}) const
     {
@@ -446,7 +460,7 @@ public:
  *         'other'.
  * \note Using msvc this function will only be a constexpr function
  *       if msvc17 or newer is used.
-**/
+ **/
 #if (PL_COMPILER != PL_COMPILER_MSVC) \
     || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
     constexpr
@@ -476,7 +490,7 @@ public:
  *         'other'.
  * \note Using msvc this function will only be a constexpr function
  *       if msvc17 or newer is used.
-**/
+ **/
 #if (PL_COMPILER != PL_COMPILER_MSVC) \
     || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
     constexpr
@@ -493,7 +507,7 @@ public:
      *                  view
      * \return true if the string view begins with the provided prefix, false
      *         otherwise.
-    **/
+     **/
     constexpr bool starts_with(value_type character) const noexcept
     {
         return not empty() and traits_type::eq(character, front());
@@ -505,7 +519,7 @@ public:
      *                    string view
      * \return true if the string view begins with the provided prefix, false
      *         otherwise.
-    **/
+     **/
     constexpr bool starts_with(this_type string_view) const noexcept
     {
         return size() >= string_view.size()
@@ -520,7 +534,7 @@ public:
      *                  string view
      * \return true if the string view ends with the provided suffix,
      *         false otherwise.
-    **/
+     **/
     constexpr bool ends_with(value_type character) const noexcept
     {
         return not empty() and traits_type::eq(character, back());
@@ -532,7 +546,7 @@ public:
      *                    string view
      * \return true if the string view ends with the provided suffix,
      *         false otherwise.
-    **/
+     **/
     constexpr bool ends_with(this_type string_view) const noexcept
     {
         return size() >= string_view.size()
@@ -553,8 +567,8 @@ private:
  * \param first The first operand.
  * \param second The second operand.
  * \note This function can be found by ADL, unlike the swap member function.
-**/
-template <typename CharT, typename Traits>
+ **/
+template<typename CharT, typename Traits>
 #if (PL_COMPILER != PL_COMPILER_MSVC) \
     || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
 constexpr
@@ -572,8 +586,8 @@ constexpr
  * \param os The ostream to print to.
  * \param string The string view object to print.
  * \return A reference to 'os'.
-**/
-template <typename CharT, typename Traits>
+ **/
+template<typename CharT, typename Traits>
 std::basic_ostream<CharT, Traits>& operator<<(
     PL_INOUT std::basic_ostream<CharT, Traits>& os,
     basic_string_view<CharT, Traits>            string)
@@ -581,7 +595,7 @@ std::basic_ostream<CharT, Traits>& operator<<(
     return os << string.data();
 }
 
-template <typename CharT, typename Traits>
+template<typename CharT, typename Traits>
 constexpr bool operator==(
     basic_string_view<CharT, Traits> x,
     basic_string_view<CharT, Traits> y) noexcept
@@ -589,7 +603,7 @@ constexpr bool operator==(
     return x.compare(y) == 0;
 }
 
-template <typename CharT, typename Traits, typename Allocator>
+template<typename CharT, typename Traits, typename Allocator>
 constexpr bool operator==(
     basic_string_view<CharT, Traits> x,
     PL_IN const std::basic_string<CharT, Traits, Allocator>& y) noexcept
@@ -597,15 +611,15 @@ constexpr bool operator==(
     return x == basic_string_view<CharT, Traits>{y};
 }
 
-template <typename CharT, typename Traits, typename Allocator>
+template<typename CharT, typename Traits, typename Allocator>
 constexpr bool operator==(
     PL_IN const std::basic_string<CharT, Traits, Allocator>& x,
-    basic_string_view<CharT, Traits> y) noexcept
+    basic_string_view<CharT, Traits>                         y) noexcept
 {
     return basic_string_view<CharT, Traits>{x} == y;
 }
 
-template <typename CharT, typename Traits>
+template<typename CharT, typename Traits>
 constexpr bool operator==(
     basic_string_view<CharT, Traits> x,
     PL_IN PL_NULL_TERMINATED(const CharT*) y) noexcept
@@ -613,15 +627,15 @@ constexpr bool operator==(
     return x == basic_string_view<CharT, Traits>{y};
 }
 
-template <typename CharT, typename Traits>
+template<typename CharT, typename Traits>
 constexpr bool operator==(
-    PL_IN PL_NULL_TERMINATED(const CharT*) x,
+    PL_IN                            PL_NULL_TERMINATED(const CharT*) x,
     basic_string_view<CharT, Traits> y) noexcept
 {
     return basic_string_view<CharT, Traits>{x} == y;
 }
 
-template <typename CharT, typename Traits>
+template<typename CharT, typename Traits>
 constexpr bool operator!=(
     basic_string_view<CharT, Traits> x,
     basic_string_view<CharT, Traits> y) noexcept
@@ -629,7 +643,7 @@ constexpr bool operator!=(
     return not(x == y);
 }
 
-template <typename CharT, typename Traits, typename Allocator>
+template<typename CharT, typename Traits, typename Allocator>
 constexpr bool operator!=(
     basic_string_view<CharT, Traits> x,
     PL_IN const std::basic_string<CharT, Traits, Allocator>& y) noexcept
@@ -637,15 +651,15 @@ constexpr bool operator!=(
     return x != basic_string_view<CharT, Traits>{y};
 }
 
-template <typename CharT, typename Traits, typename Allocator>
+template<typename CharT, typename Traits, typename Allocator>
 constexpr bool operator!=(
     PL_IN const std::basic_string<CharT, Traits, Allocator>& x,
-    basic_string_view<CharT, Traits> y) noexcept
+    basic_string_view<CharT, Traits>                         y) noexcept
 {
     return basic_string_view<CharT, Traits>{x} != y;
 }
 
-template <typename CharT, typename Traits>
+template<typename CharT, typename Traits>
 constexpr bool operator!=(
     basic_string_view<CharT, Traits> x,
     PL_IN PL_NULL_TERMINATED(const CharT*) y) noexcept
@@ -653,15 +667,15 @@ constexpr bool operator!=(
     return x != basic_string_view<CharT, Traits>{y};
 }
 
-template <typename CharT, typename Traits>
+template<typename CharT, typename Traits>
 constexpr bool operator!=(
-    PL_IN PL_NULL_TERMINATED(const CharT*) x,
+    PL_IN                            PL_NULL_TERMINATED(const CharT*) x,
     basic_string_view<CharT, Traits> y) noexcept
 {
     return basic_string_view<CharT, Traits>{x} != y;
 }
 
-template <typename CharT, typename Traits>
+template<typename CharT, typename Traits>
 constexpr bool operator<(
     basic_string_view<CharT, Traits> x,
     basic_string_view<CharT, Traits> y) noexcept
@@ -669,7 +683,7 @@ constexpr bool operator<(
     return x.compare(y) < 0;
 }
 
-template <typename CharT, typename Traits, typename Allocator>
+template<typename CharT, typename Traits, typename Allocator>
 constexpr bool operator<(
     basic_string_view<CharT, Traits> x,
     PL_IN const std::basic_string<CharT, Traits, Allocator>& y) noexcept
@@ -677,15 +691,15 @@ constexpr bool operator<(
     return x < basic_string_view<CharT, Traits>{y};
 }
 
-template <typename CharT, typename Traits, typename Allocator>
+template<typename CharT, typename Traits, typename Allocator>
 constexpr bool operator<(
     PL_IN const std::basic_string<CharT, Traits, Allocator>& x,
-    basic_string_view<CharT, Traits> y) noexcept
+    basic_string_view<CharT, Traits>                         y) noexcept
 {
     return basic_string_view<CharT, Traits>{x} < y;
 }
 
-template <typename CharT, typename Traits>
+template<typename CharT, typename Traits>
 constexpr bool operator<(
     basic_string_view<CharT, Traits> x,
     PL_IN PL_NULL_TERMINATED(const CharT*) y) noexcept
@@ -693,15 +707,15 @@ constexpr bool operator<(
     return x < basic_string_view<CharT, Traits>{y};
 }
 
-template <typename CharT, typename Traits>
+template<typename CharT, typename Traits>
 inline bool operator<(
-    PL_IN PL_NULL_TERMINATED(const CharT*) x,
+    PL_IN                            PL_NULL_TERMINATED(const CharT*) x,
     basic_string_view<CharT, Traits> y) noexcept
 {
     return basic_string_view<CharT, Traits>{x} < y;
 }
 
-template <typename CharT, typename Traits>
+template<typename CharT, typename Traits>
 constexpr bool operator>(
     basic_string_view<CharT, Traits> x,
     basic_string_view<CharT, Traits> y) noexcept
@@ -709,7 +723,7 @@ constexpr bool operator>(
     return x.compare(y) > 0;
 }
 
-template <typename CharT, typename Traits, typename Allocator>
+template<typename CharT, typename Traits, typename Allocator>
 constexpr bool operator>(
     basic_string_view<CharT, Traits> x,
     PL_IN const std::basic_string<CharT, Traits, Allocator>& y) noexcept
@@ -717,15 +731,15 @@ constexpr bool operator>(
     return x > basic_string_view<CharT, Traits>{y};
 }
 
-template <typename CharT, typename Traits, typename Allocator>
+template<typename CharT, typename Traits, typename Allocator>
 constexpr bool operator>(
     PL_IN const std::basic_string<CharT, Traits, Allocator>& x,
-    basic_string_view<CharT, Traits> y) noexcept
+    basic_string_view<CharT, Traits>                         y) noexcept
 {
     return basic_string_view<CharT, Traits>{x} > y;
 }
 
-template <typename CharT, typename Traits>
+template<typename CharT, typename Traits>
 constexpr bool operator>(
     basic_string_view<CharT, Traits> x,
     PL_IN PL_NULL_TERMINATED(const CharT*) y) noexcept
@@ -733,15 +747,15 @@ constexpr bool operator>(
     return x > basic_string_view<CharT, Traits>{y};
 }
 
-template <typename CharT, typename Traits>
+template<typename CharT, typename Traits>
 constexpr bool operator>(
-    PL_IN PL_NULL_TERMINATED(const CharT*) x,
+    PL_IN                            PL_NULL_TERMINATED(const CharT*) x,
     basic_string_view<CharT, Traits> y) noexcept
 {
     return basic_string_view<CharT, Traits>{x} > y;
 }
 
-template <typename CharT, typename Traits>
+template<typename CharT, typename Traits>
 constexpr bool operator<=(
     basic_string_view<CharT, Traits> x,
     basic_string_view<CharT, Traits> y) noexcept
@@ -749,7 +763,7 @@ constexpr bool operator<=(
     return x.compare(y) <= 0;
 }
 
-template <typename CharT, typename Traits, typename Allocator>
+template<typename CharT, typename Traits, typename Allocator>
 constexpr bool operator<=(
     basic_string_view<CharT, Traits> x,
     PL_IN const std::basic_string<CharT, Traits, Allocator>& y) noexcept
@@ -757,15 +771,15 @@ constexpr bool operator<=(
     return x <= basic_string_view<CharT, Traits>{y};
 }
 
-template <typename CharT, typename Traits, typename Allocator>
+template<typename CharT, typename Traits, typename Allocator>
 constexpr bool operator<=(
     PL_IN const std::basic_string<CharT, Traits, Allocator>& x,
-    basic_string_view<CharT, Traits> y) noexcept
+    basic_string_view<CharT, Traits>                         y) noexcept
 {
     return basic_string_view<CharT, Traits>{x} <= y;
 }
 
-template <typename CharT, typename Traits>
+template<typename CharT, typename Traits>
 constexpr bool operator<=(
     basic_string_view<CharT, Traits> x,
     PL_IN PL_NULL_TERMINATED(const CharT*) y) noexcept
@@ -773,15 +787,15 @@ constexpr bool operator<=(
     return x <= basic_string_view<CharT, Traits>{y};
 }
 
-template <typename CharT, typename Traits>
+template<typename CharT, typename Traits>
 constexpr bool operator<=(
-    PL_IN PL_NULL_TERMINATED(const CharT*) x,
+    PL_IN                            PL_NULL_TERMINATED(const CharT*) x,
     basic_string_view<CharT, Traits> y) noexcept
 {
     return basic_string_view<CharT, Traits>{x} <= y;
 }
 
-template <typename CharT, typename Traits>
+template<typename CharT, typename Traits>
 constexpr bool operator>=(
     basic_string_view<CharT, Traits> x,
     basic_string_view<CharT, Traits> y) noexcept
@@ -789,7 +803,7 @@ constexpr bool operator>=(
     return x.compare(y) >= 0;
 }
 
-template <typename CharT, typename Traits, typename Allocator>
+template<typename CharT, typename Traits, typename Allocator>
 constexpr bool operator>=(
     basic_string_view<CharT, Traits> x,
     PL_IN const std::basic_string<CharT, Traits, Allocator>& y) noexcept
@@ -797,15 +811,15 @@ constexpr bool operator>=(
     return x >= basic_string_view<CharT, Traits>{y};
 }
 
-template <typename CharT, typename Traits, typename Allocator>
+template<typename CharT, typename Traits, typename Allocator>
 constexpr bool operator>=(
     PL_IN const std::basic_string<CharT, Traits, Allocator>& x,
-    basic_string_view<CharT, Traits> y) noexcept
+    basic_string_view<CharT, Traits>                         y) noexcept
 {
     return basic_string_view<CharT, Traits>{x} >= y;
 }
 
-template <typename CharT, typename Traits>
+template<typename CharT, typename Traits>
 constexpr bool operator>=(
     basic_string_view<CharT, Traits> x,
     PL_IN PL_NULL_TERMINATED(const CharT*) y) noexcept
@@ -813,9 +827,9 @@ constexpr bool operator>=(
     return x >= basic_string_view<CharT, Traits>{y};
 }
 
-template <typename CharT, typename Traits>
+template<typename CharT, typename Traits>
 constexpr bool operator>=(
-    PL_IN PL_NULL_TERMINATED(const CharT*) x,
+    PL_IN                            PL_NULL_TERMINATED(const CharT*) x,
     basic_string_view<CharT, Traits> y) noexcept
 {
     return basic_string_view<CharT, Traits>{x} >= y;

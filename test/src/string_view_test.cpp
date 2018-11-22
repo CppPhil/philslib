@@ -244,9 +244,8 @@ TEST_CASE("string_view_constructability_test")
     PL_TEST_STATIC_ASSERT(
         std::is_constructible<pl::string_view, char*, std::size_t>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_constructible<pl::string_view,
-                              const char*,
-                              std::size_t>::value);
+        std::is_constructible<pl::string_view, const char*, std::size_t>::
+            value);
 
     CHECK_UNARY(true);
 }
@@ -318,24 +317,16 @@ TEST_CASE("string_view_iterate_test")
     std::basic_ostringstream<char32_t> oss3{};
     std::wostringstream                oss4{};
 
-    for (char c : sv1) {
-        oss1 << c;
-    }
+    for (char c : sv1) { oss1 << c; }
     CHECK(oss1.str() == "text");
 
-    for (char16_t c : sv2) {
-        oss2 << c;
-    }
+    for (char16_t c : sv2) { oss2 << c; }
     CHECK(oss2.str() == u"text");
 
-    for (char32_t c : sv3) {
-        oss3 << c;
-    }
+    for (char32_t c : sv3) { oss3 << c; }
     CHECK(oss3.str() == U"text");
 
-    for (wchar_t c : sv4) {
-        oss4 << c;
-    }
+    for (wchar_t c : sv4) { oss4 << c; }
     CHECK(oss4.str() == L"text");
 }
 
@@ -351,24 +342,16 @@ TEST_CASE("string_view_iterate_reversed_test")
     std::basic_ostringstream<char32_t> oss3{};
     std::wostringstream                oss4{};
 
-    for (char c : pl::iterate_reversed(sv1)) {
-        oss1 << c;
-    }
+    for (char c : pl::iterate_reversed(sv1)) { oss1 << c; }
     CHECK(oss1.str() == "txet");
 
-    for (char16_t c : pl::iterate_reversed(sv2)) {
-        oss2 << c;
-    }
+    for (char16_t c : pl::iterate_reversed(sv2)) { oss2 << c; }
     CHECK(oss2.str() == u"txet");
 
-    for (char32_t c : pl::iterate_reversed(sv3)) {
-        oss3 << c;
-    }
+    for (char32_t c : pl::iterate_reversed(sv3)) { oss3 << c; }
     CHECK(oss3.str() == U"txet");
 
-    for (wchar_t c : pl::iterate_reversed(sv4)) {
-        oss4 << c;
-    }
+    for (wchar_t c : pl::iterate_reversed(sv4)) { oss4 << c; }
     CHECK(oss4.str() == L"txet");
 }
 
@@ -788,4 +771,27 @@ TEST_CASE("string_view_print_test")
         CHECK_UNARY(result3.empty());
         CHECK_UNARY(result4.empty());
     }
+}
+
+TEST_CASE("string_view_null_pointer_test")
+{
+    static constexpr std::nullptr_t a{nullptr};
+    static constexpr const char*    b{nullptr};
+    static constexpr char*          c{nullptr};
+    static constexpr std::size_t    size{0U};
+
+    const pl::string_view sv1{a};
+    const pl::string_view sv2{b};
+    const pl::string_view sv3{c};
+
+    const pl::string_view sv4{a, size};
+    const pl::string_view sv5{b, size};
+    const pl::string_view sv6{c, size};
+
+    CHECK_UNARY(sv1.empty());
+    CHECK_UNARY(sv2.empty());
+    CHECK_UNARY(sv3.empty());
+    CHECK_UNARY(sv4.empty());
+    CHECK_UNARY(sv5.empty());
+    CHECK_UNARY(sv6.empty());
 }
