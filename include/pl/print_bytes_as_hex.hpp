@@ -27,7 +27,7 @@
 /*!
  * \file print_bytes_as_hex.hpp
  * \brief Exports the print_bytes_as_hex type.
-**/
+ **/
 #ifndef INCG_PL_PRINT_BYTES_AS_HEX_HPP
 #define INCG_PL_PRINT_BYTES_AS_HEX_HPP
 #include "annotations.hpp" // PL_IN, PL_INOUT
@@ -44,7 +44,7 @@
 namespace pl {
 /*!
  * \brief Type to print raw memory as hexadecimal digits.
-**/
+ **/
 class print_bytes_as_hex {
 public:
     using this_type = print_bytes_as_hex;
@@ -59,7 +59,7 @@ public:
      *              to effectively have no delimiter by passing "".
      * \throws pl::null_pointer_exception if 'data_to_print' is nullptr.
      *         pl::invalid_size_exception if count_bytes is 0.
-    **/
+     **/
     print_bytes_as_hex(
         PL_IN const void* data_to_print,
         std::size_t       count_bytes,
@@ -69,25 +69,25 @@ public:
      * \brief Defaulted copy constructor to suppress 'has pointer data members
      *        but does not override copy constructor or copy assignment
      *        operator' warning from -Weffc++.
-    **/
+     **/
     print_bytes_as_hex(const this_type&);
 
     /*!
      * \brief Defaulted move constructor.
-    **/
-    print_bytes_as_hex(this_type&&);
+     **/
+    print_bytes_as_hex(this_type&&) noexcept;
 
     /*!
      * \brief Defaulted copy assignment operator to suppress 'has pointer data
      *        members but does not override copy constructor or copy assignment
      *        operator' warning from -Weffc++.
-    **/
+     **/
     this_type& operator=(const this_type&);
 
     /*!
      * \brief Defaulted move assignment operator.
-    **/
-    this_type& operator=(this_type&&);
+     **/
+    this_type& operator=(this_type&&) noexcept;
 
     /*!
      * \brief Prints a print_bytes_as_hex object to an ostream printing the
@@ -95,7 +95,7 @@ public:
      * \param os The ostream to print to.
      * \param to_print The print_bytes_as_hex object to print.
      * \return A reference to 'os'.
-    **/
+     **/
     friend std::ostream& operator<<(
         PL_INOUT std::ostream& os,
         PL_IN const this_type& to_print);
@@ -124,12 +124,13 @@ inline print_bytes_as_hex::print_bytes_as_hex(
 
 inline print_bytes_as_hex::print_bytes_as_hex(const this_type&) = default;
 
-inline print_bytes_as_hex::print_bytes_as_hex(this_type&&) = default;
+inline print_bytes_as_hex::print_bytes_as_hex(this_type&&) noexcept = default;
 
 inline print_bytes_as_hex& print_bytes_as_hex::operator=(const this_type&)
     = default;
 
-inline print_bytes_as_hex& print_bytes_as_hex::operator=(this_type&&) = default;
+inline print_bytes_as_hex& print_bytes_as_hex::operator=(this_type&&) noexcept
+    = default;
 
 inline std::ostream& operator<<(
     PL_INOUT std::ostream& os,
@@ -151,9 +152,7 @@ inline std::ostream& operator<<(
             os << std::setw(nibbles_per_byte) << std::setfill(fill_char)
                << static_cast<std::uint16_t>(data_to_print[i]);
 
-            if (i < (to_print.m_count_bytes - 1U)) {
-                os << to_print.m_delim;
-            }
+            if (i < (to_print.m_count_bytes - 1U)) { os << to_print.m_delim; }
         }
     }
     catch (...) {

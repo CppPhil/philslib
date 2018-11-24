@@ -134,7 +134,8 @@ public:
     /*!
      * \brief Creates an empty basic_string_view from a nullptr literal.
      **/
-    constexpr basic_string_view(std::nullptr_t) noexcept : basic_string_view{}
+    PL_IMPLICIT constexpr basic_string_view(std::nullptr_t) noexcept
+        : basic_string_view{}
     {
     }
 
@@ -194,7 +195,7 @@ public:
      *          any embedded null characters.
      **/
     template<std::size_t Size>
-    constexpr basic_string_view(
+    PL_IMPLICIT constexpr basic_string_view(
         PL_IN PL_NULL_TERMINATED(const value_type (&array)[Size])) noexcept
         : m_data{array}, m_size{Size - 1U}
     {
