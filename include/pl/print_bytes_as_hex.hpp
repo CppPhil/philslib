@@ -33,13 +33,14 @@
 #include "annotations.hpp" // PL_IN, PL_INOUT
 #include "byte.hpp"        // pl::byte
 #include "except.hpp" // PL_THROW_IF_NULL, pl::null_pointer_exception, pl::invalid_size_exception
-#include <cstddef> // std::size_t
-#include <cstdint> // std::uint16_t
-#include <iomanip> // std::setw, std::setfill
-#include <ios>     // std::uppercase, std::hex
-#include <ostream> // std::ostream
-#include <string>  // std::string
-#include <utility> // std::move
+#include <cstddef>     // std::size_t
+#include <cstdint>     // std::uint16_t
+#include <iomanip>     // std::setw, std::setfill
+#include <ios>         // std::uppercase, std::hex
+#include <ostream>     // std::ostream
+#include <string>      // std::string
+#include <type_traits> // std::is_nothrow_move_assignable, ...
+#include <utility>     // std::move
 
 namespace pl {
 /*!
@@ -70,24 +71,28 @@ public:
      *        but does not override copy constructor or copy assignment
      *        operator' warning from -Weffc++.
      **/
-    print_bytes_as_hex(const this_type&);
+    print_bytes_as_hex(const this_type&) noexcept(
+        std::is_nothrow_copy_constructible<std::string>::value);
 
     /*!
      * \brief Defaulted move constructor.
      **/
-    print_bytes_as_hex(this_type&&) noexcept;
+    print_bytes_as_hex(this_type&&) noexcept(
+        std::is_nothrow_move_constructible<std::string>::value);
 
     /*!
      * \brief Defaulted copy assignment operator to suppress 'has pointer data
      *        members but does not override copy constructor or copy assignment
      *        operator' warning from -Weffc++.
      **/
-    this_type& operator=(const this_type&);
+    this_type& operator=(const this_type&) noexcept(
+        std::is_nothrow_copy_assignable<std::string>::value);
 
     /*!
      * \brief Defaulted move assignment operator.
      **/
-    this_type& operator=(this_type&&) noexcept;
+    this_type& operator=(this_type&&) noexcept(
+        std::is_nothrow_move_assignable<std::string>::value);
 
     /*!
      * \brief Prints a print_bytes_as_hex object to an ostream printing the
@@ -122,14 +127,21 @@ inline print_bytes_as_hex::print_bytes_as_hex(
     }
 }
 
-inline print_bytes_as_hex::print_bytes_as_hex(const this_type&) = default;
-
-inline print_bytes_as_hex::print_bytes_as_hex(this_type&&) noexcept = default;
-
-inline print_bytes_as_hex& print_bytes_as_hex::operator=(const this_type&)
+inline print_bytes_as_hex::print_bytes_as_hex(const this_type&) noexcept(
+    std::is_nothrow_copy_constructible<std::string>::value)
     = default;
 
-inline print_bytes_as_hex& print_bytes_as_hex::operator=(this_type&&) noexcept
+inline print_bytes_as_hex::print_bytes_as_hex(this_type&&) noexcept(
+    std::is_nothrow_move_constructible<std::string>::value)
+    = default;
+
+inline print_bytes_as_hex& print_bytes_as_hex::
+                           operator=(const this_type&) noexcept(
+    std::is_nothrow_copy_assignable<std::string>::value)
+    = default;
+
+inline print_bytes_as_hex& print_bytes_as_hex::operator=(this_type&&) noexcept(
+    std::is_nothrow_move_assignable<std::string>::value)
     = default;
 
 inline std::ostream& operator<<(
