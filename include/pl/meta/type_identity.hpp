@@ -25,32 +25,33 @@
  */
 
 /*!
- * \file identity.hpp
- * \brief Exports the identity meta function.
-**/
-#ifndef INCG_PL_META_IDENTITY_HPP
-#define INCG_PL_META_IDENTITY_HPP
+ * \file type_identity.hpp
+ * \brief Exports the type_identity meta function.
+ **/
+#ifndef INCG_PL_META_TYPE_IDENTITY_HPP
+#define INCG_PL_META_TYPE_IDENTITY_HPP
 
 namespace pl {
 namespace meta {
 /*!
- * \brief The identity meta function.
+ * \brief The type_identity meta function.
  *        Returns Ty unchanged.
  *
- * The identity meta function.
+ * The type_identity meta function.
  * This meta function may be used in a function's parameter list
  * instead of Ty directly in order to prevent type deduction of Ty.
-**/
-template <typename Ty>
-struct identity {
+ * Provides a non deduced context.
+ **/
+template<typename Ty>
+struct type_identity {
     using type = Ty;
 };
 
 /*!
- * \brief C++14 style helper template alias for the identity meta function.
-**/
-template <typename Ty>
-using identity_t = typename identity<Ty>::type;
+ * \brief C++14 style helper template alias for the type_identity meta function.
+ **/
+template<typename Ty>
+using type_identity_t = typename type_identity<Ty>::type;
 } // namespace meta
 } // namespace pl
-#endif // INCG_PL_META_IDENTITY_HPP
+#endif // INCG_PL_META_TYPE_IDENTITY_HPP

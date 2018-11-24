@@ -132,7 +132,6 @@ include/pl/meta/conjunction.hpp: The conjunction meta function from C++17.
 include/pl/meta/detection_idiom.hpp: An implementation of the detection idiom from library fundamentals TS v2.  
 include/pl/meta/disable_if.hpp: disable_if, analogous to std::enable_if.  
 include/pl/meta/disjunction.hpp: The disjunction meta function from C++17.  
-include/pl/meta/identify.hpp: Meta function to prevent undesired type deduction.  
 include/pl/meta/is_initializer_list.hpp: Meta function to determine whether a type is an initializer_list type.  
 include/pl/meta/is_reference_wrapper.hpp: Meta functions to determine whether a type is a reference_wrapper type or not.  
 include/pl/meta/iterator_traits.hpp: Iterator traits  implementing the hierarchy of the kinds of iterators. Can be used to check whether a given iterator satisfies the minimum iterator requirement.  
@@ -140,6 +139,7 @@ include/pl/meta/negation.hpp: The negation meta function from C++17.
 include/pl/meta/nested_types.hpp: Template aliases to access common nested types.  
 include/pl/meta/none.hpp: Meta function to determine whether none of the traits given are satisfied, analogous to disjunction and conjunction from C++17.  
 include/pl/meta/remove_cvref.hpp: The remove_cvref meta function from C++20.  
+include/pl/meta/type_identity.hpp: Meta function to prevent undesired type deduction.  
 include/pl/meta/void_t.hpp: void_t from C++17.  
 include/pl/thd/concurrent.hpp: Thread safe concurrency adaptor to 'run' an object in a new thread, behaves like a non-blocking monitor as the callables accessing the object are run on the underlying thread.  
 include/pl/thd/monitor.hpp: A monitor providing thread-safe access to an object by using locks.  

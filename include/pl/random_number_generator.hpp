@@ -27,14 +27,14 @@
 /*!
  * \file random_number_generator.hpp
  * \brief Exports the random_number_generator type.
-**/
+ **/
 #ifndef INCG_PL_RANDOM_NUMBER_GENERATOR_HPP
 #define INCG_PL_RANDOM_NUMBER_GENERATOR_HPP
 #include "annotations.hpp"           // PL_INOUT
 #include "assert.hpp"                // PL_DBG_CHECK_PRE
 #include "meta/disable_if.hpp"       // pl::meta::disable_if_t
-#include "meta/identity.hpp"         // pl::meta::identity_t
 #include "meta/remove_cvref.hpp"     // pl::meta::remove_cvref_t
+#include "meta/type_identity.hpp"    // pl::meta::type_identity_t
 #include "no_macro_substitution.hpp" // PL_NO_MACRO_SUBSTITUTION
 #include <algorithm>                 // std::shuffle
 #include <cstddef>                   // std::size_t
@@ -42,13 +42,13 @@
 #include <limits>                    // std::numeric_limits
 #include <memory>                    // std::unique_ptr
 #include <random>                    // std::random_device, std::mt19937
-#include <type_traits>               // std::is_floating_point, std::true_type, std::false_type, std::is_same, std::enable_if_t
+#include <type_traits> // std::is_floating_point, std::true_type, std::false_type, std::is_same, std::enable_if_t
 
 namespace pl {
 namespace detail {
 static constexpr std::size_t large_urbg_threshold = 50U;
 
-template <typename Urbg, bool IsLarge>
+template<typename Urbg, bool IsLarge>
 class urbg_storage_impl {
 public:
     using this_type    = urbg_storage_impl;
@@ -71,7 +71,7 @@ private:
     std::unique_ptr<element_type> m_urbg;
 };
 
-template <typename Urbg>
+template<typename Urbg>
 class urbg_storage_impl<Urbg, false> {
 public:
     using this_type    = urbg_storage_impl;
@@ -96,7 +96,7 @@ private:
     element_type m_urbg;
 };
 
-template <typename Urbg>
+template<typename Urbg>
 class urbg_storage
     : public urbg_storage_impl<Urbg, sizeof(Urbg) >= large_urbg_threshold> {
 public:
@@ -108,65 +108,65 @@ public:
     using base_type::base_type;
 };
 
-template <typename Type>
+template<typename Type>
 struct distribution_of;
 
-template <>
+template<>
 struct distribution_of<float> {
     using type = std::uniform_real_distribution<float>;
 };
 
-template <>
+template<>
 struct distribution_of<double> {
     using type = std::uniform_real_distribution<double>;
 };
 
-template <>
+template<>
 struct distribution_of<long double> {
     using type = std::uniform_real_distribution<long double>;
 };
 
-template <>
+template<>
 struct distribution_of<short> {
     using type = std::uniform_int_distribution<short>;
 };
 
-template <>
+template<>
 struct distribution_of<int> {
     using type = std::uniform_int_distribution<int>;
 };
 
-template <>
+template<>
 struct distribution_of<long> {
     using type = std::uniform_int_distribution<long>;
 };
 
-template <>
+template<>
 struct distribution_of<long long> {
     using type = std::uniform_int_distribution<long long>;
 };
 
-template <>
+template<>
 struct distribution_of<unsigned short> {
     using type = std::uniform_int_distribution<unsigned short>;
 };
 
-template <>
+template<>
 struct distribution_of<unsigned int> {
     using type = std::uniform_int_distribution<unsigned int>;
 };
 
-template <>
+template<>
 struct distribution_of<unsigned long> {
     using type = std::uniform_int_distribution<unsigned long>;
 };
 
-template <>
+template<>
 struct distribution_of<unsigned long long> {
     using type = std::uniform_int_distribution<unsigned long long>;
 };
 
-template <typename Type>
+template<typename Type>
 using distribution_of_t = typename distribution_of<Type>::type;
 } // namespace detail
 
@@ -180,8 +180,8 @@ using distribution_of_t = typename distribution_of<Type>::type;
  *        locking overhead.
  *        Generates non-deterministic random numbers.
  *        By default uses the std::mt19937 engine.
-**/
-template <typename Engine = std::mt19937>
+ **/
+template<typename Engine = std::mt19937>
 class random_number_generator {
 public:
     using this_type    = random_number_generator;
@@ -191,16 +191,16 @@ public:
      * \brief Creates a random_number_generator.
      *        Initializes the underlying random_device and uses it
      *        to seed the engine.
-    **/
+     **/
     random_number_generator() : m_random_device{}, m_urbg{m_random_device()} {}
     /*!
      * \brief this type is non-copyable.
-    **/
+     **/
     random_number_generator(const this_type&) = delete;
 
     /*!
      * \brief this type is non-copyable.
-    **/
+     **/
     this_type& operator=(const this_type&) = delete;
 
     /*!
@@ -218,16 +218,16 @@ public:
      * \note Types such as char, signed char, unsigned char, std::uint8_t and
      *       std::int8_t are not allowed,
      *       see http://cplusplus.github.io/LWG/lwg-closed.html#2326.
-    **/
-    template <typename Numeric>
+     **/
+    template<typename Numeric>
     auto generate(
-        meta::identity_t<Numeric>           begin
+        meta::type_identity_t<Numeric>      begin
         = std::numeric_limits<Numeric>::min PL_NO_MACRO_SUBSTITUTION(),
-        meta::identity_t<Numeric>           end
+        meta::type_identity_t<Numeric>      end
         = std::numeric_limits<Numeric>::max PL_NO_MACRO_SUBSTITUTION())
-        -> meta::disable_if_t<std::is_same<meta::remove_cvref_t<Numeric>,
-                                           bool>::value,
-                              Numeric>
+        -> meta::disable_if_t<
+            std::is_same<meta::remove_cvref_t<Numeric>, bool>::value,
+            Numeric>
     {
         return generate_impl<Numeric>(
             begin, end, typename std::is_floating_point<Numeric>::type{});
@@ -237,8 +237,8 @@ public:
      * \brief Generates a random boolean value.
      * \param true_chance the chance to generate true, defaults to 0.5.
      * \return the boolean value generated.
-    **/
-    template <typename Bool>
+     **/
+    template<typename Bool>
     auto generate(double true_chance = 0.5) -> std::
         enable_if_t<std::is_same<meta::remove_cvref_t<Bool>, bool>::value, bool>
     {
@@ -253,8 +253,8 @@ public:
      * \param begin The begin iterator of the half open range to shuffle.
      * \param end The end iterator of the half open range to shuffle.
      * \return A reference to this random_number_generator.
-    **/
-    template <typename RandomAccessIterator>
+     **/
+    template<typename RandomAccessIterator>
     this_type& shuffle(RandomAccessIterator begin, RandomAccessIterator end)
     {
         std::shuffle(begin, end, m_urbg.get());
@@ -265,18 +265,18 @@ public:
      * \brief Shuffles 'container'.
      * \param container The Container to shuffle.
      * \return A reference to this random_number_generator.
-    **/
-    template <typename Container>
+     **/
+    template<typename Container>
     this_type& shuffle(PL_INOUT Container& container)
     {
         return shuffle(std::begin(container), std::end(container));
     }
 
 private:
-    template <typename Numeric>
+    template<typename Numeric>
     Numeric generate_impl(
-        meta::identity_t<Numeric> begin,
-        meta::identity_t<Numeric> end,
+        meta::type_identity_t<Numeric> begin,
+        meta::type_identity_t<Numeric> end,
         std::true_type)
     {
         PL_DBG_CHECK_PRE(begin < end);
@@ -284,10 +284,10 @@ private:
         return dist(m_urbg.get());
     }
 
-    template <typename Numeric>
+    template<typename Numeric>
     Numeric generate_impl(
-        meta::identity_t<Numeric> begin,
-        meta::identity_t<Numeric> end,
+        meta::type_identity_t<Numeric> begin,
+        meta::type_identity_t<Numeric> end,
         std::false_type)
     {
         PL_DBG_CHECK_PRE(begin <= end);
