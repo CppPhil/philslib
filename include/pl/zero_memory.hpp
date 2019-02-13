@@ -58,7 +58,7 @@ namespace pl {
  * \warning dest may not be a null pointer.
  * \see secure_zero_memory
 **/
-PL_ALWAYS_INLINE void* zero_memory(PL_OUT void* dest, std::size_t count_bytes)
+PL_ALWAYS_INLINE void* zero_memory(PL_OUT void* dest, std::size_t count_bytes) noexcept
 {
     PL_DBG_CHECK_PRE(dest != nullptr);
 
@@ -96,7 +96,7 @@ PL_ALWAYS_INLINE void* zero_memory(PL_OUT void* dest, std::size_t count_bytes)
 **/
 PL_ALWAYS_INLINE void* secure_zero_memory(
     PL_OUT void* dest,
-    std::size_t  count_bytes)
+    std::size_t  count_bytes) noexcept
 {
     PL_DBG_CHECK_PRE(dest != nullptr);
 

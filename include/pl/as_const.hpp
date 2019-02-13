@@ -49,6 +49,6 @@ constexpr add_const_t<Ty>& as_const(PL_IN Ty& ty) noexcept
  * \brief asConst may not be called with rvalues.
 **/
 template <typename Ty>
-void as_const(PL_IN const Ty&&) = delete;
+void as_const(PL_IN const Ty&&) noexcept = delete;
 } // namespace pl
 #endif // INCG_PL_AS_CONST_HPP
