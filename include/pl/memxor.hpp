@@ -31,7 +31,6 @@
 #ifndef INCG_PL_MEMXOR_HPP
 #define INCG_PL_MEMXOR_HPP
 #include "annotations.hpp" // PL_IN, PL_INOUT
-#include "assert.hpp"      // PL_DBG_CHECK_PRE
 #include "byte.hpp"        // pl::Byte
 #include "restrict.hpp"    // PL_RESTRICT
 #include <cstddef>         // std::size_t
@@ -54,11 +53,8 @@ namespace pl {
 inline void* memxor(
     PL_INOUT void* PL_RESTRICT destination,
     PL_IN const void* PL_RESTRICT source,
-    std::size_t                   byte_count)
+    std::size_t                   byte_count) noexcept
 {
-    PL_DBG_CHECK_PRE(destination != nullptr);
-    PL_DBG_CHECK_PRE(source != nullptr);
-
     auto dest = static_cast<byte * PL_RESTRICT>(destination);
     auto src  = static_cast<const byte * PL_RESTRICT>(source);
 

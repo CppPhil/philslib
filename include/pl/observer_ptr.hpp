@@ -31,7 +31,6 @@
 #ifndef INCG_PL_OBSERVER_PTR_HPP
 #define INCG_PL_OBSERVER_PTR_HPP
 #include "annotations.hpp" // PL_IN_OPT, PL_INOUT, PL_NODISCARD, PL_IMPLICIT
-#include "assert.hpp"      // PL_DBG_CHECK_PRE
 #include "compiler.hpp"    // PL_COMPILER, PL_COMPILER_MSVC, ...
 #include "type_traits.hpp" // pl::enable_if_t, pl::add_lvalue_reference_t
 #include <ciso646>         // not
@@ -183,9 +182,8 @@ public:
      * \return Returns the object watched by *this, equivalent to *get().
      * \warning The behavior is undefined if get() == nullptr.
     **/
-    constexpr add_lvalue_reference_t<element_type> operator*() const
+    constexpr add_lvalue_reference_t<element_type> operator*() const noexcept
     {
-        PL_DBG_CHECK_PRE(this->operator bool());
         return *get();
     }
 
@@ -194,9 +192,8 @@ public:
      * \return Returns a pointer to the object watched by *this, i.e. get().
      * \warning Do not call this function if get() == nullptr.
     **/
-    constexpr element_type* operator->() const
+    constexpr element_type* operator->() const noexcept
     {
-        PL_DBG_CHECK_PRE(this->operator bool());
         return get();
     }
 

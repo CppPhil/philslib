@@ -31,7 +31,6 @@
 #ifndef INCG_PL_ZERO_MEMORY_HPP
 #define INCG_PL_ZERO_MEMORY_HPP
 #include "annotations.hpp" // PL_OUT
-#include "assert.hpp"      // PL_DBG_CHECK_PRE
 #include "byte.hpp"        // pl::byte
 #include "inline.hpp"      // PL_ALWAYS_INLINE
 #include <cstddef>         // std::size_t
@@ -60,8 +59,6 @@ namespace pl {
 **/
 PL_ALWAYS_INLINE void* zero_memory(PL_OUT void* dest, std::size_t count_bytes) noexcept
 {
-    PL_DBG_CHECK_PRE(dest != nullptr);
-
     byte* ptr{static_cast<byte*>(dest)};
 
     for (; count_bytes != 0U; ++ptr, --count_bytes) {
@@ -98,8 +95,6 @@ PL_ALWAYS_INLINE void* secure_zero_memory(
     PL_OUT void* dest,
     std::size_t  count_bytes) noexcept
 {
-    PL_DBG_CHECK_PRE(dest != nullptr);
-
     volatile byte* ptr{static_cast<volatile byte*>(dest)};
 
     for (; count_bytes != 0U; ++ptr, --count_bytes) {

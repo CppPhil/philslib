@@ -31,7 +31,6 @@
 #ifndef INCG_PL_ALGO_CLAMP_HPP
 #define INCG_PL_ALGO_CLAMP_HPP
 #include "../annotations.hpp" // PL_IN
-#include "../assert.hpp"      // PL_DBG_CHECK_PRE
 #include <ciso646>            // not
 #include <functional>         // std::less
 
