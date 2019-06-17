@@ -27,7 +27,7 @@
 /*!
  * \file numeric.hpp
  * \brief This header file defines various utilities for working with numbers.
-**/
+ **/
 #ifndef INCG_PL_NUMERIC_HPP
 #define INCG_PL_NUMERIC_HPP
 #include <ciso646> // not, and
@@ -38,8 +38,8 @@ namespace pl {
  * \param numeric The number to check.
  * \return true if numeric is even; false otherwise.
  * \note Only pass in numbers.
-**/
-template <typename Numeric>
+ **/
+template<typename Numeric>
 constexpr bool is_even(Numeric numeric)
 {
     return ((numeric & Numeric{1}) == Numeric{});
@@ -50,8 +50,8 @@ constexpr bool is_even(Numeric numeric)
  * \param numeric The number to check.
  * \return true if numeric is odd; false otherwise.
  * \note Only pass in numbers.
-**/
-template <typename Numeric>
+ **/
+template<typename Numeric>
 constexpr bool is_odd(Numeric numeric)
 {
     return not::pl::is_even(numeric);
@@ -66,8 +66,8 @@ constexpr bool is_odd(Numeric numeric)
  *              and check_me is also <= upper_bound;
  *         false otherwise.
  * \warning lower_bound must be <= upper_bound
-**/
-template <typename Numeric>
+ **/
+template<typename Numeric>
 constexpr bool
 is_between(Numeric check_me, Numeric lower_bound, Numeric upper_bound)
 {

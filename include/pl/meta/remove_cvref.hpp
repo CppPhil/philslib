@@ -27,7 +27,7 @@
 /*!
  * \file remove_cvref.hpp
  * \brief Exports the remove_cvref meta function.
-**/
+ **/
 #ifndef INCG_PL_META_REMOVE_CVREF_HPP
 #define INCG_PL_META_REMOVE_CVREF_HPP
 #include "../type_traits.hpp" // pl::remove_reference_t
@@ -40,8 +40,8 @@ namespace meta {
  *
  * The nested type type will have its reference type modifiers removed
  * and will have its const and volatile type qualifiers removed.
-**/
-template <typename Type>
+ **/
+template<typename Type>
 struct remove_cvref : public std::remove_cv<remove_reference_t<Type>> {
 };
 
@@ -49,8 +49,8 @@ struct remove_cvref : public std::remove_cv<remove_reference_t<Type>> {
  * \brief C++14 style meta function helper that is an alias of the nested type
  *        type of pl::meta::remove_cvref. Reduces the necessity of the typename
  *        keyword in application code.
-**/
-template <typename Type>
+ **/
+template<typename Type>
 using remove_cvref_t = typename remove_cvref<Type>::type;
 } // namespace meta
 } // namespace pl

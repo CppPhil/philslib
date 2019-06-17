@@ -55,32 +55,32 @@ TEST_CASE("iterate_reversed_type_test")
     using const_end_it   = decltype(std::declval<const_type>().end());
 
     PL_TEST_STATIC_ASSERT(
-        std::is_same<non_const_begin_it,
-                     std::vector<int>::reverse_iterator>::value);
+        std::is_same<non_const_begin_it, std::vector<int>::reverse_iterator>::
+            value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<non_const_end_it,
-                     std::vector<int>::reverse_iterator>::value);
+        std::is_same<non_const_end_it, std::vector<int>::reverse_iterator>::
+            value);
 
     PL_TEST_STATIC_ASSERT(
-        std::is_same<const_begin_it,
-                     std::vector<int>::const_reverse_iterator>::value);
+        std::is_same<const_begin_it, std::vector<int>::const_reverse_iterator>::
+            value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<const_end_it,
-                     std::vector<int>::const_reverse_iterator>::value);
+        std::is_same<const_end_it, std::vector<int>::const_reverse_iterator>::
+            value);
 
+    PL_TEST_STATIC_ASSERT(std::is_same<
+                          std::iterator_traits<non_const_begin_it>::reference,
+                          int&>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<std::iterator_traits<non_const_begin_it>::reference,
-                     int&>::value);
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<std::iterator_traits<non_const_end_it>::reference,
-                     int&>::value);
+        std::is_same<std::iterator_traits<non_const_end_it>::reference, int&>::
+            value);
 
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<std::iterator_traits<const_begin_it>::reference,
-                     const int&>::value);
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<std::iterator_traits<const_end_it>::reference,
-                     const int&>::value);
+    PL_TEST_STATIC_ASSERT(std::is_same<
+                          std::iterator_traits<const_begin_it>::reference,
+                          const int&>::value);
+    PL_TEST_STATIC_ASSERT(std::is_same<
+                          std::iterator_traits<const_end_it>::reference,
+                          const int&>::value);
 
     CHECK_UNARY(true);
 }

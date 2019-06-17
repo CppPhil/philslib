@@ -27,7 +27,7 @@
 /*!
  * \file empty.hpp
  * \brief Exports the non-member empty function from C++17.
-**/
+ **/
 #ifndef INCG_PL_CONT_EMPTY_HPP
 #define INCG_PL_CONT_EMPTY_HPP
 #include "../annotations.hpp" // PL_IN, PL_NODISCARD
@@ -42,8 +42,8 @@ namespace cont {
  * \return container.empty()
  * \note The return value will be true if the container doesn't have
  *       any element, otherwise it will be false.
-**/
-template <typename Container>
+ **/
+template<typename Container>
 PL_NODISCARD constexpr auto empty(PL_IN const Container& container)
     -> decltype(container.empty())
 {
@@ -56,8 +56,8 @@ PL_NODISCARD constexpr auto empty(PL_IN const Container& container)
  * \return false
  * \note The return value will be true if the C-Array doesn't have
  *       any element, otherwise it will be false.
-**/
-template <typename Ty, std::size_t Size>
+ **/
+template<typename Ty, std::size_t Size>
 PL_NODISCARD constexpr bool empty(PL_IN const Ty (&array)[Size]) noexcept
 {
     (void)array;
@@ -70,8 +70,8 @@ PL_NODISCARD constexpr bool empty(PL_IN const Ty (&array)[Size]) noexcept
  * \return il.size() == 0U
  * \note The return value will be true if the std::initializer_list doesn't have
  *       any element, otherwise it will be false.
-**/
-template <typename Ty>
+ **/
+template<typename Ty>
 PL_NODISCARD constexpr bool empty(std::initializer_list<Ty> il) noexcept
 {
     return il.size() == 0U;

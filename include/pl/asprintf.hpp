@@ -27,7 +27,7 @@
 /*!
  * \file asprintf.hpp
  * \brief Exports asprintf functions.
-**/
+ **/
 #ifndef INCG_PL_ASPRINTF_HPP
 #define INCG_PL_ASPRINTF_HPP
 #include "annotations.hpp" // PL_OUT, PL_IN, PL_FMT_STR, PL_NODISCARD, ...
@@ -52,7 +52,7 @@ namespace {
  *         on success or a negative number on error.
  * \warning Will cause undefined behavior if 'strp' or 'fmt' is nullptr.
  * \note In general you probably want to be using asprintf instead.
-**/
+ **/
 PL_NODISCARD int vasprintf(
     PL_OUT std::unique_ptr<char[]>* strp,
     PL_IN                           PL_FMT_STR(const char*) fmt,
@@ -70,7 +70,7 @@ PL_NODISCARD int vasprintf(
  *         on success or a negative number on error.
  * \warning Will cause undefined behavior if 'strp' or 'fmt' is nullptr.
  * \note In general you probably want to be using asprintf instead.
-**/
+ **/
 PL_NODISCARD int vasprintf(
     PL_OUT std::string* strp,
     PL_IN               PL_FMT_STR(const char*) fmt,
@@ -87,7 +87,7 @@ PL_NODISCARD int vasprintf(
  * \return The number of bytes written (not including the null-terminator)
  *         on success or a negative number on error.
  * \warning Will cause undefined behavior if 'strp' or 'fmt' is nullptr.
-**/
+ **/
 PL_NODISCARD int asprintf(
     PL_OUT std::unique_ptr<char[]>* strp,
     PL_IN                           PL_FMT_STR(const char*) fmt,
@@ -103,7 +103,7 @@ PL_NODISCARD int asprintf(
  * \return The number of bytes written (not including the null-terminator)
  *         on success or a negative number on error.
  * \warning Will cause undefined behavior if 'strp' or 'fmt' is nullptr.
-**/
+ **/
 PL_NODISCARD int asprintf(
     PL_OUT std::string* strp,
     PL_IN               PL_FMT_STR(const char*) fmt,
@@ -119,9 +119,7 @@ PL_NODISCARD int vasprintf(
 
     const auto err_code = std::vsnprintf(nullptr, 0, fmt, ap);
 
-    if (err_code < 0) {
-        return err_code;
-    }
+    if (err_code < 0) { return err_code; }
 
     const auto bytes_to_allocate = 1U + static_cast<std::size_t>(err_code);
 
@@ -143,9 +141,7 @@ PL_NODISCARD int vasprintf(
 
     const auto err_code = std::vsnprintf(nullptr, 0, fmt, ap);
 
-    if (err_code < 0) {
-        return err_code;
-    }
+    if (err_code < 0) { return err_code; }
 
     const auto bytes_to_allocate = 1U + static_cast<std::size_t>(err_code);
 

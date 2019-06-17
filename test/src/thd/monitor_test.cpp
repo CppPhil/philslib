@@ -50,11 +50,11 @@ public:
     {
     }
 
-    double d() const noexcept { return m_d; }
-    void d(double d) noexcept { m_d = d; }
-    void          set_d_to_25() noexcept { d(25.0); }
-    const char*   str() const noexcept { return m_s.data(); }
-    int           m_i;
+    double      d() const noexcept { return m_d; }
+    void        d(double d) noexcept { m_d = d; }
+    void        set_d_to_25() noexcept { d(25.0); }
+    const char* str() const noexcept { return m_s.data(); }
+    int         m_i;
 
 private:
     double      m_d;
@@ -76,9 +76,8 @@ TEST_CASE("monitor_test")
     monitor(&pl::test::monitor_test_type::set_d_to_25);
 
     CHECK(
-        monitor(
-            static_cast<double (pl::test::monitor_test_type::*)() const>(
-                &pl::test::monitor_test_type::d))
+        monitor(static_cast<double (pl::test::monitor_test_type::*)() const>(
+            &pl::test::monitor_test_type::d))
         == doctest::Approx{25.0});
 
     CHECK(std::strcmp(monitor(&pl::test::monitor_test_type::str), "text") == 0);

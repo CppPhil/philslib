@@ -28,7 +28,7 @@
  * \file overload.hpp
  * \brief Defines the C++14 compatible overload machinery that
  *        creates callables combining different lambdas by deriving from them.
-**/
+ **/
 #ifndef INCG_PL_OVERLOAD_HPP
 #define INCG_PL_OVERLOAD_HPP
 #include "annotations.hpp"       // PL_IN
@@ -39,23 +39,25 @@ namespace pl {
 /*!
  * \brief The primary 'overloaded' template.
  *        Exports all the call operators of the lambdas, which are base types.
-**/
-template <typename Lambda1, typename... Lambdas>
-class overloaded : public Lambda1, public overloaded<Lambdas...> {
+ **/
+template<typename Lambda1, typename... Lambdas>
+class overloaded
+    : public Lambda1
+    , public overloaded<Lambdas...> {
 public:
     /*!
      * \brief Creates an 'overloaded' object.
      * \param lambda1 The first lambda to construct.
      * \param lambdas The rest of the lambdas to construct.
-    **/
-    template <typename FirstLambda, typename... OtherLambdas>
+     **/
+    template<typename FirstLambda, typename... OtherLambdas>
     overloaded(PL_IN FirstLambda&& lambda1, PL_IN OtherLambdas&&... lambdas)
         : Lambda1{std::forward<FirstLambda>(lambda1)}
         , overloaded<Lambdas...>{std::forward<OtherLambdas>(lambdas)...}
     {
     }
 
-    using Lambda1::operator();
+    using Lambda1::               operator();
     using overloaded<Lambdas...>::operator();
 };
 
@@ -63,15 +65,15 @@ public:
  * \brief The recursive base case of the 'overloaded' machinery.
  *        Derives from Lambda1. A partial template specialization of the
  *        base template.
-**/
-template <typename Lambda1>
+ **/
+template<typename Lambda1>
 class overloaded<Lambda1> : public Lambda1 {
 public:
     /*!
      * \brief Constructs an 'overloaded' object.
      * \param lambda1 The first lambda to construct.
-    **/
-    template <typename FirstLambda>
+     **/
+    template<typename FirstLambda>
     explicit overloaded(PL_IN FirstLambda&& lambda1)
         : Lambda1{std::forward<FirstLambda>(lambda1)}
     {
@@ -86,8 +88,8 @@ public:
  * \return An object that features all the call operators of all the
  *         lambdas passed into the parameter list.
  * \note The parameter list may not be empty.
-**/
-template <typename... Lambdas>
+ **/
+template<typename... Lambdas>
 inline auto overload(PL_IN Lambdas&&... lambdas)
 {
     static_assert(

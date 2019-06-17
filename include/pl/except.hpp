@@ -27,7 +27,7 @@
 /*!
  * \file except.hpp
  * \brief This header defines various utilities for working with exceptions.
-**/
+ **/
 #ifndef INCG_PL_EXCEPT_HPP
 #define INCG_PL_EXCEPT_HPP
 #include "begin_end_macro.hpp"  // PL_BEGIN_MACRO, PL_END_MACRO
@@ -50,7 +50,7 @@
  *        and the base class will be base_class. The exception type is defined
  *        in the current namespace. This macro makes defining new exception
  *        types a lot more convenient by generating a lot of boilerplate code.
-**/
+ **/
 #define PL_DEFINE_EXCEPTION_TYPE(exception_type_identifier, base_class) \
     class exception_type_identifier : public base_class {               \
     public:                                                             \
@@ -81,7 +81,7 @@
  * thrown by the macro. The second parameter of the macro is the message
  * of the user to include in the exception object's message, std::string must
  * be constructible from message.
-**/
+ **/
 #define PL_THROW_WITH_SOURCE_INFO(exception_type, message)  \
     throw exception_type                                    \
     {                                                       \
@@ -99,7 +99,7 @@
  * \brief Throws pl::null_pointer_exception if the pointer passed in is null.
  * \note Uses PL_THROW_WITH_SOURCE_INFO internally.
  * \see PL_THROW_WITH_SOURCE_INFO
-**/
+ **/
 #define PL_THROW_IF_NULL(pointer)                                            \
     PL_BEGIN_MACRO                                                           \
     if ((pointer) == nullptr) {                                              \
@@ -114,7 +114,7 @@
  *        functions that are net yet implemented so that they throw when called.
  * \note Uses PL_THROW_WITH_SOURCE_INFO internally.
  * \see PL_THROW_WITH_SOURCE_INFO
-**/
+ **/
 #define PL_NOT_YET_IMPLEMENTED()           \
     PL_THROW_WITH_SOURCE_INFO(             \
         pl::not_yet_implemented_exception, \
@@ -125,7 +125,7 @@ namespace pl {
  * \brief Exception thrown on assertion violation.
  * \note Not to be caught, this exception indicates a bug.
  * \see assert.hpp
-**/
+ **/
 class assertion_violation_exception : public std::runtime_error {
 public:
     using std::runtime_error::runtime_error;
@@ -135,7 +135,7 @@ public:
  * \brief Exception thrown on precondition violation.
  * \note Not to be caught, this exception indicates a bug.
  * \see assert.hpp
-**/
+ **/
 class precondition_violation_exception : public assertion_violation_exception {
 public:
     using assertion_violation_exception::assertion_violation_exception;
@@ -145,7 +145,7 @@ public:
  * \brief Exception thrown on postcondition violation.
  * \note Not to be caught, this exception indicates a bug.
  * \see assert.hpp
-**/
+ **/
 class postcondition_violation_exception : public assertion_violation_exception {
 public:
     using assertion_violation_exception::assertion_violation_exception;
@@ -153,7 +153,7 @@ public:
 
 /*!
  * \brief Exception that you can throw if given an unexpected null pointer.
-**/
+ **/
 class null_pointer_exception : public std::runtime_error {
 public:
     using std::runtime_error::runtime_error;
@@ -161,7 +161,7 @@ public:
 
 /*!
  * \brief Used by the PL_NOT_YET_IMPLEMENTED macro.
-**/
+ **/
 class not_yet_implemented_exception : public std::runtime_error {
 public:
     using std::runtime_error::runtime_error;
@@ -169,7 +169,7 @@ public:
 
 /*!
  * \brief Exception that you can throw if an arithmetic error were to occur.
-**/
+ **/
 class arithmetic_exception : public std::runtime_error {
 public:
     using std::runtime_error::runtime_error;
@@ -177,7 +177,7 @@ public:
 
 /*!
  * \brief Exception that you can throw if given an illegal argument.
-**/
+ **/
 class illegal_argument_exception : public std::runtime_error {
 public:
     using std::runtime_error::runtime_error;
@@ -185,7 +185,7 @@ public:
 
 /*!
  * \brief Exception that you can throw if an index is out of bounds.
-**/
+ **/
 class index_out_of_bounds_exception : public std::runtime_error {
 public:
     using std::runtime_error::runtime_error;
@@ -194,7 +194,7 @@ public:
 /*!
  * \brief Exception that you can throw if a requested operation is not
  *        supported.
-**/
+ **/
 class operation_not_supported_exception : public std::runtime_error {
 public:
     using std::runtime_error::runtime_error;
@@ -202,7 +202,7 @@ public:
 
 /*!
  * \brief Exception that indicates an invalid size.
-**/
+ **/
 class invalid_size_exception : public std::runtime_error {
 public:
     using std::runtime_error::runtime_error;
@@ -232,7 +232,7 @@ public:
  * pl::handle_exceptions will rethrow the exception that was just caught and
  * handle it, by printing the information associated with that exception to
  * std::cerr. May be used for debugging purposes.
-**/
+ **/
 inline void handle_exceptions()
 {
     static constexpr char function_name[] = "pl::handle_exceptions";

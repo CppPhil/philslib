@@ -48,9 +48,7 @@ TEST_CASE("zero_memory_test")
 
     std::uint64_t i{UINT64_C(0x1A1BAABBCCDDEEFF)};
 
-    for (pl::byte byte : ary) {
-        REQUIRE(byte != static_cast<pl::byte>(0x00));
-    }
+    for (pl::byte byte : ary) { REQUIRE(byte != static_cast<pl::byte>(0x00)); }
 
     REQUIRE(i != UINT64_C(0));
 

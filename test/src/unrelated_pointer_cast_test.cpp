@@ -42,7 +42,7 @@
 
 TEST_CASE("unrelated_pointer_cast_test")
 {
-    static constexpr std::size_t bytes{sizeof(std::uint32_t)};
+    static constexpr std::size_t             bytes{sizeof(std::uint32_t)};
     static constexpr std::array<char, bytes> ary{"\xAA\xBB\xCC"};
 
     std::uint32_t i{};

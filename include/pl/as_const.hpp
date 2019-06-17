@@ -27,7 +27,7 @@
 /*!
  * \file as_const.hpp
  * \brief Exports a function to view an object as const.
-**/
+ **/
 #ifndef INCG_PL_AS_CONST_HPP
 #define INCG_PL_AS_CONST_HPP
 #include "annotations.hpp" // PL_IN
@@ -38,8 +38,8 @@ namespace pl {
  * \brief Function to view something as const.
  * \param ty The object to be viewed as const.
  * \return A const & to ty.
-**/
-template <typename Ty>
+ **/
+template<typename Ty>
 constexpr add_const_t<Ty>& as_const(PL_IN Ty& ty) noexcept
 {
     return ty;
@@ -47,8 +47,8 @@ constexpr add_const_t<Ty>& as_const(PL_IN Ty& ty) noexcept
 
 /*!
  * \brief asConst may not be called with rvalues.
-**/
-template <typename Ty>
+ **/
+template<typename Ty>
 void as_const(PL_IN const Ty&&) noexcept = delete;
 } // namespace pl
 #endif // INCG_PL_AS_CONST_HPP

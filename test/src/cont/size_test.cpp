@@ -133,7 +133,7 @@ TEST_CASE("list_size_test")
 
 TEST_CASE("std_array_size_test")
 {
-    static constexpr std::size_t size{3U};
+    static constexpr std::size_t               size{3U};
     std::array<int, size>                      array1{{1, 2, 3}};
     const std::array<unsigned long long, size> array2{{5ULL, 10ULL, 20ULL}};
 

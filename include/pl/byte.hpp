@@ -27,7 +27,7 @@
 /*!
  * \file byte.hpp
  * \brief Exports the byte type and an associated user defined literal.
-**/
+ **/
 #ifndef INCG_PL_BYTE_HPP
 #define INCG_PL_BYTE_HPP
 #include "compiler.hpp" // PL_COMPILER, PL_COMPILER_MSVC, PL_COMPILER_VERSION, PL_COMPILER_VERSION_CHECK
@@ -40,7 +40,7 @@ namespace pl {
  * \brief The byte type. To be used when viewing something as raw bytes.
  *        An alias for unsigned char. This type is effectively a 1 byte large
  *        unsigned integer.
-**/
+ **/
 using byte = unsigned char;
 
 inline namespace literals {
@@ -52,7 +52,7 @@ inline namespace integer_literals {
  * \return The resulting pl::byte object.
  * \warning If the value passed in is larger than UCHAR_MAX the program
  *          is ill-formed.
-**/
+ **/
 constexpr ::pl::byte operator""_byte(unsigned long long value)
 {
 #if (PL_COMPILER != PL_COMPILER_MSVC) \

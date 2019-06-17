@@ -28,7 +28,7 @@
  * \file erase.hpp
  * \brief Exports the erase and erase_if algorithms that implement the
  *        erase remove idiom.
-**/
+ **/
 #ifndef INCG_PL_ALGO_ERASE_HPP
 #define INCG_PL_ALGO_ERASE_HPP
 #include "../annotations.hpp"           // PL_IN, PL_INOUT
@@ -47,8 +47,8 @@ namespace detail {
  * \param element_to_remove The element to remove. All elements of the container
  *                          that compare equal to this will be removed from
  *                          the container.
-**/
-template <typename Container, typename Type>
+ **/
+template<typename Container, typename Type>
 inline void erase_helper(
     PL_INOUT Container& container,
     PL_IN const Type& element_to_remove,
@@ -69,8 +69,8 @@ inline void erase_helper(
  *                        to remove. All elements for which this object's call
  *                        operator returns true will be removed from
  *                        the container.
-**/
-template <typename Container, typename UnaryPredicate>
+ **/
+template<typename Container, typename UnaryPredicate>
 inline void erase_if_helper(
     PL_INOUT Container& container,
     PL_IN UnaryPredicate&& unary_predicate,
@@ -92,8 +92,8 @@ inline void erase_if_helper(
  * \param element_to_remove The element to remove. All elements of the container
  *                          that compare equal to this will be removed from
  *                          the container.
-**/
-template <typename Container, typename Type>
+ **/
+template<typename Container, typename Type>
 inline void erase_helper(
     PL_INOUT Container& container,
     PL_IN const Type& element_to_remove,
@@ -112,8 +112,8 @@ inline void erase_helper(
  *                        to remove. All elements for which this object's
  *                        call operator returns true will be removed
  *                        from the container.
-**/
-template <typename Container, typename UnaryPredicate>
+ **/
+template<typename Container, typename UnaryPredicate>
 inline void erase_if_helper(
     PL_INOUT Container& container,
     PL_IN UnaryPredicate&& unary_predicate,
@@ -132,8 +132,8 @@ inline void erase_if_helper(
  * \param element_to_remove The element to remove. All elements of the container
  *                          that compare equivalent/equal to this will be
  *                          removed from the container.
-**/
-template <typename Container, typename Type>
+ **/
+template<typename Container, typename Type>
 inline void erase_helper(
     PL_INOUT Container& container,
     PL_IN const Type& element_to_remove,
@@ -152,8 +152,8 @@ inline void erase_helper(
  *                        to remove. All elements for which this object's call
  *                        operator returns true will be removed from
  *                        the container.
-**/
-template <typename Container, typename UnaryPredicate>
+ **/
+template<typename Container, typename UnaryPredicate>
 inline void erase_if_helper(
     PL_INOUT Container& container,
     UnaryPredicate      unary_predicate,
@@ -162,9 +162,7 @@ inline void erase_if_helper(
     const auto end_iter = container.end();
 
     for (auto iterator = container.begin(); iterator != end_iter;) {
-        if (unary_predicate(*iterator)) {
-            container.erase(iterator++);
-        }
+        if (unary_predicate(*iterator)) { container.erase(iterator++); }
         else {
             ++iterator;
         }
@@ -194,8 +192,8 @@ inline void erase_if_helper(
  *       std::unordered_multimap the function expects the key of the pair
  *       to remove from the container. So pass the key of the pair(s) to
  *       remove into element_to_remove.
-**/
-template <typename Container, typename Type>
+ **/
+template<typename Container, typename Type>
 inline void erase(
     PL_INOUT Container& container,
     PL_IN const Type& element_to_remove)
@@ -216,8 +214,8 @@ inline void erase(
  * returns true will be removed from the container. The call operator
  * of unary_predicate is invoked with each element of the container to determine
  * if it is to be removed.
-**/
-template <typename Container, typename UnaryPredicate>
+ **/
+template<typename Container, typename UnaryPredicate>
 inline void erase_if(
     PL_INOUT Container& container,
     PL_IN UnaryPredicate&& unary_predicate)

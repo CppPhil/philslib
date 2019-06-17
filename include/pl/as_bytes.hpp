@@ -27,7 +27,7 @@
 /*!
  * \file as_bytes.hpp
  * \brief Exports the as_bytes function.
-**/
+ **/
 #ifndef INCG_PL_AS_BYTES_HPP
 #define INCG_PL_AS_BYTES_HPP
 #include "annotations.hpp"            // PL_IN
@@ -42,8 +42,8 @@ namespace pl {
  * \return The address of the beginning of object as byte*.
  * \note This overload deals with non-const objects.
  * \note The pointer returned will never be nullptr.
-**/
-template <typename Type>
+ **/
+template<typename Type>
 constexpr byte* as_bytes(PL_IN Type& object) noexcept
 {
     return ::pl::unrelated_pointer_cast<byte*>(std::addressof(object));
@@ -55,8 +55,8 @@ constexpr byte* as_bytes(PL_IN Type& object) noexcept
  * \return The address of the beginning of object as const byte*.
  * \note This overload deals with const objects.
  * \note The pointer returned will never be nullptr.
-**/
-template <typename Type>
+ **/
+template<typename Type>
 constexpr const byte* as_bytes(PL_IN const Type& object) noexcept
 {
     return ::pl::unrelated_pointer_cast<const byte*>(std::addressof(object));
@@ -64,8 +64,8 @@ constexpr const byte* as_bytes(PL_IN const Type& object) noexcept
 
 /*!
  * \brief Rvalues are not allowed.
-**/
-template <typename Type>
+ **/
+template<typename Type>
 void as_bytes(PL_IN const Type&&) noexcept = delete;
 } // namespace pl
 #endif // INCG_PL_AS_BYTES_HPP

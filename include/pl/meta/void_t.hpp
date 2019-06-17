@@ -27,7 +27,7 @@
 /*!
  * \file void_t.hpp
  * \brief Exports the void_t metafunction from C++17.
-**/
+ **/
 #ifndef INCG_PL_META_VOID_T_HPP
 #define INCG_PL_META_VOID_T_HPP
 
@@ -36,8 +36,8 @@ namespace meta {
 namespace detail {
 /*!
  * \brief Implementation struct of pl::meta::void_t, not to be used directly.
-**/
-template <typename... Args>
+ **/
+template<typename... Args>
 struct void_t_impl {
     using type = void; /* C++14 compatibility */
 };
@@ -50,8 +50,8 @@ struct void_t_impl {
  *
  * This metafunction is used in template metaprogramming to detect
  * ill-formed types in SFINAE contexts.
-**/
-template <typename... Args>
+ **/
+template<typename... Args>
 using void_t = typename detail::void_t_impl<Args...>::type;
 } // namespace meta
 } // namespace pl

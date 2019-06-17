@@ -45,11 +45,11 @@ TEST_CASE("bool_constant_type_test")
     PL_TEST_STATIC_ASSERT(
         std::is_same<pl::meta::bool_constant<false>, std::false_type>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<pl::meta::bool_constant<true>::type,
-                     std::true_type>::value);
+        std::is_same<pl::meta::bool_constant<true>::type, std::true_type>::
+            value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<pl::meta::bool_constant<false>::type,
-                     std::false_type>::value);
+        std::is_same<pl::meta::bool_constant<false>::type, std::false_type>::
+            value);
 
     CHECK_UNARY(true);
 }

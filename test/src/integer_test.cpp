@@ -38,9 +38,9 @@
 #include "../include/static_assert.hpp"               // PL_TEST_STATIC_ASSERT
 #include <climits>                                    // CHAR_BIT
 #include <cstddef>                                    // std::size_t
-#include <cstdint>                                    // std::int8_t, std::uint8_t, std::int16_t, std::uint16_t, std::int32_t, std::uint32_t, std::int64_t, std::uint64_t
-#include <limits>                                     // std::numeric_limits
-#include <type_traits>                                // std::is_same
+#include <cstdint> // std::int8_t, std::uint8_t, std::int16_t, std::uint16_t, std::int32_t, std::uint32_t, std::int64_t, std::uint64_t
+#include <limits>  // std::numeric_limits
+#include <type_traits> // std::is_same
 
 TEST_CASE("integer_test_types")
 {

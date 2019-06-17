@@ -32,8 +32,8 @@
 #include "../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
 #pragma GCC diagnostic pop
-#endif                                  // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/pl/except.hpp"  // PL_DEFINE_EXCEPTION_TYPE, PL_THROW_WITH_SOURCE_INFO, PL_THROW_IF_NULL, PL_NOT_YET_IMPLEMENTED
+#endif                                 // PL_COMPILER == PL_COMPILER_GCC
+#include "../../include/pl/except.hpp" // PL_DEFINE_EXCEPTION_TYPE, PL_THROW_WITH_SOURCE_INFO, PL_THROW_IF_NULL, PL_NOT_YET_IMPLEMENTED
 #include "../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
 #include <cstddef>                      // std::nullptr_t
 #include <cstdint>                      // std::uintptr_t

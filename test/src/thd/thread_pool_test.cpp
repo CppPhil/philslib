@@ -42,12 +42,12 @@
 namespace pl {
 namespace test {
 namespace {
-int f1(int i) noexcept { return i * 2; }
-void       f2() noexcept {}
+int  f1(int i) noexcept { return i * 2; }
+void f2() noexcept {}
 class type {
 public:
     double mem_fn1(double a) const noexcept { return a * 3.0; }
-    void                  mem_fn2() const noexcept {}
+    void   mem_fn2() const noexcept {}
 };
 } // anonymous namespace
 } // namespace test
@@ -86,7 +86,7 @@ TEST_CASE("thread_pool_test")
         std::future<std::string> fut5{tp.add_task(
             [](const char* str) { return std::string{"text "} + str; },
             "test")};
-        std::future<void> fut6{tp.add_task([] {})};
+        std::future<void>        fut6{tp.add_task([] {})};
 
         CHECK(fut1.get() == 10);
         fut2.wait();

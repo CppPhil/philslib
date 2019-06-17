@@ -27,7 +27,7 @@
 /*!
  * \file unrelated_pointer_cast.hpp
  * \brief Exports the unrelated_pointer_cast function.
-**/
+ **/
 #ifndef INCG_PL_UNRELATED_POINTER_CAST_HPP
 #define INCG_PL_UNRELATED_POINTER_CAST_HPP
 #include "annotations.hpp" // PL_IN_OPT
@@ -69,8 +69,8 @@ namespace pl {
  *          Basically any usage of reinterpret_cast and
  *          pl::unrelated_pointer_cast
  *          should be suspect.
-**/
-template <typename CastTo>
+ **/
+template<typename CastTo>
 constexpr CastTo unrelated_pointer_cast(PL_IN_OPT void* p) noexcept
 {
     static_assert(
@@ -116,8 +116,8 @@ constexpr CastTo unrelated_pointer_cast(PL_IN_OPT void* p) noexcept
  *          Basically any usage of reinterpret_cast and
  *          pl::unrelated_pointer_cast
  *          should be suspect.
-**/
-template <typename CastTo>
+ **/
+template<typename CastTo>
 constexpr CastTo unrelated_pointer_cast(PL_IN_OPT const void* p) noexcept
 {
     static_assert(

@@ -29,7 +29,7 @@
  * \brief Exports the is_reference_wrapper meta function to check whether
  *        or not a type is a std::reference_wrapper type.
  *        Also exports is_not_reference_wrapper.
-**/
+ **/
 #ifndef INCG_PL_META_IS_REFERENCE_WRAPPER_HPP
 #define INCG_PL_META_IS_REFERENCE_WRAPPER_HPP
 #include "../type_traits.hpp" // pl::decay_t
@@ -45,8 +45,8 @@ namespace meta {
  *
  * Detects whether Ty is a std::reference_wrapper type.
  * Is derived from std::false_type.
-**/
-template <typename Ty>
+ **/
+template<typename Ty>
 struct is_reference_wrapper : public std::false_type {
 };
 
@@ -56,16 +56,16 @@ struct is_reference_wrapper : public std::false_type {
  *
  * Detects whether Ty is a std::reference_wrapper type.
  * Is derived from std::true_type.
-**/
-template <typename Ty>
+ **/
+template<typename Ty>
 struct is_reference_wrapper<std::reference_wrapper<Ty>>
     : public std::true_type {
 };
 
 /*!
  * \brief Negation of is_reference_wrapper.
-**/
-template <typename Type>
+ **/
+template<typename Type>
 using is_not_reference_wrapper = negation<is_reference_wrapper<decay_t<Type>>>;
 } // namespace meta
 } // namespace pl

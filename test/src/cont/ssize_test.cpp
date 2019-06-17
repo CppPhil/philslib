@@ -32,26 +32,26 @@
 #include "../../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
 #pragma GCC diagnostic pop
-#endif                                       // PL_COMPILER == PL_COMPILER_GCC
+#endif                                        // PL_COMPILER == PL_COMPILER_GCC
 #include "../../../include/pl/cont/ssize.hpp" // pl::cont::ssize
-#include "../../include/static_assert.hpp"   // PL_TEST_STATIC_ASSERT
-#include <array>                             // std::array
-#include <bitset>                            // std::bitset
-#include <cstdint>                           // std::uint8_t
-#include <deque>                             // std::deque
-#include <initializer_list>                  // std::initializer_list
-#include <list>                              // std::list
-#include <map>                               // std::map, std::multimap
-#include <queue>                             // std::queue
-#include <regex>                             // std::smatch
-#include <set>                               // std::set, std::multiset
-#include <stack>                             // std::stack
-#include <string>                            // std::string, std::wstring
+#include "../../include/static_assert.hpp"    // PL_TEST_STATIC_ASSERT
+#include <array>                              // std::array
+#include <bitset>                             // std::bitset
+#include <cstddef>                            // std::size_t
+#include <cstdint>                            // std::uint8_t
+#include <deque>                              // std::deque
+#include <initializer_list>                   // std::initializer_list
+#include <list>                               // std::list
+#include <map>                                // std::map, std::multimap
+#include <queue>                              // std::queue
+#include <regex>                              // std::smatch
+#include <set>                                // std::set, std::multiset
+#include <stack>                              // std::stack
+#include <string>                             // std::string, std::wstring
 #include <unordered_map> // std::unordered_map, std::unordered_multimap
 #include <unordered_set> // std::unordered_set, std::unordered_multiset
 #include <valarray>      // std::valarray
 #include <vector>        // std::vector
-#include <cstddef> // std::size_t
 
 TEST_CASE("c_array_ssize_test")
 {
@@ -133,7 +133,7 @@ TEST_CASE("list_ssize_test")
 
 TEST_CASE("std_array_ssize_test")
 {
-    static constexpr std::size_t size{3U};
+    static constexpr std::size_t               size{3U};
     std::array<int, size>                      array1{{1, 2, 3}};
     const std::array<unsigned long long, size> array2{{5ULL, 10ULL, 20ULL}};
 

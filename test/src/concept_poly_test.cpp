@@ -76,7 +76,7 @@ public:
     draw_concept& operator=(const draw_concept&) = delete;
 };
 
-template <typename Impl>
+template<typename Impl>
 class draw_model : public draw_concept {
 public:
     explicit draw_model(Impl impl) : draw_concept{}, m_impl{std::move(impl)} {}

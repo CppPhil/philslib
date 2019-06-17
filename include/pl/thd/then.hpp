@@ -28,7 +28,7 @@
  * \file then.hpp
  * \brief Exports the then function template that can be used to
  *        continue a future.
-**/
+ **/
 #ifndef INCG_PL_THD_THEN_HPP
 #define INCG_PL_THD_THEN_HPP
 #include "../annotations.hpp" // PL_INOUT, PL_IN
@@ -41,8 +41,8 @@ namespace detail {
 /*!
  * \brief Implementation function of then handling the non-void case.
  *        Not to be used directly.
-**/
-template <typename Ty, typename Continuation>
+ **/
+template<typename Ty, typename Continuation>
 inline auto then_impl(
     PL_INOUT std::future<Ty>& future,
     PL_IN Continuation& continuation) -> decltype(auto)
@@ -53,8 +53,8 @@ inline auto then_impl(
 /*!
  * \brief Implementation function of then handling the void case.
  *        Not to be used directly.
-**/
-template <typename Continuation>
+ **/
+template<typename Continuation>
 inline auto then_impl(
     PL_INOUT std::future<void>& future,
     PL_IN Continuation& continuation) -> decltype(auto)
@@ -76,8 +76,8 @@ inline auto then_impl(
  * parameter to be ready. As soon as the future passed into the parameter is
  * ready the newly launched thread will fetch that future's value and invoke
  * the continuation passing in the value returned by that future.
-**/
-template <typename Ty, typename Continuation>
+ **/
+template<typename Ty, typename Continuation>
 inline auto then(std::future<Ty> future, Continuation continuation)
     -> decltype(auto)
 {

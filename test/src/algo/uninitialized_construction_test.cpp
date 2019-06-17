@@ -57,8 +57,8 @@ public:
 
     test_type& operator=(const test_type&) = default;
 
-    test_type(test_type&&) noexcept : m_constructed{true},
-                                      m_was_move_constructed{true}
+    test_type(test_type&&) noexcept
+        : m_constructed{true}, m_was_move_constructed{true}
     {
     }
 

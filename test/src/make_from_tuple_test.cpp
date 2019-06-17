@@ -69,6 +69,7 @@ public:
     const std::string& s() const noexcept { return m_s; }
     std::uint32_t      i() const noexcept { return m_i; }
     void*              p() const noexcept { return m_p; }
+
 private:
     std::string   m_s;
     std::uint32_t m_i;

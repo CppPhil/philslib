@@ -44,7 +44,8 @@ TEST_CASE("assert_test")
     const std::string     str3{"test"};
 
     CHECK_THROWS_AS(PL_CHECK_PRE(false), pl::precondition_violation_exception);
-    CHECK_THROWS_AS(PL_CHECK_POST(false), pl::postcondition_violation_exception);
+    CHECK_THROWS_AS(
+        PL_CHECK_POST(false), pl::postcondition_violation_exception);
     CHECK_THROWS_AS(PL_ASSERT(false), pl::assertion_violation_exception);
     CHECK_THROWS_AS(
         PL_ASSERT_MSG(false, "test"), pl::assertion_violation_exception);

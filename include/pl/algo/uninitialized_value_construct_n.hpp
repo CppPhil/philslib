@@ -27,7 +27,7 @@
 /*!
  * \file uninitialized_value_construct_n.hpp
  * \brief Exports the C++17 uninitialized_value_construct_n algorithm.
-**/
+ **/
 #ifndef INCG_PL_ALGO_UNINITIALIZED_VALUE_CONSTRUCT_N_HPP
 #define INCG_PL_ALGO_UNINITIALIZED_VALUE_CONSTRUCT_N_HPP
 #include <iterator> // std::iterator_traits
@@ -50,8 +50,8 @@ namespace algo {
  * \note If an exception is thrown during the initialization,
  *       the function has no effects.
  *       The complexity is linear in 'n'.
-**/
-template <typename ForwardIterator, typename SizeType>
+ **/
+template<typename ForwardIterator, typename SizeType>
 inline ForwardIterator uninitialized_value_construct_n(
     ForwardIterator first,
     SizeType        n)

@@ -27,7 +27,7 @@
 /*!
  * \file eprintf.hpp
  * \brief Exports the eprintf function.
-**/
+ **/
 #ifndef INCG_PL_EPRINTF_HPP
 #define INCG_PL_EPRINTF_HPP
 #include "annotations.hpp" // PL_IN, PL_FMT_STR, PL_PRINTF_FUNCTION
@@ -46,7 +46,7 @@ namespace {
  *       stdout.
  * \warning Be careful not to use incorrect format specifiers or an incorrect
  *          amount of arguments for the printf-style string.
-**/
+ **/
 PL_PRINTF_FUNCTION(1, 2)
 int eprintf(PL_IN PL_FMT_STR(const char*) format_string, ...) noexcept
 {

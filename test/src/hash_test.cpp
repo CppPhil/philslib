@@ -51,7 +51,7 @@ class hashable;
 } // namespace pl
 
 namespace std {
-template <>
+template<>
 struct hash<::pl::test::hashable>;
 } // namespace std
 
@@ -81,7 +81,7 @@ private:
 } // namespace pl
 
 namespace std {
-template <>
+template<>
 struct hash<::pl::test::hashable> {
     size_t operator()(const ::pl::test::hashable& hashable) const
     {
@@ -113,7 +113,8 @@ TEST_CASE("hash_negative_test")
 {
     pl::test::hashable a{"text", 5};
     pl::test::hashable b{
-        "text", 6,
+        "text",
+        6,
     };
 
     CHECK(

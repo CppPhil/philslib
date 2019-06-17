@@ -62,15 +62,15 @@ TEST_CASE("list_front_test")
 
 TEST_CASE("std_array_front_test")
 {
-    static constexpr std::size_t size{3U};
+    static constexpr std::size_t     size{3U};
     std::array<unsigned, size>       array1{{1U, 2U, 3U}};
     const std::array<unsigned, size> array2{{4U, 5U, 6U}};
 
     PL_TEST_STATIC_ASSERT(
         std::is_same<decltype(pl::cont::front(array1)), unsigned&>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::cont::front(array2)),
-                     const unsigned&>::value);
+        std::is_same<decltype(pl::cont::front(array2)), const unsigned&>::
+            value);
 
     CHECK(pl::cont::front(array1) == 1U);
     CHECK(pl::cont::front(array2) == 4U);
@@ -144,8 +144,8 @@ TEST_CASE("forward_list_front_test")
     PL_TEST_STATIC_ASSERT(
         std::is_same<decltype(pl::cont::front(forward_list1)), int&>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::cont::front(forward_list2)),
-                     const int&>::value);
+        std::is_same<decltype(pl::cont::front(forward_list2)), const int&>::
+            value);
 
     CHECK(pl::cont::front(forward_list1) == 0);
     CHECK(pl::cont::front(forward_list2) == 5);
@@ -159,8 +159,8 @@ TEST_CASE("c_array_front_test")
     PL_TEST_STATIC_ASSERT(
         std::is_same<decltype(pl::cont::front(array1)), std::size_t&>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::cont::front(array2)),
-                     const std::size_t&>::value);
+        std::is_same<decltype(pl::cont::front(array2)), const std::size_t&>::
+            value);
 
     CHECK(pl::cont::front(array1) == 1U);
     CHECK(pl::cont::front(array2) == 7U);
@@ -176,8 +176,8 @@ TEST_CASE("initializer_list_front_test")
     PL_TEST_STATIC_ASSERT(
         std::is_same<decltype(pl::cont::front(il)), const int&>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::cont::front(il2)),
-                     const std::string&>::value);
+        std::is_same<decltype(pl::cont::front(il2)), const std::string&>::
+            value);
 
     CHECK(pl::cont::front(il) == 1);
     CHECK(pl::cont::front(il2) == "text"s);

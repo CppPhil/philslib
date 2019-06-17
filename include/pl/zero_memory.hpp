@@ -27,7 +27,7 @@
 /*!
  * \file zero_memory.hpp
  * \brief Exports the pl::zero_memory and the pl::secure_zero_memory functions.
-**/
+ **/
 #ifndef INCG_PL_ZERO_MEMORY_HPP
 #define INCG_PL_ZERO_MEMORY_HPP
 #include "annotations.hpp" // PL_OUT
@@ -56,14 +56,14 @@ namespace pl {
  *          to by dest, the behavior is undefined.
  * \warning dest may not be a null pointer.
  * \see secure_zero_memory
-**/
-PL_ALWAYS_INLINE void* zero_memory(PL_OUT void* dest, std::size_t count_bytes) noexcept
+ **/
+PL_ALWAYS_INLINE void* zero_memory(
+    PL_OUT void* dest,
+    std::size_t  count_bytes) noexcept
 {
     byte* ptr{static_cast<byte*>(dest)};
 
-    for (; count_bytes != 0U; ++ptr, --count_bytes) {
-        *ptr = 0U;
-    }
+    for (; count_bytes != 0U; ++ptr, --count_bytes) { *ptr = 0U; }
 
     return dest;
 }
@@ -90,16 +90,14 @@ PL_ALWAYS_INLINE void* zero_memory(PL_OUT void* dest, std::size_t count_bytes) n
  * pl::zero_memory when you want to ensure that the data will be zeroed out
  * even if the object pointed to by dest will not be referenced after
  * a call to this function.
-**/
+ **/
 PL_ALWAYS_INLINE void* secure_zero_memory(
     PL_OUT void* dest,
     std::size_t  count_bytes) noexcept
 {
     volatile byte* ptr{static_cast<volatile byte*>(dest)};
 
-    for (; count_bytes != 0U; ++ptr, --count_bytes) {
-        *ptr = 0U;
-    }
+    for (; count_bytes != 0U; ++ptr, --count_bytes) { *ptr = 0U; }
 
     return dest;
 }

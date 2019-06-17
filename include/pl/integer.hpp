@@ -27,55 +27,55 @@
 /*!
  * \file integer.hpp
  * \brief This header defines various fixed size integer types.
-**/
+ **/
 #ifndef INCG_PL_INTEGER_HPP
 #define INCG_PL_INTEGER_HPP
 #include <cstdint> // std::int8_t, std::int16_t, std::int32_t, std::int64_t, std::uint8_t, std::uint16_t, std::uint32_t, std::uint64_t
 
 namespace pl {
 namespace detail {
-template <int Bits>
+template<int Bits>
 struct int_impl;
 
-template <>
+template<>
 struct int_impl<8> {
     using type = std::int8_t;
 };
 
-template <>
+template<>
 struct int_impl<16> {
     using type = std::int16_t;
 };
 
-template <>
+template<>
 struct int_impl<32> {
     using type = std::int32_t;
 };
 
-template <>
+template<>
 struct int_impl<64> {
     using type = std::int64_t;
 };
 
-template <int Bits>
+template<int Bits>
 struct uint_impl;
 
-template <>
+template<>
 struct uint_impl<8> {
     using type = std::uint8_t;
 };
 
-template <>
+template<>
 struct uint_impl<16> {
     using type = std::uint16_t;
 };
 
-template <>
+template<>
 struct uint_impl<32> {
     using type = std::uint32_t;
 };
 
-template <>
+template<>
 struct uint_impl<64> {
     using type = std::uint64_t;
 };
@@ -84,15 +84,15 @@ struct uint_impl<64> {
 /*!
  * \brief Fixed size signed integer type.
  * \note The only valid values for the template parameter are 8, 16, 32 and 64.
-**/
-template <int Bits>
+ **/
+template<int Bits>
 using int_t = typename detail::int_impl<Bits>::type;
 
 /*!
  * \brief Fixed size unsigned integer type.
  * \note The only valid values for the template parameter are 8, 16, 32 and 64.
-**/
-template <int Bits>
+ **/
+template<int Bits>
 using uint_t = typename detail::uint_impl<Bits>::type;
 } // namespace pl
 #endif // INCG_PL_INTEGER_HPP

@@ -46,7 +46,7 @@ class type {
 public:
     explicit type(bool v) : m_v{v} {}
     bool mem_fun(const char* s) const { return std::strchr(s, 'a') != nullptr; }
-    bool                     m_v;
+    bool m_v;
 };
 
 class functor {
@@ -128,9 +128,9 @@ TEST_CASE("negate_predicate_functor_test")
 
 TEST_CASE("negate_predicate_lambda_test")
 {
-    auto l             = [](int i) { return i > 5; };
-    auto&           r  = l;
-    const auto&     cr = l;
+    auto        l  = [](int i) { return i > 5; };
+    auto&       r  = l;
+    const auto& cr = l;
 
     const std::vector<int> vec1{1, 2, 3, 4, 5};
     const std::vector<int> vec2{2, 3, 4, 5, 6};

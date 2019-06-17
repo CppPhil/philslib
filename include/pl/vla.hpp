@@ -27,7 +27,7 @@
 /*!
  * \file vla.hpp
  * \brief Exports the PL_VLA macro.
-**/
+ **/
 #ifndef INCG_PL_VLA_HPP
 #define INCG_PL_VLA_HPP
 #include "alloca.hpp"           // PL_ALLOCA
@@ -48,7 +48,7 @@
  *       std::unordered_map<int, std::string>
  *       you have to use a type alias for that type, rather than using the type
  *       directly so that the comma effectively disappears.
-**/
+ **/
 
 #define PL_VLA(type, identifier, size, ...)  \
     ::pl::raw_memory_array<type> identifier( \

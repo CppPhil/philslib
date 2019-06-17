@@ -47,7 +47,7 @@ TEST_CASE("empty_test")
     std::vector<int>    vec1{1, 2, 3};
     std::vector<double> vec2{};
 
-    static constexpr std::size_t array_size{3U};
+    static constexpr std::size_t          array_size{3U};
     constexpr std::array<int, array_size> a{{1, 2, 3}};
 
     std::deque<long long> deque{1LL};

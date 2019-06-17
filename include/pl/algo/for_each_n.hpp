@@ -27,7 +27,7 @@
 /*!
  * \file for_each_n.hpp
  * \brief Exports the C++17 for_each_n algorithm.
-**/
+ **/
 #ifndef INCG_PL_ALGO_FOR_EACH_N_HPP
 #define INCG_PL_ALGO_FOR_EACH_N_HPP
 #include "../invoke.hpp" // pl::invoke
@@ -58,8 +58,8 @@ namespace algo {
  *          If 'first' + 'n' is beyond the end iterator of the range,
  *          the behavior is undefined.
  * \return 'first' + 'n'
-**/
-template <typename InputIterator, typename SizeType, typename UnaryInvocable>
+ **/
+template<typename InputIterator, typename SizeType, typename UnaryInvocable>
 inline InputIterator
 for_each_n(InputIterator first, SizeType n, UnaryInvocable unary_invocable)
 {

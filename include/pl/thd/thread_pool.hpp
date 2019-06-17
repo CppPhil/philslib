@@ -27,7 +27,7 @@
 /*!
  * \file thread_pool.hpp
  * \brief Defines the thread_pool class.
-**/
+ **/
 #ifndef INCG_PL_THD_THREAD_POOL_HPP
 #define INCG_PL_THD_THREAD_POOL_HPP
 #include "../algo/destroy.hpp" // pl::algo::destroy
@@ -57,7 +57,7 @@ namespace thd {
  *        will run the tasks added according to their priority. The count of
  *        threads and the count of tasks still waiting to be executed can be
  *        queried.
-**/
+ **/
 class thread_pool {
 private:
     class executor_base;
@@ -70,7 +70,7 @@ public:
      * \param a The first operand.
      * \param b The second operand.
      * \return true if a's priority is less than b's priority; false otherwise.
-    **/
+     **/
     friend bool operator<(
         PL_IN const executor_base& a,
         PL_IN const executor_base& b);
@@ -85,17 +85,17 @@ public:
      * You can use std::thread::hardware_concurrency() to get a good amount
      * of threads to be used. However, note that
      * std::thread::hardware_concurrency() may return 0 on error.
-    **/
+     **/
     explicit thread_pool(std::size_t amt_threads);
 
     /*!
      * \brief This type is non-copyable.
-    **/
+     **/
     thread_pool(const this_type&) = delete;
 
     /*!
      * \brief This type is non-copyable.
-    **/
+     **/
     this_type& operator=(const this_type&) = delete;
 
     /*!
@@ -103,7 +103,7 @@ public:
      *        managed by the thread_pool and then destroying the threads.
      * \warning Will block the calling thread until all of the threads in the
      *          thread_pool are shut down.
-    **/
+     **/
     ~thread_pool();
 
     /*!
@@ -125,8 +125,8 @@ public:
      * passed. The priority used will be 0, which is the lowest possible
      * priority. Will wake up one thread waiting for something to be added
      * to the queue of tasks.
-    **/
-    template <typename Callable, typename... Args>
+     **/
+    template<typename Callable, typename... Args>
     PL_NODISCARD auto add_task(Callable task, Args... args)
     {
         // add the task using a priority of 0.
@@ -158,15 +158,14 @@ public:
      * that is waiting for a task to be added to the queue. Will return a
      * std::future to the result of invoking the task with the arguments passed.
      * That std::future can be joined using .get() for instance.
-    **/
-    template <typename Callable, typename... Args>
+     **/
+    template<typename Callable, typename... Args>
     PL_NODISCARD auto add_task(std::uint8_t prio, Callable task, Args... args)
     {
-        auto invoker =
-            [ t = std::move(task), tup = std::make_tuple(std::move(args)...) ]
-        {
-            return ::pl::apply(std::move(t), std::move(tup));
-        };
+        auto invoker
+            = [t = std::move(task), tup = std::make_tuple(std::move(args)...)] {
+                  return ::pl::apply(std::move(t), std::move(tup));
+              };
 
         // return type for the Executor template
         using ret = decltype(invoker());
@@ -187,7 +186,7 @@ public:
      * \brief Function to query the amount of threads that this thread_pool
      *        manages.
      * \return The count of threads that this thread_pool manages.
-    **/
+     **/
     PL_NODISCARD std::size_t thread_count() const;
 
     /*!
@@ -196,7 +195,7 @@ public:
      * \return The number of tasks still waiting in the queue.
      * \warning May block the calling thread while other threads access
      *          the underlying priority queue of tasks.
-    **/
+     **/
     PL_NODISCARD std::size_t tasks_waiting_for_execution() const;
 
 private:
@@ -205,19 +204,19 @@ private:
      *        the result as a promise. Has a priority associated with it
      *        that represents the priority of the task to be run.
      *        Can be compared by that priority.
-    **/
+     **/
     class executor_base {
     public:
         /*!
          * \brief Constructor for excutor_base.
          * \param p the priority to be stored in the protected data member,
          *        defaults to 0xFFU, which is 255.
-        **/
+         **/
         explicit executor_base(std::uint8_t p = 0xFFU);
 
         /*!
          * \brief Destroys an executor_base.
-        **/
+         **/
         virtual ~executor_base();
 
         /*!
@@ -226,7 +225,7 @@ private:
          * \param b The second operand.
          * \return true if a's priority is less than b's priority; false
          *         otherwise.
-        **/
+         **/
         friend bool operator<(
             PL_IN const executor_base& a,
             PL_IN const executor_base& b);
@@ -234,21 +233,21 @@ private:
         /*!
          * \brief pure virtual member function to be implemented by deriving
          *        types. Invokes the task and stores the result in a promise.
-        **/
+         **/
         virtual void operator()() = 0;
 
     protected:
         std::uint8_t m_priority; /*!< the priority with which to run the task.
                                   *   Can be accessed by derived types.
-                                 **/
+                                  **/
     };
 
     /*!
      * \brief executor for tasks returning a non-void type.
      *
      * Runs the task in its call operator and sets the result to its promise.
-    **/
-    template <typename Task, typename Ret>
+     **/
+    template<typename Task, typename Ret>
     class executor final : public executor_base {
     public:
         /*!
@@ -256,7 +255,7 @@ private:
          * \param task The task to be run in the call operator.
          * \param priority The priority with which the task is to be run.
          *        The executors will remain sorted by this criterion.
-        **/
+         **/
         executor(PL_IN const Task& task, std::uint8_t priority)
             : executor_base{priority}, m_task{task}, m_result{}
         {
@@ -267,7 +266,7 @@ private:
          *        result to its promise.
          * \note If an exception occurs while running the task, the
          *       exception will be stored in the promise instead.
-        **/
+         **/
         virtual void operator()() override
         {
             try {
@@ -283,8 +282,9 @@ private:
          * \return A non-const lvalue reference to the promise stored.
          * \note Used by thread_pool::add_task to access the promise and get its
          *       associated future.
-        **/
+         **/
         PL_NODISCARD std::promise<Ret>& result() { return m_result; }
+
     private:
         Task              m_task;   //!< The task to be run.
         std::promise<Ret> m_result; //!< the result of running the task.
@@ -295,8 +295,8 @@ private:
      *
      * Runs the task in its call operator, that is to be called by a thread.
      * and sets the result to its underlying promise.
-    **/
-    template <typename Task>
+     **/
+    template<typename Task>
     class executor<Task, void> final : public executor_base {
     public:
         /*!
@@ -308,7 +308,7 @@ private:
          *        they can remain sorted according to that criterion.
          * \note The function that is run by the threads will always take the
          *       'greatest' task, that is the one with the highest priority.
-        **/
+         **/
         executor(PL_IN const Task& task, std::uint8_t priority)
             : executor_base{priority}, m_task{task}, m_result{}
         {
@@ -322,7 +322,7 @@ private:
          * The task is called, when this function is invoked. The
          * promise stored will be made ready. If the invocation if the task
          * throws that exception will be caught and be put into the promise.
-        **/
+         **/
         virtual void operator()() override
         {
             try {
@@ -340,14 +340,15 @@ private:
          * \note This function is called in thread_pool::add_task so that
          *       the future associated with this promise can be gotten and be
          *       returned back to the user.
-        **/
+         **/
         PL_NODISCARD std::promise<void>& result() { return m_result; }
+
     private:
         Task m_task; //!< The task to be called in the call operator.
         std::promise<void> m_result; /*!< The result of calling the Task.
                                       *   Will be void or if an exception
                                       *   occurred, it will be that exception.
-                                     **/
+                                      **/
     };
 
     /*!
@@ -355,7 +356,7 @@ private:
      *        Helper to keep the tasks sorted according to their priority.
      *        Dereferences two objects passed in and compares the results using
      *        std::less.
-    **/
+     **/
     class deref_less final {
     public:
         /*!
@@ -364,8 +365,8 @@ private:
          * \param p2 The second operator to be dereferenced and the compared.
          * \return The result of comparing *p1 and *p2 using std::less.
          *         true if *p1 is considered less than *p2; false otherwise.
-        **/
-        template <typename Pointer>
+         **/
+        template<typename Pointer>
         PL_NODISCARD bool operator()(
             PL_IN Pointer const& p1,
             PL_IN Pointer const& p2)
@@ -389,7 +390,7 @@ private:
      * which will run the actual task and set the promise in the Executor
      * that the future that was returned to the user by add_task is associated
      * with.
-    **/
+     **/
     void thread_function();
 
     /*!
@@ -398,23 +399,24 @@ private:
      *        thread_pool's destructor.
      * \warning Will let the calling thread wait until the threads of this
      *          thread_pool are shut down.
-    **/
+     **/
     void join();
 
-    std::priority_queue<std::shared_ptr<executor_base>,
-                        std::vector<std::shared_ptr<executor_base>>,
-                        deref_less>
+    std::priority_queue<
+        std::shared_ptr<executor_base>,
+        std::vector<std::shared_ptr<executor_base>>,
+        deref_less>
                             m_tasks_shared; //!< the queue of tasks still to be run
     mutable std::mutex      m_mutex; //!< mutex to protect the shared data
     std::condition_variable m_cv; /*!< condvar to wake threads waiting for the
                                    *   queue to no longer be empty. And to
                                    *   shutdown the threads in the join function
-                                  **/
+                                   **/
     bool m_is_finished_shared; //!< flag that will be set to true on shutdown.
     const std::size_t           m_thread_count; //!< the amount of threads.
     std::unique_ptr<pl::byte[]> m_threads;      /*!< raw memory that the threads
                                                  *   live in.
-                                                **/
+                                                 **/
     std::thread* m_thread_begin; //!< iterator to the first thread.
     std::thread* m_thread_end;   //!< end iterator of the range of threads.
 };
@@ -457,7 +459,7 @@ inline thread_pool::~thread_pool()
 
     /* Call the destructors of the threads.
      * the unique_ptr will only free the raw memory of pl::bytes.
-    **/
+     **/
     algo::destroy(m_thread_begin, m_thread_end);
 }
 

@@ -80,8 +80,8 @@ TEST_CASE("wstring_data_test")
     PL_TEST_STATIC_ASSERT(
         std::is_same<decltype(pl::cont::data(wstring1)), wchar_t*>::value);
     PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::cont::data(wstring2)),
-                     const wchar_t*>::value);
+        std::is_same<decltype(pl::cont::data(wstring2)), const wchar_t*>::
+            value);
 
     CHECK(pl::cont::data(wstring1) == &wstring1[0]);
     CHECK(pl::cont::data(wstring2) == wstring2.data());

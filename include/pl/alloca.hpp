@@ -27,7 +27,7 @@
 /*!
  * \file alloca.hpp
  * \brief Defines the PL_ALLOCA function like macro.
-**/
+ **/
 #ifndef INCG_PL_ALLOCA_HPP
 #define INCG_PL_ALLOCA_HPP
 #include "os.hpp" // PL_OS, PL_OS_LINUX, PL_OS_MAC, PL_OS_WINDOWS
@@ -54,7 +54,7 @@
  *          the program is undefined.
  *          Make sure that the 'count_bytes' supplied is safe, i.e. not
  *          supplied by the user or some external source.
-**/
+ **/
 
 #if PL_OS == PL_OS_LINUX || PL_OS == PL_OS_MAC
 #define PL_ALLOCA(count_bytes) alloca(count_bytes)

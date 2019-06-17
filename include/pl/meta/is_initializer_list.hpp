@@ -27,7 +27,7 @@
 /*!
  * \file is_initializer_list.hpp
  * \brief Exports the is_initializer_list meta function.
-**/
+ **/
 #ifndef INCG_PL_META_IS_INITIALIZER_LIST_HPP
 #define INCG_PL_META_IS_INITIALIZER_LIST_HPP
 #include <initializer_list> // std::initializer_list
@@ -41,8 +41,8 @@ namespace meta {
  *
  * Detects whether Ty is a std::initializer_list type.
  * Is derived from std::false_type.
-**/
-template <typename Ty>
+ **/
+template<typename Ty>
 struct is_initializer_list : public std::false_type {
 };
 
@@ -52,8 +52,8 @@ struct is_initializer_list : public std::false_type {
  *
  * Detects whether Ty is a std::initializer_list type.
  * Is derived from std::true_type.
-**/
-template <typename Ty>
+ **/
+template<typename Ty>
 struct is_initializer_list<std::initializer_list<Ty>> : public std::true_type {
 };
 } // namespace meta

@@ -153,19 +153,20 @@ TEST_CASE("observer_ptr_test")
         pl::observer_ptr<const int> const_observer_ptr{&i};
 
         PL_TEST_STATIC_ASSERT(
-            std::is_same<decltype(const_observer_ptr.release()),
-                         const int*>::value);
+            std::is_same<decltype(const_observer_ptr.release()), const int*>::
+                value);
         PL_TEST_STATIC_ASSERT(
-            std::is_same<decltype(const_observer_ptr.get()),
-                         const int*>::value);
+            std::is_same<decltype(const_observer_ptr.get()), const int*>::
+                value);
         PL_TEST_STATIC_ASSERT(
             std::is_same<decltype(*const_observer_ptr), const int&>::value);
+        PL_TEST_STATIC_ASSERT(std::is_same<
+                              decltype(const_observer_ptr.operator->()),
+                              const int*>::value);
         PL_TEST_STATIC_ASSERT(
-            std::is_same<decltype(const_observer_ptr.operator->()),
-                         const int*>::value);
-        PL_TEST_STATIC_ASSERT(
-            std::is_same<decltype(const_observer_ptr.operator const int*()),
-                         const int*>::value);
+            std::is_same<
+                decltype(const_observer_ptr.operator const int*()),
+                const int*>::value);
 
         CHECK(const_observer_ptr.get() == &i);
         CHECK(const_observer_ptr == pointer);

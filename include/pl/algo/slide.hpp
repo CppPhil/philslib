@@ -27,7 +27,7 @@
 /*!
  * \file slide.hpp
  * \brief Exports the slide algorithm.
-**/
+ **/
 #ifndef INCG_PL_ALGO_SLIDE_HPP
 #define INCG_PL_ALGO_SLIDE_HPP
 #include <algorithm> // std::rotate
@@ -58,21 +58,17 @@ namespace algo {
  * Note that all iterators must point into the same container
  * Also note the last iterator is not considered part of the range as
  * ranges are typically half open in C++.
-**/
-template <typename RandomAccessIterator>
+ **/
+template<typename RandomAccessIterator>
 inline auto slide(
     RandomAccessIterator first,
     RandomAccessIterator last,
     RandomAccessIterator place)
     -> std::pair<RandomAccessIterator, RandomAccessIterator>
 {
-    if (place < first) {
-        return {place, std::rotate(place, first, last)};
-    }
+    if (place < first) { return {place, std::rotate(place, first, last)}; }
 
-    if (last < place) {
-        return {std::rotate(first, last, place), place};
-    }
+    if (last < place) { return {std::rotate(first, last, place), place}; }
 
     return {first, last};
 }

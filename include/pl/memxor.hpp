@@ -27,7 +27,7 @@
 /*!
  * \file memxor.hpp
  * \brief Exports the memxor function.
-**/
+ **/
 #ifndef INCG_PL_MEMXOR_HPP
 #define INCG_PL_MEMXOR_HPP
 #include "annotations.hpp" // PL_IN, PL_INOUT
@@ -49,7 +49,7 @@ namespace pl {
  *                  byte size for 'destination' and 'source'.
  * \return 'destination' is returned.
  * \warning Make sure 'byte_count' is correct!
-**/
+ **/
 inline void* memxor(
     PL_INOUT void* PL_RESTRICT destination,
     PL_IN const void* PL_RESTRICT source,

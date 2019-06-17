@@ -106,10 +106,12 @@ TEST_CASE("erase_if_from_list")
 {
     std::list<int> list{0, 10, 11, 20, 22, 30, 33};
 
-    pl::algo::erase_if(list, [](int i) { return ((i % 100) / 10) == (i % 10); });
+    pl::algo::erase_if(
+        list, [](int i) { return ((i % 100) / 10) == (i % 10); });
     CHECK(list == std::list<int>{10, 20, 30});
 
-    pl::algo::erase_if(list, [](int i) { return ((i % 100) / 10) == (i % 10); });
+    pl::algo::erase_if(
+        list, [](int i) { return ((i % 100) / 10) == (i % 10); });
     CHECK(list == std::list<int>{10, 20, 30});
 }
 

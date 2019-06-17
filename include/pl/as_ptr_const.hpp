@@ -27,7 +27,7 @@
 /*!
  * \file as_ptr_const.hpp
  * \brief Exports the as_ptr_const function template.
-**/
+ **/
 #ifndef INCG_PL_AS_PTR_CONST_HPP
 #define INCG_PL_AS_PTR_CONST_HPP
 #include "annotations.hpp" // PL_IN_OPT
@@ -40,8 +40,8 @@ namespace pl {
  * \param p The pointer passed in.
  * \return A low level const qualified pointer to the object that is pointed
  *         to by 'p'.
-**/
-template <typename Ty>
+ **/
+template<typename Ty>
 constexpr add_const_t<Ty>* as_ptr_const(PL_IN_OPT Ty* p) noexcept
 {
     return p;

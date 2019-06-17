@@ -27,7 +27,7 @@
 /*!
  * \file uninitialized_default_construct.hpp
  * \brief Exports the C++17 uninitialized_default_construct algorithm.
-**/
+ **/
 #ifndef INCG_PL_ALGO_UNINITIALIZED_DEFAULT_CONSTRUCT_HPP
 #define INCG_PL_ALGO_UNINITIALIZED_DEFAULT_CONSTRUCT_HPP
 #include <iterator> // std::iterator_traits
@@ -48,8 +48,8 @@ namespace algo {
  * \note If an exception is thrown during the initialization,
  *       the function has no effects.
  *       The complexity is linear in the distance between 'first' and 'last'.
-**/
-template <typename ForwardIterator>
+ **/
+template<typename ForwardIterator>
 inline void uninitialized_default_construct(
     ForwardIterator first,
     ForwardIterator last)

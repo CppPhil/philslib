@@ -39,67 +39,65 @@
 
 TEST_CASE("container_traits_test")
 {
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<pl::meta::container_traits_category<std::vector<int>>,
-                     pl::meta::vectorlike_tag>::value);
+    PL_TEST_STATIC_ASSERT(std::is_same<
+                          pl::meta::container_traits_category<std::vector<int>>,
+                          pl::meta::vectorlike_tag>::value);
+
+    PL_TEST_STATIC_ASSERT(std::is_same<
+                          pl::meta::container_traits_category<std::deque<int>>,
+                          pl::meta::vectorlike_tag>::value);
+
+    PL_TEST_STATIC_ASSERT(std::is_same<
+                          pl::meta::container_traits_category<std::string>,
+                          pl::meta::vectorlike_tag>::value);
+
+    PL_TEST_STATIC_ASSERT(std::is_same<
+                          pl::meta::container_traits_category<std::list<int>>,
+                          pl::meta::listlike_tag>::value);
 
     PL_TEST_STATIC_ASSERT(
-        std::is_same<pl::meta::container_traits_category<std::deque<int>>,
-                     pl::meta::vectorlike_tag>::value);
+        std::is_same<
+            pl::meta::container_traits_category<std::forward_list<int>>,
+            pl::meta::listlike_tag>::value);
+
+    PL_TEST_STATIC_ASSERT(std::is_same<
+                          pl::meta::container_traits_category<std::set<int>>,
+                          pl::meta::associative_tag>::value);
 
     PL_TEST_STATIC_ASSERT(
-        std::is_same<pl::meta::container_traits_category<std::string>,
-                     pl::meta::vectorlike_tag>::value);
+        std::is_same<
+            pl::meta::container_traits_category<std::multiset<int>>,
+            pl::meta::associative_tag>::value);
 
     PL_TEST_STATIC_ASSERT(
-        std::is_same<pl::meta::container_traits_category<std::list<int>>,
-                     pl::meta::listlike_tag>::value);
+        std::is_same<
+            pl::meta::container_traits_category<std::unordered_set<int>>,
+            pl::meta::associative_tag>::value);
 
     PL_TEST_STATIC_ASSERT(
-        std::
-            is_same<pl::meta::container_traits_category<std::forward_list<int>>,
-                    pl::meta::listlike_tag>::value);
+        std::is_same<
+            pl::meta::container_traits_category<std::unordered_multiset<int>>,
+            pl::meta::associative_tag>::value);
 
     PL_TEST_STATIC_ASSERT(
-        std::is_same<pl::meta::container_traits_category<std::set<int>>,
-                     pl::meta::associative_tag>::value);
+        std::is_same<
+            pl::meta::container_traits_category<std::map<int, int>>,
+            pl::meta::associative_tag>::value);
 
     PL_TEST_STATIC_ASSERT(
-        std::is_same<pl::meta::container_traits_category<std::multiset<int>>,
-                     pl::meta::associative_tag>::value);
+        std::is_same<
+            pl::meta::container_traits_category<std::multimap<int, int>>,
+            pl::meta::associative_tag>::value);
 
     PL_TEST_STATIC_ASSERT(
-        std::is_same<pl::meta::
-                         container_traits_category<std::unordered_set<int>>,
-                     pl::meta::associative_tag>::value);
+        std::is_same<
+            pl::meta::container_traits_category<std::unordered_map<int, int>>,
+            pl::meta::associative_tag>::value);
 
-    PL_TEST_STATIC_ASSERT(
-        std::
-            is_same<pl::meta::
-                        container_traits_category<std::unordered_multiset<int>>,
-                    pl::meta::associative_tag>::value);
-
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<pl::meta::container_traits_category<std::map<int, int>>,
-                     pl::meta::associative_tag>::value);
-
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<pl::meta::container_traits_category<std::multimap<int,
-                                                                       int>>,
-                     pl::meta::associative_tag>::value);
-
-    PL_TEST_STATIC_ASSERT(
-        std::
-            is_same<pl::meta::
-                        container_traits_category<std::unordered_map<int, int>>,
-                    pl::meta::associative_tag>::value);
-
-    PL_TEST_STATIC_ASSERT(
-        std::
-            is_same<pl::meta::
-                        container_traits_category<std::unordered_multimap<int,
-                                                                          int>>,
-                    pl::meta::associative_tag>::value);
+    PL_TEST_STATIC_ASSERT(std::is_same<
+                          pl::meta::container_traits_category<
+                              std::unordered_multimap<int, int>>,
+                          pl::meta::associative_tag>::value);
 
     CHECK_UNARY(true);
 }

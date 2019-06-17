@@ -120,4 +120,3 @@ TEST_CASE("to_array_rvalue_test")
     CHECK(*(stdArray2.front()) == 20);
 }
 #endif // PL_COMPILER != PL_COMPILER_MSVC
-

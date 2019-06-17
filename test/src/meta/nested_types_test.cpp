@@ -47,36 +47,36 @@ TEST_CASE("value_type_test")
 {
     PL_TEST_STATIC_ASSERT(
         std::is_same<pl::meta::value_type<std::vector<int>>, int>::value);
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<pl::meta::value_type<std::deque<std::string>>,
-                     std::string>::value);
+    PL_TEST_STATIC_ASSERT(std::is_same<
+                          pl::meta::value_type<std::deque<std::string>>,
+                          std::string>::value);
 
     CHECK_UNARY(true);
 }
 
 TEST_CASE("allocator_type_test")
 {
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<pl::meta::allocator_type<std::vector<int>>,
-                     std::allocator<int>>::value);
+    PL_TEST_STATIC_ASSERT(std::is_same<
+                          pl::meta::allocator_type<std::vector<int>>,
+                          std::allocator<int>>::value);
 
     CHECK_UNARY(true);
 }
 
 TEST_CASE("difference_type_test")
 {
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<pl::meta::difference_type<std::vector<int>>,
-                     std::vector<int>::difference_type>::value);
+    PL_TEST_STATIC_ASSERT(std::is_same<
+                          pl::meta::difference_type<std::vector<int>>,
+                          std::vector<int>::difference_type>::value);
 
     CHECK_UNARY(true);
 }
 
 TEST_CASE("size_type_test")
 {
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<pl::meta::size_type<std::vector<double>>,
-                     std::vector<double>::size_type>::value);
+    PL_TEST_STATIC_ASSERT(std::is_same<
+                          pl::meta::size_type<std::vector<double>>,
+                          std::vector<double>::size_type>::value);
 
     CHECK_UNARY(true);
 }
@@ -84,8 +84,8 @@ TEST_CASE("size_type_test")
 TEST_CASE("key_type_test")
 {
     PL_TEST_STATIC_ASSERT(
-        std::is_same<pl::meta::key_type<std::unordered_map<int, double>>,
-                     int>::value);
+        std::is_same<pl::meta::key_type<std::unordered_map<int, double>>, int>::
+            value);
 
     CHECK_UNARY(true);
 }
@@ -93,8 +93,9 @@ TEST_CASE("key_type_test")
 TEST_CASE("mapped_type_test")
 {
     PL_TEST_STATIC_ASSERT(
-        std::is_same<pl::meta::mapped_type<std::unordered_map<int, double>>,
-                     double>::value);
+        std::is_same<
+            pl::meta::mapped_type<std::unordered_map<int, double>>,
+            double>::value);
 
     CHECK_UNARY(true);
 }
@@ -102,26 +103,26 @@ TEST_CASE("mapped_type_test")
 TEST_CASE("element_type_test")
 {
     PL_TEST_STATIC_ASSERT(
-        std::is_same<pl::meta::element_type<std::unique_ptr<float>>,
-                     float>::value);
+        std::is_same<pl::meta::element_type<std::unique_ptr<float>>, float>::
+            value);
 
     CHECK_UNARY(true);
 }
 
 TEST_CASE("deleter_type_test")
 {
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<pl::meta::deleter_type<std::unique_ptr<std::string>>,
-                     std::default_delete<std::string>>::value);
+    PL_TEST_STATIC_ASSERT(std::is_same<
+                          pl::meta::deleter_type<std::unique_ptr<std::string>>,
+                          std::default_delete<std::string>>::value);
 
     CHECK_UNARY(true);
 }
 
 TEST_CASE("container_type_test")
 {
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<pl::meta::container_type<std::stack<const char*>>,
-                     std::deque<const char*>>::value);
+    PL_TEST_STATIC_ASSERT(std::is_same<
+                          pl::meta::container_type<std::stack<const char*>>,
+                          std::deque<const char*>>::value);
 
     CHECK_UNARY(true);
 }

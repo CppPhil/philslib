@@ -27,7 +27,7 @@
 /*!
  * \file os.hpp
  * \brief defines macros to detect the operating system used.
-**/
+ **/
 #ifndef INCG_PL_OS_HPP
 #define INCG_PL_OS_HPP
 
@@ -35,54 +35,54 @@
  * \def PL_OS_WINDOWS
  * \brief PL_OS will be defined as this if the operating system used is
  *        Microsoft Windows.
-**/
+ **/
 
 /*!
  * \def PL_OS_MAC
  * \brief PL_OS will be defined as this if the operating system used is
  *        Apple Macintosh.
-**/
+ **/
 
 /*!
  * \def PL_OS_LINUX
  * \brief PL_OS will be defined as this if the operating system used is
  *        GNU/Linux.
-**/
+ **/
 
 /*!
  * \def PL_OS_ANDROID
  * \brief PL_OS will be defined as this if the operating system used is
  *        Android.
-**/
+ **/
 
 /*!
  * \def PL_OS_FREEBSD
  * \brief PL_OS will be defined as this if the operating system used is
  *        FreeBSD.
-**/
+ **/
 
 /*!
  * \def PL_OS_SOLARIS
  * \brief PL_OS will be defined as this if the operating system used is
  *        Oracle Solaris.
-**/
+ **/
 
 /*!
  * \def PL_OS_UNKNOWN
  * \brief PL_OS will be defined as this if the operating system used
  *        could not be determined.
-**/
+ **/
 
 /*!
  * \def PL_OS
  * \brief Will be defined as PL_OS_WINDOWS, PL_OS_MAC, PL_OS_LINUX,
  *        PL_OS_ANDROID, PL_OS_FREEBSD, PL_OS_SOLARIS or PL_OS_UNKNOWN
-**/
+ **/
 
 /*!
  * \def PL_OS_NAME
  * \brief The name of the operating system.
-**/
+ **/
 
 #define PL_OS_WINDOWS (0x0000) /* meaningless number */
 #define PL_OS_MAC (0x0001)     /* meaningless number */

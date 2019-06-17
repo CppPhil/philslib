@@ -60,9 +60,8 @@ TEST_CASE("alloca_test")
 
     std::fill(begin, end, fill_byte);
 
-    CHECK_UNARY(std::all_of(begin, end, [](pl::byte byte) {
-        return byte == fill_byte;
-    }));
+    CHECK_UNARY(std::all_of(
+        begin, end, [](pl::byte byte) { return byte == fill_byte; }));
 }
 #if PL_COMPILER == PL_COMPILER_GCC
 #pragma GCC diagnostic pop

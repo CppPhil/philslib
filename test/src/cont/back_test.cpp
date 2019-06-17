@@ -48,7 +48,7 @@
 TEST_CASE("std_array_back_test")
 {
     static constexpr std::size_t size{5U};
-    const std::array<int, size> array{{1, 2, 3, 4, 5}};
+    const std::array<int, size>  array{{1, 2, 3, 4, 5}};
     CHECK(pl::cont::back(array) == 5);
 }
 

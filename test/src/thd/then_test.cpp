@@ -42,7 +42,8 @@ TEST_CASE("then_test")
 {
     std::future<int> fut1{pl::thd::then(
         pl::thd::then(
-            std::async(std::launch::async, [](int i) { return i * 2; }, 3),
+            std::async(
+                std::launch::async, [](int i) { return i * 2; }, 3),
             [](int j) { return j + 2; }),
         [](int k) { return k / 2; })};
 

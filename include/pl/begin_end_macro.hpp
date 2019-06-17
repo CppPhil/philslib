@@ -28,7 +28,7 @@
  * \file begin_end_macro.hpp
  * \brief Exports macros that simplify the definition of convenient to use
  *        function like macros.
-**/
+ **/
 #ifndef INCG_PL_BEGIN_END_MACRO_HPP
 #define INCG_PL_BEGIN_END_MACRO_HPP
 
@@ -37,14 +37,14 @@
  * \brief To be used to begin definitions of macros that shall be forced to
  *        require a semicolon when used.
  * \see PL_END_MACRO
-**/
+ **/
 #define PL_BEGIN_MACRO do {
 /*!
  * \def PL_END_MACRO
  * \brief To be used to end definitions of macros that shall be forced to
  *        require a semicolon when used.
  * \see PL_BEGIN_MACRO
-**/
+ **/
 #define PL_END_MACRO \
     }                \
     while ((void)0, 0) /* avoid warnings */

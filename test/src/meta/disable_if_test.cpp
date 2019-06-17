@@ -41,11 +41,11 @@
 namespace pl {
 namespace test {
 namespace {
-template <typename Ty>
+template<typename Ty>
 auto foo(Ty &&)
     -> pl::meta::disable_if_t<not std::is_same<Ty, int>::value, std::true_type>;
 
-template <typename Ty>
+template<typename Ty>
 auto foo(Ty &&)
     -> pl::meta::disable_if_t<std::is_same<Ty, int>::value, std::false_type>;
 } // anonymous namespace

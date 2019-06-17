@@ -28,13 +28,12 @@
  * \file ssize.hpp
  * \brief Exports the ssize function that return the size of a container or
  *        C-style array.
-**/
+ **/
 #ifndef INCG_PL_CONT_SSIZE_HPP
 #define INCG_PL_CONT_SSIZE_HPP
 #include "../annotations.hpp" // PL_IN
 #include "../type_traits.hpp" // pl::common_type_t, pl::make_signed_t
 #include <cstddef>            // std::ptrdiff_t
-
 
 namespace pl {
 namespace cont {
@@ -43,12 +42,14 @@ namespace cont {
  * \tparam Container The type of the container to get the size of.
  * \param container The container to get the size of.
  * \return The size of the container given as a signed integer.
-**/
-template <typename Container>
+ **/
+template<typename Container>
 constexpr auto ssize(PL_IN const Container& container)
     -> common_type_t<std::ptrdiff_t, make_signed_t<decltype(container.size())>>
 {
-    return static_cast<common_type_t<std::ptrdiff_t, make_signed_t<decltype(container.size())>>>(container.size());
+    return static_cast<common_type_t<
+        std::ptrdiff_t,
+        make_signed_t<decltype(container.size())>>>(container.size());
 }
 
 /*
@@ -57,8 +58,8 @@ constexpr auto ssize(PL_IN const Container& container)
  * \tparam Size The size of the C-style array.
  * \param array The C-style array to get the size of.
  * \return The size of the C-style array given as a signed integer.
-**/
-template <typename Type, std::ptrdiff_t Size>
+ **/
+template<typename Type, std::ptrdiff_t Size>
 constexpr std::ptrdiff_t ssize(PL_IN const Type (&array)[Size]) noexcept
 {
     (void)array;

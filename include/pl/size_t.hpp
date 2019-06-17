@@ -28,7 +28,7 @@
  * \file size_t.hpp
  * \brief Exports a user defined literal (UDL) to create an object of type
  *        std::size_t.
-**/
+ **/
 #ifndef INCG_PL_SIZE_T_HPP
 #define INCG_PL_SIZE_T_HPP
 #include "compiler.hpp" // PL_COMPILER, PL_COMPILER_MSVC, PL_COMPILER_VERSION, PL_COMPILER_VERSION_CHECK
@@ -49,7 +49,7 @@ inline namespace integer_literals {
  * \warning If the value passed in is larger than
  *          std::numeric_limits<std::size_t>::max()
  *          the program is ill-formed.
-**/
+ **/
 constexpr std::size_t operator""_zu(unsigned long long value)
 {
 #if (PL_COMPILER != PL_COMPILER_MSVC) \

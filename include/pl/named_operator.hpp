@@ -27,7 +27,7 @@
 /*!
  * \file named_operator.hpp
  * \brief Exports utilities for defining named operators.
-**/
+ **/
 #ifndef INCG_PL_NAMED_OPERATOR_HPP
 #define INCG_PL_NAMED_OPERATOR_HPP
 #include "invoke.hpp" // pl::invoke
@@ -38,14 +38,14 @@ namespace detail {
 /*!
  * \brief Implementation wrapper type used to communicate between operator<
  *        and operator>.
-**/
-template <typename BinaryCallable, typename Type>
+ **/
+template<typename BinaryCallable, typename Type>
 struct binary_callable_with_value {
     /*!
      * \brief Constructor.
      * \param p_binary_callable The BinaryCallable.
      * \param p_value The left hand side object.
-    **/
+     **/
     constexpr binary_callable_with_value(
         BinaryCallable p_binary_callable,
         Type&          p_value)
@@ -61,14 +61,14 @@ struct binary_callable_with_value {
 /*!
  * \brief Struct that holds a BinaryCallable to be used as a named operator.
  * \note Use make_named_operator to construct.
-**/
-template <typename BinaryCallable>
+ **/
+template<typename BinaryCallable>
 struct named_oper {
     /*!
      * \brief Constructor for named_oper.
      * \param p_binary_callable The BinaryCallable to use for the
      *                          named_operator.
-    **/
+     **/
     constexpr explicit named_oper(BinaryCallable p_binary_callable)
         : binary_callable{std::move(p_binary_callable)}
     {
@@ -82,8 +82,8 @@ struct named_oper {
  * \param binary_callable The callable that takes the left hand side and the
  *                        right hand side object of the named operator.
  * \return The named_oper object.
-**/
-template <typename BinaryCallable>
+ **/
+template<typename BinaryCallable>
 constexpr named_oper<BinaryCallable> make_named_operator(
     BinaryCallable binary_callable)
 {
@@ -96,8 +96,8 @@ inline namespace named_operator {
  * \param value The left hand side object of the named operator.
  * \param named_operator The named operator that the operator> shall apply.
  * \note Handles non-const left hand side objects.
-**/
-template <typename BinaryCallable, typename Type>
+ **/
+template<typename BinaryCallable, typename Type>
 inline detail::binary_callable_with_value<BinaryCallable, Type> operator<(
     Type&                      value,
     named_oper<BinaryCallable> named_operator)
@@ -111,8 +111,8 @@ inline detail::binary_callable_with_value<BinaryCallable, Type> operator<(
  * \param value The left hand side object of the named operator.
  * \param named_operator The named operator that the operator> shall apply.
  * \note Handles const qualified left hand side objects.
-**/
-template <typename BinaryCallable, typename Type>
+ **/
+template<typename BinaryCallable, typename Type>
 inline detail::binary_callable_with_value<BinaryCallable, const Type> operator<(
     const Type&                value,
     named_oper<BinaryCallable> named_operator)
@@ -129,8 +129,8 @@ inline detail::binary_callable_with_value<BinaryCallable, const Type> operator<(
  * \param value The right hand side object.
  * \return The result of invoking the named operator with the left hand side
  *         object and the right hand side object.
-**/
-template <typename BinaryCallable, typename Type1, typename Type2>
+ **/
+template<typename BinaryCallable, typename Type1, typename Type2>
 inline auto operator>(
     const detail::binary_callable_with_value<BinaryCallable, Type1>&
                  callable_with_value,
@@ -150,8 +150,8 @@ inline auto operator>(
  * \return The result of assigning the result of invoking the named operator
  *         with the left hand side and right hand side object to the left
  *         hand side object.
-**/
-template <typename BinaryCallable, typename Type1, typename Type2>
+ **/
+template<typename BinaryCallable, typename Type1, typename Type2>
 inline auto operator>=(
     const detail::binary_callable_with_value<BinaryCallable, Type1>&
                  callable_with_value,

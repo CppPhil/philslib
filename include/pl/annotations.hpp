@@ -27,7 +27,7 @@
 /*!
  * \file annotations.hpp
  * \brief Exports various macros to annotate the source code.
-**/
+ **/
 #ifndef INCG_PL_ANNOTATIONS_HPP
 #define INCG_PL_ANNOTATIONS_HPP
 #include "compiler.hpp" // PL_COMPILER, PL_COMPILER_GCC, PL_COMPILER_CLANG, PL_COMPILER_ICC, PL_COMPILER_MSVC, PL_COMPILER_UNKNOWN
@@ -37,13 +37,13 @@
  * \def PL_FALLTHROUGH
  * \brief Annotation to mark a case label's end as fallthrough.
  * \note Uses the C++17 attribute if available
-**/
+ **/
 
 /*!
  * \def PL_NODISCARD
  * \brief Annotation to mark a function's return as not to be discarded.
  * \note Uses the C++17 attribute if available
-**/
+ **/
 
 /*!
  * \def PL_PRINTF_FUNCTION(format_str_pos, var_args_pos)
@@ -59,23 +59,23 @@
  * argument use 0 as the var_args_pos.
  * Note that if used on non-static member functions the this pointer
  * will be considered to be the first argument!
-**/
+ **/
 
 /*!
  * \def PL_IN
  * \brief Annotates a pointer or reference parameter as an input parameter.
  *
  * Indicates that the referenced object will only be read from.
-**/
+ **/
 #define PL_IN /* nothing */
 
 /*!
-* \def PL_OUT
-* \brief Annotates a pointer or reference parameter as an output parameter.
-*
-* Indicates that the referenced object will only be written to,
-* but not be read from.
-**/
+ * \def PL_OUT
+ * \brief Annotates a pointer or reference parameter as an output parameter.
+ *
+ * Indicates that the referenced object will only be written to,
+ * but not be read from.
+ **/
 #define PL_OUT /* nothing */
 
 /*!
@@ -85,7 +85,7 @@
  *
  * Indicates that the referenced object will be both read from and
  * be written to.
-**/
+ **/
 #define PL_INOUT /* nothing */
 
 /*!
@@ -95,7 +95,7 @@
  *
  * Indicates that if the pointer is not a null pointer the pointed to object
  * will only be read from.
-**/
+ **/
 #define PL_IN_OPT /* nothing */
 
 /*!
@@ -105,7 +105,7 @@
  *
  * Indicates that if the pointer is not a null pointer the pointed to object
  * will only be written to, but never be read from.
-**/
+ **/
 #define PL_OUT_OPT /* nothing */
 
 /*!
@@ -115,7 +115,7 @@
  *
  * Indicates that if the pointer is not a null pointer the pointed to object
  * will be both read from and written to.
-**/
+ **/
 #define PL_INOUT_OPT /* nothing */
 
 #if PL_COMPILER == PL_COMPILER_GCC
@@ -166,7 +166,7 @@
  * \def PL_PARENT(parent)
  * \brief Macro that can be used to mark something as a parent.
  *        Can be used when using Qt Framework's parent system for instance.
-**/
+ **/
 #define PL_PARENT(parent) parent
 
 /*!
@@ -174,7 +174,7 @@
  * \brief Macro that expands to nullptr. Can be used when using Qt Framework's
  *        parent system for instance. Can be used to create a QObject type with
  *        no parent.
-**/
+ **/
 #define PL_NO_PARENT nullptr
 
 /*!
@@ -182,19 +182,19 @@
  * \brief Macro to annotate constructors callable with a single argument
  *        (converting constructors) and implicit conversion operators that
  *        lack the explicit keyword on purpose as implicit.
-**/
+ **/
 #define PL_IMPLICIT /* nothing */
 
 /*!
  * \def PL_NULL_TERMINATED(type)
  * \brief Macro to annotate a cv char * or cv char[] type as null terminated.
-**/
+ **/
 #define PL_NULL_TERMINATED(type) type
 
 /*!
  * \def PL_FMT_STR(type)
  * \brief Macro to annotate a cv char * or cv char[] type as a null terminated
  *        printf style format string.
-**/
+ **/
 #define PL_FMT_STR(type) type
 #endif // INCG_PL_ANNOTATIONS_HPP

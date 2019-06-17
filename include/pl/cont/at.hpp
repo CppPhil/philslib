@@ -28,7 +28,7 @@
  * \file at.hpp
  * \brief Exports a bounds checked index based interface for accessing
  *        containers, C-Arrays and std::initializer_lists.
-**/
+ **/
 #ifndef INCG_PL_CONT_AT_HPP
 #define INCG_PL_CONT_AT_HPP
 #include "../annotations.hpp" // PL_IN
@@ -46,8 +46,8 @@ namespace cont {
  * \param index The index of the element in 'arr' to get a reference to.
  * \return A reference to the element at position 'index' in 'arr'.
  * \throws std::out_of_range if 'index' is out of bounds.
-**/
-template <typename Ty, std::size_t Size>
+ **/
+template<typename Ty, std::size_t Size>
 constexpr Ty& at(PL_IN Ty (&arr)[Size], std::size_t index)
 {
     if (not(index < Size)) {
@@ -65,8 +65,8 @@ constexpr Ty& at(PL_IN Ty (&arr)[Size], std::size_t index)
  * \param index The index of the element in 'container' to get a reference to.
  * \return A reference to the element at position 'index' in 'container'.
  * \throws std::out_of_range if 'index' is out of bounds.
-**/
-template <typename Container>
+ **/
+template<typename Container>
 constexpr auto at(PL_IN Container& container, std::size_t index)
     -> decltype(container[container.size()])
 {
@@ -85,8 +85,8 @@ constexpr auto at(PL_IN Container& container, std::size_t index)
  * \param index The index of the element to get a copy of.
  * \return A copy of the element at position 'index'.
  * \throws std::out_of_range if 'index' is out of bounds.
-**/
-template <typename Ty>
+ **/
+template<typename Ty>
 constexpr Ty at(std::initializer_list<Ty> il, std::size_t index)
 {
     if (not(index < il.size())) {

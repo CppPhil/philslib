@@ -27,7 +27,7 @@
 /*!
  * \file uninitialized_move.hpp
  * \brief Exports the C++17 uninitialized_move algorithm.
-**/
+ **/
 #ifndef INCG_PL_ALGO_UNINITIALIZED_MOVE_HPP
 #define INCG_PL_ALGO_UNINITIALIZED_MOVE_HPP
 #include <iterator> // std::iterator_traits
@@ -49,8 +49,8 @@ namespace algo {
  *          If an exception is thrown during the initialization, some objects
  *          in ['first', 'last') are left in a valid but unspecified state.
  * \note The complexity is linear in the distance between 'first' and 'last'.
-**/
-template <typename InputIterator, typename ForwardIterator>
+ **/
+template<typename InputIterator, typename ForwardIterator>
 inline ForwardIterator uninitialized_move(
     InputIterator   first,
     InputIterator   last,

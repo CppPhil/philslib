@@ -28,44 +28,44 @@
  * \file compiler.hpp
  * \brief Defines macros to determine the compiler
  *        and the version of that compiler being used.
-**/
+ **/
 #ifndef INCG_PL_COMPILER_HPP
 #define INCG_PL_COMPILER_HPP
 
 /*!
  * \def PL_COMPILER_CLANG
  * \brief PL_COMPILER will be defined as this if clang is being used.
-**/
+ **/
 
 /*!
  * \def PL_COMPILER_ICC
  * \brief PL_COMPILER will be defined as this
  *        if Intel C++ Compiler is being used.
-**/
+ **/
 
 /*!
  * \def PL_COMPILER_MSVC
  * \brief PL_COMPILER will be defined as this if Microsoft Visual Compiler is
  *        being used.
-**/
+ **/
 
 /*!
  * \def PL_COMPILER_GCC
  * \brief PL_COMPILER will be defined as this if gcc is being used.
-**/
+ **/
 
 /*!
-* \def PL_COMPILER_UNKNOWN
-* \brief PL_COMPILER will be defined as this if the compiler being used
-*        could not be determined.
-**/
+ * \def PL_COMPILER_UNKNOWN
+ * \brief PL_COMPILER will be defined as this if the compiler being used
+ *        could not be determined.
+ **/
 
 /*!
  * \def PL_COMPILER
  * \brief Will be defined as PL_COMPILER_CLANG, PL_COMPILER_ICC,
  *        PL_COMPILER_MSVC, PL_COMPILER_GCC or PL_COMPILER_UNKNOWN
  *        depending on which compiler is being used.
-**/
+ **/
 
 #define PL_COMPILER_CLANG (0x0000)   /* meaningless number */
 #define PL_COMPILER_ICC (0x0001)     /* meaningless number */
@@ -89,22 +89,22 @@
 /*!
  * \def PL_COMPILER_MAJOR
  * \brief The major version of the compiler.
-**/
+ **/
 
 /*!
  * \def PL_COMPILER_MINOR
  * \brief The minor version of the compiler.
-**/
+ **/
 
 /*!
  * \def PL_COMPILER_PATCH
  * \brief The patch level of the compiler.
-**/
+ **/
 
 /*!
  * \def PL_COMPILER_NAME
  * \brief The name of the compiler.
-**/
+ **/
 
 #if PL_COMPILER == PL_COMPILER_CLANG
 #define PL_COMPILER_MAJOR __clang_major__
@@ -138,7 +138,7 @@
  * \brief Can be used to create a compiler version using a major, minor
  *        and patch number. Useful to compare the current compiler version
  *        to a specific version.
-**/
+ **/
 #define PL_COMPILER_VERSION_CHECK(major, minor, patch) \
     (((major)*16777216) + ((minor)*65536)              \
      + (patch)) /* multipliers to 'push' the numbers leftward */
@@ -147,7 +147,7 @@
  * \def PL_COMPILER_VERSION
  * \brief The current compiler version, may be compared to a number generated
  *        with PL_COMPILER_VERSION_CHECK
-**/
+ **/
 #define PL_COMPILER_VERSION    \
     PL_COMPILER_VERSION_CHECK( \
         PL_COMPILER_MAJOR, PL_COMPILER_MINOR, PL_COMPILER_PATCH)

@@ -27,7 +27,7 @@
 /*!
  * \file clamp.hpp
  * \brief Exports the clamp-algorithm from the C++17 standard library.
-**/
+ **/
 #ifndef INCG_PL_ALGO_CLAMP_HPP
 #define INCG_PL_ALGO_CLAMP_HPP
 #include "../annotations.hpp" // PL_IN
@@ -66,17 +66,17 @@ namespace algo {
  *          is an rvalue produces a dangling reference if that parameter is
  *          returned!
  *          Only works for floating-point 'Ty' if NaNs are avoided.
-**/
-template <typename Ty, typename BinaryComparator>
+ **/
+template<typename Ty, typename BinaryComparator>
 constexpr const Ty& clamp(
     PL_IN const Ty& value,
     PL_IN const Ty& lower_bound,
     PL_IN const Ty&  upper_bound,
     BinaryComparator comp)
 {
-    return comp(value, lower_bound) ? lower_bound : comp(upper_bound, value)
-                                                        ? upper_bound
-                                                        : value;
+    return comp(value, lower_bound)
+               ? lower_bound
+               : comp(upper_bound, value) ? upper_bound : value;
 }
 
 /*!
@@ -99,8 +99,8 @@ constexpr const Ty& clamp(
  *          is rvalue produces a dangling reference if that parameter is
  *          returned!
  *          Only works for floating-point 'Ty' if NaNs are avoided.
-**/
-template <typename Ty>
+ **/
+template<typename Ty>
 constexpr const Ty& clamp(
     PL_IN const Ty& value,
     PL_IN const Ty& lower_bound,

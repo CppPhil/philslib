@@ -32,7 +32,7 @@ namespace test {
 /*!
  * \brief An invocable object that calls std::free from <cstdlib> on the
  *        void * passed into its call operator.
-**/
+ **/
 class freeer {
 public:
     using this_type = freeer;
@@ -41,7 +41,7 @@ public:
      * \brief Frees data dynamically allocated with std::malloc
      *        or std::calloc.
      * \param to_be_freed Pointer to the data to free.
-    **/
+     **/
     void operator()(void* to_be_freed) const noexcept;
 };
 } // namespace test

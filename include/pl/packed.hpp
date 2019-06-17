@@ -28,7 +28,7 @@
  * \file packed.hpp
  * \brief Exports macros in order to be able to define packed
  *        structure types.
-**/
+ **/
 #ifndef INCG_PL_PACKED_HPP
 #define INCG_PL_PACKED_HPP
 #include "compiler.hpp" // PL_COMPILER, PL_COMPILER_MSVC
@@ -50,14 +50,14 @@
  *
  * A packed struct will contain no padding.
  * This can be used to treat packed structs as raw memory.
-**/
+ **/
 
 /*!
  * \def PL_PACKED_END
  * \brief The macro that ends a packed struct declaration introduced by
  *        PL_PACKED_START
  * \see PL_PACKED_START
-**/
+ **/
 
 #if PL_COMPILER == PL_COMPILER_MSVC
 #define PL_PACKED_START __pragma(pack(push, 1))

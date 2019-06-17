@@ -47,15 +47,13 @@ namespace pl {
 namespace test {
 namespace {
 // this is just here to suppress pedantic MSVC warnings
-template <typename BidirectionalIterator, typename OutputIterator>
+template<typename BidirectionalIterator, typename OutputIterator>
 OutputIterator reverse_copy(
     BidirectionalIterator first,
     BidirectionalIterator last,
     OutputIterator        destination)
 {
-    while (first != last) {
-        *(destination++) = *(--last);
-    }
+    while (first != last) { *(destination++) = *(--last); }
 
     return destination;
 }

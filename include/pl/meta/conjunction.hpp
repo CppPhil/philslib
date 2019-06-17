@@ -27,7 +27,7 @@
 /*!
  * \file conjunction.hpp
  * \brief Exports the conjunction meta function from the C++17 standard library.
-**/
+ **/
 #ifndef INCG_PL_META_CONJUNCTION_HPP
 #define INCG_PL_META_CONJUNCTION_HPP
 #include "../type_traits.hpp" // pl::conditional_t
@@ -38,28 +38,29 @@ namespace meta {
 /*!
  * \brief Forms the logical conjunction of the type traits 'Traits'
  *        effectively performing a logical 'and' on the sequence of traits.
-**/
-template <typename...>
+ **/
+template<typename...>
 struct conjunction : public std::true_type {
 };
 
 /*!
  * \brief Forms the logical conjunction of the type traits 'Traits'
  *        effectively performing a logical 'and' on the sequence of traits.
-**/
-template <typename Trait1>
+ **/
+template<typename Trait1>
 struct conjunction<Trait1> : public Trait1 {
 };
 
 /*!
  * \brief Forms the logical conjunction of the type traits 'Traits'
  *        effectively performing a logical 'and' on the sequence of traits.
-**/
-template <typename Trait1, typename... Traits>
+ **/
+template<typename Trait1, typename... Traits>
 struct conjunction<Trait1, Traits...>
-    : public conditional_t<bool(Trait1::value),
-                           conjunction<Traits...>,
-                           Trait1> {
+    : public conditional_t<
+          bool(Trait1::value),
+          conjunction<Traits...>,
+          Trait1> {
 };
 } // namespace meta
 } // namespace pl

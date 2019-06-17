@@ -45,7 +45,8 @@ cheshire_cat_impl_type::cheshire_cat_impl_type(
 }
 
 cheshire_cat_impl_type::cheshire_cat_impl_type(
-    cheshire_cat_impl_type&& other) noexcept : m_p{other.m_p}
+    cheshire_cat_impl_type&& other) noexcept
+    : m_p{other.m_p}
 {
     other.m_p = nullptr;
 }

@@ -29,7 +29,7 @@
  * \brief Defines the concurrent type which wraps an instance of any type
  *        and manages a thread that runs callables on the instance wrapped.
  *        Those callables are passed in by users.
-**/
+ **/
 #ifndef INCG_PL_THD_CONCURRENT_HPP
 #define INCG_PL_THD_CONCURRENT_HPP
 #include "../annotations.hpp"    // PL_IN, PL_OUT, PL_INOUT
@@ -48,8 +48,8 @@ namespace pl {
 namespace thd {
 /*!
  * \brief Allows callables to be run on an object managed by a thread.
-**/
-template <typename Type>
+ **/
+template<typename Type>
 class concurrent {
 public:
     using this_type = concurrent;
@@ -58,7 +58,7 @@ public:
      * \brief Type alias for the template type parameter of 'concurrent'.
      *        Can be accessed to query the template type parameter
      *        that was used for a given 'concurrent'.
-    **/
+     **/
     using element_type = Type;
 
     /*!
@@ -66,24 +66,22 @@ public:
      *        callables stored in the thread_safe_queue continuously.
      * \param value The object that the callables passed in the call operator
      *        will operate on.
-    **/
+     **/
     explicit concurrent(Type value)
         : m_value{std::move(value)}, m_q{}, m_is_done{false}, m_thd{[this] {
-            while (not m_is_done) {
-                m_q.pop()();
-            }
+            while (not m_is_done) { m_q.pop()(); }
         }}
     {
     }
 
     /*!
      * \brief This type is non-copyable.
-    **/
+     **/
     concurrent(const this_type&) = delete;
 
     /*!
      * \brief This type is non-copyable.
-    **/
+     **/
     this_type& operator=(const this_type&) = delete;
 
     /*!
@@ -95,7 +93,7 @@ public:
      * thread_safe_queue. As soon as the callable that sets is done to true is
      * run the thread will exit its loop. Then the thread calling this
      * destructor joins this instances's underlying thread.
-    **/
+     **/
     ~concurrent()
     {
         m_q.push([this] { m_is_done = true; });
@@ -111,12 +109,12 @@ public:
      *         with m_value as soon as that callable has been run, or
      *         an exception, if an exception occurred.
      *         The returned future can be joined on using .get() for instance.
-    **/
-    template <typename Callable>
+     **/
+    template<typename Callable>
     auto operator()(PL_IN Callable&& callable)
     {
-        auto p = std::make_shared<std::promise<decltype(
-            ::pl::invoke(callable, m_value))>>();
+        auto p = std::make_shared<
+            std::promise<decltype(::pl::invoke(callable, m_value))>>();
 
         auto ret = p->get_future();
 
@@ -139,8 +137,8 @@ private:
 
     /*!
      * \brief Invokes the callable with ty and sets the result to the promise.
-    **/
-    template <typename Fut, typename Callable, typename Ty>
+     **/
+    template<typename Fut, typename Callable, typename Ty>
     static void set_value(
         PL_OUT std::promise<Fut>& p,
         PL_IN Callable& callable,
@@ -158,8 +156,8 @@ private:
      * \brief Invokes the callable with ty and sets the result to the promise.
      * \note This is the overload that handles the void case, as void is not
      *       a regular type.
-    **/
-    template <typename Callable, typename Ty>
+     **/
+    template<typename Callable, typename Ty>
     static void set_value(
         PL_OUT std::promise<void>& p,
         PL_IN Callable& callable,

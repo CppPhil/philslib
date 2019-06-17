@@ -50,7 +50,7 @@ class test_class {
 public:
     explicit test_class(std::uint64_t v) : m_v{v} {}
     std::uint64_t mem_fun(std::uint64_t v) const { return f(v, m_v); }
-    std::uint64_t                       m_v;
+    std::uint64_t m_v;
 };
 
 class functor {
@@ -107,8 +107,8 @@ TEST_CASE("invoke_test_functor")
         = std::uint64_t (*)(std::uint64_t, std::uint64_t);
 
     pl::test::functor functor{};
-    const auto lambda = [](std::uint64_t v) { return v * 5U; };
-    const auto                           bind = std::bind(
+    const auto        lambda = [](std::uint64_t v) { return v * 5U; };
+    const auto        bind   = std::bind(
         static_cast<binary_function_pointer>(&pl::test::f),
         std::placeholders::_1,
         25U);

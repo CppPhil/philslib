@@ -27,7 +27,7 @@
 /*!
  * \file invoke.hpp
  * \brief Exports the invoke function template.
-**/
+ **/
 #ifndef INCG_PL_INVOKE_HPP
 #define INCG_PL_INVOKE_HPP
 #include "annotations.hpp" // PL_IN
@@ -43,11 +43,15 @@ namespace detail {
 /*!
  * \brief Implementation function template of invoke.
  *        Not to be used directly.
-**/
-template <typename Callable, typename... Args>
-inline auto
-invoke_impl(std::true_type, PL_IN Callable&& callable, PL_IN Args&&... args) noexcept(
-    noexcept(std::mem_fn(callable)(std::forward<Args>(args)...)))
+ **/
+template<typename Callable, typename... Args>
+inline auto invoke_impl(
+    std::true_type,
+    PL_IN Callable&& callable,
+    PL_IN            Args&&... args) noexcept(noexcept(std::
+                                                mem_fn(callable)(
+                                                    std::forward<Args>(
+                                                        args)...)))
     -> decltype(auto)
 {
     return std::mem_fn(callable)(std::forward<Args>(args)...);
@@ -56,11 +60,15 @@ invoke_impl(std::true_type, PL_IN Callable&& callable, PL_IN Args&&... args) noe
 /*!
  * \brief Implementation function template of invoke.
  *        Not to be used directly.
-**/
-template <typename Callable, typename... Args>
-inline auto
-invoke_impl(std::false_type, PL_IN Callable&& callable, PL_IN Args&&... args) noexcept(
-    noexcept(std::forward<Callable>(callable)(std::forward<Args>(args)...)))
+ **/
+template<typename Callable, typename... Args>
+inline auto invoke_impl(
+    std::false_type,
+    PL_IN Callable&& callable,
+    PL_IN            Args&&... args) noexcept(noexcept(std::
+                                                forward<Callable>(callable)(
+                                                    std::forward<Args>(
+                                                        args)...)))
     -> decltype(auto)
 {
     return std::forward<Callable>(callable)(std::forward<Args>(args)...);
@@ -82,14 +90,13 @@ invoke_impl(std::false_type, PL_IN Callable&& callable, PL_IN Args&&... args) no
  * Offers a uniform interface to invoke free functions,
  * function objects (including lambdas), member function pointers,
  * as well as access non-static data members through member object pointers.
-**/
-template <typename Callable, typename... Args>
+ **/
+template<typename Callable, typename... Args>
 inline auto invoke(PL_IN Callable&& callable, PL_IN Args&&... args) noexcept(
-    noexcept(
-        ::pl::detail::invoke_impl(
-            typename std::is_member_pointer<decay_t<Callable>>::type{},
-            std::forward<Callable>(callable),
-            std::forward<Args>(args)...))) -> decltype(auto)
+    noexcept(::pl::detail::invoke_impl(
+        typename std::is_member_pointer<decay_t<Callable>>::type{},
+        std::forward<Callable>(callable),
+        std::forward<Args>(args)...))) -> decltype(auto)
 {
     return ::pl::detail::invoke_impl(
         typename std::is_member_pointer<decay_t<Callable>>::type{},

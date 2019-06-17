@@ -35,7 +35,7 @@
  *        expression where the condition passed in failed.
  *        The error message will also include the expression used for
  *        the PL_TEST_STATIC_ASSERT macro as well.
-**/
+ **/
 
 #define PL_TEST_STATIC_ASSERT(...)                                          \
     static_assert(                                                          \

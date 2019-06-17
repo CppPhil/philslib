@@ -64,8 +64,8 @@ TEST_CASE("remove_cvref_test")
         std::is_same<pl::meta::remove_cvref_t<volatile int&>, int>::value);
 
     PL_TEST_STATIC_ASSERT(
-        std::is_same<pl::meta::remove_cvref_t<const volatile int&>,
-                     int>::value);
+        std::is_same<pl::meta::remove_cvref_t<const volatile int&>, int>::
+            value);
 
     PL_TEST_STATIC_ASSERT(
         std::is_same<pl::meta::remove_cvref_t<const int&&>, int>::value);
@@ -74,8 +74,8 @@ TEST_CASE("remove_cvref_test")
         std::is_same<pl::meta::remove_cvref_t<volatile int&&>, int>::value);
 
     PL_TEST_STATIC_ASSERT(
-        std::is_same<pl::meta::remove_cvref_t<const volatile int&&>,
-                     int>::value);
+        std::is_same<pl::meta::remove_cvref_t<const volatile int&&>, int>::
+            value);
 
     CHECK_UNARY(true);
 }

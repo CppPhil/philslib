@@ -158,8 +158,8 @@ public:
         typename = enable_if_t<
             std::is_pointer<meta::remove_cvref_t<Ty>>::value
             and std::is_same<
-                    remove_const_t<remove_pointer_t<meta::remove_cvref_t<Ty>>>,
-                    value_type>::value>>
+                remove_const_t<remove_pointer_t<meta::remove_cvref_t<Ty>>>,
+                value_type>::value>>
     PL_IMPLICIT constexpr basic_string_view(PL_IN PL_NULL_TERMINATED(Ty&&)
                                                 string) noexcept
         : basic_string_view{}
@@ -430,11 +430,11 @@ public:
         swap(PL_INOUT this_type& other) noexcept
     {
         const const_pointer ptr = m_data;
-        m_data                      = other.m_data;
-        other.m_data                = ptr;
-        const size_type size        = m_size;
-        m_size                      = other.m_size;
-        other.m_size                = size;
+        m_data                  = other.m_data;
+        other.m_data            = ptr;
+        const size_type size    = m_size;
+        m_size                  = other.m_size;
+        other.m_size            = size;
     }
 
     /*!

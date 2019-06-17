@@ -57,7 +57,7 @@ TEST_CASE("strndup_test")
     static constexpr char        str[]{"Sample text"};
     static constexpr std::size_t str_len{(sizeof(str) / sizeof(str[0U]))
                                          - sizeof(str[0U])};
-    std::unique_ptr<char[]> up{nullptr};
+    std::unique_ptr<char[]>      up{nullptr};
 
     up = pl::strndup(str, 0U);
     REQUIRE(up != nullptr);

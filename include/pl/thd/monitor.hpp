@@ -28,7 +28,7 @@
  * \file monitor.hpp
  * \brief Defines the monitor class that can be used to synchronize access
  *        from multiple threads to some shared data.
-**/
+ **/
 #ifndef INCG_PL_THD_MONITOR_HPP
 #define INCG_PL_THD_MONITOR_HPP
 #include "../annotations.hpp" // PL_IN
@@ -42,8 +42,8 @@ namespace thd {
  * \brief Stores shared data in its private section.
  *        Allows different threads to operate on the shared data
  *        by passing in callables that operate on the shared data.
-**/
-template <typename SharedData>
+ **/
+template<typename SharedData>
 class monitor {
 public:
     using this_type    = monitor;
@@ -52,7 +52,7 @@ public:
     /*!
      * \brief Creates a monitor.
      * \param shared_data the data to be protected by the Monitor.
-    **/
+     **/
     explicit monitor(element_type shared_data)
         : m_shared_data{std::move(shared_data)}, m_mutex{}
     {
@@ -60,12 +60,12 @@ public:
 
     /*!
      * \brief This type is non-copyable.
-    **/
+     **/
     monitor(const this_type&) = delete;
 
     /*!
      * \brief This type is non-copyable.
-    **/
+     **/
     this_type& operator=(const this_type&) = delete;
 
     /*!
@@ -74,8 +74,8 @@ public:
      * \param callable The callable to be used to operate on the shared data.
      * \return The result of calling the callable passed in with the shared data
      *         as the callable's call operator's argument.
-    **/
-    template <typename Callable>
+     **/
+    template<typename Callable>
     auto operator()(PL_IN Callable&& callable) -> decltype(auto)
     {
         std::lock_guard<std::mutex> lock_guard{m_mutex};
@@ -87,7 +87,7 @@ private:
     element_type m_shared_data; //!< the shared data
     std::mutex   m_mutex;       /*!< the mutex to guard access
                                  *   to the shared data
-                                **/
+                                 **/
 };
 } // namespace thd
 } // namespace pl

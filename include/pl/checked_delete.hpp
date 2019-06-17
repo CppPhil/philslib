@@ -29,7 +29,7 @@
  * \brief This header defines functions to call delete and delete[] operators
  *        on raw pointers while ensuring that the pointed to type is a complete
  *        type.
-**/
+ **/
 #ifndef INCG_PL_CHECKED_DELETE_HPP
 #define INCG_PL_CHECKED_DELETE_HPP
 #include "annotations.hpp" // PL_IN_OPT, PL_INOUT
@@ -46,8 +46,8 @@ namespace pl {
  * \warning Only pass in raw pointers to a dynamically allocated object.
  *          The raw pointer passed in must be the sole owner of the pointed to
  *          object.
-**/
-template <typename Ty>
+ **/
+template<typename Ty>
 inline void checked_delete(PL_IN_OPT Ty* p) noexcept
 {
     using incomplete_type_not_allowed = unsigned char[sizeof(Ty) ? 1 : -1];
@@ -65,7 +65,7 @@ inline void checked_delete(PL_IN_OPT Ty* p) noexcept
  *          The raw pointer passed in must be the sole owner of the
  *          pointed to C-style array.
  */
-template <typename Ty>
+template<typename Ty>
 inline void checked_array_delete(PL_IN_OPT Ty* p) noexcept
 {
     using incomplete_type_not_allowed = unsigned char[sizeof(Ty) ? 1 : -1];
@@ -80,7 +80,7 @@ inline void checked_array_delete(PL_IN_OPT Ty* p) noexcept
  *          null.
  * \see pl::checked_delete
  */
-template <typename Ty>
+template<typename Ty>
 inline void checked_delete_and_null(PL_INOUT Ty*& p) noexcept
 {
     ::pl::checked_delete(p);
@@ -94,7 +94,7 @@ inline void checked_delete_and_null(PL_INOUT Ty*& p) noexcept
  *          then null.
  * \see pl::checked_array_delete
  */
-template <typename Ty>
+template<typename Ty>
 inline void checked_array_delete_and_null(PL_INOUT Ty*& p) noexcept
 {
     ::pl::checked_array_delete(p);

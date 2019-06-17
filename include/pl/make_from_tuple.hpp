@@ -27,7 +27,7 @@
 /*!
  * \file make_from_tuple.hpp
  * \brief This header file exports the make_from_tuple function.
-**/
+ **/
 #ifndef INCG_PL_MAKE_FROM_TUPLE_HPP
 #define INCG_PL_MAKE_FROM_TUPLE_HPP
 #include "annotations.hpp" // PL_IN
@@ -41,8 +41,8 @@ namespace detail {
 /*!
  * \brief Helper function for make_from_tuple.
  * \warning Not to be used directly, use pl::make_from_tuple!.
-**/
-template <typename Ty, typename TupleLike, std::size_t... Indices>
+ **/
+template<typename Ty, typename TupleLike, std::size_t... Indices>
 constexpr Ty make_from_tuple_impl(
     PL_IN TupleLike&& tuple_like,
     std::index_sequence<Indices...>)
@@ -61,8 +61,8 @@ constexpr Ty make_from_tuple_impl(
  * \note The tuple need not be std::tuple, and instead may be anything that
  *       supports std::get and std::tuple_size;
  *       in particular, std::array and std::pair may be used.
-**/
-template <typename Ty, typename TupleLike>
+ **/
+template<typename Ty, typename TupleLike>
 constexpr Ty make_from_tuple(PL_IN TupleLike&& tuple_like)
 {
     return detail::make_from_tuple_impl<Ty>(

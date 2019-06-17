@@ -31,7 +31,7 @@ namespace pl {
 namespace test {
 /*!
  * \brief Type to test destroying algorithms that call destructors.
-**/
+ **/
 class destroy_test_type {
 public:
     using this_type = destroy_test_type;
@@ -41,22 +41,22 @@ public:
      * \param p A pointer to a bool that should be set to false.
      * \warning Causes undefined behaviour if 'p' does not point to a bool.
      * \note Initializes the 'm_p' data member with 'p'.
-    **/
+     **/
     explicit destroy_test_type(bool* p);
 
     /*!
      * \brief Defaulted copy constructor.
-    **/
+     **/
     destroy_test_type(const this_type&);
 
     /*!
      * \brief Defaulted copy assignment operator.
-    **/
+     **/
     this_type& operator=(const this_type&);
 
     /*!
      * \brief Sets the bool pointed to by 'm_p' to true.
-    **/
+     **/
     ~destroy_test_type();
 
 private:

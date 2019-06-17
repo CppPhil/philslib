@@ -27,7 +27,7 @@
 /*!
  * \file apply.hpp
  * \brief Exports the apply function template.
-**/
+ **/
 #ifndef INCG_PL_APPLY_HPP
 #define INCG_PL_APPLY_HPP
 #include "annotations.hpp" // PL_IN
@@ -46,8 +46,8 @@ namespace pl {
 namespace detail {
 /*!
  * \brief Implementation function of apply; not to be used directly!
-**/
-template <typename Callable, typename TupleLike, std::size_t... Indices>
+ **/
+template<typename Callable, typename TupleLike, std::size_t... Indices>
 inline auto apply_impl(
     PL_IN Callable&& callable,
     PL_IN TupleLike&& tuple_like,
@@ -68,8 +68,8 @@ inline auto apply_impl(
  * \note 'tuple_like' need not be std::tuple, and instead may be anything
  *       that supports std::get and std::tuple_size; in particular,
  *       std::array and std::pair may be used.
-**/
-template <typename Callable, typename TupleLike>
+ **/
+template<typename Callable, typename TupleLike>
 inline auto apply(PL_IN Callable&& callable, PL_IN TupleLike&& tuple_like)
     -> decltype(auto)
 {

@@ -34,8 +34,8 @@
 #pragma GCC diagnostic pop
 #endif                                // PL_COMPILER == PL_COMPILER_GCC
 #include "../../include/pl/timer.hpp" // pl::timer
-#include <chrono>                     // std::literals::chrono_literals::operator""ms, std::chrono::duration_cast, std::chrono::milliseconds
-#include <thread>                     // std::this_thread::sleep_for
+#include <chrono> // std::literals::chrono_literals::operator""ms, std::chrono::duration_cast, std::chrono::milliseconds
+#include <thread> // std::this_thread::sleep_for
 
 TEST_CASE("timer_test")
 {

@@ -27,7 +27,7 @@
 /*!
  * \file none.hpp
  * \brief Exports the none meta function.
-**/
+ **/
 #ifndef INCG_PL_META_NONE_HPP
 #define INCG_PL_META_NONE_HPP
 #include "bool_constant.hpp" // pl::meta::bool_constant
@@ -39,8 +39,8 @@ namespace meta {
 /*!
  * \brief Will behave like std::true_type if none of the traits passed in
  *        are satisfied. Otherwise will behave like std::false_type.
-**/
-template <typename... Traits>
+ **/
+template<typename... Traits>
 using none = bool_constant<not disjunction<Traits...>::value>;
 } // namespace meta
 } // namespace pl

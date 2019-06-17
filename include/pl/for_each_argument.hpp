@@ -27,7 +27,7 @@
 /*!
  * \file for_each_argument.hpp
  * \brief Exports the for_each_argument function template.
-**/
+ **/
 #ifndef INCG_PL_FOR_EACH_ARGUMENT_HPP
 #define INCG_PL_FOR_EACH_ARGUMENT_HPP
 #include "annotations.hpp"  // PL_IN
@@ -46,8 +46,8 @@ namespace pl {
  *        parameter pack individually one after the other.
  * \return A copy of 'callable'.
  * \note 'callable' should be cheap to copy.
-**/
-template <typename Callable, typename... Args>
+ **/
+template<typename Callable, typename... Args>
 inline Callable for_each_argument(Callable callable, PL_IN Args&&... args)
 {
     (void)std::initializer_list<int>{

@@ -28,7 +28,7 @@
  * \file strdup.hpp
  * \brief Exports the strdup and strndup functions, which are similar
  *        to those specified by POSIX.
-**/
+ **/
 #ifndef INCG_PL_STRDUP_HPP
 #define INCG_PL_STRDUP_HPP
 #include "annotations.hpp" // PL_NODISCARD, PL_IN, PL_NULL_TERMINATED
@@ -45,7 +45,7 @@ namespace {
  *               May not be nullptr or otherwise be invalid!
  * \param maximum_length The 'maximum length'.
  * \return std::strlen(string) or maximum_length, whichever is less.
-**/
+ **/
 std::size_t strnlen(
     PL_IN       PL_NULL_TERMINATED(const char*) string,
     std::size_t maximum_length) noexcept
@@ -53,9 +53,7 @@ std::size_t strnlen(
     std::size_t pos{0U};
 
     for (; pos < maximum_length; ++pos) {
-        if (string[pos] == '\0') {
-            break;
-        }
+        if (string[pos] == '\0') { break; }
     }
 
     return pos;
@@ -69,7 +67,7 @@ namespace {
  * \param str Pointer to the null-terminated byte string to duplicate.
  *            May not be nullptr or otherwise be invalid!
  * \return The copy.
-**/
+ **/
 PL_NODISCARD std::unique_ptr<char[]> strdup(
     PL_IN PL_NULL_TERMINATED(const char*) str) noexcept
 {
@@ -90,7 +88,7 @@ PL_NODISCARD std::unique_ptr<char[]> strdup(
  * which contains copies of at most 'size' bytes from the string pointed
  * to by 'str'. If the null terminator is not encountered in the first
  * 'size' bytes, it is added to the duplicated string.
-**/
+ **/
 PL_NODISCARD std::unique_ptr<char[]> strndup(
     PL_IN       PL_NULL_TERMINATED(const char*) str,
     std::size_t size) noexcept

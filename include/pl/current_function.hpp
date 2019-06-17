@@ -27,7 +27,7 @@
 /*!
  * \file current_function.hpp
  * \brief Exports an object like macro to get the name of the current function.
-**/
+ **/
 #ifndef INCG_PL_CURRENT_FUNCTION_HPP
 #define INCG_PL_CURRENT_FUNCTION_HPP
 #include "compiler.hpp" // PL_COMPILER, PL_COMPILER_MSVC, PL_COMPILER_GCC, PL_COMPILER_CLANG
@@ -41,7 +41,7 @@
  *          different C-String literal!
  * \warning The result of the macro expansion can not be string concatenated
  *          by the preprocessor with other C-String literals.
-**/
+ **/
 
 #if PL_COMPILER == PL_COMPILER_MSVC
 #define PL_CURRENT_FUNCTION __FUNCSIG__

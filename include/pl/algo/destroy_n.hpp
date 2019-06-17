@@ -27,7 +27,7 @@
 /*!
  * \file destroy_n.hpp
  * \brief Exports the C++17 destroy_n algorithm.
-**/
+ **/
 #ifndef INCG_PL_ALGO_DESTROY_N_HPP
 #define INCG_PL_ALGO_DESTROY_N_HPP
 #include "destroy_at.hpp" // pl::algo::destroy_at
@@ -45,8 +45,8 @@ namespace algo {
  * \warning No increment, assignment, comparison, or indirection through valid
  *          instances of 'ForwardIterator' may throw exceptions.
  * \note The complexity is linear in 'n'.
-**/
-template <typename ForwardIterator, typename SizeType>
+ **/
+template<typename ForwardIterator, typename SizeType>
 inline ForwardIterator destroy_n(ForwardIterator first, SizeType n)
 {
     while (n > 0) {

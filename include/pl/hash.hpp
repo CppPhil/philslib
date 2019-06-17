@@ -29,7 +29,7 @@
  * \brief Header file that defines hashing utilities.
  *        So that implementing hash functions for user defined types
  *        becomes easier.
-**/
+ **/
 #ifndef INCG_PL_HASH_HPP
 #define INCG_PL_HASH_HPP
 #include "annotations.hpp"  // PL_IN, PL_INOUT
@@ -44,8 +44,8 @@ namespace detail {
  * \param hash_seed The hash seed to have the newly generated hash value be
  *                  added to.
  * \param hashable The object to generate a hash for.
-**/
-template <typename Hashable>
+ **/
+template<typename Hashable>
 void add_hash(
     PL_INOUT std::size_t& hash_seed,
     PL_IN const Hashable& hashable) noexcept
@@ -68,8 +68,8 @@ void add_hash(
  * This function can be used for explicit specializations of std::hash
  * for user defined types. All of the type's data members are passed to
  * this function.
-**/
-template <typename... Args>
+ **/
+template<typename... Args>
 std::size_t hash(PL_IN const Args&... args) noexcept
 {
     std::size_t hash_seed{0U};

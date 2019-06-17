@@ -39,9 +39,9 @@
 #include <cstdint>                               // std::uint32_t, UINT32_C
 #include <utility>                               // std::move
 
-using test_cheshire_cat
-    = pl::cheshire_cat<pl::test::cheshire_cat_impl_type,
-                       sizeof(pl::test::cheshire_cat_impl_type)>;
+using test_cheshire_cat = pl::cheshire_cat<
+    pl::test::cheshire_cat_impl_type,
+    sizeof(pl::test::cheshire_cat_impl_type)>;
 
 TEST_CASE("cheshire_cat_impl_type_default_construct_test")
 {

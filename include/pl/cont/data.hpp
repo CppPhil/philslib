@@ -27,7 +27,7 @@
 /*!
  * \file data.hpp
  * \brief Exports the C++17 data function.
-**/
+ **/
 #ifndef INCG_PL_CONT_DATA_HPP
 #define INCG_PL_CONT_DATA_HPP
 #include "../annotations.hpp" // PL_IN
@@ -42,15 +42,15 @@ namespace cont {
 namespace detail {
 /* Workaround to get a CharT * for a non const basic_string,
  * rather than a const CharT * with pre C++17 implementations.
-**/
+ **/
 
-template <typename CharT, typename Traits, typename Allocator>
+template<typename CharT, typename Traits, typename Allocator>
 std::true_type is_basic_string(
     const std::basic_string<CharT, Traits, Allocator>&);
 
 std::false_type is_basic_string(...);
 
-template <typename CharT, typename Traits, typename Allocator>
+template<typename CharT, typename Traits, typename Allocator>
 constexpr CharT* data_impl(
     PL_IN std::basic_string<CharT, Traits, Allocator>& basic_string,
     std::true_type)
@@ -58,7 +58,7 @@ constexpr CharT* data_impl(
     return std::addressof(basic_string[0U]);
 }
 
-template <typename CharT, typename Traits, typename Allocator>
+template<typename CharT, typename Traits, typename Allocator>
 constexpr const CharT* data_impl(
     PL_IN const std::basic_string<CharT, Traits, Allocator>& basic_string,
     std::true_type)
@@ -66,14 +66,14 @@ constexpr const CharT* data_impl(
     return basic_string.data();
 }
 
-template <typename Container>
+template<typename Container>
 constexpr auto data_impl(PL_IN Container& container, std::false_type)
     -> decltype(container.data())
 {
     return container.data();
 }
 
-template <typename Container>
+template<typename Container>
 constexpr auto data_impl(PL_IN const Container& container, std::false_type)
     -> decltype(container.data())
 {
@@ -88,8 +88,8 @@ constexpr auto data_impl(PL_IN const Container& container, std::false_type)
  * \return A pointer to the block of memory containing the elements of
  *         the container.
  * \warning Do not dereference the pointer returned if 'container' is empty.
-**/
-template <typename Container>
+ **/
+template<typename Container>
 constexpr auto data(PL_IN Container& container) -> decltype(auto)
 {
     return ::pl::cont::detail::data_impl(
@@ -103,8 +103,8 @@ constexpr auto data(PL_IN Container& container) -> decltype(auto)
  *              array to pointer decay.
  * \return A pointer to the block of memory containing the elements of the
  *         C-Style array.
-**/
-template <typename Ty, std::size_t Size>
+ **/
+template<typename Ty, std::size_t Size>
 constexpr Ty* data(PL_IN Ty (&array)[Size]) noexcept
 {
     return array;
@@ -116,8 +116,8 @@ constexpr Ty* data(PL_IN Ty (&array)[Size]) noexcept
  * \param init_list The initializer_list to get the pointer for.
  * \return A pointer to the block of memory containing the elements of the
  *         std::initializer_list.
-**/
-template <typename Ty>
+ **/
+template<typename Ty>
 constexpr const Ty* data(std::initializer_list<Ty> init_list) noexcept
 {
     return init_list.begin();

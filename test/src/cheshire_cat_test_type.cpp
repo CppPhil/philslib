@@ -36,8 +36,7 @@ namespace test {
 class cheshire_cat_test_type::implementation {
 public:
     implementation(std::uint32_t p_a, std::string p_s) noexcept
-        : a{p_a},
-          s{std::move(p_s)}
+        : a{p_a}, s{std::move(p_s)}
     {
     }
 
@@ -52,7 +51,8 @@ cheshire_cat_test_type::cheshire_cat_test_type() noexcept
 
 cheshire_cat_test_type::cheshire_cat_test_type(
     std::uint32_t   a,
-    pl::string_view sv) noexcept : m_cc{pl::in_place_t{}, a, sv.to_string()}
+    pl::string_view sv) noexcept
+    : m_cc{pl::in_place_t{}, a, sv.to_string()}
 {
 }
 

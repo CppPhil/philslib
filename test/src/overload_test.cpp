@@ -45,10 +45,10 @@ TEST_CASE("overload_advanced_test")
 {
     const std::string string{"Text"};
 
-    auto l1       = [](int i) { return i * i; };
-    const auto l2 = [](double d1, double d2) { return d1 + d2; };
-    auto l3       = [](const std::string& s) { return s.front(); };
-    const auto&                     r = l3;
+    auto        l1 = [](int i) { return i * i; };
+    const auto  l2 = [](double d1, double d2) { return d1 + d2; };
+    auto        l3 = [](const std::string& s) { return s.front(); };
+    const auto& r  = l3;
 
     const auto overload
         = pl::overload(l1, l2, r, [](float f) { return f * 2.0F; });

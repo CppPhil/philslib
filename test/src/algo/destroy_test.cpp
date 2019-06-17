@@ -68,9 +68,7 @@ TEST_CASE("test_destroy_algorithms")
     {
         pl::algo::destroy(begin, end);
 
-        for (bool b : ary) {
-            CHECK_UNARY(b);
-        }
+        for (bool b : ary) { CHECK_UNARY(b); }
     }
 
     SUBCASE("test_destroy_at")
@@ -79,17 +77,13 @@ TEST_CASE("test_destroy_algorithms")
             pl::algo::destroy_at(&begin[i]);
         }
 
-        for (bool b : ary) {
-            CHECK_UNARY(b);
-        }
+        for (bool b : ary) { CHECK_UNARY(b); }
     }
 
     SUBCASE("test_destroy_n")
     {
         pl::algo::destroy_n(begin, size);
 
-        for (bool b : ary) {
-            CHECK_UNARY(b);
-        }
+        for (bool b : ary) { CHECK_UNARY(b); }
     }
 }

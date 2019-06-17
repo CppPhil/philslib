@@ -27,7 +27,7 @@
 /*!
  * \file uninitialized_move_n.hpp
  * \brief Exports the C++17 uninitialized_move_n algorithm.
-**/
+ **/
 #ifndef INCG_PL_ALGO_UNINITIALIZED_MOVE_N_HPP
 #define INCG_PL_ALGO_UNINITIALIZED_MOVE_N_HPP
 #include <iterator> // std::iterator_traits
@@ -54,8 +54,8 @@ namespace algo {
  *          If an exception is thrown during the initialization, some objects
  *          in the source range are left in a valid but unspecified state.
  * \note The complexity is linear in 'count'.
-**/
-template <typename InputIterator, typename SizeType, typename ForwardIterator>
+ **/
+template<typename InputIterator, typename SizeType, typename ForwardIterator>
 inline std::pair<InputIterator, ForwardIterator>
 uninitialized_move_n(InputIterator first, SizeType count, ForwardIterator dest)
 {

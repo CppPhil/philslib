@@ -27,7 +27,7 @@
 /*!
  * \file destroy_at.hpp
  * \brief Exports the C++17 destroy_at algorithm.
-**/
+ **/
 #ifndef INCG_PL_ALGO_DESTROY_AT_HPP
 #define INCG_PL_ALGO_DESTROY_AT_HPP
 #include "../annotations.hpp" // PL_OUT
@@ -41,8 +41,8 @@ namespace algo {
  *        as if by ptr->~Ty();
  * \param ptr A pointer to the object to be destroyed. May not be nullptr
  *            or otherwise be invalid.
-**/
-template <typename Ty>
+ **/
+template<typename Ty>
 inline void destroy_at(PL_OUT Ty* ptr)
 {
     PL_DBG_CHECK_PRE(ptr != nullptr);

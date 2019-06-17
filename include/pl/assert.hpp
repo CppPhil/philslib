@@ -28,14 +28,14 @@
  * \file assert.hpp
  * \brief Defines various assertion macros including macros specifically
  *        designed for pre- and postconditions.
-**/
+ **/
 #ifndef INCG_PL_ASSERT_HPP
 #define INCG_PL_ASSERT_HPP
 #include "begin_end_macro.hpp" // PL_BEGIN_MACRO, PL_END_MACRO
-#include "except.hpp"          // pl::assertion_violation_exception, pl::precondition_violation_exception, pl::postcondition_violation_exception
-#include <cassert>             // NDEBUG
-#include <ciso646>             // not
-#include <string>              // std::string
+#include "except.hpp" // pl::assertion_violation_exception, pl::precondition_violation_exception, pl::postcondition_violation_exception
+#include <cassert>    // NDEBUG
+#include <ciso646>    // not
+#include <string>     // std::string
 
 /*!
  * \def PL_DBG_CHECK_PRE(precondition)
@@ -53,7 +53,7 @@
  * Throws pl::precondition_violation_exception with an appropriate message if
  * precondition evaluates to false and NDEBUG is not defined.
  * If NDEBUG is defined does nothing.
-**/
+ **/
 
 /*!
  * \def PL_DBG_CHECK_POST(postcondition)
@@ -71,7 +71,7 @@
  * Throws pl::postcondition_violation_exception with an appropriate message if
  * postcondition evaluates to false and NDEBUG is not defined.
  * If NDEBUG is defined does nothing.
-**/
+ **/
 
 /*!
  * \def PL_DBG_ASSERT(condition)
@@ -89,7 +89,7 @@
  * Throws pl::assertion_violation_exception with an appropriate message if
  * condition evaluates to false and NDEBUG is not defined.
  * If NDEBUG is defined does nothing.
-**/
+ **/
 
 /*!
  * \def PL_DETAIL_ASSERTION_IMPLEMENTATION
@@ -98,7 +98,7 @@
  *
  * Implementation macro used in PL_CHECK_PRE, PL_CHECK_POST, PL_ASSERT,
  * PL_DBG_CHECK_PRE, PL_DBG_CHECK_POST and PL_DBG_ASSERT.
-**/
+ **/
 #define PL_DETAIL_ASSERTION_IMPLEMENTATION(                                   \
     condition, exception_type, violation_type_string)                         \
     PL_BEGIN_MACRO                                                            \
@@ -116,7 +116,7 @@
  * \brief Implementation macro not to be used directly.
  *
  * Implementation macro used in PL_ASSERT_MSG and PL_DBG_ASSERT_MSG.
-**/
+ **/
 #define PL_DETAIL_ASSERTION_IMPLEMENTATION_MSG(                          \
     condition, exception_type, violation_type_string, message)           \
     PL_BEGIN_MACRO                                                       \
@@ -137,7 +137,7 @@
  *
  * Throws pl::precondition_violation_exception with an appropriate message if
  * precondition evaluates to false.
-**/
+ **/
 #define PL_CHECK_PRE(precondition)      \
     PL_DETAIL_ASSERTION_IMPLEMENTATION( \
         precondition, ::pl::precondition_violation_exception, "PRECONDITION")
@@ -148,7 +148,7 @@
  *
  * Throws pl::postcondition_violation_exception with an appropriate message if
  * postcondition evaluates to false.
-**/
+ **/
 #define PL_CHECK_POST(postcondition)             \
     PL_DETAIL_ASSERTION_IMPLEMENTATION(          \
         postcondition,                           \
@@ -161,7 +161,7 @@
  *
  * Throws pl::assertion_violation_exception with an appropriate message if
  * postcondition evaluates to false.
-**/
+ **/
 #define PL_ASSERT(condition)            \
     PL_DETAIL_ASSERTION_IMPLEMENTATION( \
         condition, ::pl::assertion_violation_exception, "ASSERTION")
@@ -173,7 +173,7 @@
  *
  * Throws pl::assertion_violation_exception with an appropriate message if
  * condition evaluates to false.
-**/
+ **/
 #define PL_ASSERT_MSG(condition, message)   \
     PL_DETAIL_ASSERTION_IMPLEMENTATION_MSG( \
         condition, ::pl::assertion_violation_exception, "ASSERTION", message)

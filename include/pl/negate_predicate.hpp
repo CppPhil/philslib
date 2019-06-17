@@ -27,7 +27,7 @@
 /*!
  * \file negate_predicate.hpp
  * \brief Exports the negate_predicate function.
-**/
+ **/
 #ifndef INCG_PL_NEGATE_PREDICATE_HPP
 #define INCG_PL_NEGATE_PREDICATE_HPP
 #include "annotations.hpp"       // PL_IN
@@ -43,8 +43,8 @@ namespace detail {
  * \brief A negated_predicate. Type returned by negate_predicate function.
  *        Stores the predicate passed. Will call the predicate in its call
  *        operator and negate the result.
-**/
-template <typename Predicate>
+ **/
+template<typename Predicate>
 class negated_predicate final {
 public:
     using this_type   = negated_predicate;
@@ -54,7 +54,7 @@ public:
     /*!
      * \brief Constructs a negated_predicate.
      * \param predicate The predicate callable that is to be stored and negated.
-    **/
+     **/
     explicit negated_predicate(value_type predicate) noexcept(
         std::is_nothrow_move_constructible<value_type>::value)
         : m_predicate{std::move(predicate)}
@@ -65,8 +65,8 @@ public:
      * \brief Calls the stored predicate and negates the result.
      * \param args The arguments to call the stored predicate callable with.
      * \return The negation of the result of calling m_predicate with args.
-    **/
-    template <typename... Args>
+     **/
+    template<typename... Args>
     return_type operator()(PL_IN Args&&... args)
     {
         return not::pl::invoke(m_predicate, std::forward<Args>(args)...);
@@ -83,8 +83,8 @@ private:
  * \param predicate The predicate functor to create the negation of.
  * \return A predicate functor that is the negation of the predicate functor
  *         passed into the parameter.
-**/
-template <typename Predicate>
+ **/
+template<typename Predicate>
 inline detail::negated_predicate<meta::remove_cvref_t<Predicate>>
 negate_predicate(PL_IN Predicate&& predicate)
 {

@@ -37,14 +37,14 @@
 #include "../../include/pl/numeric.hpp"        // pl::is_between
 #include "../../include/pl/random_number_generator.hpp" // pl::random_number_generator
 #include <algorithm>                                    // std::find
-#include <cstdint>                                      // std::uint16_t, std::int16_t, std::uint32_t, std::int32_t, std::uint64_t, std::int64_t, ...
-#include <iterator>                                     // std::begin, std::end
-#include <vector>                                       // std::vector
+#include <cstdint> // std::uint16_t, std::int16_t, std::uint32_t, std::int32_t, std::uint64_t, std::int64_t, ...
+#include <iterator> // std::begin, std::end
+#include <vector>   // std::vector
 
 namespace pl {
 namespace test {
 namespace {
-template <typename Engine, typename IntType>
+template<typename Engine, typename IntType>
 bool is_ok(
     pl::random_number_generator<Engine>& rng,
     IntType                              lower_bound,
@@ -133,32 +133,24 @@ TEST_CASE("random_number_generator_test")
     SUBCASE("test_shuffle_iter_mt19937")
     {
         mt19937.shuffle(std::begin(copy), std::end(copy));
-        for (int i : vector1) {
-            CHECK_UNARY(copy<contains> i);
-        }
+        for (int i : vector1) { CHECK_UNARY(copy<contains> i); }
     }
 
     SUBCASE("test_shuffle_iter_mt19937_64")
     {
         mt19937_64.shuffle(std::begin(copy), std::end(copy));
-        for (int i : vector1) {
-            CHECK_UNARY(copy<contains> i);
-        }
+        for (int i : vector1) { CHECK_UNARY(copy<contains> i); }
     }
 
     SUBCASE("test_shuffle_ranged_mt19937")
     {
         mt19937.shuffle(copy);
-        for (int i : vector1) {
-            CHECK_UNARY(copy<contains> i);
-        }
+        for (int i : vector1) { CHECK_UNARY(copy<contains> i); }
     }
 
     SUBCASE("test_shuffle_ranged_mt19937_64")
     {
         mt19937_64.shuffle(copy);
-        for (int i : vector1) {
-            CHECK_UNARY(copy<contains> i);
-        }
+        for (int i : vector1) { CHECK_UNARY(copy<contains> i); }
     }
 }
