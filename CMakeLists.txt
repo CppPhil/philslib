@@ -76,11 +76,6 @@ if (PHILISLIB_BUILD_TESTS)
 		# Warning flags
 		target_compile_options(${UNIT_TEST_NAME} PRIVATE "/W4" "/WX")
 
-		 # Disable MSVC extensions
-		if(MSVC_VERSION GREATER_EQUAL "1912")
-			target_compile_options(${UNIT_TEST_NAME} PRIVATE "/permissive-")
-		endif()
-
 		# Optimization flags
 		target_compile_options(${UNIT_TEST_NAME} PRIVATE "$<$<CONFIG:DEBUG>:/Od>")
 		target_compile_options(${UNIT_TEST_NAME} PRIVATE "$<$<CONFIG:RELEASE>:/O2>")
