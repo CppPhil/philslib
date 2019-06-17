@@ -126,6 +126,7 @@ include/pl/cont/empty.hpp: The empty function from C++17.
 include/pl/cont/front.hpp: Non-member front function that also works for built-in arrays and initializer_lists.  
 include/pl/cont/make_array.hpp: Function to conveniently create a std::array, like the one from library fundamentals TS v2.  
 include/pl/cont/size.hpp: The size function from C++17.  
+include/pl/cont/ssize.hpp: The ssize function from C++20.  
 include/pl/cont/to_array.hpp: Function to create a std::array from a built-in array, like the one from library fundamentals TS v2.  
 include/pl/meta/bool_constant.hpp: bool_constant from C++17.  
 include/pl/meta/conjunction.hpp: The conjunction meta function from C++17.  
