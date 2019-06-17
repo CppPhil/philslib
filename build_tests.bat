@@ -32,9 +32,9 @@ If "%2"=="Debug" (
             goto ERROR
         )
     )
-
+    
     cmake -G %1 -DCMAKE_BUILD_TYPE=Debug ..
-    msbuild PhilsLib.sln /p:Configuration=Debug;Platform="%platformStr%" /maxcpucount
+    msbuild Project.sln /p:Configuration=Debug;Platform="%platformStr%" /maxcpucount
     cd ..
 )
 
@@ -50,9 +50,9 @@ If "%2"=="Release" (
             goto ERROR
         )
     )
-
+    
     cmake -G %1 -DCMAKE_BUILD_TYPE=Release ..
-    msbuild PhilsLib.sln /p:Configuration=Release;Platform="%platformStr%" /maxcpucount
+    msbuild Project.sln /p:Configuration=Release;Platform="%platformStr%" /maxcpucount
     cd ..
 )
 
