@@ -429,9 +429,9 @@ public:
         void
         swap(PL_INOUT this_type& other) noexcept
     {
-        const const_pointer pointer = m_data;
+        const const_pointer ptr = m_data;
         m_data                      = other.m_data;
-        other.m_data                = pointer;
+        other.m_data                = ptr;
         const size_type size        = m_size;
         m_size                      = other.m_size;
         other.m_size                = size;
