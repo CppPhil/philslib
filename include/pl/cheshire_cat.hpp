@@ -37,7 +37,6 @@
 #include <initializer_list> // std::initializer_list
 #include <memory>           // std::addressof
 #include <new>              // ::operator new, __cpp_lib_launder, std::launder
-#include <type_traits>      // std::aligned_storage, ...
 #include <utility>          // std::move, std::forward
 
 namespace pl {
@@ -93,8 +92,9 @@ public:
     static constexpr std::size_t buffer_byte_size = BufferByteSize;
     static constexpr std::size_t alignment        = Alignment;
 
-    using storage_type =
-        typename std::aligned_storage<buffer_byte_size, alignment>::type;
+    struct storage_type {
+        alignas(alignment) unsigned char data[buffer_byte_size];
+    };
 
 private:
     template<typename... Args>
@@ -111,7 +111,7 @@ private:
         static_assert(
             (alignof(storage_type) % alignof(element_type)) == 0U,
             "The alignment requirement is not a divisor of the alignment "
-            "provided by the aligned storage buffer.");
+            "provided by the storage_type.");
 
 #ifndef __cpp_lib_launder
         m_ptr =

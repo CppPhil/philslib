@@ -81,9 +81,6 @@ using remove_pointer_t = typename std::remove_pointer<Ty>::type;
 template<typename Ty>
 using add_pointer_t = typename std::add_pointer<Ty>::type;
 
-template<std::size_t Len, typename... Types>
-using aligned_union_t = typename std::aligned_union<Len, Types...>::type;
-
 template<typename Ty>
 using decay_t = typename std::decay<Ty>::type;
 

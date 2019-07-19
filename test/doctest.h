@@ -5834,7 +5834,7 @@ struct ConsoleReporter : public IReporter {
         if (st.failure_flags & TestCaseFailureReason::TooManyFailedAsserts) {
             s << Color::Red << "Aborting - too many failed asserts!\n";
         }
-        s << Color::None;
+        s << Color::None; // lgtm [cpp/useless-expression]
     }
 
     void test_case_exception(const TestCaseException& e) override
