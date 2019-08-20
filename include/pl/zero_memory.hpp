@@ -33,7 +33,15 @@
 #include "annotations.hpp" // PL_OUT
 #include "byte.hpp"        // pl::byte
 #include "inline.hpp"      // PL_ALWAYS_INLINE
+#include "os.hpp"          // PL_OS, PL_OS_WINDOWS
 #include <cstddef>         // std::size_t
+#if PL_OS == PS_OS_WINDOWS
+#include <Windows.h> // SecureZeroMemory
+#elif defined(__unix__)
+#include <string.h> // explicit_bzero
+#else
+#error "secure_zero_memory: Unsupported platform"
+#endif
 
 namespace pl {
 /*!
@@ -95,11 +103,14 @@ PL_ALWAYS_INLINE void* secure_zero_memory(
     PL_OUT void* dest,
     std::size_t  count_bytes) noexcept
 {
-    volatile byte* ptr{static_cast<volatile byte*>(dest)};
-
-    for (; count_bytes != 0U; ++ptr, --count_bytes) { *ptr = 0U; }
-
+#if PL_OS == PL_OS_WINDOWS
+    return SecureZeroMemory(dest, count_bytes);
+#elif defined(__unix__)
+    explicit_bzero(dest, count_bytes);
     return dest;
+#else
+#error "secure_zero_memory: Unsupported platform"
+#endif
 }
 } // namespace pl
 #endif // INCG_PL_ZERO_MEMORY_HPP

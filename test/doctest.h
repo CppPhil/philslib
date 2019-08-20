@@ -55,8 +55,8 @@
 
 #define DOCTEST_VERSION_MAJOR 2
 #define DOCTEST_VERSION_MINOR 3
-#define DOCTEST_VERSION_PATCH 3
-#define DOCTEST_VERSION_STR "2.3.3"
+#define DOCTEST_VERSION_PATCH 4
+#define DOCTEST_VERSION_STR "2.3.4"
 
 #define DOCTEST_VERSION                                          \
     (DOCTEST_VERSION_MAJOR * 10000 + DOCTEST_VERSION_MINOR * 100 \
@@ -444,8 +444,8 @@ DOCTEST_GCC_SUPPRESS_WARNING_POP
 // Forward declaring 'X' in namespace std is not permitted by the C++ Standard.
 DOCTEST_MSVC_SUPPRESS_WARNING_WITH_PUSH(4643)
 
-DOCTEST_STD_NAMESPACE_BEGIN
-typedef decltype(nullptr) nullptr_t;
+DOCTEST_STD_NAMESPACE_BEGIN // NOLINT (cert-dcl58-cpp)
+    typedef decltype(nullptr) nullptr_t;
 template<class charT>
 struct char_traits;
 template<>
@@ -505,7 +505,7 @@ DOCTEST_INTERFACE extern bool is_running_in_test;
 // - relational operators as free functions - taking const char* as one of the
 // params
 class DOCTEST_INTERFACE String {
-    static const unsigned len = 24; //! OCLINT avoid private static members
+    static const unsigned len  = 24; //! OCLINT avoid private static members
     static const unsigned last = len - 1; //! OCLINT avoid private static
                                           //! members
 
@@ -1636,112 +1636,27 @@ DOCTEST_INTERFACE void toStream(std::ostream* s, int long unsigned in);
 DOCTEST_INTERFACE void toStream(std::ostream* s, int long long in);
 DOCTEST_INTERFACE void toStream(std::ostream* s, int long long unsigned in);
 
-class DOCTEST_INTERFACE ContextBuilder {
-    friend class ContextScope;
+// ContextScope base class used to allow implementing methods of ContextScope
+// that don't depend on the template parameter in doctest.cpp.
+class DOCTEST_INTERFACE ContextScopeBase : public IContextScope {
+protected:
+    ContextScopeBase();
 
-    struct DOCTEST_INTERFACE ICapture {
-        DOCTEST_DELETE_COPIES(ICapture);
-        ICapture();
-        virtual ~ICapture();
-        virtual void toStream(std::ostream*) const = 0;
-    };
-
-    template<typename T>
-    struct Capture
-        : public ICapture //! OCLINT destructor of virtual class
-    {
-        const T* capture;
-
-        explicit Capture(const T* in) : capture(in) {}
-        void toStream(std::ostream* s) const override
-        {
-            detail::toStream(s, *capture);
-        }
-    };
-
-    struct DOCTEST_INTERFACE Chunk {
-        char buf[sizeof(Capture<char>)] DOCTEST_ALIGNMENT(
-            2 * sizeof(void*)); // place to construct a Capture<T>
-
-        DOCTEST_DECLARE_DEFAULTS(Chunk);
-        DOCTEST_DELETE_COPIES(Chunk);
-    };
-
-    struct DOCTEST_INTERFACE Node {
-        Chunk chunk;
-        Node* next;
-
-        DOCTEST_DECLARE_DEFAULTS(Node);
-        DOCTEST_DELETE_COPIES(Node);
-    };
-
-    Chunk stackChunks[DOCTEST_CONFIG_NUM_CAPTURES_ON_STACK];
-    int   numCaptures = 0;
-    Node* head        = nullptr;
-    Node* tail        = nullptr;
-
-    ContextBuilder(ContextBuilder& other);
-
-    ContextBuilder& operator=(const ContextBuilder&) = delete;
-
-    void stringify(std::ostream* s) const;
-
-public:
-    ContextBuilder();
-    ~ContextBuilder();
-
-    template<typename T>
-    DOCTEST_NOINLINE ContextBuilder& operator<<(T& in)
-    {
-        Capture<T> temp(&in);
-
-        // construct either on stack or on heap
-        // copy the bytes for the whole object - including the vtable because we
-        // cant construct the object directly in the buffer using placement new
-        // - need the <new> header...
-        if (numCaptures < DOCTEST_CONFIG_NUM_CAPTURES_ON_STACK) {
-            my_memcpy(stackChunks[numCaptures].buf, &temp, sizeof(Chunk));
-        }
-        else {
-            auto curr  = new Node;
-            curr->next = nullptr;
-            if (tail) {
-                tail->next = curr;
-                tail       = curr;
-            }
-            else {
-                head = tail = curr;
-            }
-
-            my_memcpy(tail->chunk.buf, &temp, sizeof(Chunk));
-        }
-        ++numCaptures;
-        return *this;
-    }
-
-    template<typename T>
-    ContextBuilder& operator<<(const T&&)
-    {
-        static_assert(
-            deferred_false<T>::value,
-            "Cannot pass temporaries or rvalues to the streaming operator "
-            "because it "
-            "caches pointers to the passed objects for lazy evaluation!");
-        return *this;
-    }
+    void destroy();
 };
 
-class DOCTEST_INTERFACE ContextScope : public IContextScope {
-    ContextBuilder contextBuilder;
+template<typename L>
+class DOCTEST_INTERFACE ContextScope : public ContextScopeBase {
+    const L& lambda_;
 
 public:
-    explicit ContextScope(ContextBuilder& temp);
+    explicit ContextScope(const L& lambda) : lambda_(lambda) {}
 
-    DOCTEST_DELETE_COPIES(ContextScope);
+    ContextScope(ContextScope&& other) : lambda_(other.lambda_) {}
 
-    ~ContextScope() override;
+    void stringify(std::ostream* s) const override { lambda_(s); }
 
-    void stringify(std::ostream* s) const override;
+    ~ContextScope() override { destroy(); }
 };
 
 struct DOCTEST_INTERFACE MessageBuilder : public MessageData {
@@ -1763,6 +1678,12 @@ struct DOCTEST_INTERFACE MessageBuilder : public MessageData {
     bool log();
     void react();
 };
+
+template<typename L>
+ContextScope<L> MakeContextScope(const L& lambda)
+{
+    return ContextScope<L>(lambda);
+}
 } // namespace detail
 
 #define DOCTEST_DEFINE_DECORATOR(name, type, def) \
@@ -1955,8 +1876,11 @@ struct DOCTEST_INTERFACE IReporter {
 namespace detail {
 typedef IReporter* (*reporterCreatorFunc)(const ContextOptions&);
 
-DOCTEST_INTERFACE void
-registerReporterImpl(const char* name, int prio, reporterCreatorFunc c);
+DOCTEST_INTERFACE void registerReporterImpl(
+    const char*         name,
+    int                 prio,
+    reporterCreatorFunc c,
+    bool                isReporter);
 
 template<typename Reporter>
 IReporter* reporterCreator(const ContextOptions& o)
@@ -1966,10 +1890,10 @@ IReporter* reporterCreator(const ContextOptions& o)
 } // namespace detail
 
 template<typename Reporter>
-int registerReporter(const char* name, int priority)
+int registerReporter(const char* name, int priority, bool isReporter)
 {
     detail::registerReporterImpl(
-        name, priority, detail::reporterCreator<Reporter>);
+        name, priority, detail::reporterCreator<Reporter>, isReporter);
     return 0;
 }
 } // namespace doctest
@@ -2205,17 +2129,40 @@ int registerReporter(const char* name, int priority)
     DOCTEST_REGISTER_EXCEPTION_TRANSLATOR_IMPL(          \
         DOCTEST_ANONYMOUS(_DOCTEST_ANON_TRANSLATOR_), signature)
 
-// for registering
+// for registering reporters
 #define DOCTEST_REGISTER_REPORTER(name, priority, reporter)                \
     DOCTEST_GLOBAL_NO_WARNINGS(DOCTEST_ANONYMOUS(_DOCTEST_ANON_REPORTER_)) \
-        = doctest::registerReporter<reporter>(name, priority);             \
+        = doctest::registerReporter<reporter>(name, priority, true);       \
+    DOCTEST_GLOBAL_NO_WARNINGS_END()                                       \
+    typedef int DOCTEST_ANONYMOUS(_DOCTEST_ANON_FOR_SEMICOLON_)
+
+// for registering listeners
+#define DOCTEST_REGISTER_LISTENER(name, priority, reporter)                \
+    DOCTEST_GLOBAL_NO_WARNINGS(DOCTEST_ANONYMOUS(_DOCTEST_ANON_REPORTER_)) \
+        = doctest::registerReporter<reporter>(name, priority, false);      \
     DOCTEST_GLOBAL_NO_WARNINGS_END()                                       \
     typedef int DOCTEST_ANONYMOUS(_DOCTEST_ANON_FOR_SEMICOLON_)
 
 // for logging
-#define DOCTEST_INFO(x)                                                 \
-    doctest::detail::ContextScope DOCTEST_ANONYMOUS(_DOCTEST_CAPTURE_)( \
-        doctest::detail::ContextBuilder() << x)
+#define DOCTEST_INFO(expression)              \
+    DOCTEST_INFO_IMPL(                        \
+        DOCTEST_ANONYMOUS(_DOCTEST_CAPTURE_), \
+        DOCTEST_ANONYMOUS(_DOCTEST_CAPTURE_), \
+        DOCTEST_ANONYMOUS(_DOCTEST_CAPTURE_), \
+        expression)
+
+#define DOCTEST_INFO_IMPL(lambda_name, mb_name, s_name, expression) \
+    DOCTEST_MSVC_SUPPRESS_WARNING_WITH_PUSH(4626)                   \
+    auto lambda_name = [&](std::ostream* s_name) {                  \
+        doctest::detail::MessageBuilder mb_name(                    \
+            __FILE__, __LINE__, doctest::assertType::is_warn);      \
+        mb_name.m_stream = s_name;                                  \
+        mb_name << expression;                                      \
+    };                                                              \
+    DOCTEST_MSVC_SUPPRESS_WARNING_POP                               \
+    auto DOCTEST_ANONYMOUS(_DOCTEST_CAPTURE_)                       \
+        = doctest::detail::MakeContextScope(lambda_name)
+
 #define DOCTEST_CAPTURE(x) DOCTEST_INFO(#x " := " << x)
 
 #define DOCTEST_ADD_AT_IMPL(type, file, line, mb, x) \
@@ -2236,15 +2183,8 @@ int registerReporter(const char* name, int priority)
 #define DOCTEST_FAIL_CHECK(x) DOCTEST_ADD_FAIL_CHECK_AT(__FILE__, __LINE__, x)
 #define DOCTEST_FAIL(x) DOCTEST_ADD_FAIL_AT(__FILE__, __LINE__, x)
 
-// hack for macros like INFO() that require lvalues
-#if __cplusplus >= 201402L || (DOCTEST_MSVC >= DOCTEST_COMPILER(19, 10, 0))
-template<class T, T x>
-constexpr T to_lvalue = x;
-#define DOCTEST_TO_LVALUE(...) to_lvalue<decltype(__VA_ARGS__), __VA_ARGS__>
-#else // TO_LVALUE
 #define DOCTEST_TO_LVALUE(...) \
-    TO_LVALUE_CAN_BE_USED_ONLY_IN_CPP14_MODE_OR_WITH_VS_2017_OR_NEWER
-#endif // TO_LVALUE
+    __VA_ARGS__ // Not removed to keep backwards compatibility.
 
 #ifndef DOCTEST_CONFIG_SUPER_FAST_ASSERTS
 
@@ -2632,6 +2572,7 @@ constexpr T to_lvalue = x;
         _DOCTEST_ANON_TRANSLATOR_)(signature)
 
 #define DOCTEST_REGISTER_REPORTER(name, priority, reporter)
+#define DOCTEST_REGISTER_LISTENER(name, priority, reporter)
 
 #define DOCTEST_INFO(x) ((void)0)
 #define DOCTEST_CAPTURE(x) ((void)0)
@@ -2772,6 +2713,7 @@ constexpr T to_lvalue = x;
 #define TEST_SUITE_END DOCTEST_TEST_SUITE_END
 #define REGISTER_EXCEPTION_TRANSLATOR DOCTEST_REGISTER_EXCEPTION_TRANSLATOR
 #define REGISTER_REPORTER DOCTEST_REGISTER_REPORTER
+#define REGISTER_LISTENER DOCTEST_REGISTER_LISTENER
 #define INFO DOCTEST_INFO
 #define CAPTURE DOCTEST_CAPTURE
 #define ADD_MESSAGE_AT DOCTEST_ADD_MESSAGE_AT
@@ -2929,12 +2871,17 @@ DOCTEST_GCC_SUPPRESS_WARNING_POP
 #endif // DOCTEST_SINGLE_HEADER
 
 #if defined(DOCTEST_CONFIG_IMPLEMENT) || !defined(DOCTEST_SINGLE_HEADER)
-#ifndef DOCTEST_LIBRARY_IMPLEMENTATION
-#define DOCTEST_LIBRARY_IMPLEMENTATION
 
 #ifndef DOCTEST_SINGLE_HEADER
 #include "doctest_fwd.h"
 #endif // DOCTEST_SINGLE_HEADER
+
+DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wunused-macros")
+
+#ifndef DOCTEST_LIBRARY_IMPLEMENTATION
+#define DOCTEST_LIBRARY_IMPLEMENTATION
+
+DOCTEST_CLANG_SUPPRESS_WARNING_POP
 
 DOCTEST_CLANG_SUPPRESS_WARNING_PUSH
 DOCTEST_CLANG_SUPPRESS_WARNING("-Wunknown-pragmas")
@@ -3073,9 +3020,6 @@ DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_BEGIN
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
 #endif // WIN32_LEAN_AND_MEAN
-#ifndef VC_EXTRA_LEAN
-#define VC_EXTRA_LEAN
-#endif // VC_EXTRA_LEAN
 #ifndef NOMINMAX
 #define NOMINMAX
 #endif // NOMINMAX
@@ -3186,7 +3130,7 @@ String rawMemoryToString(const void* object, unsigned size)
     return oss.str().c_str();
 }
 
-DOCTEST_THREAD_LOCAL std::ostringstream g_oss;
+DOCTEST_THREAD_LOCAL std::ostringstream g_oss; // NOLINT(cert-err58-cpp)
 
 std::ostream* getTlsOss()
 {
@@ -3742,7 +3686,7 @@ bool operator==(double lhs, const Approx& rhs)
     return std::fabs(lhs - rhs.m_value)
            < rhs.m_epsilon
                  * (rhs.m_scale
-                    + std::max(std::fabs(lhs), std::fabs(rhs.m_value)));
+                    + std::max<double>(std::fabs(lhs), std::fabs(rhs.m_value)));
 }
 bool operator==(const Approx& lhs, double rhs) { return operator==(rhs, lhs); }
 bool operator!=(double lhs, const Approx& rhs) { return !operator==(lhs, rhs); }
@@ -3847,7 +3791,13 @@ namespace {
 // register a reporter with a duplicate name and a different priority but
 // hopefully that won't happen often :|
 typedef std::map<std::pair<int, String>, reporterCreatorFunc> reporterMap;
-reporterMap&                                                  getReporters()
+
+reporterMap& getReporters()
+{
+    static reporterMap data;
+    return data;
+}
+reporterMap& getListeners()
 {
     static reporterMap data;
     return data;
@@ -3875,7 +3825,10 @@ bool checkIfShouldThrow(assertType::Enum at)
 }
 
 #ifndef DOCTEST_CONFIG_NO_EXCEPTIONS
-[[noreturn]] void throwException() { throw TestFailureException(); }
+[[noreturn]] void throwException()
+{
+    throw TestFailureException();
+} // NOLINT(cert-err60-cpp)
 #else  // DOCTEST_CONFIG_NO_EXCEPTIONS
 void throwException() {}
 #endif // DOCTEST_CONFIG_NO_EXCEPTIONS
@@ -3915,8 +3868,8 @@ int wildcmp(const char* str, const char* wild, bool caseSensitive)
             str++;
         }
         else {
-            wild = mp;  //! OCLINT parameter reassignment
-            str = cp++; //! OCLINT parameter reassignment
+            wild = mp;   //! OCLINT parameter reassignment
+            str  = cp++; //! OCLINT parameter reassignment
         }
     }
 
@@ -3925,7 +3878,7 @@ int wildcmp(const char* str, const char* wild, bool caseSensitive)
 }
 
 //// C string hash function (djb2) - taken from
-///http://www.cse.yorku.ca/~oz/hash.html
+/// http://www.cse.yorku.ca/~oz/hash.html
 // unsigned hashStr(unsigned const char* str) {
 //    unsigned long hash = 5381;
 //    char          c;
@@ -4339,68 +4292,17 @@ void toStream(std::ostream* s, int long long unsigned in) { *s << in; }
 DOCTEST_THREAD_LOCAL std::vector<IContextScope*>
                      g_infoContexts; // for logging with INFO()
 
-ContextBuilder::ICapture::ICapture()  = default;
-ContextBuilder::ICapture::~ICapture() = default;
-
-ContextBuilder::Chunk::Chunk()  = default;
-ContextBuilder::Chunk::~Chunk() = default;
-
-ContextBuilder::Node::Node()  = default;
-ContextBuilder::Node::~Node() = default;
-
-// steal the contents of the other - acting as a move constructor...
-ContextBuilder::ContextBuilder(ContextBuilder& other)
-    : numCaptures(other.numCaptures), head(other.head), tail(other.tail)
-{
-    other.numCaptures = 0;
-    other.head        = nullptr;
-    other.tail        = nullptr;
-    memcpy(
-        stackChunks,
-        other.stackChunks,
-        unsigned(int(sizeof(Chunk)) * DOCTEST_CONFIG_NUM_CAPTURES_ON_STACK));
-}
-
-DOCTEST_GCC_SUPPRESS_WARNING_WITH_PUSH("-Wcast-align")
-void ContextBuilder::stringify(std::ostream* s) const
-{
-    int curr = 0;
-    // iterate over small buffer
-    while (curr < numCaptures && curr < DOCTEST_CONFIG_NUM_CAPTURES_ON_STACK)
-        reinterpret_cast<const ICapture*>(stackChunks[curr++].buf)->toStream(s);
-    // iterate over list
-    auto curr_elem = head;
-    while (curr < numCaptures) {
-        reinterpret_cast<const ICapture*>(curr_elem->chunk.buf)->toStream(s);
-        curr_elem = curr_elem->next;
-        ++curr;
-    }
-}
-DOCTEST_GCC_SUPPRESS_WARNING_POP
-
-ContextBuilder::ContextBuilder() = default;
-
-ContextBuilder::~ContextBuilder()
-{
-    // free the linked list - the ones on the stack are left as-is
-    // no destructors are called at all - there is no need
-    while (head) {
-        auto next = head->next;
-        delete head;
-        head = next;
-    }
-}
-
-ContextScope::ContextScope(ContextBuilder& temp) : contextBuilder(temp)
-{
-    g_infoContexts.push_back(this);
-}
+ContextScopeBase::ContextScopeBase() { g_infoContexts.push_back(this); }
 
 DOCTEST_MSVC_SUPPRESS_WARNING_WITH_PUSH(
     4996) // std::uncaught_exception is deprecated in C++17
 DOCTEST_GCC_SUPPRESS_WARNING_WITH_PUSH("-Wdeprecated-declarations")
 DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wdeprecated-declarations")
-ContextScope::~ContextScope()
+// destroy cannot be inlined into the destructor because that would mean calling
+// stringify after ContextScope has been destroyed (base class destructors run
+// after derived class destructors). Instead, ContextScope calls this method
+// directly from its destructor.
+void ContextScopeBase::destroy()
 {
     if (std::uncaught_exception()) {
         std::ostringstream s;
@@ -4413,10 +4315,6 @@ DOCTEST_CLANG_SUPPRESS_WARNING_POP
 DOCTEST_GCC_SUPPRESS_WARNING_POP
 DOCTEST_MSVC_SUPPRESS_WARNING_POP
 
-void ContextScope::stringify(std::ostream* s) const
-{
-    contextBuilder.stringify(s);
-}
 } // namespace detail
 namespace {
 using namespace detail;
@@ -4601,8 +4499,9 @@ using namespace detail;
 #define DOCTEST_OUTPUT_DEBUG_STRING(text) ::OutputDebugStringA(text)
 #else
 // TODO: integration with XCode and other IDEs
-#define DOCTEST_OUTPUT_DEBUG_STRING(text)
-#endif // Platform
+#define DOCTEST_OUTPUT_DEBUG_STRING( \
+    text) // NOLINT(clang-diagnostic-unused-macros)
+#endif    // Platform
 
 void addAssert(assertType::Enum at)
 {
@@ -5250,6 +5149,10 @@ struct XmlReporter : public IReporter {
     {
         test_run_start();
         if (opt.list_reporters) {
+            for (auto& curr : getListeners())
+                xml.scopedElement("Listener")
+                    .writeAttribute("priority", curr.first.first)
+                    .writeAttribute("name", curr.first.second);
             for (auto& curr : getReporters())
                 xml.scopedElement("Reporter")
                     .writeAttribute("priority", curr.first.first)
@@ -5666,11 +5569,18 @@ struct ConsoleReporter : public IReporter {
     void printRegisteredReporters()
     {
         printVersion();
-        s << Color::Cyan << "[doctest] " << Color::None
-          << "listing all registered reporters\n";
-        for (auto& curr : getReporters())
-            s << "priority: " << std::setw(5) << curr.first.first
-              << " name: " << curr.first.second << "\n";
+        auto printReporters
+            = [this](const reporterMap& reporters, const char* type) {
+                  if (reporters.size()) {
+                      s << Color::Cyan << "[doctest] " << Color::None
+                        << "listing all registered " << type << "\n";
+                      for (auto& curr : reporters)
+                          s << "priority: " << std::setw(5) << curr.first.first
+                            << " name: " << curr.first.second << "\n";
+                  }
+              };
+        printReporters(getListeners(), "listeners");
+        printReporters(getReporters(), "reporters");
     }
 
     void list_query_results()
@@ -6421,6 +6331,13 @@ int Context::run()
             p->reporters_currently_used.push_back(curr.second(*g_cs));
     }
 
+    // TODO: check if there is nothing in reporters_currently_used
+
+    // prepend all listeners
+    for (auto& curr : getListeners())
+        p->reporters_currently_used.insert(
+            p->reporters_currently_used.begin(), curr.second(*g_cs));
+
 #ifdef DOCTEST_PLATFORM_WINDOWS
     if (isDebuggerActive())
         p->reporters_currently_used.push_back(
@@ -6649,10 +6566,18 @@ const String* IReporter::get_stringified_contexts()
 }
 
 namespace detail {
-void registerReporterImpl(const char* name, int priority, reporterCreatorFunc c)
+void registerReporterImpl(
+    const char*         name,
+    int                 priority,
+    reporterCreatorFunc c,
+    bool                isReporter)
 {
-    getReporters().insert(
-        reporterMap::value_type(reporterMap::key_type(priority, name), c));
+    if (isReporter)
+        getReporters().insert(
+            reporterMap::value_type(reporterMap::key_type(priority, name), c));
+    else
+        getListeners().insert(
+            reporterMap::value_type(reporterMap::key_type(priority, name), c));
 }
 } // namespace detail
 
