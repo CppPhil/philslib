@@ -20,6 +20,12 @@ If "%3"=="x86" (
     )
 )
 
+set archSuffix=""
+
+If "%1"=="Visual Studio 16 2019" (
+    set archSuffix="-A %platformStr%"
+)
+
 If "%2"=="Debug" (
     If %isx86% equ true (
         mkdir Debug_x86
@@ -33,7 +39,7 @@ If "%2"=="Debug" (
         )
     )
     
-    cmake -G %1 -DCMAKE_BUILD_TYPE=Debug ..
+    cmake -G %1 %archSuffix% -DCMAKE_BUILD_TYPE=Debug ..
     msbuild Project.sln /p:Configuration=Debug;Platform="%platformStr%" /maxcpucount
     cd ..
 )
@@ -51,7 +57,7 @@ If "%2"=="Release" (
         )
     )
     
-    cmake -G %1 -DCMAKE_BUILD_TYPE=Release ..
+    cmake -G %1 %archSuffix% -DCMAKE_BUILD_TYPE=Release ..
     msbuild Project.sln /p:Configuration=Release;Platform="%platformStr%" /maxcpucount
     cd ..
 )

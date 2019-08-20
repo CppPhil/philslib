@@ -4,19 +4,22 @@ matrix:
 environment:
   matrix:
     - gen: "Visual Studio 14 2015"
+      x64String: " Win64"
     - gen: "Visual Studio 15 2017"
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-    - gen: "Visual Studio 16 2019"
+      x64String: " Win64"
+    - gen: "Visual Studio 16 2019"      
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      x64String: ""
 
 build_script:
   # x64 Debug
-  - build_tests.bat "%gen% Win64" Debug x64
+  - build_tests.bat "%gen%%x64String%" Debug x64
   - cd Debug_x64
   - ctest --verbose .
   - cd ..
   # x64 Release
-  - build_tests.bat "%gen% Win64" Release x64
+  - build_tests.bat "%gen%%x64String%" Release x64
   - cd Release_x64
   - ctest --verbose .
   - cd ..
