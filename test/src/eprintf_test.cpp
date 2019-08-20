@@ -38,11 +38,11 @@
 
 TEST_CASE("eprintf_test")
 {
-    static constexpr auto array = pl::cont::make_array('H', 'e', 'l', 'l', 'o');
-    static constexpr int  expected_count = 11;
+    static constexpr auto array
+        = pl::cont::make_array('H', 'e', 'l', 'l', 'o', '\0');
+    static constexpr int expected_count = 11;
 
-    const int ret_val{pl::eprintf(
-        "Test %.*s\n", static_cast<int>(array.size()), array.data())};
+    const int ret_val{pl::eprintf("Test %s\n", array.data())};
 
     REQUIRE(ret_val >= 0);
     CHECK(ret_val == expected_count);
