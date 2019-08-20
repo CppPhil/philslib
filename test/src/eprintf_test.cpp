@@ -32,17 +32,14 @@
 #include "../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
 #pragma GCC diagnostic pop
-#endif // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/pl/cont/make_array.hpp" // pl::cont::make_array
-#include "../../include/pl/eprintf.hpp"         // pl::eprintf
+#endif                                  // PL_COMPILER == PL_COMPILER_GCC
+#include "../../include/pl/eprintf.hpp" // pl::eprintf
 
 TEST_CASE("eprintf_test")
 {
-    static constexpr auto array
-        = pl::cont::make_array('H', 'e', 'l', 'l', 'o', '\0');
     static constexpr int expected_count = 11;
 
-    const int ret_val{pl::eprintf("Test %s\n", array.data())};
+    const int ret_val{pl::eprintf("Test %s\n", "Hello")};
 
     REQUIRE(ret_val >= 0);
     CHECK(ret_val == expected_count);
