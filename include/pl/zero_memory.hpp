@@ -39,6 +39,7 @@
 #include <Windows.h> // SecureZeroMemory
 #elif defined(__unix__)
 #include <string.h> // explicit_bzero
+#include <strings.h>
 #else
 #error "secure_zero_memory: Unsupported platform"
 #endif
