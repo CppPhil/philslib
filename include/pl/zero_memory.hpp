@@ -37,7 +37,7 @@
 #include <cstddef>         // std::size_t
 #if PL_OS == PS_OS_WINDOWS
 #include <Windows.h> // SecureZeroMemory
-#elif defined(__unix__)
+#elif defined(__linux__) || defined(__unix__)
 #include <string.h> // explicit_bzero
 #include <strings.h>
 #else
@@ -106,7 +106,7 @@ PL_ALWAYS_INLINE void* secure_zero_memory(
 {
 #if PL_OS == PL_OS_WINDOWS
     return SecureZeroMemory(dest, count_bytes);
-#elif defined(__unix__)
+#elif defined(__linux__) || defined(__unix__)
     explicit_bzero(dest, count_bytes);
     return dest;
 #else
