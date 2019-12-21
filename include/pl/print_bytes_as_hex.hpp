@@ -135,8 +135,8 @@ inline print_bytes_as_hex::print_bytes_as_hex(this_type&&) noexcept(
     std::is_nothrow_move_constructible<std::string>::value)
     = default;
 
-inline print_bytes_as_hex& print_bytes_as_hex::
-                           operator=(const this_type&) noexcept(
+inline print_bytes_as_hex&
+print_bytes_as_hex::operator=(const this_type&) noexcept(
     std::is_nothrow_copy_assignable<std::string>::value)
     = default;
 

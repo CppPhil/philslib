@@ -87,8 +87,8 @@ public:
      *          value_type objects that are to be placed into it.
      **/
     raw_memory_array(
-        PL_OUT void* raw_memory,
-        size_type    byte_count,
+        PL_OUT void*          raw_memory,
+        size_type             byte_count,
         PL_IN const_reference initial_value = value_type())
         : m_data{static_cast<pointer>(raw_memory)}
         , m_size{byte_count / sizeof(value_type)}

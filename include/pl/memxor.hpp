@@ -51,7 +51,7 @@ namespace pl {
  * \warning Make sure 'byte_count' is correct!
  **/
 inline void* memxor(
-    PL_INOUT void* PL_RESTRICT destination,
+    PL_INOUT void* PL_RESTRICT    destination,
     PL_IN const void* PL_RESTRICT source,
     std::size_t                   byte_count) noexcept
 {

@@ -41,10 +41,9 @@
  *        context of the callable object being called from within the generic
  *        algorithm.
  **/
-#define PL_LIFT(...)                                                    \
-    [](auto&&... args) noexcept(noexcept(__VA_ARGS__(PL_FWD(args)...))) \
-        ->decltype(__VA_ARGS__(PL_FWD(args)...))                        \
-    {                                                                   \
-        return __VA_ARGS__(PL_FWD(args)...);                            \
+#define PL_LIFT(...)                                                   \
+    [](auto&&... args) noexcept(noexcept(__VA_ARGS__(                  \
+        PL_FWD(args)...))) -> decltype(__VA_ARGS__(PL_FWD(args)...)) { \
+        return __VA_ARGS__(PL_FWD(args)...);                           \
     }
 #endif // INCG_PL_LIFT_HPP
