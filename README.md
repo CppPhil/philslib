@@ -141,6 +141,8 @@ include/pl/meta/nested_types.hpp: Template aliases to access common nested types
 include/pl/meta/none.hpp: Meta function to determine whether none of the traits given are satisfied, analogous to disjunction and conjunction from C++17.  
 include/pl/meta/remove_cvref.hpp: The remove_cvref meta function from C++20.  
 include/pl/meta/type_identity.hpp: Meta function to prevent undesired type deduction.  
+include/pl/meta/unwrap_ref_decay.hpp: unwrap_ref_decay from C++20  
+include/pl/meta/unwrap_reference.hpp: unwrap_reference from C++20  
 include/pl/meta/void_t.hpp: void_t from C++17.  
 include/pl/thd/concurrent.hpp: Thread safe concurrency adaptor to 'run' an object in a new thread, behaves like a non-blocking monitor as the callables accessing the object are run on the underlying thread.  
 include/pl/thd/monitor.hpp: A monitor providing thread-safe access to an object by using locks.  
@@ -205,3 +207,4 @@ include/pl/unrelated_pointer_cast.hpp: Function template for unrelated pointer c
 include/pl/unused.hpp: Macro to suppress warnings about objects being unused.  
 include/pl/vla.hpp: Macro to be able to define VLAs by using alloca.  
 include/pl/zero_memory.hpp: zero_memory and secure_zero_memory functions to zero regions of memory.
+~~
