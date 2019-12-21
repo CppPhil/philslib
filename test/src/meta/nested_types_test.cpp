@@ -126,3 +126,73 @@ TEST_CASE("container_type_test")
 
     CHECK_UNARY(true);
 }
+
+TEST_CASE("reference_test")
+{
+    PL_TEST_STATIC_ASSERT(
+        std::is_same<pl::meta::reference<std::vector<int>>, int&>::value);
+
+    CHECK_UNARY(true);
+}
+
+TEST_CASE("const_reference_test")
+{
+    PL_TEST_STATIC_ASSERT(
+        std::is_same<pl::meta::const_reference<std::vector<int>>, const int&>::
+            value);
+
+    CHECK_UNARY(true);
+}
+
+TEST_CASE("pointer_test")
+{
+    PL_TEST_STATIC_ASSERT(
+        std::is_same<pl::meta::pointer<std::vector<int>>, int*>::value);
+
+    CHECK_UNARY(true);
+}
+
+TEST_CASE("const_pointer_test")
+{
+    PL_TEST_STATIC_ASSERT(
+        std::is_same<pl::meta::const_pointer<std::vector<int>>, const int*>::
+            value);
+
+    CHECK_UNARY(true);
+}
+
+TEST_CASE("iterator_test")
+{
+    PL_TEST_STATIC_ASSERT(std::is_same<
+                          pl::meta::iterator<std::vector<int>>,
+                          std::vector<int>::iterator>::value);
+
+    CHECK_UNARY(true);
+}
+
+TEST_CASE("const_iterator_test")
+{
+    PL_TEST_STATIC_ASSERT(std::is_same<
+                          pl::meta::const_iterator<std::vector<int>>,
+                          std::vector<int>::const_iterator>::value);
+
+    CHECK_UNARY(true);
+}
+
+TEST_CASE("reverse_iterator_test")
+{
+    PL_TEST_STATIC_ASSERT(std::is_same<
+                          pl::meta::reverse_iterator<std::vector<int>>,
+                          std::vector<int>::reverse_iterator>::value);
+
+    CHECK_UNARY(true);
+}
+
+TEST_CASE("const_reverse_iterator_test")
+{
+    PL_TEST_STATIC_ASSERT(std::is_same<
+                          pl::meta::const_reverse_iterator<std::vector<int>>,
+                          std::vector<int>::const_reverse_iterator>::value);
+
+    CHECK_UNARY(true);
+}

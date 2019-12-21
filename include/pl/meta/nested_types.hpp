@@ -86,6 +86,54 @@ using deleter_type = typename Type::deleter_type;
  **/
 template<typename Type>
 using container_type = typename Type::container_type;
+
+/*!
+ * \brief Alias of the nested type reference of Type.
+ **/
+template<typename Type>
+using reference = typename Type::reference;
+
+/*!
+ * \brief Alias of the nested type const_reference of Type.
+ **/
+template<typename Type>
+using const_reference = typename Type::const_reference;
+
+/*!
+ * \brief Alias of the nested type pointer of Type.
+ **/
+template<typename Type>
+using pointer = typename Type::pointer;
+
+/*!
+ * \brief Alias of the nested type const_pointer of Type.
+ **/
+template<typename Type>
+using const_pointer = typename Type::const_pointer;
+
+/*!
+ * \brief Alias of the nested type iterator of Type.
+ **/
+template<typename Type>
+using iterator = typename Type::iterator;
+
+/*!
+ * \brief Alias of the nested type const_iterator of Type.
+ **/
+template<typename Type>
+using const_iterator = typename Type::const_iterator;
+
+/*!
+ * \brief Alias of the nested type reverse_iterator of Type.
+ **/
+template<typename Type>
+using reverse_iterator = typename Type::reverse_iterator;
+
+/*!
+ * \brief Alias of the nested type const_reverse_iterator of Type.
+ **/
+template<typename Type>
+using const_reverse_iterator = typename Type::const_reverse_iterator;
 } // namespace meta
 } // namespace pl
 #endif // INCG_PL_META_NESTED_TYPES_HPP
