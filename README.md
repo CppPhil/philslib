@@ -205,6 +205,6 @@ include/pl/toggle_bool.hpp: Function to invert the value of a bool object.
 include/pl/type_traits.hpp: Includes the standard library `<type_traits>` and defines the C++14 style template aliases for the type traits for standard library implementations that don't offer them.  
 include/pl/unrelated_pointer_cast.hpp: Function template for unrelated pointer casts, leaving reinterpret_cast for just integer to pointer and pointer to integer conversions.  
 include/pl/unused.hpp: Macro to suppress warnings about objects being unused.  
+include/pl/version.hpp: Versioning macros of the library.  
 include/pl/vla.hpp: Macro to be able to define VLAs by using alloca.  
 include/pl/zero_memory.hpp: zero_memory and secure_zero_memory functions to zero regions of memory.
-~~
