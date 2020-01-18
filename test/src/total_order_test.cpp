@@ -32,16 +32,59 @@
 #include "../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
 #pragma GCC diagnostic pop
-#endif                                  // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/pl/version.hpp" // PL_VERSION_MAJOR, PL_VERSION_MINOR, PL_VERSION_PATCH, PL_VERSION
-#include "../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
-#include <cstring>                      // std::strcmp
+#endif                                      // PL_COMPILER == PL_COMPILER_GCC
+#include "../../include/pl/total_order.hpp" // PL_TOTAL_ORDER
+#include "../include/static_assert.hpp"     // PL_TEST_STATIC_ASSERT
 
-TEST_CASE("version_test")
+namespace pl {
+namespace test {
+namespace {
+struct t1 {
+    int i;
+
+    constexpr friend bool operator<(t1 lhs, t1 rhs) { return lhs.i < rhs.i; }
+
+    constexpr friend bool operator==(t1 lhs, t1 rhs) { return lhs.i == rhs.i; }
+};
+
+PL_TOTAL_ORDER_CONSTEXPR(t1)
+
+struct t2 {
+    int i;
+
+    friend bool operator<(t2 lhs, t2 rhs) { return lhs.i < rhs.i; }
+
+    friend bool operator==(t2 lhs, t2 rhs) { return lhs.i == rhs.i; }
+};
+
+PL_TOTAL_ORDER(t2)
+} // anonymous namespace
+} // namespace test
+} // namespace pl
+
+TEST_CASE("total_order_test")
 {
-    PL_TEST_STATIC_ASSERT(PL_VERSION_MAJOR == 1);
-    PL_TEST_STATIC_ASSERT(PL_VERSION_MINOR == 1);
-    PL_TEST_STATIC_ASSERT(PL_VERSION_PATCH == 0);
+    constexpr pl::test::t1 a1{5};
+    constexpr pl::test::t1 b1{6};
 
-    CHECK(std::strcmp(PL_VERSION, "1.1.0") == 0);
+    PL_TEST_STATIC_ASSERT(a1 < b1);
+    PL_TEST_STATIC_ASSERT(a1 == a1);
+    PL_TEST_STATIC_ASSERT(a1 != b1);
+    PL_TEST_STATIC_ASSERT(b1 > a1);
+    PL_TEST_STATIC_ASSERT(a1 <= a1);
+    PL_TEST_STATIC_ASSERT(a1 <= b1);
+    PL_TEST_STATIC_ASSERT(b1 >= b1);
+    PL_TEST_STATIC_ASSERT(b1 >= a1);
+
+    const pl::test::t2 a2{5};
+    const pl::test::t2 b2{6};
+
+    CHECK_UNARY(a2 < b2);
+    CHECK_UNARY(a2 == a2);
+    CHECK_UNARY(a2 != b2);
+    CHECK_UNARY(b2 > a2);
+    CHECK_UNARY(a2 <= a2);
+    CHECK_UNARY(a2 <= b2);
+    CHECK_UNARY(b2 >= b2);
+    CHECK_UNARY(b2 >= a2);
 }
