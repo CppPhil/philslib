@@ -25,7 +25,7 @@
  */
 
 /*!
- * \file unwray_ref_decay.hpp
+ * \file unwrap_ref_decay.hpp
  * \brief Exports the unwrap_ref_decay meta function.
  **/
 #ifndef INCG_PL_META_UNWRAP_REF_DECAY_HPP
@@ -36,7 +36,7 @@
 namespace pl {
 namespace meta {
 /*!
- * \brief unwray_ref_decay C++20 meta function
+ * \brief unwrap_ref_decay C++20 meta function
  * \tparam Type the template type parameter.
  *
  * If `Type` is std::reference_wrapper<T> for some type T, ignoring

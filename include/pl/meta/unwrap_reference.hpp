@@ -25,7 +25,7 @@
  */
 
 /*!
- * \file unwray_reference.hpp
+ * \file unwrap_reference.hpp
  * \brief Exports the unwrap_reference meta function.
  **/
 #ifndef INCG_PL_META_UNWRAP_REFERENCE_HPP
