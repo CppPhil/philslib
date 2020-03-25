@@ -518,6 +518,15 @@ TEST_CASE("string_view_data_test")
     CHECK(std::strcmp(sv.data(), p) == 0);
 }
 
+TEST_CASE("string_view_c_str_test")
+{
+    const char* const     p{"text"};
+    const pl::string_view sv{p};
+
+    CHECK(sv.c_str() == p);
+    CHECK(std::strcmp(sv.c_str(), p) == 0);
+}
+
 TEST_CASE("string_view_remove_prefix_test")
 {
     using namespace pl::literals::string_view_literals;

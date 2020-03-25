@@ -391,6 +391,18 @@ public:
      *       viewed have to be null-terminated.
      **/
     constexpr const_pointer data() const noexcept { return m_data; }
+
+    /*!
+     * \brief Returns a pointer to the underlying character array. The pointer
+     *        is such that the range [c_str(); c_str() + size()] is valid and
+     *        the values in it correspond to the values of the view.
+     * \return A pointer to the underlying character array.
+     * \note Constant complexity.
+     *       Returns a pointer to a null-terminated string as all strings
+     *       viewed have to be null-terminated.
+     **/
+    constexpr const_pointer c_str() const noexcept { return data(); }
+
 /*!
  * \brief Moves the start of the view forward by 'characters_to_remove'
  *        characters.
