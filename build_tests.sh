@@ -44,7 +44,7 @@ if [ "$1" == "Release" ]; then
     cmake -DCMAKE_BUILD_TYPE=Release -DARCH=$2 ..
 fi
 
-cmake --build . -- -j2
+cmake --build . -- -j$(nproc)
 
 exit 0
 

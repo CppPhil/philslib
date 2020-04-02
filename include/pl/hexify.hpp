@@ -25,42 +25,29 @@
  */
 
 /*!
- * \file version.hpp
- * \brief Defines macros to determine the version
- *        of the library being used.
+ * \file hexify.hpp
+ * \brief Exports the hexify function.
  **/
-#ifndef INCG_PL_VERSION_HPP
-#define INCG_PL_VERSION_HPP
-#include "stringify.hpp" // PL_STRINGIFY
+#ifndef INCG_PL_HEXIFY_HPP
+#define INCG_PL_HEXIFY_HPP
+#include "print_bytes_as_hex.hpp" // pl::print_bytes_as_hex
+#include <sstream>                // std::ostringstream
+#include <utility>                // std::move
 
+namespace pl {
 /*!
- * \def PL_VERSION_MAJOR
- * \brief The major version of the library
+ * \brief Converts binary data to a hex encoded string.
+ * \param data The base address of the memory region containing binary data.
+ * \param byte_count The size of the memory region pointed to by `data` in
+ *bytes. \param delimiter The delimiter to use to delimit each pair of hexits.
+ * \return The resulting hex encoded string.
  **/
-
-/*!
- * \def PL_VERSION_MINOR
- * \brief The minor version of the library
- **/
-
-/*!
- * \def PL_VERSION_PATCH
- * \brief The patch level of the library
- **/
-
-/*!
- * \def PL_VERSION
- * \brief A string literal of the version of the library
- **/
-
-#define PL_VERSION_MAJOR 1
-
-#define PL_VERSION_MINOR 3
-
-#define PL_VERSION_PATCH 0
-
-#define PL_VERSION                 \
-    PL_STRINGIFY(PL_VERSION_MAJOR) \
-    "." PL_STRINGIFY(PL_VERSION_MINOR) "." PL_STRINGIFY(PL_VERSION_PATCH)
-
-#endif // INCG_PL_VERSION_HPP
+inline std::string
+hexify(PL_IN const void* data, std::size_t byte_count, std::string delimiter)
+{
+    std::ostringstream oss{};
+    oss << pl::print_bytes_as_hex{data, byte_count, std::move(delimiter)};
+    return oss.str();
+}
+} // namespace pl
+#endif // INCG_PL_HEXIFY_HPP

@@ -24,43 +24,32 @@
  * For more information, please refer to <http://unlicense.org/>
  */
 
-/*!
- * \file version.hpp
- * \brief Defines macros to determine the version
- *        of the library being used.
- **/
-#ifndef INCG_PL_VERSION_HPP
-#define INCG_PL_VERSION_HPP
-#include "stringify.hpp" // PL_STRINGIFY
+#include "../../include/pl/compiler.hpp"
+#if PL_COMPILER == PL_COMPILER_GCC
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-noreturn"
+#endif // PL_COMPILER == PL_COMPILER_GCC
+#include "../doctest.h"
+#if PL_COMPILER == PL_COMPILER_GCC
+#pragma GCC diagnostic pop
+#endif // PL_COMPILER == PL_COMPILER_GCC
+#include "../../include/pl/hexify.hpp"
 
-/*!
- * \def PL_VERSION_MAJOR
- * \brief The major version of the library
- **/
+TEST_CASE("hexify_test")
+{
+    const unsigned char data[] = {0x00, 0xAB, 0xFF};
 
-/*!
- * \def PL_VERSION_MINOR
- * \brief The minor version of the library
- **/
+    SUBCASE("no delimiter")
+    {
+        const std::string expected{"00ABFF"};
 
-/*!
- * \def PL_VERSION_PATCH
- * \brief The patch level of the library
- **/
+        CHECK(expected == pl::hexify(data, sizeof(data), ""));
+    }
 
-/*!
- * \def PL_VERSION
- * \brief A string literal of the version of the library
- **/
+    SUBCASE("delimiter")
+    {
+        const std::string expected{"00DELABDELFF"};
 
-#define PL_VERSION_MAJOR 1
-
-#define PL_VERSION_MINOR 3
-
-#define PL_VERSION_PATCH 0
-
-#define PL_VERSION                 \
-    PL_STRINGIFY(PL_VERSION_MAJOR) \
-    "." PL_STRINGIFY(PL_VERSION_MINOR) "." PL_STRINGIFY(PL_VERSION_PATCH)
-
-#endif // INCG_PL_VERSION_HPP
+        CHECK(expected == pl::hexify(data, sizeof(data), "DEL"));
+    }
+}
