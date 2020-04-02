@@ -175,6 +175,7 @@ include/pl/for_each_argument.hpp: Function template to call a callable with ever
 include/pl/fwd.hpp: Function like macro to perfectly forward an object, deducing the type. Useful for generic lambda expressions.  
 include/pl/glue.hpp: The classic token pasting GLUE macro.  
 include/pl/hash.hpp: Utility function to combine hashes to ease definition of std::hash specializations for UDTs.  
+include/pl/hexify.hpp: Function to encode binary data as hex strings.  
 include/pl/inline.hpp: Portable macros to force and prevent function inlining.  
 include/pl/integer.hpp: Fixed size integer types as template aliases.  
 include/pl/invoke.hpp: The invoke function from C++17.  
