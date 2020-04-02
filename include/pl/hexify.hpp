@@ -39,7 +39,8 @@ namespace pl {
  * \brief Converts binary data to a hex encoded string.
  * \param data The base address of the memory region containing binary data.
  * \param byte_count The size of the memory region pointed to by `data` in
- *bytes. \param delimiter The delimiter to use to delimit each pair of hexits.
+ *        bytes.
+ * \param delimiter The delimiter to use to delimit each pair of hexits.
  * \return The resulting hex encoded string.
  **/
 inline std::string
