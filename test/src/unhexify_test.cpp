@@ -119,12 +119,14 @@ TEST_CASE("unhexify_map_ascii")
 
     const auto byte = [](pl::byte b) { return bytes{b}; };
 
-    char buf[3] = {0x00, 0x00, 0x00};
+    std::vector<char> v{'\0', '\0', '\0'};
+    char*             buf{v.data()};
 
     for (std::uint16_t i{}; i <= 0xFF; ++i) {
         buf[1] = static_cast<char>(static_cast<unsigned char>(i));
 
-        const bytes result{pl::unhexify(buf, 0)};
+        const bytes result{
+            pl::unhexify(pl::string_view{buf, v.size() - 1U}, 0)};
 
         switch (i) {
         case 0x30: CHECK(result == byte(0x00)); break;
