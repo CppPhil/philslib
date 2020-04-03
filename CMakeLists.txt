@@ -1,6 +1,8 @@
 ### GLOBAL SETTINGS
 cmake_minimum_required(VERSION 3.1)
 
+project(Project)
+
 if(MSVC)
     if(MSVC_VERSION GREATER_EQUAL "1911")
         set(CMAKE_CXX_STANDARD 17)

@@ -205,6 +205,7 @@ include/pl/timer.hpp: Simple timer class to measure durations of time.
 include/pl/toggle_bool.hpp: Function to invert the value of a bool object.  
 include/pl/total_order.hpp: Macros to define a total order for a type.  
 include/pl/type_traits.hpp: Includes the standard library `<type_traits>` and defines the C++14 style template aliases for the type traits for standard library implementations that don't offer them.  
+include/pl/unhexify.hpp: The unhexify function to turn hex encoded strings back into bytes.  
 include/pl/unrelated_pointer_cast.hpp: Function template for unrelated pointer casts, leaving reinterpret_cast for just integer to pointer and pointer to integer conversions.  
 include/pl/unused.hpp: Macro to suppress warnings about objects being unused.  
 include/pl/version.hpp: Versioning macros of the library.  
