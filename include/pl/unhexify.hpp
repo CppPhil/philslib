@@ -58,12 +58,12 @@ inline std::vector<byte> unhexify(
     constexpr std::size_t           nibbles_per_byte{2U};
     constexpr std::size_t           high_nibble_offset{0U};
     constexpr std::size_t           low_nibble_offset{1U};
-    constexpr std::array<byte, 32U> map = {
+    constexpr std::array<byte, 32U> map{{
         0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, // 01234567
         0x08, 0x09, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // 89:;<=>?
         0x00, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f, 0x00, // @ABCDEFG
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00  // HIJKLMNO
-    };
+    }};
 
     if (hex_string.size() < nibbles_per_byte) {
         PL_THROW_WITH_SOURCE_INFO(
