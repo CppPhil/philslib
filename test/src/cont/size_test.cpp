@@ -75,12 +75,13 @@ TEST_CASE("map_size_test")
 TEST_CASE("multimap_size_test")
 {
     std::multimap<int, int>                 multimap1{{1, 2}, {1, 9}, {1, 20}};
-    const std::multimap<std::string, float> multimap2{{"A", 5.5F},
-                                                      {"B", 6.6F},
-                                                      {"C", 7.7F},
-                                                      {"C", 8.8F},
-                                                      {"D", 9.9F},
-                                                      {"?", 0.0F}};
+    const std::multimap<std::string, float> multimap2{
+        {"A", 5.5F},
+        {"B", 6.6F},
+        {"C", 7.7F},
+        {"C", 8.8F},
+        {"D", 9.9F},
+        {"?", 0.0F}};
 
     CHECK(pl::cont::size(multimap1) == 3U);
     CHECK(pl::cont::size(multimap2) == 6U);

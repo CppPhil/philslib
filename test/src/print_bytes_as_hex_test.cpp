@@ -65,11 +65,12 @@ TEST_CASE("print_bytes_as_hex_test")
 {
     using namespace std::literals::string_literals;
 
-    static constexpr pl::byte array[]{static_cast<pl::byte>('\xDE'),
-                                      static_cast<pl::byte>('\xAD'),
-                                      static_cast<pl::byte>('\xC0'),
-                                      static_cast<pl::byte>('\xDE'),
-                                      static_cast<pl::byte>('\x00')};
+    static constexpr pl::byte array[]{
+        static_cast<pl::byte>('\xDE'),
+        static_cast<pl::byte>('\xAD'),
+        static_cast<pl::byte>('\xC0'),
+        static_cast<pl::byte>('\xDE'),
+        static_cast<pl::byte>('\x00')};
 
     std::ostringstream oss{};
 

@@ -82,23 +82,24 @@ TEST_CASE("unhexify_too_short_delimiter_size")
     CHECK_THROWS_AS(
         pl::unhexify(ary1, incorrect_delimiter_size1), std::out_of_range);
 
-    const std::vector<pl::byte> expected2{0x00,
-                                          0x00,
-                                          0x00,
-                                          0x00,
-                                          0x10,
-                                          0x00,
-                                          0x00,
-                                          0x02,
-                                          0x00,
-                                          0x00,
-                                          0x00,
-                                          0x30,
-                                          0x00,
-                                          0x00,
-                                          0x04};
-    constexpr char              ary2[] = "00     01     02     03     04";
-    const std::size_t           incorrect_delimiter_size2{0U};
+    const std::vector<pl::byte> expected2{
+        0x00,
+        0x00,
+        0x00,
+        0x00,
+        0x10,
+        0x00,
+        0x00,
+        0x02,
+        0x00,
+        0x00,
+        0x00,
+        0x30,
+        0x00,
+        0x00,
+        0x04};
+    constexpr char    ary2[] = "00     01     02     03     04";
+    const std::size_t incorrect_delimiter_size2{0U};
     CHECK(expected2 == pl::unhexify(ary2, incorrect_delimiter_size2));
 }
 

@@ -213,8 +213,8 @@ TEST_CASE("erase_from_multimap")
 
     SUBCASE("erase_element_from_multimap")
     {
-        const std::multimap<int, std::string> expected{{1, "std::nullptr_t"},
-                                                       {2, "bool"}};
+        const std::multimap<int, std::string> expected{
+            {1, "std::nullptr_t"}, {2, "bool"}};
 
         pl::algo::erase(map, 0);
         CHECK(map == expected);
@@ -321,8 +321,8 @@ TEST_CASE("erase_from_unordered_multimap")
 
     SUBCASE("erase_element_from_unordered_multimap")
     {
-        const std::unordered_multimap<int, std::string> expected{{0, ""},
-                                                                 {0, "text"}};
+        const std::unordered_multimap<int, std::string> expected{
+            {0, ""}, {0, "text"}};
 
         pl::algo::erase(map, 1);
         CHECK(map == expected);
@@ -333,8 +333,8 @@ TEST_CASE("erase_from_unordered_multimap")
 
     SUBCASE("erase_if_from_unordered_multimap")
     {
-        const std::unordered_multimap<int, std::string> expected{{0, "text"},
-                                                                 {1, "text"}};
+        const std::unordered_multimap<int, std::string> expected{
+            {0, "text"}, {1, "text"}};
 
         pl::algo::erase_if(map, [](const auto& p) {
             return std::all_of(

@@ -49,14 +49,16 @@ TEST_CASE("bswap_basic_test")
 
     PL_TEST_STATIC_ASSERT(sizeof(std::uint32_t) == byte_size);
 
-    const std::array<pl::byte, byte_size> le{{static_cast<pl::byte>(0xDD),
-                                              static_cast<pl::byte>(0xCC),
-                                              static_cast<pl::byte>(0xBB),
-                                              static_cast<pl::byte>(0xAA)}};
-    const std::array<pl::byte, byte_size> be{{static_cast<pl::byte>(0xAA),
-                                              static_cast<pl::byte>(0xBB),
-                                              static_cast<pl::byte>(0xCC),
-                                              static_cast<pl::byte>(0xDD)}};
+    const std::array<pl::byte, byte_size> le{
+        {static_cast<pl::byte>(0xDD),
+         static_cast<pl::byte>(0xCC),
+         static_cast<pl::byte>(0xBB),
+         static_cast<pl::byte>(0xAA)}};
+    const std::array<pl::byte, byte_size> be{
+        {static_cast<pl::byte>(0xAA),
+         static_cast<pl::byte>(0xBB),
+         static_cast<pl::byte>(0xCC),
+         static_cast<pl::byte>(0xDD)}};
 
     std::uint32_t val{};
 

@@ -41,8 +41,8 @@ TEST_CASE("bits_test")
 {
     static constexpr std::uint8_t low_bit{0U};
 
-    static constexpr std::uint8_t high_bit{(sizeof(std::uint8_t) * CHAR_BIT)
-                                           - 1U};
+    static constexpr std::uint8_t high_bit{
+        (sizeof(std::uint8_t) * CHAR_BIT) - 1U};
 
     std::uint8_t val{0U};
 

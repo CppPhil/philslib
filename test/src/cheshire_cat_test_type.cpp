@@ -63,8 +63,8 @@ cheshire_cat_test_type::cheshire_cat_test_type(this_type&&) noexcept = default;
 cheshire_cat_test_type& cheshire_cat_test_type::operator=(const this_type&)
     = default;
 
-cheshire_cat_test_type& cheshire_cat_test_type::operator=(this_type&&) noexcept
-    = default;
+cheshire_cat_test_type& cheshire_cat_test_type::operator=(
+    this_type&&) noexcept = default;
 
 cheshire_cat_test_type::~cheshire_cat_test_type() = default;
 
