@@ -31,15 +31,21 @@
 #ifndef INCG_PL_STRCONTAINS_HPP
 #define INCG_PL_STRCONTAINS_HPP
 #include "annotations.hpp" // PL_NODISCARD, PL_IN, PL_NULL_TERMINATED
-#include <type_traits>     // std::is_pointer, std::decay_t
+#include "compiler.hpp" // PL_COMPILER, PL_COMPILER_MSVC, PL_COMPILER_VERSION, PL_COMPILER_VERSION_CHECK
+#include <type_traits> // std::is_pointer, std::decay_t
 
 namespace pl {
 namespace detail {
 namespace {
 template<typename CharT>
-constexpr bool strcontains(
-    PL_IN PL_NULL_TERMINATED(const CharT*) haystack,
-    PL_IN PL_NULL_TERMINATED(const CharT*) needle) noexcept
+#if (PL_COMPILER != PL_COMPILER_MSVC) \
+    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
+constexpr
+#endif
+    bool
+    strcontains(
+        PL_IN PL_NULL_TERMINATED(const CharT*) haystack,
+        PL_IN PL_NULL_TERMINATED(const CharT*) needle) noexcept
 {
     const auto* str1 = haystack;
     const auto* str2 = needle;
@@ -58,13 +64,23 @@ constexpr bool strcontains(
 }
 
 template<typename Ptr>
-constexpr Ptr get_pointer(Ptr ptr, std::true_type) noexcept
+#if (PL_COMPILER != PL_COMPILER_MSVC) \
+    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
+constexpr
+#endif
+    Ptr
+    get_pointer(Ptr ptr, std::true_type) noexcept
 {
     return ptr;
 }
 
 template<typename Str>
-constexpr auto get_pointer(const Str& str, std::false_type) noexcept
+#if (PL_COMPILER != PL_COMPILER_MSVC) \
+    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
+constexpr
+#endif
+    auto
+    get_pointer(const Str& str, std::false_type) noexcept
 {
     return str.c_str();
 }
@@ -81,9 +97,13 @@ namespace {
  * \return true if `haystack` contains `needle`; otherwise false.
  **/
 template<typename Str1, typename Str2>
-PL_NODISCARD constexpr bool strcontains(
-    const Str1& haystack,
-    const Str2& needle) noexcept
+PL_NODISCARD
+#if (PL_COMPILER != PL_COMPILER_MSVC) \
+    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
+    constexpr
+#endif
+    bool
+    strcontains(const Str1& haystack, const Str2& needle) noexcept
 {
     return ::pl::detail::strcontains(
         ::pl::detail::get_pointer(
