@@ -804,3 +804,87 @@ TEST_CASE("string_view_null_pointer_test")
     CHECK_UNARY(sv5.empty());
     CHECK_UNARY(sv6.empty());
 }
+
+TEST_CASE("string_view should contain substring")
+{
+    using namespace pl::literals::string_view_literals;
+    CHECK_UNARY(""_sv.contains(""_sv));
+    CHECK_UNARY("a"_sv.contains(""_sv));
+    CHECK_UNARY("a"_sv.contains("a"_sv));
+    CHECK_UNARY("This is a test."_sv.contains("a test"_sv));
+}
+
+TEST_CASE("string_view should not contain unrelated substring")
+{
+    using namespace pl::literals::string_view_literals;
+    const auto s = "text"_sv;
+    CHECK_UNARY_FALSE(s.contains("xe"_sv));
+    CHECK_UNARY_FALSE(s.contains("text1"_sv));
+}
+
+TEST_CASE("string_view should contain null-terminated string")
+{
+    const pl::string_view sv{"This is a test."};
+    CHECK_UNARY(sv.contains("This"));
+    CHECK_UNARY(sv.contains("a "));
+}
+
+TEST_CASE("string_view should contain character")
+{
+    const pl::string_view    sv1{"abc"};
+    const pl::u16string_view sv2{u"abc"};
+    const pl::u32string_view sv3{U"abc"};
+    const pl::wstring_view   sv4{L"abc"};
+
+    CHECK_UNARY(sv1.contains('a'));
+    CHECK_UNARY(sv1.contains('b'));
+    CHECK_UNARY(sv1.contains('c'));
+    CHECK_UNARY(sv2.contains(u'a'));
+    CHECK_UNARY(sv2.contains(u'b'));
+    CHECK_UNARY(sv2.contains(u'c'));
+    CHECK_UNARY(sv3.contains(U'a'));
+    CHECK_UNARY(sv3.contains(U'b'));
+    CHECK_UNARY(sv3.contains(U'c'));
+    CHECK_UNARY(sv4.contains(L'a'));
+    CHECK_UNARY(sv4.contains(L'b'));
+    CHECK_UNARY(sv4.contains(L'c'));
+}
+
+TEST_CASE("string_view shouldn't contain unrelated characters.")
+{
+    const pl::string_view    sv1{"abc"};
+    const pl::u16string_view sv2{u"abc"};
+    const pl::u32string_view sv3{U"abc"};
+    const pl::wstring_view   sv4{L"abc"};
+
+    CHECK_UNARY_FALSE(sv1.contains('x'));
+    CHECK_UNARY_FALSE(sv2.contains(u'x'));
+    CHECK_UNARY_FALSE(sv3.contains(U'x'));
+    CHECK_UNARY_FALSE(sv4.contains(L'x'));
+}
+
+TEST_CASE("empty string_view shouldn't contain a character")
+{
+    const pl::string_view    sv1{};
+    const pl::u16string_view sv2{};
+    const pl::u32string_view sv3{};
+    const pl::wstring_view   sv4{};
+
+    CHECK_UNARY_FALSE(sv1.contains('a'));
+    CHECK_UNARY_FALSE(sv2.contains(u'a'));
+    CHECK_UNARY_FALSE(sv3.contains(U'a'));
+    CHECK_UNARY_FALSE(sv4.contains(L'a'));
+}
+
+TEST_CASE("string_view shouldn't contain the NUL character")
+{
+    const pl::string_view    sv1{"Text"};
+    const pl::u16string_view sv2{u"Text"};
+    const pl::u32string_view sv3{U"Text"};
+    const pl::wstring_view   sv4{L"Text"};
+
+    CHECK_UNARY_FALSE(sv1.contains('\0'));
+    CHECK_UNARY_FALSE(sv2.contains(u'\0'));
+    CHECK_UNARY_FALSE(sv3.contains(U'\0'));
+    CHECK_UNARY_FALSE(sv4.contains(L'\0'));
+}
