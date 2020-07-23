@@ -33,6 +33,7 @@
 #include "annotations.hpp" // PL_NODISCARD, PL_IN, PL_OUT, PL_INOUT, PL_NULL_TERMINATED, PL_IMPLICIT
 #include "compiler.hpp" // PL_COMPILER, PL_COMPILER_MSVC, PL_COMPILER_VERSION, PL_COMPILER_VERSION_CHECK
 #include "meta/remove_cvref.hpp" // pl::meta::remove_cvref_t
+#include "strcontains.hpp"       // pl::strcontains
 #include "type_traits.hpp" // pl::remove_const_t, pl::remove_pointer_t, pl::enable_if_t
 #include <algorithm>   // std::min, std::copy_n
 #include <ciso646>     // and, not
@@ -568,6 +569,37 @@ public:
                        string_view.data(),
                        string_view.size())
                        == 0;
+    }
+
+    /*!
+     * \brief Checks if this string_view contains `str`.
+     * \param str The other string_view to find in this string_view.
+     * \return true if this string_view contains `str`; otherwise false.
+     **/
+    constexpr bool contains(this_type str) const noexcept
+    {
+        return strcontains(*this, str);
+    }
+
+    /*!
+     * \brief Checks if this string_view contains the character `ch`.
+     * \param ch The character to find in this string_view.
+     * \return true if this string_view contains `ch`; otherwise false.
+     **/
+    constexpr bool contains(value_type ch) const noexcept
+    {
+        return traits_type::find(c_str(), size(), ch) != nullptr;
+    }
+
+    /*!
+     * \brief Checks if this string_view contains the null-terminated string
+     *        `str`.
+     * \param str The null-terminated string to find in this string_view.
+     * \return true if this string_view contains `str`; otherwise false.
+     **/
+    constexpr bool contains(PL_IN PL_NULL_TERMINATED(const_pointer) str) const
+    {
+        return strcontains(*this, str);
     }
 
 private:

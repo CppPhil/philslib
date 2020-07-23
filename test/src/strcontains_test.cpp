@@ -34,6 +34,7 @@
 #pragma GCC diagnostic pop
 #endif                                      // PL_COMPILER == PL_COMPILER_GCC
 #include "../../include/pl/strcontains.hpp" // pl::strcontains
+#include "../../include/pl/string_view.hpp" // pl::string_view
 #include <string> // std::basic_string, std::literals::string_literals::operator""s
 
 using namespace pl::literals::string_view_literals;
@@ -91,65 +92,66 @@ TEST_CASE("strcontains should find substring")
 
 TEST_CASE("strcontains should find the empty string in the empty string")
 {
-  CHECK_STRCONTAINS("", "");
+    CHECK_STRCONTAINS("", "");
 }
 
 TEST_CASE("strcontains shouldn't find text in an empty string")
 {
-  CHECK_STRNOTCONTAINS("", "a");
-  CHECK_STRNOTCONTAINS("", "test");
+    CHECK_STRNOTCONTAINS("", "a");
+    CHECK_STRNOTCONTAINS("", "test");
 }
 
 TEST_CASE("strcontains should find single character in single character string")
 {
-  CHECK_STRCONTAINS("a", "a");
+    CHECK_STRCONTAINS("a", "a");
 }
 
 TEST_CASE("strcontains should find all substrings")
 {
-  CHECK_STRCONTAINS("abc", "");
-  CHECK_STRCONTAINS("abc", "a");
-  CHECK_STRCONTAINS("abc", "ab");
-  CHECK_STRCONTAINS("abc", "abc");
-  CHECK_STRCONTAINS("abc", "b");
-  CHECK_STRCONTAINS("abc", "bc");
-  CHECK_STRCONTAINS("abc", "c");
+    CHECK_STRCONTAINS("abc", "");
+    CHECK_STRCONTAINS("abc", "a");
+    CHECK_STRCONTAINS("abc", "ab");
+    CHECK_STRCONTAINS("abc", "abc");
+    CHECK_STRCONTAINS("abc", "b");
+    CHECK_STRCONTAINS("abc", "bc");
+    CHECK_STRCONTAINS("abc", "c");
 }
 
 TEST_CASE("strcontains shouldn't find reverse string")
 {
-  CHECK_STRNOTCONTAINS("test_string", "gnirts_tset");
+    CHECK_STRNOTCONTAINS("test_string", "gnirts_tset");
 }
 
 TEST_CASE("strcontains should find the empty string in any string")
 {
-  CHECK_STRCONTAINS("", "");
-  CHECK_STRCONTAINS("a", "");
-  CHECK_STRCONTAINS("ab", "");
-  CHECK_STRCONTAINS("abc", "");
-  CHECK_STRCONTAINS("text", "");
+    CHECK_STRCONTAINS("", "");
+    CHECK_STRCONTAINS("a", "");
+    CHECK_STRCONTAINS("ab", "");
+    CHECK_STRCONTAINS("abc", "");
+    CHECK_STRCONTAINS("text", "");
 }
 
 TEST_CASE("strcontains should find equal string")
 {
-  CHECK_STRCONTAINS("This is a sample text.", "This is a sample text.");
+    CHECK_STRCONTAINS("This is a sample text.", "This is a sample text.");
 }
 
 TEST_CASE("strcontains should find string at the start")
 {
-  CHECK_STRCONTAINS("This is a lengthy text.", "This");
+    CHECK_STRCONTAINS("This is a lengthy text.", "This");
 }
 
 TEST_CASE("strcontains should find a string in the middle")
 {
-  CHECK_STRCONTAINS("This is a lengthy text.", "a lengthy ");
+    CHECK_STRCONTAINS("This is a lengthy text.", "a lengthy ");
 }
 
-TEST_CASE("strcontains should find a string at the end") {
-  CHECK_STRCONTAINS("This is a lengthy text.", "text.");
+TEST_CASE("strcontains should find a string at the end")
+{
+    CHECK_STRCONTAINS("This is a lengthy text.", "text.");
 }
 
 TEST_CASE("strcontains should find bytes")
 {
-  CHECK_STRCONTAINS("\xDE\xAD\xC0\xDE", "\xC0\xDE");
+    CHECK_STRCONTAINS("\xDE\xAD\xC0\xDE", "\xC0\xDE");
 }

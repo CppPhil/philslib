@@ -31,29 +31,13 @@
 #ifndef INCG_PL_STRCONTAINS_HPP
 #define INCG_PL_STRCONTAINS_HPP
 #include "annotations.hpp" // PL_NODISCARD, PL_IN, PL_NULL_TERMINATED
-#include "string_view.hpp" // pl::basic_string_view
-#include <cstring>         // std::strstr
-#include <cwchar>          // std::wcsstr
 #include <type_traits>     // std::is_pointer, std::decay_t
 
 namespace pl {
 namespace detail {
-PL_NODISCARD inline bool strcontains(
-    PL_IN PL_NULL_TERMINATED(const char*) haystack,
-    PL_IN PL_NULL_TERMINATED(const char*) needle) noexcept
-{
-    return std::strstr(haystack, needle) != nullptr;
-}
-
-PL_NODISCARD inline bool strcontains(
-    PL_IN PL_NULL_TERMINATED(const wchar_t*) haystack,
-    PL_IN PL_NULL_TERMINATED(const wchar_t*) needle) noexcept
-{
-    return std::wcsstr(haystack, needle) != nullptr;
-}
-
+namespace {
 template<typename CharT>
-PL_NODISCARD inline bool strcontains(
+constexpr bool strcontains(
     PL_IN PL_NULL_TERMINATED(const CharT*) haystack,
     PL_IN PL_NULL_TERMINATED(const CharT*) needle) noexcept
 {
@@ -74,18 +58,20 @@ PL_NODISCARD inline bool strcontains(
 }
 
 template<typename Ptr>
-inline Ptr get_pointer(Ptr ptr, std::true_type) noexcept
+constexpr Ptr get_pointer(Ptr ptr, std::true_type) noexcept
 {
     return ptr;
 }
 
 template<typename Str>
-inline auto* get_pointer(const Str& str, std::false_type) noexcept
+constexpr auto get_pointer(const Str& str, std::false_type) noexcept
 {
     return str.c_str();
 }
+} // anonymous namespace
 } // namespace detail
 
+namespace {
 /*!
  * \brief Checks if the string `haystack` contains the string `needle`.
  * \tparam Str1 The type of the first parameter.
@@ -93,9 +79,9 @@ inline auto* get_pointer(const Str& str, std::false_type) noexcept
  * \param haystack The null-terminated string to search for `needle`.
  * \param needle The null-terminated string to search `haystack` for.
  * \return true if `haystack` contains `needle`; otherwise false.
-**/
+ **/
 template<typename Str1, typename Str2>
-PL_NODISCARD inline bool strcontains(
+PL_NODISCARD constexpr bool strcontains(
     const Str1& haystack,
     const Str2& needle) noexcept
 {
@@ -105,5 +91,6 @@ PL_NODISCARD inline bool strcontains(
         ::pl::detail::get_pointer(
             needle, typename std::is_pointer<std::decay_t<Str2>>::type{}));
 }
+} // anonymous namespace
 } // namespace pl
 #endif // INCG_PL_STRCONTAINS_HPP
