@@ -86,6 +86,14 @@ inline auto* get_pointer(const Str& str, std::false_type) noexcept
 }
 } // namespace detail
 
+/*!
+ * \brief Checks if the string `haystack` contains the string `needle`.
+ * \tparam Str1 The type of the first parameter.
+ * \tparam Str2 The type of the second parameter.
+ * \param haystack The null-terminated string to search for `needle`.
+ * \param needle The null-terminated string to search `haystack` for.
+ * \return true if `haystack` contains `needle`; otherwise false.
+**/
 template<typename Str1, typename Str2>
 PL_NODISCARD inline bool strcontains(
     const Str1& haystack,
