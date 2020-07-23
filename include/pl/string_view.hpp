@@ -41,7 +41,7 @@
 #include <iterator>    // std::reverse_iterator
 #include <ostream>     // std::basic_ostream
 #include <stdexcept>   // std::out_of_range
-#include <string>      // std::char_Traits, std::basic_string
+#include <string>      // std::char_traits, std::basic_string
 #include <type_traits> // std::is_same, std::is_pointer
 
 #if PL_COMPILER == PL_COMPILER_MSVC

@@ -492,7 +492,7 @@ DOCTEST_INTERFACE extern bool is_running_in_test;
 // - relational operators as free functions - taking const char* as one of the
 // params
 class DOCTEST_INTERFACE String {
-    static const unsigned len = 24; //! OCLINT avoid private static members
+    static const unsigned len  = 24; //! OCLINT avoid private static members
     static const unsigned last = len - 1; //! OCLINT avoid private static
                                           //! members
 
@@ -3845,8 +3845,8 @@ int wildcmp(const char* str, const char* wild, bool caseSensitive)
             str++;
         }
         else {
-            wild = mp;  //! OCLINT parameter reassignment
-            str = cp++; //! OCLINT parameter reassignment
+            wild = mp;   //! OCLINT parameter reassignment
+            str  = cp++; //! OCLINT parameter reassignment
         }
     }
 
@@ -3855,7 +3855,7 @@ int wildcmp(const char* str, const char* wild, bool caseSensitive)
 }
 
 //// C string hash function (djb2) - taken from
-///http://www.cse.yorku.ca/~oz/hash.html
+/// http://www.cse.yorku.ca/~oz/hash.html
 // unsigned hashStr(unsigned const char* str) {
 //    unsigned long hash = 5381;
 //    char          c;
