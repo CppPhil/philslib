@@ -34,15 +34,10 @@
 #include "string_view.hpp" // pl::basic_string_view
 #include <cstring>         // std::strstr
 #include <cwchar>          // std::wcsstr
+#include <type_traits>     // std::is_pointer, std::decay_t
 
 namespace pl {
-/*!
- * \brief Checks if `haystack` contains `needle`.
- * \param haystack The null-terminated byte character string to search for
- *`needle`. \param needle The null-terminated byte character string to search
- *for in `haystack`. \return true if `haystack` contains `needle`; false
- *otherwise.
- **/
+namespace detail {
 PL_NODISCARD inline bool strcontains(
     PL_IN PL_NULL_TERMINATED(const char*) haystack,
     PL_IN PL_NULL_TERMINATED(const char*) needle) noexcept
@@ -50,13 +45,6 @@ PL_NODISCARD inline bool strcontains(
     return std::strstr(haystack, needle) != nullptr;
 }
 
-/*!
- * \brief Checks if `haystack` contains `needle`.
- * \param haystack The null-terminated wide character string to search for
- *`needle`. \param needle The null-terminated wide character string to search
- *for in `haystack`. \return true if `haystack` contains `needle`; false
- *otherwise.
- **/
 PL_NODISCARD inline bool strcontains(
     PL_IN PL_NULL_TERMINATED(const wchar_t*) haystack,
     PL_IN PL_NULL_TERMINATED(const wchar_t*) needle) noexcept
@@ -64,13 +52,6 @@ PL_NODISCARD inline bool strcontains(
     return std::wcsstr(haystack, needle) != nullptr;
 }
 
-/*!
- * \brief Checks if `haystack` contains `needle`.
- * \tparam CharT The type of character that the strings consist of.
- * \param haystack The null-terminated string to search for `needle`.
- * \param needle The null-terminated string to search for in `haystack`.
- * \return true if `haystack` contains `needle`; false otherwise.
- **/
 template<typename CharT>
 PL_NODISCARD inline bool strcontains(
     PL_IN PL_NULL_TERMINATED(const CharT*) haystack,
@@ -92,58 +73,29 @@ PL_NODISCARD inline bool strcontains(
     }
 }
 
-/*!
- * \brief Checks if `haystack` contains `needle`.
- * \tparam CharT The type of character that the string_views consist of.
- * \tparam Traits The CharTraits class for `CharT`.
- * \param haystack The string_view to search for `needle`.
- * \param needle The string_view to search for in `haystack`.
- * \return true if `haystack` contains `needle`; false otherwise.
- * \warning Traits::char_type must be the same type as CharT or
- *          the behaviour is undefined.
- **/
-template<typename CharT, typename Traits>
-PL_NODISCARD inline bool strcontains(
-    basic_string_view<CharT, Traits> haystack,
-    basic_string_view<CharT, Traits> needle) noexcept
+template<typename Ptr>
+inline Ptr get_pointer(Ptr ptr, std::true_type) noexcept
 {
-    return strcontains(haystack.c_str(), needle.c_str());
+    return ptr;
 }
 
-/*!
- * \brief Checks if `haystack` contains `needle`.
- * \tparam CharT The type of character that the strings consist of.
- * \tparam Traits The CharTraits class for `CharT`.
- * \param haystack The string_view to search for `needle`.
- * \param needle The null-terminated string to search for in `haystack`.
- * \return true if `haystack` contains `needle`; false otherwise.
- * \warning Traits::char_type must be the same type as CharT or
- *          the behaviour is undefined.
- **/
-template<typename CharT, typename Traits>
-PL_NODISCARD inline bool strcontains(
-    basic_string_view<CharT, Traits> haystack,
-    PL_IN PL_NULL_TERMINATED(const CharT*) needle) noexcept
+template<typename Str>
+inline auto* get_pointer(const Str& str, std::false_type) noexcept
 {
-    return strcontains(haystack.c_str(), needle);
+    return str.c_str();
 }
+} // namespace detail
 
-/*!
- * \brief Checks if `haystack` contains `needle`.
- * \tparam CharT The type of character that the strings consist of.
- * \tparam Traits The CharTraits class for `CharT`.
- * \param haystack The null-terminated string to search for `needle`.
- * \param needle The string_view to search for in `haystack`.
- * \return true if `haystack` contains `needle`; false otherwise.
- * \warning Traits::char_type must be the same type as CharT or
- *          the behaviour is undefined.
- **/
-template<typename CharT, typename Traits>
+template<typename Str1, typename Str2>
 PL_NODISCARD inline bool strcontains(
-    PL_IN                            PL_NULL_TERMINATED(const CharT*) haystack,
-    basic_string_view<CharT, Traits> needle) noexcept
+    const Str1& haystack,
+    const Str2& needle) noexcept
 {
-    return strcontains(haystack, needle.c_str());
+    return ::pl::detail::strcontains(
+        ::pl::detail::get_pointer(
+            haystack, typename std::is_pointer<std::decay_t<Str1>>::type{}),
+        ::pl::detail::get_pointer(
+            needle, typename std::is_pointer<std::decay_t<Str2>>::type{}));
 }
 } // namespace pl
 #endif // INCG_PL_STRCONTAINS_HPP
