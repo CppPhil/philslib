@@ -4,7 +4,7 @@ project(philslib_project)
 
 add_library(philslib INTERFACE)
 target_include_directories(philslib
-                           INTERFACE "${PROJECT_SOURCE_DIR}/include/pl")
+                           INTERFACE "${PROJECT_SOURCE_DIR}/include")
 
 add_library(CppPhil::philslib ALIAS philslib)
 
