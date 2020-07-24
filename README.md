@@ -45,61 +45,6 @@ To generate the documentation run:
 To view the generated html documentation using firefox run:  
 `firefox ./doc/html/index.html &`  
 
-
-## Building the tests
-### Using a GNU/Linux OS
-To build the tests for x86 without optimizations run:  
-`bash ./build_tests.sh Debug x86`  
-
-To build the tests for x86 with optimizations run:  
-`bash ./build_tests.sh Release x86`  
-
-To build the tests for x64 without optimizations run:  
-`bash ./build_tests.sh Debug x64`  
-
-To build the tests for x64 with optimizations run:  
-`bash ./build_tests.sh Release x64`   
-
-### Using a Windows OS
-Open a Visual Studio Developer Command Prompt of the  
-Microsoft Visual C++ Compiler version to be used (msvc15 or newer).  
-
-To build the tests for x86 without optimizations using msvc15 run:  
-`build_tests.bat "Visual Studio 14 2015" Debug x86`  
-
-To build the tests for x86 with optimizations using msvc15 run:  
-`build_tests.bat "Visual Studio 14 2015" Release x86`  
-
-To build the tests for x64 without optimizations using msvc15 run:  
-`build_tests.bat "Visual Studio 14 2015 Win64" Debug x64`  
-
-To build the tests for x64 with optimizations using msvc15 run:  
-`build_tests.bat "Visual Studio 14 2015 Win64" Release x64`  
-
-To build the tests for x86 without optimizations using msvc17 run:  
-`build_tests.bat "Visual Studio 15 2017" Debug x86`  
-
-To build the tests for x86 with optimizations using msvc17 run:  
-`build_tests.bat "Visual Studio 15 2017" Release x86`  
-
-To build the tests for x64 without optimizations using msvc17 run:  
-`build_tests.bat "Visual Studio 15 2017 Win64" Debug x64`  
-
-To build the tests for x64 with optimizations using msvc17 run:  
-`build_tests.bat "Visual Studio 15 2017 Win64" Release x64`  
-
-## Running the tests
-To run the tests after having built the tests  
-navigate into the subdirectory named  
-`Debug_x86`,  
-`Release_x86`,  
-`Debug_x64`, or  
-`Release_x64`,  
-depending on which version was built.  
-Then run:  
-`ctest --verbose .`  
-
-
 ## Components
 This header-only library in the include subdirectory is sub-divided into 5 parts.  
 
@@ -204,6 +149,7 @@ include/pl/raw_memory_array.hpp: Class template to treat a memory region as an a
 include/pl/restrict.hpp: Portable macro to define a restrict pointer.  
 include/pl/size_t.hpp: User defined literal to create std::size_t objects.  
 include/pl/source_line.hpp: Macro that expands to a string literal of the current line in the current source file.  
+include/pl/strcontains.hpp: Function to check if a null-terminated string contains another null-terminated string as a substring.  
 include/pl/strdup.hpp: strdup and strndup functions similar to the ones known from POSIX or the C dynamic memory TR.  
 include/pl/string_view.hpp: string view type for null-terminated strings with a never emtpy guarantee.  
 include/pl/stringify.hpp: The classic stringification macro.  
