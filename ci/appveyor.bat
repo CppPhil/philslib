@@ -14,10 +14,30 @@ mkdir "Debug_x86"
 cd "Debug_x86"
 If %COMPILER%=="msvc19" (
   cmake -G "Visual Studio %gen_num% %gen_year%" -A Win32 -DCMAKE_BUILD_TYPE=Debug -DPL_BUILD_TESTS=ON ..
+  If errorlevel 1 (
+    EXIT /B 1
+  )
   msbuild philslib_project.sln -property:Configuration=Debug /maxcpucount
+  If errorlevel 1 (
+    EXIT /B 1
+  )
+  ctest --verbose .
+  If errorlevel 1 (
+    EXIT /B 1
+  )
 ) Else (
   cmake -G "Visual Studio %gen_num% %gen_year%" -DCMAKE_BUILD_TYPE=Debug -DPL_BUILD_TESTS=ON ..
+  If errorlevel 1 (
+    EXIT /B 1
+  )
   msbuild philslib_project.sln /p:Configuration=Debug;Platform="x86" /maxcpucount
+  If errorlevel 1 (
+    EXIT /B 1
+  )
+  ctest --verbose .
+  If errorlevel 1 (
+    EXIT /B 1
+  )
 )
 cd ..
 
@@ -26,12 +46,30 @@ mkdir "Release_x86"
 cd "Release_x86"
 If %COMPILER%=="msvc19" (
   cmake -G "Visual Studio %gen_num% %gen_year%" -A Win32 -DCMAKE_BUILD_TYPE=Release -DPL_BUILD_TESTS=ON ..
+  If errorlevel 1 (
+    EXIT /B 1
+  )
   msbuild philslib_project.sln -property:Configuration=Release /maxcpucount
+  If errorlevel 1 (
+    EXIT /B 1
+  )
   ctest --verbose .
+  If errorlevel 1 (
+    EXIT /B 1
+  )
 ) Else (
   cmake -G "Visual Studio %gen_num% %gen_year%" -DCMAKE_BUILD_TYPE=Release -DPL_BUILD_TESTS=ON ..
+  If errorlevel 1 (
+    EXIT /B 1
+  )
   msbuild philslib_project.sln /p:Configuration=Release;Platform="x86" /maxcpucount
+  If errorlevel 1 (
+    EXIT /B 1
+  )
   ctest --verbose .
+  If errorlevel 1 (
+    EXIT /B 1
+  )
 )
 cd ..
 
@@ -40,12 +78,30 @@ mkdir "Debug_x64"
 cd "Debug_x64"
 If %COMPILER%=="msvc19" (
   cmake -G "Visual Studio %gen_num% %gen_year%" -A x64 -DCMAKE_BUILD_TYPE=Debug -DPL_BUILD_TESTS=ON ..
+  If errorlevel 1 (
+    EXIT /B 1
+  )
   msbuild philslib_project.sln -property:Configuration=Debug /maxcpucount
+  If errorlevel 1 (
+    EXIT /B 1
+  )
   ctest --verbose .
+  If errorlevel 1 (
+    EXIT /B 1
+  )
 ) Else (
   cmake -G "Visual Studio %gen_num% %gen_year% Win64" -DCMAKE_BUILD_TYPE=Debug -DPL_BUILD_TESTS=ON ..
+  If errorlevel 1 (
+    EXIT /B 1
+  )
   msbuild philslib_project.sln /p:Configuration=Debug;Platform="x64" /maxcpucount
+  If errorlevel 1 (
+    EXIT /B 1
+  )
   ctest --verbose .
+  If errorlevel 1 (
+    EXIT /B 1
+  )
 )
 cd ..
 
@@ -54,12 +110,30 @@ mkdir "Release_x64"
 cd "Release_x64"
 If %COMPILER%=="msvc19" (
   cmake -G "Visual Studio %gen_num% %gen_year%" -A x64 -DCMAKE_BUILD_TYPE=Release -DPL_BUILD_TESTS=ON ..
+  If errorlevel 1 (
+    EXIT /B 1
+  )
   msbuild philslib_project.sln -property:Configuration=Release /maxcpucount
+  If errorlevel 1 (
+    EXIT /B 1
+  )
   ctest --verbose .
+  If errorlevel 1 (
+    EXIT /B 1
+  )
 ) Else (
   cmake -G "Visual Studio %gen_num% %gen_year% Win64" -DCMAKE_BUILD_TYPE=Release -DPL_BUILD_TESTS=ON ..
+  If errorlevel 1 (
+    EXIT /B 1
+  )
   msbuild philslib_project.sln /p:Configuration=Release;Platform="x64" /maxcpucount
+  If errorlevel 1 (
+    EXIT /B 1
+  )
   ctest --verbose .
+  If errorlevel 1 (
+    EXIT /B 1
+  )
 )
 cd ..
 
