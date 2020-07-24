@@ -3,7 +3,8 @@ cmake_minimum_required(VERSION 3.1)
 project(philslib_project)
 
 add_library(philslib INTERFACE)
-target_include_directories(philslib INTERFACE include/pl)
+target_include_directories(philslib
+                           INTERFACE "${PROJECT_SOURCE_DIR}/include/pl")
 
 add_library(CppPhil::philslib ALIAS philslib)
 
