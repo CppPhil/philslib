@@ -1,11 +1,8 @@
-REM @echo off
+@echo off
 
 set gen_num=
 
 set gen_year=
-
-REM TODO: HERE
-set "COMPILER="msvc19""
 
 call :generator %COMPILER% gen_num gen_year
 

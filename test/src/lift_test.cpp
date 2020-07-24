@@ -33,7 +33,7 @@
 #if PL_COMPILER == PL_COMPILER_GCC
 #pragma GCC diagnostic pop
 #endif                                   // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/pl/compiler.hpp" // PL_COMPILER, PL_COMPILER_CLANG, PL_COMPILER_VERSION, PL_COMPILER_VERSION_CHECK
+#include "../../include/pl/compiler.hpp" // PL_COMPILER, PL_COMPILER_CLANG, PL_COMPILER_MSVC, PL_COMPILER_VERSION, PL_COMPILER_VERSION_CHECK
 #include "../../include/pl/lift.hpp"     // PL_LIFT
 #include <utility>                       // std::forward, std::move
 
@@ -53,8 +53,7 @@ int fun2(Callable&& callable, Arg&& arg)
 } // namespace test
 } // namespace pl
 
-#if (PL_COMPILER != PL_COMPILER_CLANG) \
-    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(5, 0, 0))
+#if (PL_COMPILER != PL_COMPILER_MSVC) && ((PL_COMPILER != PL_COMPILER_CLANG) || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(5, 0, 0)))
 TEST_CASE("lift_test")
 {
     int       i{};
@@ -72,5 +71,4 @@ TEST_CASE("lift_test")
     CHECK(res4 == 7);
     CHECK(res5 == 7);
 }
-#endif // (PL_COMPILER != PL_COMPILER_CLANG) || (PL_COMPILER_VERSION >=
-       // PL_COMPILER_VERSION_CHECK(5, 0, 0))
+#endif
