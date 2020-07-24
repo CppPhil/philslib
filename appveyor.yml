@@ -1,8 +1,3 @@
-image:
- - Visual Studio 2015
- - Visual Studio 2017
- - Visual Studio 2019
-
 matrix:
   fast_finish: false
   
