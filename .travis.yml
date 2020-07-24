@@ -94,33 +94,5 @@ matrix:
           sources: *apt_sources
                 
 script:
-  - /usr/bin/$(printenv COMPILER) --version
-  # debug x64
-  - echo "DEBUG x64"
-  - CXX=/usr/bin/$(printenv COMPILER) ./build_tests.sh Debug x64
-  - cd ./Debug_x64
-  - ctest --verbose .
-  - cd ..
-  - echo "******************************************"
-  # release x64
-  - echo "RELEASE x64"
-  - CXX=/usr/bin/$(printenv COMPILER) ./build_tests.sh Release x64
-  - cd ./Release_x64
-  - ctest --verbose .
-  - cd ..
-  - echo "******************************************"
-  # debug x86
-  - echo "DEBUG x86"
-  - CXX=/usr/bin/$(printenv COMPILER) ./build_tests.sh Debug x86
-  - cd ./Debug_x86
-  - ctest --verbose .
-  - cd ..
-  - echo "******************************************"
-  # release x86
-  - echo "RELEASE x86"
-  - CXX=/usr/bin/$(printenv COMPILER) ./build_tests.sh Release x86
-  - cd ./Release_x86
-  - ctest --verbose .
-  - cd ..
-  - echo "******************************************"
-
+  - ./ci/travis.sh
+ 
