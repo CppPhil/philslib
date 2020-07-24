@@ -26,6 +26,12 @@ As this is a header-only library all you have to do is
 add the `include` subdirectory to your compiler's  
 include path.  
 
+### Using CMake
+If your project uses CMake the library can be included as a a subdirectory using  
+`add_subdirectory(path/to/philslib)`  
+The include paths can then be added to a target using  
+`target_link_libraries(your_target PRIVATE CppPhil::philslib)`  
+
 
 ## Disabling optional C++17 features
 The library optionally uses some C++17 features such as `[[nodiscard]]` and `[[fallthrough]]` if the compiler being used is new enough to support them.  
