@@ -1,54 +1,81 @@
-@echo off
+REM @echo off
 
-set gen=
+set gen_num=
 
-call :generator %COMPILER% gen
+set gen_year=
 
-set build_types = Debug Release
+REM TODO: HERE
+set "COMPILER="msvc19""
 
-set archs = x86 x64
+call :generator %COMPILER% gen_num gen_year
 
-(for %%build_type in (%build_types%) do (
-  (for %%arch in (%archs%) do (
-    echo "%%build_type %%arch"
+echo "Debug x86"
+mkdir "Debug_x86"
+cd "Debug_x86"
+If %COMPILER%=="msvc19" (
+  cmake -G "Visual Studio %gen_num% %gen_year%" -A Win32 -DCMAKE_BUILD_TYPE=Debug -DPL_BUILD_TESTS=ON ..
+  msbuild philslib_project.sln -property:Configuration=Debug /maxcpucount
+) Else (
+  cmake -G "Visual Studio %gen_num% %gen_year%" -DCMAKE_BUILD_TYPE=Debug -DPL_BUILD_TESTS=ON ..
+  msbuild philslib_project.sln /p:Configuration=Debug;Platform="x86" /maxcpucount
+)
+cd ..
 
-    set platform=
-    call :platform_str %%arch platform
-  
-    mkdir "%%build_type_%%arch"
-    cd "%%build_type_%%arch"
-  
-    If %COMPILER%=="msvc19" (
-      cmake -G "%gen%" -A %platform% -DCMAKE_BUILD_TYPE=%%build_type -DPL_BUILD_TESTS=ON ..
-      msbuild philslib_project.sln -property:Configuration=%%build_type /maxcpucount
-    ) Else (
-      cmake -G "%gen%" -DCMAKE_BUILD_TYPE=%%build_type -DPL_BUILD_TESTS=ON ..
-      msbuild philslib_project.sln /p:Configuration=%%build_type;Platform="%platform%" /maxcpucount
-    )
-    
-    cd ..
-  ))
-))
+echo "Release x86"
+mkdir "Release_x86"
+cd "Release_x86"
+If %COMPILER%=="msvc19" (
+  cmake -G "Visual Studio %gen_num% %gen_year%" -A Win32 -DCMAKE_BUILD_TYPE=Release -DPL_BUILD_TESTS=ON ..
+  msbuild philslib_project.sln -property:Configuration=Release /maxcpucount
+  ctest --verbose .
+) Else (
+  cmake -G "Visual Studio %gen_num% %gen_year%" -DCMAKE_BUILD_TYPE=Release -DPL_BUILD_TESTS=ON ..
+  msbuild philslib_project.sln /p:Configuration=Release;Platform="x86" /maxcpucount
+  ctest --verbose .
+)
+cd ..
+
+echo "Debug x64"
+mkdir "Debug_x64"
+cd "Debug_x64"
+If %COMPILER%=="msvc19" (
+  cmake -G "Visual Studio %gen_num% %gen_year%" -A x64 -DCMAKE_BUILD_TYPE=Debug -DPL_BUILD_TESTS=ON ..
+  msbuild philslib_project.sln -property:Configuration=Debug /maxcpucount
+  ctest --verbose .
+) Else (
+  cmake -G "Visual Studio %gen_num% %gen_year% Win64" -DCMAKE_BUILD_TYPE=Debug -DPL_BUILD_TESTS=ON ..
+  msbuild philslib_project.sln /p:Configuration=Debug;Platform="x64" /maxcpucount
+  ctest --verbose .
+)
+cd ..
+
+echo "Release x64"
+mkdir "Release_x64"
+cd "Release_x64"
+If %COMPILER%=="msvc19" (
+  cmake -G "Visual Studio %gen_num% %gen_year%" -A x64 -DCMAKE_BUILD_TYPE=Release -DPL_BUILD_TESTS=ON ..
+  msbuild philslib_project.sln -property:Configuration=Release /maxcpucount
+  ctest --verbose .
+) Else (
+  cmake -G "Visual Studio %gen_num% %gen_year% Win64" -DCMAKE_BUILD_TYPE=Release -DPL_BUILD_TESTS=ON ..
+  msbuild philslib_project.sln /p:Configuration=Release;Platform="x64" /maxcpucount
+  ctest --verbose .
+)
+cd ..
 
 EXIT /B 0
 
 :generator
 If "%1"=="msvc15" (
-  set %2="Visual Studio 14 2015"
-) Else (
-  If "%1"=="msvc17" (
-    set %2="Visual Studio 15 2017"
-  ) Else (
-    set %2="Visual Studio 16 2019"
-  )
+  set "%~2=14"
+  set "%~3=2015"
+  EXIT /B 0
 )
-EXIT /B 0
-
-:platform_str
-If "%1"=="x86" (
-  set %2="Win32"
-) Else (
-  set %2="x64"
+If "%1"=="msvc17" (
+  set "%~2=15"
+  set "%~3=2017"
+  EXIT /B 0
 )
+set "%~2=16"
+set "%~3=2019"
 EXIT /B 0
-
