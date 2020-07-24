@@ -2,17 +2,8 @@ cmake_minimum_required(VERSION 3.1)
 
 project(philslib_project)
 
-file(
-  GLOB
-  LIB_HEADERS
-  include/pl/algo/*.hpp
-  include/pl/cont/*.hpp
-  include/pl/meta/*.hpp
-  include/pl/thd/*.hpp
-  include/pl/*.hpp)
-
 add_library(philslib INTERFACE)
-target_include_directories(philslib INTERFACE ${LIB_HEADERS})
+target_include_directories(philslib INTERFACE include/pl)
 
 add_library(CppPhil::philslib ALIAS philslib)
 
@@ -117,10 +108,9 @@ if(PL_BUILD_TESTS)
     test/src/thd/*.cpp
     test/src/*.cpp)
 
-  add_executable(${UNIT_TEST_NAME} "${TEST_HEADERS}" "${TEST_SOURCES}"
-                                   "${LIB_HEADERS}")
+  add_executable(${UNIT_TEST_NAME} "${TEST_HEADERS}" "${TEST_SOURCES}")
 
-  target_link_libraries(${UNIT_TEST_NAME} Threads::Threads)
+  target_link_libraries(${UNIT_TEST_NAME} Threads::Threads CppPhil::philslib)
 
   add_test(Unittest ${UNIT_TEST_NAME})
 endif()
