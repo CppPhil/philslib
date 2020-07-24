@@ -1,5 +1,4 @@
 dist: trusty
-sudo: false
 language: cpp
 
 notifications:
@@ -23,7 +22,7 @@ addons:
 compiler: clang
 os: linux
 
-matrix:
+jobs:
   include:
     # GCC 5
     - env: COMPILER=g++-5
