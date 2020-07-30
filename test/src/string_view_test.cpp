@@ -42,6 +42,7 @@
 #include <sstream> // std::basic_ostringstream, std::ostringstream, std::wostringstream
 #include <string> // std::string, std::u16string, std::u32string, std::wstring
 #include <type_traits> // std::is_constructible, std::is_copy_assignable, std::is_move_assignable
+#include <unordered_set> // std::unordered_set
 
 TEST_CASE("string_view_default_construct_test")
 {
@@ -887,4 +888,44 @@ TEST_CASE("string_view shouldn't contain the NUL character")
     CHECK_UNARY_FALSE(sv2.contains(u'\0'));
     CHECK_UNARY_FALSE(sv3.contains(U'\0'));
     CHECK_UNARY_FALSE(sv4.contains(L'\0'));
+}
+
+TEST_CASE("string_views should be hashable")
+{
+    std::unordered_set<pl::string_view>    us1{};
+    std::unordered_set<pl::u16string_view> us2{};
+    std::unordered_set<pl::u32string_view> us3{};
+    std::unordered_set<pl::wstring_view>   us4{};
+
+    const auto r1 = us1.insert("test");
+    REQUIRE_UNARY(r1.second);
+    const auto r2 = us1.insert("text");
+    REQUIRE_UNARY(r2.second);
+
+    const auto r3 = us2.insert(u"test");
+    REQUIRE_UNARY(r3.second);
+    const auto r4 = us2.insert(u"text");
+    REQUIRE_UNARY(r4.second);
+
+    const auto r5 = us3.insert(U"test");
+    REQUIRE_UNARY(r5.second);
+    const auto r6 = us3.insert(U"text");
+    REQUIRE_UNARY(r6.second);
+
+    const auto r7 = us4.insert(L"test");
+    REQUIRE_UNARY(r7.second);
+    const auto r8 = us4.insert(L"text");
+    REQUIRE_UNARY(r8.second);
+
+    CHECK(us1.count("test") == 1);
+    CHECK(us1.count("text") == 1);
+
+    CHECK(us2.count(u"test") == 1);
+    CHECK(us2.count(u"text") == 1);
+
+    CHECK(us3.count(U"test") == 1);
+    CHECK(us3.count(U"text") == 1);
+
+    CHECK(us4.count(L"test") == 1);
+    CHECK(us4.count(L"text") == 1);
 }

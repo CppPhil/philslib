@@ -32,6 +32,7 @@
 #define INCG_PL_STRING_VIEW_HPP
 #include "annotations.hpp" // PL_NODISCARD, PL_IN, PL_OUT, PL_INOUT, PL_NULL_TERMINATED, PL_IMPLICIT
 #include "compiler.hpp" // PL_COMPILER, PL_COMPILER_MSVC, PL_COMPILER_VERSION, PL_COMPILER_VERSION_CHECK
+#include "hash.hpp"              // pl::detail::add_hash
 #include "meta/remove_cvref.hpp" // pl::meta::remove_cvref_t
 #include "strcontains.hpp"       // pl::strcontains
 #include "type_traits.hpp" // pl::remove_const_t, pl::remove_pointer_t, pl::enable_if_t
@@ -917,6 +918,22 @@ constexpr wstring_view operator""_sv(
 } // inline namespace string_view_literals
 } // inline namespace literals
 } // namespace pl
+
+namespace std {
+template<typename CharT, typename Traits>
+struct hash<::pl::basic_string_view<CharT, Traits>> {
+    size_t operator()(::pl::basic_string_view<CharT, Traits> str_view) const
+    {
+        size_t hash_seed{0U};
+
+        for (auto character : str_view) {
+            ::pl::detail::add_hash(hash_seed, character);
+        }
+
+        return hash_seed;
+    }
+};
+} // namespace std
 #if PL_COMPILER == PL_COMPILER_MSVC
 #pragma warning(pop)
 #endif // PL_COMPILER == PL_COMPILER_MSVC
