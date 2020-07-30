@@ -61,14 +61,15 @@ constexpr string_view to_s(test_enum enm) noexcept
 TEST_CASE("unreachable_test")
 {
     using namespace pl::literals::string_view_literals;
-
+#if (PL_COMPILER != PL_COMPILER_MSVC) \
+    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
     PL_TEST_STATIC_ASSERT(
         pl::test::to_s(pl::test::test_enum::a).front() == 'a');
     PL_TEST_STATIC_ASSERT(
         pl::test::to_s(pl::test::test_enum::b).front() == 'b');
     PL_TEST_STATIC_ASSERT(
         pl::test::to_s(pl::test::test_enum::c).front() == 'c');
-
+#endif
     CHECK(pl::test::to_s(pl::test::test_enum::a) == "a"_sv);
     CHECK(pl::test::to_s(pl::test::test_enum::b) == "b"_sv);
     CHECK(pl::test::to_s(pl::test::test_enum::c) == "c"_sv);
