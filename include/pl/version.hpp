@@ -55,7 +55,7 @@
 
 #define PL_VERSION_MAJOR 1
 
-#define PL_VERSION_MINOR 4
+#define PL_VERSION_MINOR 5
 
 #define PL_VERSION_PATCH 0
 
