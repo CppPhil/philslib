@@ -42,7 +42,12 @@ namespace test {
 namespace {
 enum class test_enum { a, b, c };
 
-constexpr string_view to_s(test_enum enm) noexcept
+#if (PL_COMPILER != PL_COMPILER_MSVC) \
+    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
+constexpr
+#endif
+    string_view
+    to_s(test_enum enm) noexcept
 {
     using namespace pl::literals::string_view_literals;
 
