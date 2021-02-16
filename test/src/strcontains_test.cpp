@@ -36,9 +36,40 @@
 #include "../../include/pl/strcontains.hpp" // pl::strcontains
 #include "../../include/pl/string_view.hpp" // pl::string_view
 #include <string> // std::basic_string, std::literals::string_literals::operator""s
+#if (PL_COMPILER == PL_COMPILER_GCC) \
+    && (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(7, 0, 0))
+#include <string_view>
+#endif
 
 using namespace pl::literals::string_view_literals;
 using namespace std::literals::string_literals;
+
+#if (PL_COMPILER == PL_COMPILER_GCC) \
+    && (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(7, 0, 0))
+#define CHECK_STRCONTAINS_IMPL_STD_STRING_VIEW(check_macro, haystack, needle)  \
+    check_macro(pl::strcontains(                                               \
+        std::string_view{haystack}, std::string_view{needle}));                \
+    check_macro(pl::strcontains(std::string_view{haystack}, needle));          \
+    check_macro(pl::strcontains(haystack, std::string_view{needle}));          \
+                                                                               \
+    check_macro(pl::strcontains(                                               \
+        std::u16string_view{u##haystack}, std::u16string_view{u##needle}));    \
+    check_macro(pl::strcontains(std::u16string_view{u##haystack}, u##needle)); \
+    check_macro(pl::strcontains(u##haystack, std::u16string_view{u##needle})); \
+                                                                               \
+    check_macro(pl::strcontains(                                               \
+        std::u32string_view{U##haystack}, std::u32string_view{U##needle}));    \
+    check_macro(pl::strcontains(std::u32string_view{U##haystack}, U##needle)); \
+    check_macro(pl::strcontains(U##haystack, std::u32string_view{U##needle})); \
+                                                                               \
+    check_macro(pl::strcontains(                                               \
+        std::wstring_view{L##haystack}, std::wstring_view{L##needle}));        \
+    check_macro(pl::strcontains(std::wstring_view{L##haystack}, L##needle));   \
+    check_macro(pl::strcontains(L##haystack, std::wstring_view{L##needle}))
+#else
+#define CHECK_STRCONTAINS_IMPL_STD_STRING_VIEW(check_macro, haystack, needle) \
+    (void)0
+#endif
 
 #define CHECK_STRCONTAINS_IMPL(check_macro, haystack, needle)       \
     check_macro(pl::strcontains(haystack, needle));                 \
@@ -71,7 +102,9 @@ using namespace std::literals::string_literals;
     check_macro(pl::strcontains(L##haystack, L##needle##_sv));      \
     check_macro(pl::strcontains(L##haystack##s, L##needle##s));     \
     check_macro(pl::strcontains(L##haystack##s, L##needle));        \
-    check_macro(pl::strcontains(L##haystack, L##needle##s))
+    check_macro(pl::strcontains(L##haystack, L##needle##s));        \
+                                                                    \
+    CHECK_STRCONTAINS_IMPL_STD_STRING_VIEW(check_macro, haystack, needle)
 
 #define CHECK_STRCONTAINS(haystack, needle) \
     CHECK_STRCONTAINS_IMPL(CHECK_UNARY, haystack, needle)
