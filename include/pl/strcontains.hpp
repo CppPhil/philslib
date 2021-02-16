@@ -82,7 +82,7 @@ constexpr
     auto
     get_pointer(const Str& str, std::false_type) noexcept
 {
-    return str.c_str();
+    return str.data();
 }
 } // anonymous namespace
 } // namespace detail
