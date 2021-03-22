@@ -41,7 +41,7 @@
 #include <iterator>                  // std::begin, std::end
 #include <limits>                    // std::numeric_limits
 #include <memory>                    // std::unique_ptr
-#include <random>                    // std::random_device, std::mt19937
+#include <random>                    // std::random_device, std::mt19937_64
 #include <type_traits> // std::is_floating_point, std::true_type, std::false_type, std::is_same, std::enable_if_t
 
 namespace pl {
@@ -179,9 +179,9 @@ using distribution_of_t = typename distribution_of<Type>::type;
  *        Monitor, which is then accessed from multiple threads incurring
  *        locking overhead.
  *        Generates non-deterministic random numbers.
- *        By default uses the std::mt19937 engine.
+ *        By default uses the std::mt19937_64 engine.
  **/
-template<typename Engine = std::mt19937>
+template<typename Engine = std::mt19937_64>
 class random_number_generator {
 public:
     using this_type    = random_number_generator;
