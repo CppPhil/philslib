@@ -10,16 +10,16 @@ cd "%dir%"
 
 set mingw_dir=mingw_dist
 
-mkdir %mingw_dir%
-cd %mingw_dir%
-
 set nuwen_archive=mingw-17.1-without-git.exe
 set url=https://nuwen.net/files/mingw/%nuwen_archive%
 
 if exist %mingw_dir%\ (
   echo %mingw_dir% exists, assuming it contains a valid MinGW distribution!
+  cd %mingw_dir%
 ) else (
-  bitsadmin.exe /transfer "MinGW Download" "%url%" "%cd%\%nuwen_archive%"
+  mkdir %mingw_dir%
+  cd %mingw_dir%
+  bitsadmin.exe /transfer "MinGW Download" "%url%" "%dir%\%mingw_dir%\%nuwen_archive%"
 
   if errorlevel 1 (
     echo Failure to download MinGW!
@@ -37,15 +37,16 @@ if exist %mingw_dir%\ (
 cd ..
 
 mkdir build
+cd build
 
-cd ..\%mingw_dir%\MinGW && set_distro_paths.bat && cd ..\..\build && cmake -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Debug -DARCH=x64 -DPL_BUILD_TESTS=ON ..
+cd ..\%mingw_dir%\MinGW && call set_distro_paths.bat && cd ..\..\build && cmake -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Debug -DARCH=x64 -DPL_BUILD_TESTS=ON ..
 
 if errorlevel 1 (
   echo Failure to run CMake generator
   exit /B 1
 )
 
-cd ..\%mingw_dir%\MinGW && set_distro_paths.bat && cd ..\..\build && make
+cd ..\%mingw_dir%\MinGW && call set_distro_paths.bat && cd ..\..\build && make
 
 if errorlevel 1 (
   echo make failed. MinGW build aborted, exiting.
@@ -61,4 +62,3 @@ if errorlevel 1 (
 
 cd "%prev_dir%"
 exit /B 0
-
