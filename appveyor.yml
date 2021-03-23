@@ -9,6 +9,7 @@ environment:
       COMPILER: msvc17
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
       COMPILER: msvc19
+    - COMPILER: "MinGW"
 
 build_script:
   - cmd: ci\appveyor.bat
