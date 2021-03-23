@@ -498,3 +498,6 @@ todo_list.txt
 ### generated documentation ###
 doc/
 
+### automatically downloaded files ###
+mingw_dist
+
