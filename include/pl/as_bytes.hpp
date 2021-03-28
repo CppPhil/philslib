@@ -57,7 +57,7 @@ constexpr byte* as_bytes(PL_IN Type& object) noexcept
  * \note The pointer returned will never be nullptr.
  **/
 template<typename Type>
-constexpr const byte* as_bytes(PL_IN const Type& object) noexcept
+constexpr const byte *as_bytes(PL_IN const Type& object) noexcept
 {
     return ::pl::unrelated_pointer_cast<const byte*>(std::addressof(object));
 }
