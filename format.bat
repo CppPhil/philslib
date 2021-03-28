@@ -33,7 +33,7 @@ cd "%1"
 if exist .clang-format (
   del /F /Q .clang-format
 )
-copy /Y "%dot_clang_format%" /A .clang-format /A
+copy /Y "%dot_clang_format%" .clang-format
 call "%fmt_bat%"
 del /F /Q .clang-format
 exit /B 0
