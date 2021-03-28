@@ -150,7 +150,7 @@ private:
 #if PL_COMPILER == PL_COMPILER_MSVC
 #pragma warning(push)
 #pragma warning(disable : 4702) // unreachable code
-#endif                          // PL_COMPILER == PL_COMPILER_MSVC
+#endif // PL_COMPILER == PL_COMPILER_MSVC
 
     /*!
      * \brief Invokes the callable with ty and sets the result to the promise.

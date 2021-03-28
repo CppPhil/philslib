@@ -78,7 +78,7 @@ inline auto invoke_impl(
 #if PL_COMPILER == PL_COMPILER_MSVC
 #pragma warning(push)
 #pragma warning(disable : 4505) // unreferenced local function has been removed
-#endif                          // PL_COMPILER == PL_COMPILER_MSVC
+#endif // PL_COMPILER == PL_COMPILER_MSVC
 
 /*!
  * \brief Calls 'callable' with 'args'.

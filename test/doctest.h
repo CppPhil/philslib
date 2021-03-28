@@ -319,7 +319,7 @@ DOCTEST_MSVC_SUPPRESS_WARNING(26812) // Prefer 'enum class' over 'enum'
 #define DOCTEST_SYMBOL_EXPORT __attribute__((dllexport))
 #define DOCTEST_SYMBOL_IMPORT __attribute__((dllimport))
 #endif // MSVC
-#else  // _WIN32
+#else // _WIN32
 #define DOCTEST_SYMBOL_EXPORT __attribute__((visibility("default")))
 #define DOCTEST_SYMBOL_IMPORT
 #endif // _WIN32
@@ -330,7 +330,7 @@ DOCTEST_MSVC_SUPPRESS_WARNING(26812) // Prefer 'enum class' over 'enum'
 #else // DOCTEST_CONFIG_IMPLEMENT
 #define DOCTEST_INTERFACE DOCTEST_SYMBOL_IMPORT
 #endif // DOCTEST_CONFIG_IMPLEMENT
-#else  // DOCTEST_CONFIG_IMPLEMENTATION_IN_DLL
+#else // DOCTEST_CONFIG_IMPLEMENTATION_IN_DLL
 #define DOCTEST_INTERFACE
 #endif // DOCTEST_CONFIG_IMPLEMENTATION_IN_DLL
 
@@ -762,7 +762,7 @@ struct ContextOptions //! OCLINT too many fields
     bool no_throw;       // to skip exceptions-related assertion macros
     bool no_exitcode;    // if the framework should return 0 as the exitcode
     bool
-         no_run; // to not run the tests at all (can be done with an "*" exclude)
+        no_run; // to not run the tests at all (can be done with an "*" exclude)
     bool no_version;    // to not print the version of the framework
     bool no_colors;     // if output to the console should be colorized
     bool force_colors;  // forces the use of colors even when a tty cannot be
@@ -1521,8 +1521,8 @@ public:
             return true;
         }
         catch (...) {
-        }            //! OCLINT -  empty catch statement
-#endif               // DOCTEST_CONFIG_NO_EXCEPTIONS
+        } //! OCLINT -  empty catch statement
+#endif // DOCTEST_CONFIG_NO_EXCEPTIONS
         ((void)res); // to silence -Wunused-parameter
         return false;
     }
@@ -1679,7 +1679,7 @@ DOCTEST_INTERFACE doctest::detail::TestSuite& getCurrentTestSuite();
 } // namespace doctest_detail_test_suite_ns
 
 namespace doctest {
-#else  // DOCTEST_CONFIG_DISABLE
+#else // DOCTEST_CONFIG_DISABLE
 template<typename T>
 int registerExceptionTranslator(String (*)(T))
 {
@@ -3135,7 +3135,7 @@ namespace timer_large_integer {
 
 #if defined(DOCTEST_PLATFORM_WINDOWS)
 typedef ULONGLONG type;
-#else  // DOCTEST_PLATFORM_WINDOWS
+#else // DOCTEST_PLATFORM_WINDOWS
 using namespace std;
 typedef uint64_t type;
 #endif // DOCTEST_PLATFORM_WINDOWS
@@ -3146,7 +3146,7 @@ typedef timer_large_integer::type ticks_t;
 #ifdef DOCTEST_CONFIG_GETCURRENTTICKS
 ticks_t getCurrentTicks() { return DOCTEST_CONFIG_GETCURRENTTICKS(); }
 #elif defined(DOCTEST_PLATFORM_WINDOWS)
-ticks_t          getCurrentTicks()
+ticks_t getCurrentTicks()
 {
     static LARGE_INTEGER hz = {0}, hzo = {0};
     if (!hz.QuadPart) {
@@ -3157,7 +3157,7 @@ ticks_t          getCurrentTicks()
     QueryPerformanceCounter(&t);
     return ((t.QuadPart - hzo.QuadPart) * LONGLONG(1000000)) / hz.QuadPart;
 }
-#else  // DOCTEST_PLATFORM_WINDOWS
+#else // DOCTEST_PLATFORM_WINDOWS
 ticks_t getCurrentTicks()
 {
     timeval t;
@@ -3806,7 +3806,7 @@ bool checkIfShouldThrow(assertType::Enum at)
     g_cs->shouldLogCurrentException = false;
     throw TestFailureException();
 } // NOLINT(cert-err60-cpp)
-#else  // DOCTEST_CONFIG_NO_EXCEPTIONS
+#else // DOCTEST_CONFIG_NO_EXCEPTIONS
 void throwException() {}
 #endif // DOCTEST_CONFIG_NO_EXCEPTIONS
 } // namespace detail
@@ -4052,7 +4052,7 @@ bool fileOrderComparator(const TestCase* lhs, const TestCase* rhs)
     // this is needed because MSVC gives different case for drive letters
     // for __FILE__ when evaluated in a header and a source file
     const int res = doctest::stricmp(lhs->m_file, rhs->m_file);
-#else  // MSVC
+#else // MSVC
     const int res = std::strcmp(lhs->m_file, rhs->m_file);
 #endif // MSVC
     if (res != 0) return res < 0;
@@ -4202,7 +4202,7 @@ String translateActiveException()
         }
         DOCTEST_GCC_SUPPRESS_WARNING_POP
 // clang-format on
-#else  // DOCTEST_CONFIG_NO_EXCEPTIONS
+#else // DOCTEST_CONFIG_NO_EXCEPTIONS
     return "";
 #endif // DOCTEST_CONFIG_NO_EXCEPTIONS
 }
@@ -4512,7 +4512,7 @@ using namespace detail;
 // TODO: integration with XCode and other IDEs
 #define DOCTEST_OUTPUT_DEBUG_STRING( \
     text) // NOLINT(clang-diagnostic-unused-macros)
-#endif    // Platform
+#endif // Platform
 
 void addAssert(assertType::Enum at)
 {
@@ -4707,7 +4707,7 @@ template<typename Ex>
 {
 #ifndef DOCTEST_CONFIG_NO_EXCEPTIONS
     throw e;
-#else  // DOCTEST_CONFIG_NO_EXCEPTIONS
+#else // DOCTEST_CONFIG_NO_EXCEPTIONS
     std::cerr
         << "doctest will terminate because it needed to throw an exception.\n"
         << "The message was: " << e.what() << '\n';
@@ -5409,9 +5409,9 @@ struct ConsoleReporter : public IReporter {
 
     Color::Enum getSuccessOrFailColor(bool success, assertType::Enum at)
     {
-        return success
-                   ? Color::BrightGreen
-                   : (at & assertType::is_warn) ? Color::Yellow : Color::Red;
+        return success                      ? Color::BrightGreen
+               : (at & assertType::is_warn) ? Color::Yellow
+                                            : Color::Red;
     }
 
     void successOrFailColoredStringToStream(

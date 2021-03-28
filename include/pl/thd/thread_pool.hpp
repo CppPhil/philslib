@@ -406,8 +406,8 @@ private:
         std::shared_ptr<executor_base>,
         std::vector<std::shared_ptr<executor_base>>,
         deref_less>
-                            m_tasks_shared; //!< the queue of tasks still to be run
-    mutable std::mutex      m_mutex; //!< mutex to protect the shared data
+                       m_tasks_shared; //!< the queue of tasks still to be run
+    mutable std::mutex m_mutex;        //!< mutex to protect the shared data
     std::condition_variable m_cv; /*!< condvar to wake threads waiting for the
                                    *   queue to no longer be empty. And to
                                    *   shutdown the threads in the join function

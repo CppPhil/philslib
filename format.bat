@@ -19,7 +19,7 @@ set fmt_sh=%clang_fmt_dir%\fmt.sh
 set dot_clang_format=%clang_fmt_dir%\.clang-format
 
 REM Bash shell
-set shell="C:\Program Files\Git\git-bash.exe"
+set shell=C:\Program Files\Git\git-bash.exe
 
 REM Format the source files.
 call :run_formatter "%include_dir%"
@@ -37,6 +37,6 @@ if exist .clang-format (
   del /F /Q .clang-format
 )
 copy /Y "%dot_clang_format%" .clang-format
-call "%shell% %fmt_sh%"
+call "%shell%" %fmt_sh%
 del /F /Q .clang-format
 exit /B 0

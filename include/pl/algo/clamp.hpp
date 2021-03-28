@@ -74,9 +74,9 @@ constexpr const Ty& clamp(
     PL_IN const Ty&  upper_bound,
     BinaryComparator comp)
 {
-    return comp(value, lower_bound)
-               ? lower_bound
-               : comp(upper_bound, value) ? upper_bound : value;
+    return comp(value, lower_bound)   ? lower_bound
+           : comp(upper_bound, value) ? upper_bound
+                                      : value;
 }
 
 /*!
