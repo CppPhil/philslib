@@ -31,8 +31,9 @@
 #ifndef INCG_PL_ALGO_CLAMP_HPP
 #define INCG_PL_ALGO_CLAMP_HPP
 #include "../annotations.hpp" // PL_IN
-#include <ciso646>            // not
-#include <functional>         // std::less
+#include "../compiler.hpp" // PL_COMPILER, PL_COMPILER_MSVC, PL_COMPILER_VERSION, PL_COMPILER_VERSION_CHECK
+#include <ciso646>    // not
+#include <functional> // std::less
 
 namespace pl {
 namespace algo {
@@ -74,9 +75,16 @@ constexpr const Ty& clamp(
     PL_IN const Ty&  upper_bound,
     BinaryComparator comp)
 {
+#if (PL_COMPILER != PL_COMPILER_MSVC) \
+    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
     const Ty* output{comp(value, lower_bound) ? &lower_bound : &value};
     output = comp(upper_bound, *output) ? &upper_bound : output;
     return *output;
+#else
+    return comp(value, lower_bound)   ? lower_bound
+           : comp(upper_bound, value) ? upper_bound
+                                      : value;
+#endif
 }
 
 /*!
