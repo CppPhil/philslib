@@ -37,77 +37,15 @@
 #include "meta/type_identity.hpp"    // pl::meta::type_identity_t
 #include "no_macro_substitution.hpp" // PL_NO_MACRO_SUBSTITUTION
 #include <algorithm>                 // std::shuffle
+#include <array>                     // std::array
 #include <cstddef>                   // std::size_t
 #include <iterator>                  // std::begin, std::end
 #include <limits>                    // std::numeric_limits
-#include <memory>                    // std::unique_ptr
 #include <random>                    // std::random_device, std::mt19937_64
 #include <type_traits> // std::is_floating_point, std::true_type, std::false_type, std::is_same, std::enable_if_t
 
 namespace pl {
 namespace detail {
-static constexpr std::size_t large_urbg_threshold = 50U;
-
-template<typename Urbg, bool IsLarge>
-class urbg_storage_impl {
-public:
-    using this_type    = urbg_storage_impl;
-    using element_type = Urbg;
-
-    // assume isLarge == true
-
-    explicit urbg_storage_impl(std::random_device::result_type seed)
-        : m_urbg{std::make_unique<element_type>(seed)}
-    {
-    }
-
-    element_type&       get() { return *m_urbg; }
-    const element_type& get() const
-    {
-        return const_cast<this_type*>(this)->get();
-    }
-
-private:
-    std::unique_ptr<element_type> m_urbg;
-};
-
-template<typename Urbg>
-class urbg_storage_impl<Urbg, false> {
-public:
-    using this_type    = urbg_storage_impl;
-    using element_type = Urbg;
-
-    explicit urbg_storage_impl(std::random_device::result_type seed)
-        : m_urbg{seed}
-    {
-    }
-
-    urbg_storage_impl(const this_type&) = delete;
-
-    this_type& operator=(const this_type&) = delete;
-
-    element_type&       get() { return m_urbg; }
-    const element_type& get() const
-    {
-        return const_cast<this_type*>(this)->get();
-    }
-
-private:
-    element_type m_urbg;
-};
-
-template<typename Urbg>
-class urbg_storage
-    : public urbg_storage_impl<Urbg, sizeof(Urbg) >= large_urbg_threshold> {
-public:
-    using this_type = urbg_storage;
-    using base_type
-        = urbg_storage_impl<Urbg, sizeof(Urbg) >= large_urbg_threshold>;
-    using element_type = typename base_type::element_type;
-
-    using base_type::base_type;
-};
-
 template<typename Type>
 struct distribution_of;
 
@@ -189,19 +127,12 @@ public:
 
     /*!
      * \brief Creates a random_number_generator.
-     *        Initializes the underlying random_device and uses it
-     *        to seed the engine.
+     *        Seeds the underlying UniformRandomBitGenerator.
      **/
-    random_number_generator() : m_random_device{}, m_urbg{m_random_device()} {}
-    /*!
-     * \brief this type is non-copyable.
-     **/
-    random_number_generator(const this_type&) = delete;
-
-    /*!
-     * \brief this type is non-copyable.
-     **/
-    this_type& operator=(const this_type&) = delete;
+    random_number_generator()
+        : m_urbg{create_uniform_random_bit_generator<element_type>()}
+    {
+    }
 
     /*!
      * \brief Generates a random number from the range of [begin,end)
@@ -243,7 +174,7 @@ public:
         enable_if_t<std::is_same<meta::remove_cvref_t<Bool>, bool>::value, bool>
     {
         std::bernoulli_distribution dist{true_chance};
-        return dist(m_urbg.get());
+        return dist(m_urbg);
     }
 
     /*!
@@ -257,7 +188,7 @@ public:
     template<typename RandomAccessIterator>
     this_type& shuffle(RandomAccessIterator begin, RandomAccessIterator end)
     {
-        std::shuffle(begin, end, m_urbg.get());
+        std::shuffle(begin, end, m_urbg);
         return *this;
     }
 
@@ -273,30 +204,47 @@ public:
     }
 
 private:
+    template<typename UniformRandomBitGenerator>
+    static UniformRandomBitGenerator create_uniform_random_bit_generator()
+    {
+        static constexpr std::size_t byte_count{
+            UniformRandomBitGenerator::state_size
+            * sizeof(typename UniformRandomBitGenerator::result_type)};
+        std::random_device random_device{};
+        std::array<
+            std::random_device::result_type,
+            (byte_count - 1) / sizeof(std::random_device::result_type) + 1>
+            seed_buffer{};
+        std::generate(seed_buffer.begin(), seed_buffer.end(), [&random_device] {
+            return random_device();
+        });
+        std::seed_seq seed_sequence(seed_buffer.begin(), seed_buffer.end());
+        return UniformRandomBitGenerator{seed_sequence};
+    }
+
     template<typename Numeric>
     Numeric generate_impl(
         meta::type_identity_t<Numeric> begin,
         meta::type_identity_t<Numeric> end,
-        std::true_type)
+        std::true_type) // floating point
     {
         PL_DBG_CHECK_PRE(begin < end);
         detail::distribution_of_t<Numeric> dist{begin, end};
-        return dist(m_urbg.get());
+        return dist(m_urbg);
     }
 
     template<typename Numeric>
     Numeric generate_impl(
         meta::type_identity_t<Numeric> begin,
         meta::type_identity_t<Numeric> end,
-        std::false_type)
+        std::false_type) // non floating point
     {
         PL_DBG_CHECK_PRE(begin <= end);
         detail::distribution_of_t<Numeric> dist{begin, end};
-        return dist(m_urbg.get());
+        return dist(m_urbg);
     }
 
-    std::random_device                 m_random_device;
-    detail::urbg_storage<element_type> m_urbg;
+    element_type m_urbg; /*!< UniformRandomBitGenerator */
 };
 } // namespace pl
 #endif // INCG_PL_RANDOM_NUMBER_GENERATOR_HPP
