@@ -31,6 +31,7 @@
 #ifndef INCG_PL_HEXIFY_HPP
 #define INCG_PL_HEXIFY_HPP
 #include "print_bytes_as_hex.hpp" // pl::print_bytes_as_hex
+#include <locale>                 // std::locale::classic
 #include <sstream>                // std::ostringstream
 #include <utility>                // std::move
 
@@ -47,6 +48,7 @@ inline std::string
 hexify(PL_IN const void* data, std::size_t byte_count, std::string delimiter)
 {
     std::ostringstream oss{};
+    oss.imbue(std::locale::classic());
     oss << pl::print_bytes_as_hex{data, byte_count, std::move(delimiter)};
     return oss.str();
 }
