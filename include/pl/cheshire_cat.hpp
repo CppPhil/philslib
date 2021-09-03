@@ -32,10 +32,10 @@
 #define INCG_PL_CHESHIRE_CAT_HPP
 #include "annotations.hpp"  // PL_IN, PL_INOUT
 #include "type_traits.hpp"  // pl::enable_if_t
+#include "voidify.hpp"      // PL_VOIDIFY
 #include <ciso646>          // and
 #include <cstddef>          // std::size_t, std::max_align_t
 #include <initializer_list> // std::initializer_list
-#include <memory>           // std::addressof
 #include <new>              // ::operator new, __cpp_lib_launder, std::launder
 #include <utility>          // std::move, std::forward
 
@@ -116,7 +116,7 @@ private:
 #ifndef __cpp_lib_launder
         m_ptr =
 #endif
-            ::new (static_cast<void*>(std::addressof(m_storage)))
+            ::new (PL_VOIDIFY(m_storage))
                 element_type(std::forward<Args>(args)...);
     }
 

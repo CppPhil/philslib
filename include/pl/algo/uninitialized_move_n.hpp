@@ -30,10 +30,10 @@
  **/
 #ifndef INCG_PL_ALGO_UNINITIALIZED_MOVE_N_HPP
 #define INCG_PL_ALGO_UNINITIALIZED_MOVE_N_HPP
-#include <iterator> // std::iterator_traits
-#include <memory>   // std::addressof
-#include <new>      // ::operator new
-#include <utility>  // std::pair, std::make_pair, std::move
+#include "../voidify.hpp" // PL_VOIDIFY
+#include <iterator>       // std::iterator_traits
+#include <new>            // ::operator new
+#include <utility>        // std::pair, std::make_pair, std::move
 
 namespace pl {
 namespace algo {
@@ -66,8 +66,7 @@ uninitialized_move_n(InputIterator first, SizeType count, ForwardIterator dest)
 
     try {
         while (count > 0) {
-            ::new (static_cast<void*>(std::addressof(*cur)))
-                value_type(std::move(*first));
+            ::new (PL_VOIDIFY(*cur)) value_type(std::move(*first));
 
             ++first;
             ++cur;

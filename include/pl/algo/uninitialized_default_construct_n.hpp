@@ -30,9 +30,9 @@
  **/
 #ifndef INCG_PL_ALGO_UNINITIALIZED_DEFAULT_CONSTRUCT_N_HPP
 #define INCG_PL_ALGO_UNINITIALIZED_DEFAULT_CONSTRUCT_N_HPP
-#include <iterator> // std::iterator_traits
-#include <memory>   // std::addressof
-#include <new>      // ::operator new
+#include "../voidify.hpp" // PL_VOIDIFY
+#include <iterator>       // std::iterator_traits
+#include <new>            // ::operator new
 
 namespace pl {
 namespace algo {
@@ -63,7 +63,7 @@ inline ForwardIterator uninitialized_default_construct_n(
 
     try {
         while (n > 0) {
-            ::new (static_cast<void*>(std::addressof(*cur))) value_type;
+            ::new (PL_VOIDIFY(*cur)) value_type;
 
             ++cur;
             --n;

@@ -30,10 +30,10 @@
  **/
 #ifndef INCG_PL_ALGO_UNINITIALIZED_MOVE_HPP
 #define INCG_PL_ALGO_UNINITIALIZED_MOVE_HPP
-#include <iterator> // std::iterator_traits
-#include <memory>   // std::addressof
-#include <new>      // ::operator new
-#include <utility>  // std::move
+#include "../voidify.hpp" // PL_VOIDIFY
+#include <iterator>       // std::iterator_traits
+#include <new>            // ::operator new
+#include <utility>        // std::move
 
 namespace pl {
 namespace algo {
@@ -63,8 +63,7 @@ inline ForwardIterator uninitialized_move(
 
     try {
         while (first != last) {
-            ::new (static_cast<void*>(std::addressof(*cur)))
-                value_type(std::move(*first));
+            ::new (PL_VOIDIFY(*cur)) value_type(std::move(*first));
 
             ++first;
             ++cur;

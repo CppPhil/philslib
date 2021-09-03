@@ -30,9 +30,9 @@
  **/
 #ifndef INCG_PL_ALGO_UNINITIALIZED_VALUE_CONSTRUCT_HPP
 #define INCG_PL_ALGO_UNINITIALIZED_VALUE_CONSTRUCT_HPP
-#include <iterator> // std::iterator_traits
-#include <memory>   // std::addressof
-#include <new>      // ::operator new
+#include "../voidify.hpp" // PL_VOIDIFY
+#include <iterator>       // std::iterator_traits
+#include <new>            // ::operator new
 
 namespace pl {
 namespace algo {
@@ -61,7 +61,7 @@ inline void uninitialized_value_construct(
 
     try {
         while (cur != last) {
-            ::new (static_cast<void*>(std::addressof(*cur))) value_type();
+            ::new (PL_VOIDIFY(*cur)) value_type();
 
             ++cur;
         }

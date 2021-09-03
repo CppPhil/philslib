@@ -24,24 +24,15 @@
  * For more information, please refer to <http://unlicense.org/>
  */
 
-#include "../../include/pl/compiler.hpp"
-#if PL_COMPILER == PL_COMPILER_GCC
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wmissing-noreturn"
-#endif // PL_COMPILER == PL_COMPILER_GCC
-#include "../doctest.h"
-#if PL_COMPILER == PL_COMPILER_GCC
-#pragma GCC diagnostic pop
-#endif                                  // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/pl/version.hpp" // PL_VERSION_MAJOR, PL_VERSION_MINOR, PL_VERSION_PATCH, PL_VERSION
-#include "../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
-#include <cstring>                      // std::strcmp
+/*!
+ * \file voidify.hpp
+ * \brief Exports the PL_VOIDIFY macro.
+ **/
+#ifndef INCG_PL_VOIDIFY_HPP
+#define INCG_PL_VOIDIFY_HPP
+#include <memory> // std::addressof
 
-TEST_CASE("version_test")
-{
-    PL_TEST_STATIC_ASSERT(PL_VERSION_MAJOR == 1);
-    PL_TEST_STATIC_ASSERT(PL_VERSION_MINOR == 6);
-    PL_TEST_STATIC_ASSERT(PL_VERSION_PATCH == 5);
-
-    CHECK(std::strcmp(PL_VERSION, "1.6.5") == 0);
-}
+#define PL_VOIDIFY(object) \
+    const_cast<void*>(     \
+        static_cast<const volatile void*>(::std::addressof(object)))
+#endif // INCG_PL_VOIDIFY_HPP

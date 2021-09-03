@@ -34,20 +34,21 @@
 #include "../annotations.hpp"  // PL_IN, PL_NODISCARD
 #include "../apply.hpp"        // pl::apply
 #include "../byte.hpp"         // pl::byte
+#include "../voidify.hpp"      // PL_VOIDIFY
 #include <algorithm>           // std::for_each
 #include <ciso646>             // not, or
 #include <condition_variable>  // std::condition_variable
 #include <cstddef>             // std::size_t
 #include <cstdint>             // std::uint8_t
 #include <future>              // std::future, std::promise
-#include <memory>  // std::shared_ptr, std::unique_ptr, std::addressof
-#include <mutex>   // std::mutex
-#include <new>     // new
-#include <queue>   // std::priority_queue
-#include <thread>  // std::thread
-#include <tuple>   // std::make_tuple
-#include <utility> // std::move
-#include <vector>  // std::vector
+#include <memory>              // std::shared_ptr, std::unique_ptr
+#include <mutex>               // std::mutex
+#include <new>                 // new
+#include <queue>               // std::priority_queue
+#include <thread>              // std::thread
+#include <tuple>               // std::make_tuple
+#include <utility>             // std::move
+#include <vector>              // std::vector
 
 namespace pl {
 namespace thd {
@@ -446,8 +447,7 @@ inline thread_pool::thread_pool(std::size_t amt_threads)
     // start running the thread running the thread_function which is a
     // non-static member function of thread_pool.
     std::for_each(m_thread_begin, m_thread_end, [self](PL_OUT std::thread& t) {
-        ::new (static_cast<void*>(std::addressof(t)))
-            std::thread{&thread_pool::thread_function, self};
+        ::new (PL_VOIDIFY(t)) std::thread{&thread_pool::thread_function, self};
     });
 }
 
