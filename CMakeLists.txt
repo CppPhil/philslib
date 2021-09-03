@@ -49,11 +49,6 @@ if(PL_BUILD_TESTS)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror -Weverything")
   endif()
 
-  if(MSVC)
-    # Treat warnings as errors when using msvc.
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /WX")
-  endif()
-
   # disable undesirable g++ warnings
   if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
     set(CMAKE_CXX_FLAGS
