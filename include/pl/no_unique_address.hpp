@@ -24,24 +24,40 @@
  * For more information, please refer to <http://unlicense.org/>
  */
 
-#include "../../include/pl/compiler.hpp"
-#if PL_COMPILER == PL_COMPILER_GCC
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wmissing-noreturn"
-#endif // PL_COMPILER == PL_COMPILER_GCC
-#include "../doctest.h"
-#if PL_COMPILER == PL_COMPILER_GCC
-#pragma GCC diagnostic pop
-#endif                                  // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/pl/version.hpp" // PL_VERSION_MAJOR, PL_VERSION_MINOR, PL_VERSION_PATCH, PL_VERSION
-#include "../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
-#include <cstring>                      // std::strcmp
+/*!
+ * \file no_unique_address.hpp
+ * \brief Exports the PL_NO_UNIQUE_ADDRESS macro.
+ */
+#ifndef INCG_PL_NO_UNIQUE_ADDRESS_HPP
+#define INCG_PL_NO_UNIQUE_ADDRESS_HPP
+#include "compiler.hpp" // PL_COMPILER, PL_COMPILER_MSVC, PL_COMPILER_GCC, PL_COMPILER_CLANG
 
-TEST_CASE("version_test")
-{
-    PL_TEST_STATIC_ASSERT(PL_VERSION_MAJOR == 1);
-    PL_TEST_STATIC_ASSERT(PL_VERSION_MINOR == 7);
-    PL_TEST_STATIC_ASSERT(PL_VERSION_PATCH == 5);
+/*!
+ * \def PL_NO_UNIQUE_ADDRESS
+ * \brief Macro to mark a data member as [[no_unique_address]] if the compiler
+ *        used supports it. If the compiler doesn't support it will expand to
+ *        nothing.
+ **/
 
-    CHECK(std::strcmp(PL_VERSION, "1.7.5") == 0);
-}
+#if PL_COMPILER == PL_COMPILER_MSVC
+#if _MSC_FULL_VER >= 192829913
+#define PL_NO_UNIQUE_ADDRESS [[msvc::no_unique_address]]
+#else
+#define PL_NO_UNIQUE_ADDRESS /* nothing */
+#endif
+#elif PL_COMPILER == PL_COMPILER_GCC
+#if PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(9, 0, 0)
+#define PL_NO_UNIQUE_ADDRESS [[no_unique_address]]
+#else
+#define PL_NO_UNIQUE_ADDRESS /* nothing */
+#endif
+#elif PL_COMPILER == PL_COMPILER_CLANG
+#if PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(9, 0, 0)
+#define PL_NO_UNIQUE_ADDRESS [[no_unique_address]]
+#else
+#define PL_NO_UNIQUE_ADDRESS /* nothing */
+#endif
+#else
+#define PL_NO_UNIQUE_ADDRESS /* nothing */
+#endif
+#endif // INCG_PL_NO_UNIQUE_ADDRESS_HPP

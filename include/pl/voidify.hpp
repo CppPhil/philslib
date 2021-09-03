@@ -32,6 +32,10 @@
 #define INCG_PL_VOIDIFY_HPP
 #include <memory> // std::addressof
 
+/*!
+ * \def PL_VOIDIFY(object)
+ * \brief Returns a void* to the object given. Used for placement new.
+ **/
 #define PL_VOIDIFY(object) \
     const_cast<void*>(     \
         static_cast<const volatile void*>(::std::addressof(object)))

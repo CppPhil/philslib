@@ -32,16 +32,43 @@
 #include "../doctest.h"
 #if PL_COMPILER == PL_COMPILER_GCC
 #pragma GCC diagnostic pop
-#endif                                  // PL_COMPILER == PL_COMPILER_GCC
-#include "../../include/pl/version.hpp" // PL_VERSION_MAJOR, PL_VERSION_MINOR, PL_VERSION_PATCH, PL_VERSION
-#include "../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
-#include <cstring>                      // std::strcmp
+#endif // PL_COMPILER == PL_COMPILER_GCC
+#include "../../include/pl/no_unique_address.hpp" // PL_NO_UNIQUE_ADDRESS
+#include <cstdint>                                // std::int32_t
 
-TEST_CASE("version_test")
+namespace test {
+namespace {
+struct Empty {
+};
+
+struct Struct {
+    std::int32_t               value;
+    PL_NO_UNIQUE_ADDRESS Empty empty;
+};
+} // anonymous namespace
+} // namespace test
+
+TEST_CASE("no_unique_address_test")
 {
-    PL_TEST_STATIC_ASSERT(PL_VERSION_MAJOR == 1);
-    PL_TEST_STATIC_ASSERT(PL_VERSION_MINOR == 7);
-    PL_TEST_STATIC_ASSERT(PL_VERSION_PATCH == 5);
-
-    CHECK(std::strcmp(PL_VERSION, "1.7.5") == 0);
+#if PL_COMPILER == PL_COMPILER_MSVC
+#if _MSC_FULL_VER >= 192829913
+    CHECK(sizeof(test::Struct) == sizeof(std::int32_t));
+#else
+    CHECK(sizeof(test::Struct) > sizeof(std::int32_t));
+#endif
+#elif PL_COMPILER == PL_COMPILER_GCC
+#if PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(9, 0, 0)
+    CHECK(sizeof(test::Struct) == sizeof(std::int32_t));
+#else
+    CHECK(sizeof(test::Struct) > sizeof(std::int32_t));
+#endif
+#elif PL_COMPILER == PL_COMPILER_CLANG
+#if PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(9, 0, 0)
+    CHECK(sizeof(test::Struct) == sizeof(std::int32_t));
+#else
+    CHECK(sizeof(test::Struct) > sizeof(std::int32_t));
+#endif
+#else
+    CHECK(sizeof(test::Struct) > sizeof(std::int32_t));
+#endif
 }
