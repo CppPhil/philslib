@@ -32,9 +32,10 @@
 #define INCG_PL_STRING_VIEW_HPP
 #include "annotations.hpp" // PL_NODISCARD, PL_IN, PL_OUT, PL_INOUT, PL_NULL_TERMINATED, PL_IMPLICIT
 #include "compiler.hpp" // PL_COMPILER, PL_COMPILER_MSVC, PL_COMPILER_VERSION, PL_COMPILER_VERSION_CHECK
-#include "hash.hpp"              // pl::detail::add_hash
-#include "meta/remove_cvref.hpp" // pl::meta::remove_cvref_t
-#include "strcontains.hpp"       // pl::strcontains
+#include "hash.hpp"                  // pl::detail::add_hash
+#include "meta/remove_cvref.hpp"     // pl::meta::remove_cvref_t
+#include "no_macro_substitution.hpp" // PL_NO_MACRO_SUBSTITUTION
+#include "strcontains.hpp"           // pl::strcontains
 #include "type_traits.hpp" // pl::remove_const_t, pl::remove_pointer_t, pl::enable_if_t
 #include <algorithm>   // std::min, std::copy_n
 #include <ciso646>     // and, not
@@ -483,7 +484,8 @@ public:
         int
         compare(this_type other) const noexcept
     {
-        const size_type length{std::min(size(), other.size())};
+        const size_type length{
+            std::min PL_NO_MACRO_SUBSTITUTION(size(), other.size())};
         int result{traits_type::compare(data(), other.data(), length)};
 
         if (result == 0) {
