@@ -56,7 +56,9 @@ struct copy_assignable_weird_return_type {
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Weffc++"
 #endif // PL_COMPILER == PL_COMPILER_GCC
-    void operator=(const copy_assignable_weird_return_type&) {}
+    void operator=(const copy_assignable_weird_return_type&)
+    {
+    }
 #if PL_COMPILER == PL_COMPILER_GCC
 #pragma GCC diagnostic pop
 #endif // PL_COMPILER == PL_COMPILER_GCC

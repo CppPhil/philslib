@@ -39,7 +39,10 @@
 namespace pl {
 namespace test {
 namespace {
-const char* current_function_test() noexcept { return PL_CURRENT_FUNCTION; }
+const char* current_function_test() noexcept
+{
+    return PL_CURRENT_FUNCTION;
+}
 } // anonymous namespace
 } // namespace test
 } // namespace pl

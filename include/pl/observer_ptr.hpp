@@ -75,7 +75,9 @@ public:
      * \brief Constructs an observer_ptr that has no corresponding watched
      *        object.
      **/
-    constexpr observer_ptr() noexcept : observer_ptr{nullptr} {}
+    constexpr observer_ptr() noexcept : observer_ptr{nullptr}
+    {
+    }
     /*!
      * \brief Constructs an observer_ptr that has no corresponding watched
      *        object.
@@ -87,7 +89,9 @@ public:
      * \brief Constructs an observer_ptr that watches p.
      * \param p Pointer to the object to watch.
      **/
-    explicit observer_ptr(PL_IN_OPT element_type* p) noexcept : m_p{p} {}
+    explicit observer_ptr(PL_IN_OPT element_type* p) noexcept : m_p{p}
+    {
+    }
     /*!
      * \brief Constructs an observer_ptr that watches other.get().
      * \note This constructor does not participate in overload resolution
@@ -164,7 +168,10 @@ public:
      *        or nullptr if no object is watched.
      * \return Pointer to the watched object or nullptr if no object is watched.
      **/
-    PL_NODISCARD constexpr element_type* get() const noexcept { return m_p; }
+    PL_NODISCARD constexpr element_type* get() const noexcept
+    {
+        return m_p;
+    }
     /*!
      * \brief Checks whether *this has an associated watched object.
      * \return true if *this has an associated watched object, false otherwise.
@@ -192,13 +199,19 @@ public:
      * \return Returns a pointer to the object watched by *this, i.e. get().
      * \warning Do not call this function if get() == nullptr.
      **/
-    constexpr element_type* operator->() const noexcept { return get(); }
+    constexpr element_type* operator->() const noexcept
+    {
+        return get();
+    }
 
     /*!
      * \brief Provides an explicit conversion to the type of the stored pointer.
      * \return A pointer to the watched object, i.e., get().
      */
-    constexpr explicit operator element_type*() const noexcept { return get(); }
+    constexpr explicit operator element_type*() const noexcept
+    {
+        return get();
+    }
 
 private:
     element_type* m_p; /*!< The underlying pointer to the watched object. */

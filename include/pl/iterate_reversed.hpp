@@ -59,13 +59,19 @@ public:
      * \return The reverse begin iterator to the container.
      * \note This function is called by the range based for loop.
      **/
-    auto begin() -> decltype(auto) { return ::pl::rbegin(m_container); }
+    auto begin() -> decltype(auto)
+    {
+        return ::pl::rbegin(m_container);
+    }
     /*!
      * \brief Returns the reverse end iterator to the container.
      * \return The reverse end iterator to the container.
      * \note This function is called by the range based for loop.
      **/
-    auto end() -> decltype(auto) { return ::pl::rend(m_container); }
+    auto end() -> decltype(auto)
+    {
+        return ::pl::rend(m_container);
+    }
 
 private:
     Container& m_container; //!< reference to the container to iterate over.
@@ -94,13 +100,19 @@ public:
      * \return The const reverse begin iterator to the container.
      * \note This function is called by the range based for loop.
      **/
-    auto begin() const -> decltype(auto) { return ::pl::crbegin(m_container); }
+    auto begin() const -> decltype(auto)
+    {
+        return ::pl::crbegin(m_container);
+    }
     /*!
      * \brief Returns the const reverse end iterator to the container.
      * \return The const reverse end iterator to the container.
      * \note This function is called by the range based for loop.
      **/
-    auto end() const -> decltype(auto) { return ::pl::crend(m_container); }
+    auto end() const -> decltype(auto)
+    {
+        return ::pl::crend(m_container);
+    }
 
 private:
     const Container& m_container; //!< const lvalue reference to the container

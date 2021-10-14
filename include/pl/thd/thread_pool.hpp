@@ -284,7 +284,10 @@ private:
          * \note Used by thread_pool::add_task to access the promise and get its
          *       associated future.
          **/
-        PL_NODISCARD std::promise<Ret>& result() { return m_result; }
+        PL_NODISCARD std::promise<Ret>& result()
+        {
+            return m_result;
+        }
 
     private:
         Task              m_task;   //!< The task to be run.
@@ -342,7 +345,10 @@ private:
          *       the future associated with this promise can be gotten and be
          *       returned back to the user.
          **/
-        PL_NODISCARD std::promise<void>& result() { return m_result; }
+        PL_NODISCARD std::promise<void>& result()
+        {
+            return m_result;
+        }
 
     private:
         Task m_task; //!< The task to be called in the call operator.

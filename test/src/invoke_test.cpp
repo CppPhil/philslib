@@ -45,17 +45,28 @@ std::uint64_t f(std::uint64_t v, std::uint64_t multiplier)
     return v * multiplier;
 }
 
-std::uint64_t f(std::uint64_t v) { return f(v, 2U); }
+std::uint64_t f(std::uint64_t v)
+{
+    return f(v, 2U);
+}
 class test_class {
 public:
-    explicit test_class(std::uint64_t v) : m_v{v} {}
-    std::uint64_t mem_fun(std::uint64_t v) const { return f(v, m_v); }
+    explicit test_class(std::uint64_t v) : m_v{v}
+    {
+    }
+    std::uint64_t mem_fun(std::uint64_t v) const
+    {
+        return f(v, m_v);
+    }
     std::uint64_t m_v;
 };
 
 class functor {
 public:
-    std::uint64_t operator()(std::uint64_t v) const { return f(v); }
+    std::uint64_t operator()(std::uint64_t v) const
+    {
+        return f(v);
+    }
 };
 } // anonymous namespace
 } // namespace test

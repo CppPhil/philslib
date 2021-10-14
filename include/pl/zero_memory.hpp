@@ -63,7 +63,9 @@ PL_ALWAYS_INLINE void* zero_memory(
 {
     byte* ptr{static_cast<byte*>(dest)};
 
-    for (; count_bytes != 0U; ++ptr, --count_bytes) { *ptr = 0U; }
+    for (; count_bytes != 0U; ++ptr, --count_bytes) {
+        *ptr = 0U;
+    }
 
     return dest;
 }
@@ -97,7 +99,9 @@ PL_ALWAYS_INLINE void* secure_zero_memory(
 {
     volatile byte* ptr{static_cast<volatile byte*>(dest)};
 
-    for (; count_bytes != 0U; ++ptr, --count_bytes) { *ptr = 0U; }
+    for (; count_bytes != 0U; ++ptr, --count_bytes) {
+        *ptr = 0U;
+    }
 
     return dest;
 }

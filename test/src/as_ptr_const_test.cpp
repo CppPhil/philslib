@@ -43,8 +43,14 @@ namespace test {
 namespace {
 class type {
 public:
-    int get() noexcept { return 1; }
-    int get() const noexcept { return 2; }
+    int get() noexcept
+    {
+        return 1;
+    }
+    int get() const noexcept
+    {
+        return 2;
+    }
 };
 } // anonymous namespace
 } // namespace test

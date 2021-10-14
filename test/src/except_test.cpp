@@ -53,7 +53,10 @@ PL_DEFINE_EXCEPTION_TYPE(test_exception, std::runtime_error);
     PL_THROW_WITH_SOURCE_INFO(::pl::test::test_exception, message);
 }
 
-[[noreturn]] void not_yet_implemented() { PL_NOT_YET_IMPLEMENTED(); }
+[[noreturn]] void not_yet_implemented()
+{
+    PL_NOT_YET_IMPLEMENTED();
+}
 } // anonymous namespace
 } // namespace test
 } // namespace pl

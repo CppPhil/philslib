@@ -125,7 +125,10 @@ TEST_CASE("observer_ptr_test")
         CHECK(std::strcmp((*s_ptr).data(), "sample text") == 0);
     }
 
-    SUBCASE("member_pointer_operator") { CHECK(s_ptr->front() == 's'); }
+    SUBCASE("member_pointer_operator")
+    {
+        CHECK(s_ptr->front() == 's');
+    }
     SUBCASE("conversion_operator")
     {
         CHECK(static_cast<std::string*>(s_ptr) == &s);

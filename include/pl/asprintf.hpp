@@ -119,7 +119,9 @@ PL_NODISCARD int vasprintf(
 
     const auto err_code = std::vsnprintf(nullptr, 0, fmt, ap);
 
-    if (err_code < 0) { return err_code; }
+    if (err_code < 0) {
+        return err_code;
+    }
 
     const auto bytes_to_allocate = 1U + static_cast<std::size_t>(err_code);
 
@@ -141,7 +143,9 @@ PL_NODISCARD int vasprintf(
 
     const auto err_code = std::vsnprintf(nullptr, 0, fmt, ap);
 
-    if (err_code < 0) { return err_code; }
+    if (err_code < 0) {
+        return err_code;
+    }
 
     const auto bytes_to_allocate = 1U + static_cast<std::size_t>(err_code);
 

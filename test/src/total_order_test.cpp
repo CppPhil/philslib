@@ -42,9 +42,15 @@ namespace {
 struct t1 {
     int i;
 
-    constexpr friend bool operator<(t1 lhs, t1 rhs) { return lhs.i < rhs.i; }
+    constexpr friend bool operator<(t1 lhs, t1 rhs)
+    {
+        return lhs.i < rhs.i;
+    }
 
-    constexpr friend bool operator==(t1 lhs, t1 rhs) { return lhs.i == rhs.i; }
+    constexpr friend bool operator==(t1 lhs, t1 rhs)
+    {
+        return lhs.i == rhs.i;
+    }
 };
 
 PL_TOTAL_ORDER_CONSTEXPR(t1)
@@ -52,9 +58,15 @@ PL_TOTAL_ORDER_CONSTEXPR(t1)
 struct t2 {
     int i;
 
-    friend bool operator<(t2 lhs, t2 rhs) { return lhs.i < rhs.i; }
+    friend bool operator<(t2 lhs, t2 rhs)
+    {
+        return lhs.i < rhs.i;
+    }
 
-    friend bool operator==(t2 lhs, t2 rhs) { return lhs.i == rhs.i; }
+    friend bool operator==(t2 lhs, t2 rhs)
+    {
+        return lhs.i == rhs.i;
+    }
 };
 
 PL_TOTAL_ORDER(t2)

@@ -28,7 +28,9 @@
 
 namespace pl {
 namespace test {
-destroy_test_type::destroy_test_type(bool* p) : m_p{p} {}
+destroy_test_type::destroy_test_type(bool* p) : m_p{p}
+{
+}
 destroy_test_type::destroy_test_type(const destroy_test_type&) = default;
 
 destroy_test_type& destroy_test_type::operator=(const destroy_test_type&)

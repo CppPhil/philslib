@@ -52,7 +52,10 @@ struct is_prefix_incrementable<
 };
 
 struct prefix_incrementable {
-    prefix_incrementable& operator++() noexcept { return *this; }
+    prefix_incrementable& operator++() noexcept
+    {
+        return *this;
+    }
 };
 
 struct postfix_incrementable {

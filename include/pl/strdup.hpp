@@ -53,7 +53,9 @@ std::size_t strnlen(
     std::size_t pos{0U};
 
     for (; pos < maximum_length; ++pos) {
-        if (string[pos] == '\0') { break; }
+        if (string[pos] == '\0') {
+            break;
+        }
     }
 
     return pos;

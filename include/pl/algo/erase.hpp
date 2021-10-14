@@ -162,7 +162,9 @@ inline void erase_if_helper(
     const auto end_iter = container.end();
 
     for (auto iterator = container.begin(); iterator != end_iter;) {
-        if (unary_predicate(*iterator)) { container.erase(iterator++); }
+        if (unary_predicate(*iterator)) {
+            container.erase(iterator++);
+        }
         else {
             ++iterator;
         }

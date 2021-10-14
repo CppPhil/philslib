@@ -51,9 +51,13 @@ constexpr
     const auto* str2 = needle;
 
     for (;;) {
-        if (*str2 == CharT{0}) { return true; }
+        if (*str2 == CharT{0}) {
+            return true;
+        }
 
-        if (*str1 == CharT{0}) { return false; }
+        if (*str1 == CharT{0}) {
+            return false;
+        }
 
         if (*str1++ != *str2++) {
             ++haystack;

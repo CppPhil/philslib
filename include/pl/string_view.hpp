@@ -237,13 +237,19 @@ public:
      * \return const_iterator to the first character
      * \note Constant complexity.
      **/
-    constexpr const_iterator begin() const noexcept { return cbegin(); }
+    constexpr const_iterator begin() const noexcept
+    {
+        return cbegin();
+    }
     /*!
      * \brief Returns an iterator to the first character of the view.
      * \return const_iterator to the first character
      * \note Constant complexity.
      **/
-    constexpr const_iterator cbegin() const noexcept { return data(); }
+    constexpr const_iterator cbegin() const noexcept
+    {
+        return data();
+    }
     /*!
      * \brief Returns an iterator to the character following the last character
      *        of the view.
@@ -252,7 +258,10 @@ public:
      * \warning The iterator returned acts as a placeholder, attempting to
      *          indirect through it results in undefined behavior.
      **/
-    constexpr const_iterator end() const noexcept { return cend(); }
+    constexpr const_iterator end() const noexcept
+    {
+        return cend();
+    }
     /*!
      * \brief Returns an iterator to the character following the last character
      *        of the view.
@@ -261,7 +270,10 @@ public:
      * \warning The iterator returned acts as a placeholder, attempting to
      *          indirect through it results in undefined behavior.
      **/
-    constexpr const_iterator cend() const noexcept { return cbegin() + size(); }
+    constexpr const_iterator cend() const noexcept
+    {
+        return cbegin() + size();
+    }
     /*!
      * \brief Returns a reverse iterator to the first character of the reversed
      *        view. It corresponds to the last character of the non-reversed
@@ -269,7 +281,10 @@ public:
      * \return const_reverse_iterator to the first character
      * \note Constant complexity.
      **/
-    const_reverse_iterator rbegin() const noexcept { return crbegin(); }
+    const_reverse_iterator rbegin() const noexcept
+    {
+        return crbegin();
+    }
     /*!
      * \brief Returns a reverse iterator to the first character of the reversed
      *        view. It corresponds to the last character of the non-reversed
@@ -293,7 +308,10 @@ public:
      *          placeholder, attempting to indirect through it results
      *          in undefined behavior.
      **/
-    const_reverse_iterator rend() const noexcept { return crend(); }
+    const_reverse_iterator rend() const noexcept
+    {
+        return crend();
+    }
     /*!
      * \brief Returns a reverse iterator to the character following the last
      *        character of the reversed view. It corresponds to the character
@@ -316,7 +334,10 @@ public:
      * \return The number of CharT elements in the view.
      * \note Constant complexity.
      **/
-    constexpr size_type size() const noexcept { return m_size; }
+    constexpr size_type size() const noexcept
+    {
+        return m_size;
+    }
     /*!
      * \brief Checks if the view has no characters, i.e. whether size() == 0.
      * \return true if the view is empty, false otherwise.
@@ -371,7 +392,10 @@ public:
      *       Returns CharT() if empty() == true as all strings viewed have to
      *       be null-terminated.
      **/
-    constexpr const_reference front() const noexcept { return operator[](0U); }
+    constexpr const_reference front() const noexcept
+    {
+        return operator[](0U);
+    }
     /*!
      * \brief Returns reference to the last character in the view.
      * \return Reference to the last character, equivalent to
@@ -393,7 +417,10 @@ public:
      *       Returns a pointer to a null-terminated string as all strings
      *       viewed have to be null-terminated.
      **/
-    constexpr const_pointer data() const noexcept { return m_data; }
+    constexpr const_pointer data() const noexcept
+    {
+        return m_data;
+    }
 
     /*!
      * \brief Returns a pointer to the underlying character array. The pointer
@@ -404,7 +431,10 @@ public:
      *       Returns a pointer to a null-terminated string as all strings
      *       viewed have to be null-terminated.
      **/
-    constexpr const_pointer c_str() const noexcept { return data(); }
+    constexpr const_pointer c_str() const noexcept
+    {
+        return data();
+    }
 
 /*!
  * \brief Moves the start of the view forward by 'characters_to_remove'
@@ -424,7 +454,9 @@ public:
         void
         remove_prefix(size_type characters_to_remove) noexcept
     {
-        if (characters_to_remove > size()) { characters_to_remove = size(); }
+        if (characters_to_remove > size()) {
+            characters_to_remove = size();
+        }
 
         m_data += characters_to_remove;
         m_size -= characters_to_remove;

@@ -44,9 +44,17 @@ namespace test {
 namespace {
 class vla_test_type {
 public:
-    vla_test_type(std::string s, int i) : m_s{std::move(s)}, m_i{i} {}
-    const std::string& s() const noexcept { return m_s; }
-    int                i() const noexcept { return m_i; }
+    vla_test_type(std::string s, int i) : m_s{std::move(s)}, m_i{i}
+    {
+    }
+    const std::string& s() const noexcept
+    {
+        return m_s;
+    }
+    int i() const noexcept
+    {
+        return m_i;
+    }
 
 private:
     std::string m_s;

@@ -124,9 +124,13 @@ public:
     /*!
      * \brief Default constructs the element_type.
      **/
-    cheshire_cat() : m_storage {}
+    cheshire_cat() : m_storage
+    {
+    }
 #ifndef __cpp_lib_launder
-    , m_ptr {}
+    , m_ptr
+    {
+    }
 #endif
     {
         create();
@@ -136,20 +140,28 @@ public:
      * \brief Copy constructor.
      * \param other The other cheshire_cat to copy construct from.
      **/
-    cheshire_cat(PL_IN const this_type& other) : cheshire_cat{*other} {}
+    cheshire_cat(PL_IN const this_type& other) : cheshire_cat{*other}
+    {
+    }
     /*!
      * \brief Move constructor.
      * \param other The other cheshire_cat to move construct from.
      * \note 'other' will be left in its moved-from state.
      **/
-    cheshire_cat(PL_INOUT this_type&& other) noexcept : cheshire_cat{*other} {}
+    cheshire_cat(PL_INOUT this_type&& other) noexcept : cheshire_cat{*other}
+    {
+    }
     /*!
      * \brief Creates a cheshire_cat from an lvalue element_type.
      * \param value The lvalue element_type to construct from.
      **/
-    explicit cheshire_cat(PL_IN const_reference value) : m_storage {}
+    explicit cheshire_cat(PL_IN const_reference value) : m_storage
+    {
+    }
 #ifndef __cpp_lib_launder
-    , m_ptr {}
+    , m_ptr
+    {
+    }
 #endif
     {
         create(value);
@@ -160,9 +172,13 @@ public:
      * \param value The rvalue element_type to construct from.
      * \note 'value' will be left in its moved-from state.
      **/
-    explicit cheshire_cat(PL_INOUT element_type&& value) noexcept : m_storage {}
+    explicit cheshire_cat(PL_INOUT element_type&& value) noexcept : m_storage
+    {
+    }
 #ifndef __cpp_lib_launder
-    , m_ptr {}
+    , m_ptr
+    {
+    }
 #endif
     {
         create(std::move(value));
@@ -181,7 +197,9 @@ public:
     {
     }
 #ifndef __cpp_lib_launder
-    , m_ptr {}
+    , m_ptr
+    {
+    }
 #endif
     {
         create(std::forward<Args>(args)...);
@@ -208,7 +226,9 @@ public:
     {
     }
 #ifndef __cpp_lib_launder
-    , m_ptr {}
+    , m_ptr
+    {
+    }
 #endif
     {
         create(il, std::forward<Args>(args)...);
@@ -263,7 +283,10 @@ public:
     /*!
      * \brief The destructor. Destroys the underlying element_type object.
      **/
-    ~cheshire_cat() noexcept { destroy(); }
+    ~cheshire_cat() noexcept
+    {
+        destroy();
+    }
     /*!
      * \brief Returns a low level const qualified pointer to the element_type
      *        object.
@@ -302,17 +325,26 @@ public:
      * \brief Returns a pointer to the element_type object.
      * \return A pointer to the element_type object.
      **/
-    pointer operator->() noexcept { return get(); }
+    pointer operator->() noexcept
+    {
+        return get();
+    }
     /*!
      * \brief Returns a const lvalue reference to the element_type object.
      * \return A const lvalue reference to the element_type object.
      **/
-    const_reference operator*() const& noexcept { return *get(); }
+    const_reference operator*() const& noexcept
+    {
+        return *get();
+    }
     /*!
      * \brief Returns an lvalue reference to the element_type object.
      * \return An lvalue reference to the element_type object.
      **/
-    reference operator*() & noexcept { return *get(); }
+    reference operator*() & noexcept
+    {
+        return *get();
+    }
     /*!
      * \brief Returns a const rvalue reference to the element_type object.
      * \return A const rvalue reference to the element_type object.
@@ -326,7 +358,10 @@ public:
      * \brief Returns an rvalue reference to the element_type object.
      * \return An rvalue reference to the element_type object.
      **/
-    element_type&& operator*() && noexcept { return std::move(*get()); }
+    element_type&& operator*() && noexcept
+    {
+        return std::move(*get());
+    }
     /*!
      * \brief Swaps this cheshire_cat with another one.
      * \param other The other cheshire_cat to swap with.
@@ -338,7 +373,10 @@ public:
     }
 
 private:
-    void         destroy() noexcept { get()->~element_type(); }
+    void destroy() noexcept
+    {
+        get()->~element_type();
+    }
     storage_type m_storage;
 #ifndef __cpp_lib_launder
     element_type* m_ptr;

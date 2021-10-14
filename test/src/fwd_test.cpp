@@ -39,9 +39,15 @@
 namespace pl {
 namespace test {
 namespace {
-int f(const int&&) { return 0; }
+int f(const int&&)
+{
+    return 0;
+}
 
-int f(const int&) { return 1; }
+int f(const int&)
+{
+    return 1;
+}
 
 template<typename Ty>
 int g(Ty&& ty)

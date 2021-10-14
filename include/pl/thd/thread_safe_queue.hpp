@@ -57,7 +57,9 @@ public:
      * \brief Creates a thread_safe_queue.
      *        The thread_safe_queue will start out empty.
      **/
-    thread_safe_queue() noexcept : m_cont{}, m_mutex{}, m_cv_has_elements{} {}
+    thread_safe_queue() noexcept : m_cont{}, m_mutex{}, m_cv_has_elements{}
+    {
+    }
     /*!
      * \brief This type is non-copyable.
      **/

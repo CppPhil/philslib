@@ -164,7 +164,9 @@ inline std::ostream& operator<<(
             os << std::setw(nibbles_per_byte) << std::setfill(fill_char)
                << static_cast<std::uint16_t>(data_to_print[i]);
 
-            if (i < (to_print.m_count_bytes - 1U)) { os << to_print.m_delim; }
+            if (i < (to_print.m_count_bytes - 1U)) {
+                os << to_print.m_delim;
+            }
         }
     }
     catch (...) {

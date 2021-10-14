@@ -41,17 +41,28 @@
 namespace pl {
 namespace test {
 namespace {
-bool is_5(int i) { return i == 5; }
+bool is_5(int i)
+{
+    return i == 5;
+}
 class type {
 public:
-    explicit type(bool v) : m_v{v} {}
-    bool mem_fun(const char* s) const { return std::strchr(s, 'a') != nullptr; }
+    explicit type(bool v) : m_v{v}
+    {
+    }
+    bool mem_fun(const char* s) const
+    {
+        return std::strchr(s, 'a') != nullptr;
+    }
     bool m_v;
 };
 
 class functor {
 public:
-    bool operator()(int a, int b) const { return a != b; }
+    bool operator()(int a, int b) const
+    {
+        return a != b;
+    }
 };
 } // anonymous namespace
 } // namespace test

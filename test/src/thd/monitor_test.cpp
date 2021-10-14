@@ -50,11 +50,23 @@ public:
     {
     }
 
-    double      d() const noexcept { return m_d; }
-    void        d(double d) noexcept { m_d = d; }
-    void        set_d_to_25() noexcept { d(25.0); }
-    const char* str() const noexcept { return m_s.data(); }
-    int         m_i;
+    double d() const noexcept
+    {
+        return m_d;
+    }
+    void d(double d) noexcept
+    {
+        m_d = d;
+    }
+    void set_d_to_25() noexcept
+    {
+        d(25.0);
+    }
+    const char* str() const noexcept
+    {
+        return m_s.data();
+    }
+    int m_i;
 
 private:
     double      m_d;

@@ -66,9 +66,18 @@ public:
 
     test_type& operator=(const test_type&) = default;
 
-    const std::string& s() const noexcept { return m_s; }
-    std::uint32_t      i() const noexcept { return m_i; }
-    void*              p() const noexcept { return m_p; }
+    const std::string& s() const noexcept
+    {
+        return m_s;
+    }
+    std::uint32_t i() const noexcept
+    {
+        return m_i;
+    }
+    void* p() const noexcept
+    {
+        return m_p;
+    }
 
 private:
     std::string   m_s;
@@ -78,7 +87,9 @@ private:
 
 class type {
 public:
-    constexpr type(int p_i, int p_j) : i{p_i}, j{p_j} {}
+    constexpr type(int p_i, int p_j) : i{p_i}, j{p_j}
+    {
+    }
     int i;
     int j;
 };

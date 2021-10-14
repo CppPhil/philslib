@@ -52,7 +52,9 @@ namespace test {
 namespace {
 class test_type {
 public:
-    test_type() noexcept : m_constructed{true}, m_was_move_constructed{false} {}
+    test_type() noexcept : m_constructed{true}, m_was_move_constructed{false}
+    {
+    }
     test_type(const test_type&) = default;
 
     test_type& operator=(const test_type&) = default;
@@ -62,7 +64,10 @@ public:
     {
     }
 
-    bool is_constructed() const noexcept { return m_constructed; }
+    bool is_constructed() const noexcept
+    {
+        return m_constructed;
+    }
     bool was_move_constructed() const noexcept
     {
         return m_was_move_constructed;

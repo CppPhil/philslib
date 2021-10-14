@@ -52,9 +52,12 @@ constexpr
     using namespace pl::literals::string_view_literals;
 
     switch (enm) {
-    case test_enum::a: return "a"_sv;
-    case test_enum::b: return "b"_sv;
-    case test_enum::c: return "c"_sv;
+    case test_enum::a:
+        return "a"_sv;
+    case test_enum::b:
+        return "b"_sv;
+    case test_enum::c:
+        return "c"_sv;
     }
 
     PL_UNREACHABLE();

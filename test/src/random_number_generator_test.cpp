@@ -133,24 +133,32 @@ TEST_CASE("random_number_generator_test")
     SUBCASE("test_shuffle_iter_mt19937")
     {
         mt19937.shuffle(std::begin(copy), std::end(copy));
-        for (int i : vector1) { CHECK_UNARY(copy<contains> i); }
+        for (int i : vector1) {
+            CHECK_UNARY(copy<contains> i);
+        }
     }
 
     SUBCASE("test_shuffle_iter_mt19937_64")
     {
         mt19937_64.shuffle(std::begin(copy), std::end(copy));
-        for (int i : vector1) { CHECK_UNARY(copy<contains> i); }
+        for (int i : vector1) {
+            CHECK_UNARY(copy<contains> i);
+        }
     }
 
     SUBCASE("test_shuffle_ranged_mt19937")
     {
         mt19937.shuffle(copy);
-        for (int i : vector1) { CHECK_UNARY(copy<contains> i); }
+        for (int i : vector1) {
+            CHECK_UNARY(copy<contains> i);
+        }
     }
 
     SUBCASE("test_shuffle_ranged_mt19937_64")
     {
         mt19937_64.shuffle(copy);
-        for (int i : vector1) { CHECK_UNARY(copy<contains> i); }
+        for (int i : vector1) {
+            CHECK_UNARY(copy<contains> i);
+        }
     }
 }

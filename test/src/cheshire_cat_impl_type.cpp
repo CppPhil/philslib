@@ -31,8 +31,12 @@
 
 namespace pl {
 namespace test {
-cheshire_cat_impl_type::cheshire_cat_impl_type() : cheshire_cat_impl_type{0} {}
-cheshire_cat_impl_type::cheshire_cat_impl_type(int val) : m_p{new int{val}} {}
+cheshire_cat_impl_type::cheshire_cat_impl_type() : cheshire_cat_impl_type{0}
+{
+}
+cheshire_cat_impl_type::cheshire_cat_impl_type(int val) : m_p{new int{val}}
+{
+}
 cheshire_cat_impl_type::cheshire_cat_impl_type(std::initializer_list<int> il)
     : m_p{new int{*(il.begin())}}
 {
@@ -65,8 +69,14 @@ cheshire_cat_impl_type& cheshire_cat_impl_type::operator=(
     return *this;
 }
 
-cheshire_cat_impl_type::~cheshire_cat_impl_type() { delete m_p; }
-int  cheshire_cat_impl_type::value() const noexcept { return *m_p; }
+cheshire_cat_impl_type::~cheshire_cat_impl_type()
+{
+    delete m_p;
+}
+int cheshire_cat_impl_type::value() const noexcept
+{
+    return *m_p;
+}
 void cheshire_cat_impl_type::swap(cheshire_cat_impl_type& other) noexcept
 {
     using std::swap;

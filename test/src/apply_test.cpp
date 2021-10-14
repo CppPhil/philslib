@@ -40,8 +40,14 @@
 namespace pl {
 namespace test {
 namespace {
-int nullary_function() noexcept { return 5; }
-int unary_function(int i) noexcept { return i * 2; }
+int nullary_function() noexcept
+{
+    return 5;
+}
+int unary_function(int i) noexcept
+{
+    return i * 2;
+}
 template<typename Ty>
 Ty unary_function_template(Ty ty)
 {
@@ -50,9 +56,17 @@ Ty unary_function_template(Ty ty)
 
 class type {
 public:
-    explicit type(int i) noexcept : data{i} {}
-    int nullary_mem_fun() const noexcept { return 5; }
-    int unary_mem_fun(int i) const noexcept { return 7 + i; }
+    explicit type(int i) noexcept : data{i}
+    {
+    }
+    int nullary_mem_fun() const noexcept
+    {
+        return 5;
+    }
+    int unary_mem_fun(int i) const noexcept
+    {
+        return 7 + i;
+    }
     template<typename Ty>
     Ty unary_mem_fun_template(Ty ty) const
     {
@@ -63,11 +77,17 @@ public:
 };
 
 struct nullary_functor {
-    int operator()() const noexcept { return 27; }
+    int operator()() const noexcept
+    {
+        return 27;
+    }
 };
 
 struct unary_functor {
-    int operator()(int i) const noexcept { return i / 2; }
+    int operator()(int i) const noexcept
+    {
+        return i / 2;
+    }
 };
 
 struct generic_functor {

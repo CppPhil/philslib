@@ -46,7 +46,9 @@ namespace test {
 namespace {
 class implementation {
 public:
-    explicit implementation(std::string string) : m_string{std::move(string)} {}
+    explicit implementation(std::string string) : m_string{std::move(string)}
+    {
+    }
     friend std::ostream&
     draw_it(const implementation& impl, std::ostream& os, std::size_t position);
 
@@ -79,7 +81,9 @@ public:
 template<typename Impl>
 class draw_model : public draw_concept {
 public:
-    explicit draw_model(Impl impl) : draw_concept{}, m_impl{std::move(impl)} {}
+    explicit draw_model(Impl impl) : draw_concept{}, m_impl{std::move(impl)}
+    {
+    }
     virtual std::unique_ptr<draw_concept> clone() const override
     {
         return std::make_unique<draw_model>(m_impl);

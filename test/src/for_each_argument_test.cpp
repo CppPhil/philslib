@@ -40,9 +40,15 @@ namespace test {
 namespace {
 int g_int_val{0};
 
-void f(int v) { g_int_val += v; }
+void f(int v)
+{
+    g_int_val += v;
+}
 struct structure {
-    void mem_fun() const { ++g_int_val; }
+    void mem_fun() const
+    {
+        ++g_int_val;
+    }
     void operator()(int v)
     {
         g_int_val += v;

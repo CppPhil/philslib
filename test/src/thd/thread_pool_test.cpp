@@ -42,12 +42,22 @@
 namespace pl {
 namespace test {
 namespace {
-int  f1(int i) noexcept { return i * 2; }
-void f2() noexcept {}
+int f1(int i) noexcept
+{
+    return i * 2;
+}
+void f2() noexcept
+{
+}
 class type {
 public:
-    double mem_fn1(double a) const noexcept { return a * 3.0; }
-    void   mem_fn2() const noexcept {}
+    double mem_fn1(double a) const noexcept
+    {
+        return a * 3.0;
+    }
+    void mem_fn2() const noexcept
+    {
+    }
 };
 } // anonymous namespace
 } // namespace test

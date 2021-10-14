@@ -199,7 +199,10 @@ public:
      *         this concept_poly.
      * \note Can be used to access the object directly.
      **/
-    Concept* get() noexcept { return m_ptr.get(); }
+    Concept* get() noexcept
+    {
+        return m_ptr.get();
+    }
     /*!
      * \brief Accessor function to get to the object managed by this
      *        concept_poly.
@@ -262,7 +265,10 @@ public:
      * \return true if this object is valid.
      *         false if this object is in the moved-from state.
      **/
-    explicit operator bool() const noexcept { return static_cast<bool>(m_ptr); }
+    explicit operator bool() const noexcept
+    {
+        return static_cast<bool>(m_ptr);
+    }
 
 private:
     std::unique_ptr<Concept> m_ptr; /*!< The underlying unique_ptr */

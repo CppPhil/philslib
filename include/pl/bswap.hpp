@@ -70,7 +70,10 @@ inline Type bswap_impl(Type ty) noexcept
  * Takes a copy of the argument passed and puts that copy into the parameter.
  * The bytes of that copy are then reversed and the result is passed back out.
  **/
-PL_ALWAYS_INLINE char bswap(char val) noexcept { return val; }
+PL_ALWAYS_INLINE char bswap(char val) noexcept
+{
+    return val;
+}
 
 /*!
  * \brief Reverses the bytes of the argument passed and returns the result.
@@ -85,7 +88,10 @@ PL_ALWAYS_INLINE char bswap(char val) noexcept { return val; }
  * Takes a copy of the argument passed and puts that copy into the parameter.
  * The bytes of that copy are then reversed and the result is passed back out.
  **/
-PL_ALWAYS_INLINE std::uint8_t bswap(std::uint8_t val) noexcept { return val; }
+PL_ALWAYS_INLINE std::uint8_t bswap(std::uint8_t val) noexcept
+{
+    return val;
+}
 
 /*!
  * \brief Reverses the bytes of the argument passed and returns the result.

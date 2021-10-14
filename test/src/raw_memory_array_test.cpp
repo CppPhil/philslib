@@ -80,7 +80,9 @@ TEST_CASE("raw_memory_array_test")
             CHECK(ary1.at(i) != r.at(i));
         }
 
-        for (size_type i{}; i < ary1.size(); ++i) { ary1.at(i) = r.at(i); }
+        for (size_type i{}; i < ary1.size(); ++i) {
+            ary1.at(i) = r.at(i);
+        }
 
         for (size_type i{}; i < ary1.size(); ++i) {
             CHECK(ary1.at(i) == r.at(i));
@@ -131,7 +133,9 @@ TEST_CASE("raw_memory_array_test")
 
         const pl::raw_memory_array<std::string>& r{ary2};
 
-        for (const std::string& s : r) { CHECK(s == "Text"s); }
+        for (const std::string& s : r) {
+            CHECK(s == "Text"s);
+        }
     }
 
     SUBCASE("iterate_backwards")

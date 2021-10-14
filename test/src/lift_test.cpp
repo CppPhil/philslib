@@ -40,9 +40,15 @@
 namespace pl {
 namespace test {
 namespace {
-int fun(const int&) { return 5; }
+int fun(const int&)
+{
+    return 5;
+}
 
-int fun(const int&&) { return 7; }
+int fun(const int&&)
+{
+    return 7;
+}
 
 template<typename Callable, typename Arg>
 int fun2(Callable&& callable, Arg&& arg)

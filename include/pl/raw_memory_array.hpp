@@ -101,7 +101,10 @@ public:
      *        of all the elements that were placement new'ed into the raw
      *        memory.
      **/
-    ~raw_memory_array() { ::pl::algo::destroy(begin(), end()); }
+    ~raw_memory_array()
+    {
+        ::pl::algo::destroy(begin(), end());
+    }
     /*!
      * \brief This type is non-copyable.
      **/
@@ -227,7 +230,10 @@ public:
      *         equal to the address of the first element.
      * \note Constant complexity.
      **/
-    PL_NODISCARD pointer data() noexcept { return m_data; }
+    PL_NODISCARD pointer data() noexcept
+    {
+        return m_data;
+    }
     /*!
      * \brief Returns a pointer to the underlying element storage.
      *        The pointer is such that range [data(), data() + size()) is always
@@ -254,7 +260,10 @@ public:
      *         equal to the address of the first element.
      * \note Constant complexity.
      **/
-    PL_NODISCARD const_pointer const_data() const noexcept { return data(); }
+    PL_NODISCARD const_pointer const_data() const noexcept
+    {
+        return data();
+    }
     /*!
      * \brief Returns an iterator to the first element.
      * \return Iterator to the first element.
@@ -264,7 +273,10 @@ public:
      * If the raw_memory_array is empty, the returned iterator will be
      * equal to end().
      **/
-    PL_NODISCARD iterator begin() noexcept { return data(); }
+    PL_NODISCARD iterator begin() noexcept
+    {
+        return data();
+    }
     /*!
      * \brief Returns an iterator to the first element.
      * \return Iterator to the first element.
@@ -288,7 +300,10 @@ public:
      * If the raw_memory_array is empty, the returned iterator will be
      * equal to end().
      **/
-    PL_NODISCARD const_iterator cbegin() const noexcept { return begin(); }
+    PL_NODISCARD const_iterator cbegin() const noexcept
+    {
+        return begin();
+    }
     /*!
      * \brief Returns an iterator to the element following the last element.
      * \return Iterator to the element following the last element.
@@ -296,7 +311,10 @@ public:
      *behavior.
      * \note Constant complexity.
      **/
-    PL_NODISCARD iterator end() noexcept { return m_data + m_size; }
+    PL_NODISCARD iterator end() noexcept
+    {
+        return m_data + m_size;
+    }
     /*!
      * \brief Returns an iterator to the element following the last element.
      * \return Iterator to the element following the last element.
@@ -316,7 +334,10 @@ public:
      *behavior.
      * \note Constant complexity.
      **/
-    PL_NODISCARD const_iterator cend() const noexcept { return end(); }
+    PL_NODISCARD const_iterator cend() const noexcept
+    {
+        return end();
+    }
     /*!
      * \brief Returns a reverse iterator to the first element of the
      *        reversed raw_memory_array. It corresponds to the last element
@@ -399,13 +420,19 @@ public:
      * \brief Checks if the raw_memory_array has no elements.
      * \return true if the raw_memory_array is empty, false otherwise.
      **/
-    PL_NODISCARD bool empty() const noexcept { return size() == 0U; }
+    PL_NODISCARD bool empty() const noexcept
+    {
+        return size() == 0U;
+    }
     /*!
      * \brief Returns the number of elements.
      * \return The number of elements.
      * \note Constant complexity.
      **/
-    PL_NODISCARD size_type size() const noexcept { return m_size; }
+    PL_NODISCARD size_type size() const noexcept
+    {
+        return m_size;
+    }
     /*!
      * \brief Returns the maximum number of elements this object is able to
      *        hold due to system or implementation limitations.
@@ -415,7 +442,10 @@ public:
      *equal
      *       to the value returned by size().
      **/
-    PL_NODISCARD size_type max_size() const noexcept { return size(); }
+    PL_NODISCARD size_type max_size() const noexcept
+    {
+        return size();
+    }
     /*!
      * \brief Assigns the given value to all elements.
      * \param value The value to assign to the elements.
@@ -435,7 +465,10 @@ public:
      * \return A reference to this object.
      * \note Complexity is linear in .size().
      **/
-    this_type& assign(PL_IN const_reference value) { return fill(value); }
+    this_type& assign(PL_IN const_reference value)
+    {
+        return fill(value);
+    }
 
 private:
     pointer   m_data; /*!< Pointer to the raw memory interpreted as 'Ty'. */

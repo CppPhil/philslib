@@ -43,8 +43,14 @@ namespace test {
 namespace {
 class test_type {
 public:
-    std::string f() { return "non-const"; }
-    std::string f() const { return "const"; }
+    std::string f()
+    {
+        return "non-const";
+    }
+    std::string f() const
+    {
+        return "const";
+    }
 };
 } // anonymous namespace
 } // namespace test

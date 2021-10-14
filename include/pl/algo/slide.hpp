@@ -66,9 +66,13 @@ inline auto slide(
     RandomAccessIterator place)
     -> std::pair<RandomAccessIterator, RandomAccessIterator>
 {
-    if (place < first) { return {place, std::rotate(place, first, last)}; }
+    if (place < first) {
+        return {place, std::rotate(place, first, last)};
+    }
 
-    if (last < place) { return {std::rotate(first, last, place), place}; }
+    if (last < place) {
+        return {std::rotate(first, last, place), place};
+    }
 
     return {first, last};
 }

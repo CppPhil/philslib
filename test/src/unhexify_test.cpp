@@ -130,28 +130,66 @@ TEST_CASE("unhexify_map_ascii")
             pl::unhexify(pl::string_view{buf, v.size() - 1U}, 0)};
 
         switch (i) {
-        case 0x30: CHECK(result == byte(0x00)); break;
-        case 0x31: CHECK(result == byte(0x01)); break;
-        case 0x32: CHECK(result == byte(0x02)); break;
-        case 0x33: CHECK(result == byte(0x03)); break;
-        case 0x34: CHECK(result == byte(0x04)); break;
-        case 0x35: CHECK(result == byte(0x05)); break;
-        case 0x36: CHECK(result == byte(0x06)); break;
-        case 0x37: CHECK(result == byte(0x07)); break;
-        case 0x38: CHECK(result == byte(0x08)); break;
-        case 0x39: CHECK(result == byte(0x09)); break;
-        case 0x41: PL_FALLTHROUGH
-        case 0x61: CHECK(result == byte(0x0A)); break;
-        case 0x42: PL_FALLTHROUGH
-        case 0x62: CHECK(result == byte(0x0B)); break;
-        case 0x43: PL_FALLTHROUGH
-        case 0x63: CHECK(result == byte(0x0C)); break;
-        case 0x44: PL_FALLTHROUGH
-        case 0x64: CHECK(result == byte(0x0D)); break;
-        case 0x45: PL_FALLTHROUGH
-        case 0x65: CHECK(result == byte(0x0E)); break;
-        case 0x46: PL_FALLTHROUGH
-        case 0x66: CHECK(result == byte(0x0F)); break;
+        case 0x30:
+            CHECK(result == byte(0x00));
+            break;
+        case 0x31:
+            CHECK(result == byte(0x01));
+            break;
+        case 0x32:
+            CHECK(result == byte(0x02));
+            break;
+        case 0x33:
+            CHECK(result == byte(0x03));
+            break;
+        case 0x34:
+            CHECK(result == byte(0x04));
+            break;
+        case 0x35:
+            CHECK(result == byte(0x05));
+            break;
+        case 0x36:
+            CHECK(result == byte(0x06));
+            break;
+        case 0x37:
+            CHECK(result == byte(0x07));
+            break;
+        case 0x38:
+            CHECK(result == byte(0x08));
+            break;
+        case 0x39:
+            CHECK(result == byte(0x09));
+            break;
+        case 0x41:
+            PL_FALLTHROUGH
+        case 0x61:
+            CHECK(result == byte(0x0A));
+            break;
+        case 0x42:
+            PL_FALLTHROUGH
+        case 0x62:
+            CHECK(result == byte(0x0B));
+            break;
+        case 0x43:
+            PL_FALLTHROUGH
+        case 0x63:
+            CHECK(result == byte(0x0C));
+            break;
+        case 0x44:
+            PL_FALLTHROUGH
+        case 0x64:
+            CHECK(result == byte(0x0D));
+            break;
+        case 0x45:
+            PL_FALLTHROUGH
+        case 0x65:
+            CHECK(result == byte(0x0E));
+            break;
+        case 0x46:
+            PL_FALLTHROUGH
+        case 0x66:
+            CHECK(result == byte(0x0F));
+            break;
         }
     }
 }

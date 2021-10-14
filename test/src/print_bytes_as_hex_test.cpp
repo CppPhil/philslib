@@ -53,7 +53,9 @@ OutputIterator reverse_copy(
     BidirectionalIterator last,
     OutputIterator        destination)
 {
-    while (first != last) { *(destination++) = *(--last); }
+    while (first != last) {
+        *(destination++) = *(--last);
+    }
 
     return destination;
 }
