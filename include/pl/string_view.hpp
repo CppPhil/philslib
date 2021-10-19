@@ -156,15 +156,8 @@ public:
      *       If the pointer passed in is a null pointer the string view created
      *       will be empty.
      **/
-    template<
-        typename Ty,
-        typename = enable_if_t<
-            std::is_pointer<meta::remove_cvref_t<Ty>>::value
-            and std::is_same<
-                remove_const_t<remove_pointer_t<meta::remove_cvref_t<Ty>>>,
-                value_type>::value>>
-    PL_IMPLICIT constexpr basic_string_view(PL_IN PL_NULL_TERMINATED(Ty&&)
-                                                string) noexcept
+    PL_IMPLICIT constexpr basic_string_view(
+        PL_IN PL_NULL_TERMINATED(const_pointer) string) noexcept
         : basic_string_view{}
     {
         if (string != nullptr) {
@@ -186,21 +179,6 @@ public:
         PL_IN const std::basic_string<value_type, traits_type, Allocator>&
                     string) noexcept
         : m_data{string.data()}, m_size{string.size()}
-    {
-    }
-
-    /*!
-     * \brief Constructs from a character array.
-     * \param array The character array to view.
-     * \note Constant complexity.
-     * \warning 'array' must be initialized and must contain a valid
-     *          null-terminated string. Furthermore 'array' may not contain
-     *          any embedded null characters.
-     **/
-    template<std::size_t Size>
-    PL_IMPLICIT constexpr basic_string_view(
-        PL_IN PL_NULL_TERMINATED(const value_type (&array)[Size])) noexcept
-        : m_data{array}, m_size{Size - 1U}
     {
     }
 

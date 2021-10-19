@@ -57,7 +57,7 @@
 
 #define PL_VERSION_MINOR 7
 
-#define PL_VERSION_PATCH 6
+#define PL_VERSION_PATCH 7
 
 #define PL_VERSION                 \
     PL_STRINGIFY(PL_VERSION_MAJOR) \
