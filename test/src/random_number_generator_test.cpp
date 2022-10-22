@@ -86,7 +86,7 @@ TEST_CASE("random_number_generator_test")
               return std::find(std::begin(container), end, value) != end;
           });
 
-    pl::random_number_generator<>                mt19937{};
+    pl::random_number_generator<std::mt19937>    mt19937{};
     pl::random_number_generator<std::mt19937_64> mt19937_64{};
     const auto use_mt19937 = [&mt19937](auto lower, auto upper) {
         return pl::test::is_ok(mt19937, lower, upper);
