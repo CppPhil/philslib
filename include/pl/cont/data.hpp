@@ -46,38 +46,38 @@ namespace detail {
 
 template<typename CharT, typename Traits, typename Allocator>
 std::true_type is_basic_string(
-    const std::basic_string<CharT, Traits, Allocator>&);
+  const std::basic_string<CharT, Traits, Allocator>&);
 
 std::false_type is_basic_string(...);
 
 template<typename CharT, typename Traits, typename Allocator>
 constexpr CharT* data_impl(
-    PL_IN std::basic_string<CharT, Traits, Allocator>& basic_string,
-    std::true_type)
+  PL_IN std::basic_string<CharT, Traits, Allocator>& basic_string,
+  std::true_type)
 {
-    return std::addressof(basic_string[0U]);
+  return std::addressof(basic_string[0U]);
 }
 
 template<typename CharT, typename Traits, typename Allocator>
 constexpr const CharT* data_impl(
-    PL_IN const std::basic_string<CharT, Traits, Allocator>& basic_string,
-    std::true_type)
+  PL_IN const std::basic_string<CharT, Traits, Allocator>& basic_string,
+  std::true_type)
 {
-    return basic_string.data();
+  return basic_string.data();
 }
 
 template<typename Container>
 constexpr auto data_impl(PL_IN Container& container, std::false_type)
-    -> decltype(container.data())
+  -> decltype(container.data())
 {
-    return container.data();
+  return container.data();
 }
 
 template<typename Container>
 constexpr auto data_impl(PL_IN const Container& container, std::false_type)
-    -> decltype(container.data())
+  -> decltype(container.data())
 {
-    return container.data();
+  return container.data();
 }
 } // namespace detail
 
@@ -92,8 +92,8 @@ constexpr auto data_impl(PL_IN const Container& container, std::false_type)
 template<typename Container>
 constexpr auto data(PL_IN Container& container) -> decltype(auto)
 {
-    return ::pl::cont::detail::data_impl(
-        container, decltype(::pl::cont::detail::is_basic_string(container)){});
+  return ::pl::cont::detail::data_impl(
+    container, decltype(::pl::cont::detail::is_basic_string(container)){});
 }
 
 /*!
@@ -107,7 +107,7 @@ constexpr auto data(PL_IN Container& container) -> decltype(auto)
 template<typename Ty, std::size_t Size>
 constexpr Ty* data(PL_IN Ty (&array)[Size]) noexcept
 {
-    return array;
+  return array;
 }
 
 /*!
@@ -120,7 +120,7 @@ constexpr Ty* data(PL_IN Ty (&array)[Size]) noexcept
 template<typename Ty>
 constexpr const Ty* data(std::initializer_list<Ty> init_list) noexcept
 {
-    return init_list.begin();
+  return init_list.begin();
 }
 } // namespace cont
 } // namespace pl

@@ -37,12 +37,12 @@
 
 TEST_CASE("checked_delete_and_null_test")
 {
-    int* p{new int{5}};
-    int* a{new int[5U]{1, 2, 3, 4, 5}};
+  int* p{new int{5}};
+  int* a{new int[5U]{1, 2, 3, 4, 5}};
 
-    pl::checked_delete_and_null(p);
-    pl::checked_array_delete_and_null(a);
+  pl::checked_delete_and_null(p);
+  pl::checked_array_delete_and_null(a);
 
-    CHECK(p == nullptr);
-    CHECK(a == nullptr);
+  CHECK(p == nullptr);
+  CHECK(a == nullptr);
 }

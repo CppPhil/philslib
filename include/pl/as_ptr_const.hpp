@@ -44,7 +44,7 @@ namespace pl {
 template<typename Ty>
 constexpr add_const_t<Ty>* as_ptr_const(PL_IN_OPT Ty* p) noexcept
 {
-    return p;
+  return p;
 }
 } // namespace pl
 #endif // INCG_PL_AS_PTR_CONST_HPP

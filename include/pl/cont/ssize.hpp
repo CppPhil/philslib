@@ -45,11 +45,11 @@ namespace cont {
  **/
 template<typename Container>
 constexpr auto ssize(PL_IN const Container& container)
-    -> common_type_t<std::ptrdiff_t, make_signed_t<decltype(container.size())>>
+  -> common_type_t<std::ptrdiff_t, make_signed_t<decltype(container.size())>>
 {
-    return static_cast<common_type_t<
-        std::ptrdiff_t,
-        make_signed_t<decltype(container.size())>>>(container.size());
+  return static_cast<
+    common_type_t<std::ptrdiff_t, make_signed_t<decltype(container.size())>>>(
+    container.size());
 }
 
 /*
@@ -62,8 +62,8 @@ constexpr auto ssize(PL_IN const Container& container)
 template<typename Type, std::ptrdiff_t Size>
 constexpr std::ptrdiff_t ssize(PL_IN const Type (&array)[Size]) noexcept
 {
-    (void)array;
-    return Size;
+  (void)array;
+  return Size;
 }
 } // namespace cont
 } // namespace pl

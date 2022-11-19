@@ -59,22 +59,22 @@ struct empty_string;
 
 template<>
 struct empty_string<char> {
-    static constexpr const char* value = "";
+  static constexpr const char* value = "";
 };
 
 template<>
 struct empty_string<char16_t> {
-    static constexpr const char16_t* value = u"";
+  static constexpr const char16_t* value = u"";
 };
 
 template<>
 struct empty_string<char32_t> {
-    static constexpr const char32_t* value = U"";
+  static constexpr const char32_t* value = U"";
 };
 
 template<>
 struct empty_string<wchar_t> {
-    static constexpr const wchar_t* value = L"";
+  static constexpr const wchar_t* value = L"";
 };
 } // namespace detail
 
@@ -95,324 +95,324 @@ struct empty_string<wchar_t> {
 template<typename CharT, typename Traits = std::char_traits<CharT>>
 class basic_string_view {
 public:
-    using this_type              = basic_string_view;
-    using traits_type            = Traits;
-    using value_type             = CharT;
-    using pointer                = CharT*;
-    using const_pointer          = const CharT*;
-    using reference              = CharT&;
-    using const_reference        = const CharT&;
-    using const_iterator         = const_pointer;
-    using iterator               = const_iterator;
-    using const_reverse_iterator = std::reverse_iterator<const_iterator>;
-    using reverse_iterator       = const_reverse_iterator;
-    using size_type              = std::size_t;
-    using difference_type        = std::ptrdiff_t;
+  using this_type              = basic_string_view;
+  using traits_type            = Traits;
+  using value_type             = CharT;
+  using pointer                = CharT*;
+  using const_pointer          = const CharT*;
+  using reference              = CharT&;
+  using const_reference        = const CharT&;
+  using const_iterator         = const_pointer;
+  using iterator               = const_iterator;
+  using const_reverse_iterator = std::reverse_iterator<const_iterator>;
+  using reverse_iterator       = const_reverse_iterator;
+  using size_type              = std::size_t;
+  using difference_type        = std::ptrdiff_t;
 
-    /*!
-     * \brief Default constructor. Constructs a string view that points to
-     *        an empty string stored in the data section. The string pointed
-     *        to contains merely the null-terminator.
-     *        The size of the string view after construction will be 0.
-     **/
-    constexpr basic_string_view() noexcept
-        : m_data{detail::empty_string<value_type>::value}
-        , m_size{static_cast<std::size_t>(0U)}
-    {
-    }
+  /*!
+   * \brief Default constructor. Constructs a string view that points to
+   *        an empty string stored in the data section. The string pointed
+   *        to contains merely the null-terminator.
+   *        The size of the string view after construction will be 0.
+   **/
+  constexpr basic_string_view() noexcept
+    : m_data{detail::empty_string<value_type>::value}
+    , m_size{static_cast<std::size_t>(0U)}
+  {
+  }
 
-    /*!
-     * \brief Copy constructor. Constructs a view of the same content as
-     *        the view passed into the parameter.
-     **/
-    constexpr basic_string_view(PL_IN const this_type&) noexcept = default;
+  /*!
+   * \brief Copy constructor. Constructs a view of the same content as
+   *        the view passed into the parameter.
+   **/
+  constexpr basic_string_view(PL_IN const this_type&) noexcept = default;
 
-    /*!
-     * \brief Replaces this view with the one passed into the parameter.
-     * \return A reference to this object.
-     * \note Constant complexity.
-     **/
-    this_type& operator=(PL_IN const this_type&) noexcept = default;
+  /*!
+   * \brief Replaces this view with the one passed into the parameter.
+   * \return A reference to this object.
+   * \note Constant complexity.
+   **/
+  this_type& operator=(PL_IN const this_type&) noexcept = default;
 
-    /*!
-     * \brief Creates an empty basic_string_view from a nullptr literal.
-     **/
-    PL_IMPLICIT constexpr basic_string_view(std::nullptr_t) noexcept
-        : basic_string_view{}
-    {
-    }
+  /*!
+   * \brief Creates an empty basic_string_view from a nullptr literal.
+   **/
+  PL_IMPLICIT constexpr basic_string_view(std::nullptr_t) noexcept
+    : basic_string_view{}
+  {
+  }
 
-    /*!
-     * \brief Constructs a view of the null-terminated character string pointed
-     *        to by 'string'.
-     *        The length of the view is determined as if by
-     *        Traits::length(string).
-     *        After construction, data() is equal to 'string', and size() is
-     *        equal to Traits::length(string).
-     * \param string Pointer to a valid null-terminated C style string.
-     * \warning The behavior is undefined if
-     *          [string, string + Traits::length(string)) is not a valid range.
-     * \note Complexity is linear in Traits::length(string).
-     *       If the pointer passed in is a null pointer the string view created
-     *       will be empty.
-     **/
-    PL_IMPLICIT constexpr basic_string_view(
-        PL_IN PL_NULL_TERMINATED(const_pointer) string) noexcept
-        : basic_string_view{}
-    {
-        if (string != nullptr) {
-            m_data = string;
-            m_size = traits_type::length(string);
-        }
+  /*!
+   * \brief Constructs a view of the null-terminated character string pointed
+   *        to by 'string'.
+   *        The length of the view is determined as if by
+   *        Traits::length(string).
+   *        After construction, data() is equal to 'string', and size() is
+   *        equal to Traits::length(string).
+   * \param string Pointer to a valid null-terminated C style string.
+   * \warning The behavior is undefined if
+   *          [string, string + Traits::length(string)) is not a valid range.
+   * \note Complexity is linear in Traits::length(string).
+   *       If the pointer passed in is a null pointer the string view created
+   *       will be empty.
+   **/
+  PL_IMPLICIT constexpr basic_string_view(
+    PL_IN PL_NULL_TERMINATED(const_pointer) string) noexcept
+    : basic_string_view{}
+  {
+    if (string != nullptr) {
+      m_data = string;
+      m_size = traits_type::length(string);
     }
+  }
 
-    /*!
-     * \brief Constructs a view of a null-terminated string owned by a
-     *        std::basic_string object.
-     * \param string The std::basic_string object to view.
-     * \note Constant complexity.
-     * \warning The std::basic_string must contain a valid null-terminated
-     *          string and may not contain embedded null-characters!
-     **/
-    template<typename Allocator>
-    PL_IMPLICIT constexpr basic_string_view(
-        PL_IN const std::basic_string<value_type, traits_type, Allocator>&
-                    string) noexcept
-        : m_data{string.data()}, m_size{string.size()}
-    {
-    }
+  /*!
+   * \brief Constructs a view of a null-terminated string owned by a
+   *        std::basic_string object.
+   * \param string The std::basic_string object to view.
+   * \note Constant complexity.
+   * \warning The std::basic_string must contain a valid null-terminated
+   *          string and may not contain embedded null-characters!
+   **/
+  template<typename Allocator>
+  PL_IMPLICIT constexpr basic_string_view(
+    PL_IN const std::basic_string<value_type, traits_type, Allocator>&
+                string) noexcept
+    : m_data{string.data()}, m_size{string.size()}
+  {
+  }
 
-    /*!
-     * \brief Constructs a string view from a pointer to a C style string and
-     *        a size.
-     * \param string A null-terminated string to view.
-     * \param size The length of 'string'. Must be the same as calling
-     *             Traits::length(string).
-     * \note Constant complexity.
-     *       The string must be a null-terminated character string but may not
-     *       contain embedded null-characters.
-     *       This constructor is provided so that you can provide the size if
-     *       you already know it, preventing overhead from calling
-     *       Traits::length.
-     *       If the pointer 'string' passed in is a null pointer the string
-     *       view will be empty.
-     * \warning The behavior is undefined if ['string', 'string' + 'size') is
-     *          not a valid range.
-     **/
-    constexpr basic_string_view(
-        PL_IN     PL_NULL_TERMINATED(const_pointer) string,
-        size_type size) noexcept
-        : basic_string_view{}
-    {
-        if (string != nullptr) {
-            m_data = string;
-            m_size = size;
-        }
+  /*!
+   * \brief Constructs a string view from a pointer to a C style string and
+   *        a size.
+   * \param string A null-terminated string to view.
+   * \param size The length of 'string'. Must be the same as calling
+   *             Traits::length(string).
+   * \note Constant complexity.
+   *       The string must be a null-terminated character string but may not
+   *       contain embedded null-characters.
+   *       This constructor is provided so that you can provide the size if
+   *       you already know it, preventing overhead from calling
+   *       Traits::length.
+   *       If the pointer 'string' passed in is a null pointer the string
+   *       view will be empty.
+   * \warning The behavior is undefined if ['string', 'string' + 'size') is
+   *          not a valid range.
+   **/
+  constexpr basic_string_view(
+    PL_IN     PL_NULL_TERMINATED(const_pointer) string,
+    size_type size) noexcept
+    : basic_string_view{}
+  {
+    if (string != nullptr) {
+      m_data = string;
+      m_size = size;
     }
+  }
 
-    /*!
-     * \brief Returns an iterator to the first character of the view.
-     * \return const_iterator to the first character
-     * \note Constant complexity.
-     **/
-    constexpr const_iterator begin() const noexcept
-    {
-        return cbegin();
-    }
-    /*!
-     * \brief Returns an iterator to the first character of the view.
-     * \return const_iterator to the first character
-     * \note Constant complexity.
-     **/
-    constexpr const_iterator cbegin() const noexcept
-    {
-        return data();
-    }
-    /*!
-     * \brief Returns an iterator to the character following the last character
-     *        of the view.
-     * \return const_iterator to the character following the last character.
-     * \note Constant complexity.
-     * \warning The iterator returned acts as a placeholder, attempting to
-     *          indirect through it results in undefined behavior.
-     **/
-    constexpr const_iterator end() const noexcept
-    {
-        return cend();
-    }
-    /*!
-     * \brief Returns an iterator to the character following the last character
-     *        of the view.
-     * \return const_iterator to the character following the last character.
-     * \note Constant complexity.
-     * \warning The iterator returned acts as a placeholder, attempting to
-     *          indirect through it results in undefined behavior.
-     **/
-    constexpr const_iterator cend() const noexcept
-    {
-        return cbegin() + size();
-    }
-    /*!
-     * \brief Returns a reverse iterator to the first character of the reversed
-     *        view. It corresponds to the last character of the non-reversed
-     *        view.
-     * \return const_reverse_iterator to the first character
-     * \note Constant complexity.
-     **/
-    const_reverse_iterator rbegin() const noexcept
-    {
-        return crbegin();
-    }
-    /*!
-     * \brief Returns a reverse iterator to the first character of the reversed
-     *        view. It corresponds to the last character of the non-reversed
-     *        view.
-     * \return const_reverse_iterator to the first character
-     * \note Constant complexity.
-     **/
-    const_reverse_iterator crbegin() const noexcept
-    {
-        return reverse_iterator{cend()};
-    }
+  /*!
+   * \brief Returns an iterator to the first character of the view.
+   * \return const_iterator to the first character
+   * \note Constant complexity.
+   **/
+  constexpr const_iterator begin() const noexcept
+  {
+    return cbegin();
+  }
+  /*!
+   * \brief Returns an iterator to the first character of the view.
+   * \return const_iterator to the first character
+   * \note Constant complexity.
+   **/
+  constexpr const_iterator cbegin() const noexcept
+  {
+    return data();
+  }
+  /*!
+   * \brief Returns an iterator to the character following the last character
+   *        of the view.
+   * \return const_iterator to the character following the last character.
+   * \note Constant complexity.
+   * \warning The iterator returned acts as a placeholder, attempting to
+   *          indirect through it results in undefined behavior.
+   **/
+  constexpr const_iterator end() const noexcept
+  {
+    return cend();
+  }
+  /*!
+   * \brief Returns an iterator to the character following the last character
+   *        of the view.
+   * \return const_iterator to the character following the last character.
+   * \note Constant complexity.
+   * \warning The iterator returned acts as a placeholder, attempting to
+   *          indirect through it results in undefined behavior.
+   **/
+  constexpr const_iterator cend() const noexcept
+  {
+    return cbegin() + size();
+  }
+  /*!
+   * \brief Returns a reverse iterator to the first character of the reversed
+   *        view. It corresponds to the last character of the non-reversed
+   *        view.
+   * \return const_reverse_iterator to the first character
+   * \note Constant complexity.
+   **/
+  const_reverse_iterator rbegin() const noexcept
+  {
+    return crbegin();
+  }
+  /*!
+   * \brief Returns a reverse iterator to the first character of the reversed
+   *        view. It corresponds to the last character of the non-reversed
+   *        view.
+   * \return const_reverse_iterator to the first character
+   * \note Constant complexity.
+   **/
+  const_reverse_iterator crbegin() const noexcept
+  {
+    return reverse_iterator{cend()};
+  }
 
-    /*!
-     * \brief Returns a reverse iterator to the character following the last
-     *        character of the reversed view. It corresponds to the character
-     *        preceding the first character of the non-reversed view.
-     * \return const_reverse_iterator to the character following the last
-     *         character.
-     * \note Constant complexity.
-     * \warning The iterator returned character acts as a
-     *          placeholder, attempting to indirect through it results
-     *          in undefined behavior.
-     **/
-    const_reverse_iterator rend() const noexcept
-    {
-        return crend();
-    }
-    /*!
-     * \brief Returns a reverse iterator to the character following the last
-     *        character of the reversed view. It corresponds to the character
-     *        preceding the first character of the non-reversed view.
-     * \return const_reverse_iterator to the character following the last
-     *         character.
-     * \note Constant complexity.
-     * \warning The iterator returned character acts as a
-     *          placeholder, attempting to indirect through it results
-     *          in undefined behavior.
-     **/
-    const_reverse_iterator crend() const noexcept
-    {
-        return reverse_iterator{cbegin()};
-    }
+  /*!
+   * \brief Returns a reverse iterator to the character following the last
+   *        character of the reversed view. It corresponds to the character
+   *        preceding the first character of the non-reversed view.
+   * \return const_reverse_iterator to the character following the last
+   *         character.
+   * \note Constant complexity.
+   * \warning The iterator returned character acts as a
+   *          placeholder, attempting to indirect through it results
+   *          in undefined behavior.
+   **/
+  const_reverse_iterator rend() const noexcept
+  {
+    return crend();
+  }
+  /*!
+   * \brief Returns a reverse iterator to the character following the last
+   *        character of the reversed view. It corresponds to the character
+   *        preceding the first character of the non-reversed view.
+   * \return const_reverse_iterator to the character following the last
+   *         character.
+   * \note Constant complexity.
+   * \warning The iterator returned character acts as a
+   *          placeholder, attempting to indirect through it results
+   *          in undefined behavior.
+   **/
+  const_reverse_iterator crend() const noexcept
+  {
+    return reverse_iterator{cbegin()};
+  }
 
-    /*!
-     * \brief Returns the number of CharT elements in the view,
-     *        i.e. std::distance(begin(), end()).
-     * \return The number of CharT elements in the view.
-     * \note Constant complexity.
-     **/
-    constexpr size_type size() const noexcept
-    {
-        return m_size;
-    }
-    /*!
-     * \brief Checks if the view has no characters, i.e. whether size() == 0.
-     * \return true if the view is empty, false otherwise.
-     * \note Constant complexity.
-     **/
-    PL_NODISCARD constexpr bool empty() const noexcept
-    {
-        return size() == static_cast<std::size_t>(0U);
-    }
+  /*!
+   * \brief Returns the number of CharT elements in the view,
+   *        i.e. std::distance(begin(), end()).
+   * \return The number of CharT elements in the view.
+   * \note Constant complexity.
+   **/
+  constexpr size_type size() const noexcept
+  {
+    return m_size;
+  }
+  /*!
+   * \brief Checks if the view has no characters, i.e. whether size() == 0.
+   * \return true if the view is empty, false otherwise.
+   * \note Constant complexity.
+   **/
+  PL_NODISCARD constexpr bool empty() const noexcept
+  {
+    return size() == static_cast<std::size_t>(0U);
+  }
 
-    /*!
-     * \brief Returns a const reference to the character at specified location
-     *        'position'.
-     * \param position The position of the character to return
-     * \return Const reference to the requested character
-     * \note Constant complexity.
-     *       operator[](size()) returns CharT() as all the strings viewed
-     *       have to be null-terminated.
-     * \warning No bounds checking is performed: the behavior is undefined
-     *          if 'position' > size().
-     **/
-    constexpr const_reference operator[](size_type position) const noexcept
-    {
-        return data()[position];
-    }
+  /*!
+   * \brief Returns a const reference to the character at specified location
+   *        'position'.
+   * \param position The position of the character to return
+   * \return Const reference to the requested character
+   * \note Constant complexity.
+   *       operator[](size()) returns CharT() as all the strings viewed
+   *       have to be null-terminated.
+   * \warning No bounds checking is performed: the behavior is undefined
+   *          if 'position' > size().
+   **/
+  constexpr const_reference operator[](size_type position) const noexcept
+  {
+    return data()[position];
+  }
 
-    /*!
-     * \brief Returns a reference to the character at specified location
-     *        'position'. Bounds checking is performed, exception of type
-     *        std::out_of_range will be thrown on invalid access.
-     * \param position The position of the character to return
-     * \return Const reference to the requested character.
-     * \throws std::out_of_range if 'position' > size().
-     * \note Constant complexity.
-     *       at(size()) returns CharT() as all strings viewed have to be
-     *       null-terminated.
-     **/
-    constexpr const_reference at(size_type position) const
-    {
-        if (position > size()) {
-            throw std::out_of_range{
-                "basic_string_view::at position was out of bounds."};
-        }
-
-        return operator[](position);
+  /*!
+   * \brief Returns a reference to the character at specified location
+   *        'position'. Bounds checking is performed, exception of type
+   *        std::out_of_range will be thrown on invalid access.
+   * \param position The position of the character to return
+   * \return Const reference to the requested character.
+   * \throws std::out_of_range if 'position' > size().
+   * \note Constant complexity.
+   *       at(size()) returns CharT() as all strings viewed have to be
+   *       null-terminated.
+   **/
+  constexpr const_reference at(size_type position) const
+  {
+    if (position > size()) {
+      throw std::out_of_range{
+        "basic_string_view::at position was out of bounds."};
     }
 
-    /*!
-     * \brief Returns reference to the first character in the view.
-     * \return reference to the first character, equivalent to operator[](0)
-     * \note Constant complexity.
-     *       Returns CharT() if empty() == true as all strings viewed have to
-     *       be null-terminated.
-     **/
-    constexpr const_reference front() const noexcept
-    {
-        return operator[](0U);
-    }
-    /*!
-     * \brief Returns reference to the last character in the view.
-     * \return Reference to the last character, equivalent to
-     *         operator[](size() - 1).
-     * \note Constant complexity.
-     * \warning The behavior is undefined if empty() == true.
-     **/
-    constexpr const_reference back() const noexcept
-    {
-        return operator[](size() - 1U);
-    }
+    return operator[](position);
+  }
 
-    /*!
-     * \brief Returns a pointer to the underlying character array. The pointer
-     *        is such that the range [data(); data() + size()] is valid and the
-     *        values in it correspond to the values of the view.
-     * \return A pointer to the underlying character array.
-     * \note Constant complexity.
-     *       Returns a pointer to a null-terminated string as all strings
-     *       viewed have to be null-terminated.
-     **/
-    constexpr const_pointer data() const noexcept
-    {
-        return m_data;
-    }
+  /*!
+   * \brief Returns reference to the first character in the view.
+   * \return reference to the first character, equivalent to operator[](0)
+   * \note Constant complexity.
+   *       Returns CharT() if empty() == true as all strings viewed have to
+   *       be null-terminated.
+   **/
+  constexpr const_reference front() const noexcept
+  {
+    return operator[](0U);
+  }
+  /*!
+   * \brief Returns reference to the last character in the view.
+   * \return Reference to the last character, equivalent to
+   *         operator[](size() - 1).
+   * \note Constant complexity.
+   * \warning The behavior is undefined if empty() == true.
+   **/
+  constexpr const_reference back() const noexcept
+  {
+    return operator[](size() - 1U);
+  }
 
-    /*!
-     * \brief Returns a pointer to the underlying character array. The pointer
-     *        is such that the range [c_str(); c_str() + size()] is valid and
-     *        the values in it correspond to the values of the view.
-     * \return A pointer to the underlying character array.
-     * \note Constant complexity.
-     *       Returns a pointer to a null-terminated string as all strings
-     *       viewed have to be null-terminated.
-     **/
-    constexpr const_pointer c_str() const noexcept
-    {
-        return data();
-    }
+  /*!
+   * \brief Returns a pointer to the underlying character array. The pointer
+   *        is such that the range [data(); data() + size()] is valid and the
+   *        values in it correspond to the values of the view.
+   * \return A pointer to the underlying character array.
+   * \note Constant complexity.
+   *       Returns a pointer to a null-terminated string as all strings
+   *       viewed have to be null-terminated.
+   **/
+  constexpr const_pointer data() const noexcept
+  {
+    return m_data;
+  }
+
+  /*!
+   * \brief Returns a pointer to the underlying character array. The pointer
+   *        is such that the range [c_str(); c_str() + size()] is valid and
+   *        the values in it correspond to the values of the view.
+   * \return A pointer to the underlying character array.
+   * \note Constant complexity.
+   *       Returns a pointer to a null-terminated string as all strings
+   *       viewed have to be null-terminated.
+   **/
+  constexpr const_pointer c_str() const noexcept
+  {
+    return data();
+  }
 
 /*!
  * \brief Moves the start of the view forward by 'characters_to_remove'
@@ -426,19 +426,19 @@ public:
  *       if msvc17 or newer is used.
  **/
 #if (PL_COMPILER != PL_COMPILER_MSVC) \
-    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
-    constexpr
+  || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
+  constexpr
 #endif
-        void
-        remove_prefix(size_type characters_to_remove) noexcept
-    {
-        if (characters_to_remove > size()) {
-            characters_to_remove = size();
-        }
-
-        m_data += characters_to_remove;
-        m_size -= characters_to_remove;
+    void
+    remove_prefix(size_type characters_to_remove) noexcept
+  {
+    if (characters_to_remove > size()) {
+      characters_to_remove = size();
     }
+
+    m_data += characters_to_remove;
+    m_size -= characters_to_remove;
+  }
 
 /*!
  * \brief Exchanges the view with that of 'other'.
@@ -448,33 +448,33 @@ public:
  *       if msvc17 or newer is used.
  **/
 #if (PL_COMPILER != PL_COMPILER_MSVC) \
-    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
-    constexpr
+  || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
+  constexpr
 #endif
-        void
-        swap(PL_INOUT this_type& other) noexcept
-    {
-        const const_pointer ptr = m_data;
-        m_data                  = other.m_data;
-        other.m_data            = ptr;
-        const size_type size    = m_size;
-        m_size                  = other.m_size;
-        other.m_size            = size;
-    }
+    void
+    swap(PL_INOUT this_type& other) noexcept
+  {
+    const const_pointer ptr = m_data;
+    m_data                  = other.m_data;
+    other.m_data            = ptr;
+    const size_type size    = m_size;
+    m_size                  = other.m_size;
+    other.m_size            = size;
+  }
 
-    /*!
-     * \brief Convenience function to create a corresponding std::basic_string
-     *        object for this view.
-     * \param allocator The allocator to use for the std::basic_string.
-     * \return The resulting std::basic_string object.
-     **/
-    template<typename Allocator = std::allocator<CharT>>
-    std::basic_string<value_type, traits_type, Allocator> to_string(
-        PL_IN const Allocator& allocator = Allocator{}) const
-    {
-        return std::basic_string<value_type, traits_type, Allocator>(
-            begin(), end(), allocator);
-    }
+  /*!
+   * \brief Convenience function to create a corresponding std::basic_string
+   *        object for this view.
+   * \param allocator The allocator to use for the std::basic_string.
+   * \return The resulting std::basic_string object.
+   **/
+  template<typename Allocator = std::allocator<CharT>>
+  std::basic_string<value_type, traits_type, Allocator> to_string(
+    PL_IN const Allocator& allocator = Allocator{}) const
+  {
+    return std::basic_string<value_type, traits_type, Allocator>(
+      begin(), end(), allocator);
+  }
 
 /*!
  * \brief Compares this string view with another one.
@@ -488,23 +488,22 @@ public:
  *       if msvc17 or newer is used.
  **/
 #if (PL_COMPILER != PL_COMPILER_MSVC) \
-    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
-    constexpr
+  || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
+  constexpr
 #endif
-        int
-        compare(this_type other) const noexcept
-    {
-        const size_type length{
-            std::min PL_NO_MACRO_SUBSTITUTION(size(), other.size())};
-        int result{traits_type::compare(data(), other.data(), length)};
+    int
+    compare(this_type other) const noexcept
+  {
+    const size_type length{
+      std::min PL_NO_MACRO_SUBSTITUTION(size(), other.size())};
+    int result{traits_type::compare(data(), other.data(), length)};
 
-        if (result == 0) {
-            result
-                = size() == other.size() ? 0 : (size() < other.size() ? -1 : 1);
-        }
-
-        return result;
+    if (result == 0) {
+      result = size() == other.size() ? 0 : (size() < other.size() ? -1 : 1);
     }
+
+    return result;
+  }
 
 /*!
  * \brief Compares this string view to a null-terminated character
@@ -519,105 +518,105 @@ public:
  *       if msvc17 or newer is used.
  **/
 #if (PL_COMPILER != PL_COMPILER_MSVC) \
-    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
-    constexpr
+  || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
+  constexpr
 #endif
-        int
-        compare(PL_IN PL_NULL_TERMINATED(const_pointer) string) const noexcept
-    {
-        return compare(this_type{string});
-    }
+    int
+    compare(PL_IN PL_NULL_TERMINATED(const_pointer) string) const noexcept
+  {
+    return compare(this_type{string});
+  }
 
-    /*!
-     * \brief Checks if the string view begins with the given prefix.
-     * \param character A single character to compare to the start of the string
-     *                  view
-     * \return true if the string view begins with the provided prefix, false
-     *         otherwise.
-     **/
-    constexpr bool starts_with(value_type character) const noexcept
-    {
-        return not empty() and traits_type::eq(character, front());
-    }
+  /*!
+   * \brief Checks if the string view begins with the given prefix.
+   * \param character A single character to compare to the start of the string
+   *                  view
+   * \return true if the string view begins with the provided prefix, false
+   *         otherwise.
+   **/
+  constexpr bool starts_with(value_type character) const noexcept
+  {
+    return not empty() and traits_type::eq(character, front());
+  }
 
-    /*!
-     * \brief Checks if the string view begins with the given prefix.
-     * \param string_view A character sequence to compare to the start of the
-     *                    string view
-     * \return true if the string view begins with the provided prefix, false
-     *         otherwise.
-     **/
-    constexpr bool starts_with(this_type string_view) const noexcept
-    {
-        return size() >= string_view.size()
-               and traits_type::compare(
-                       data(), string_view.data(), string_view.size())
-                       == 0;
-    }
+  /*!
+   * \brief Checks if the string view begins with the given prefix.
+   * \param string_view A character sequence to compare to the start of the
+   *                    string view
+   * \return true if the string view begins with the provided prefix, false
+   *         otherwise.
+   **/
+  constexpr bool starts_with(this_type string_view) const noexcept
+  {
+    return size() >= string_view.size()
+           and traits_type::compare(
+                 data(), string_view.data(), string_view.size())
+                 == 0;
+  }
 
-    /*!
-     * \brief Checks if the string view ends with the given suffix.
-     * \param character A single character to compare to the end of the
-     *                  string view
-     * \return true if the string view ends with the provided suffix,
-     *         false otherwise.
-     **/
-    constexpr bool ends_with(value_type character) const noexcept
-    {
-        return not empty() and traits_type::eq(character, back());
-    }
+  /*!
+   * \brief Checks if the string view ends with the given suffix.
+   * \param character A single character to compare to the end of the
+   *                  string view
+   * \return true if the string view ends with the provided suffix,
+   *         false otherwise.
+   **/
+  constexpr bool ends_with(value_type character) const noexcept
+  {
+    return not empty() and traits_type::eq(character, back());
+  }
 
-    /*!
-     * \brief Checks if the string view ends with the given suffix.
-     * \param string_view A character sequence to compare to the end of the
-     *                    string view
-     * \return true if the string view ends with the provided suffix,
-     *         false otherwise.
-     **/
-    constexpr bool ends_with(this_type string_view) const noexcept
-    {
-        return size() >= string_view.size()
-               and traits_type::compare(
-                       data() + size() - string_view.size(),
-                       string_view.data(),
-                       string_view.size())
-                       == 0;
-    }
+  /*!
+   * \brief Checks if the string view ends with the given suffix.
+   * \param string_view A character sequence to compare to the end of the
+   *                    string view
+   * \return true if the string view ends with the provided suffix,
+   *         false otherwise.
+   **/
+  constexpr bool ends_with(this_type string_view) const noexcept
+  {
+    return size() >= string_view.size()
+           and traits_type::compare(
+                 data() + size() - string_view.size(),
+                 string_view.data(),
+                 string_view.size())
+                 == 0;
+  }
 
-    /*!
-     * \brief Checks if this string_view contains `str`.
-     * \param str The other string_view to find in this string_view.
-     * \return true if this string_view contains `str`; otherwise false.
-     **/
-    constexpr bool contains(this_type str) const noexcept
-    {
-        return strcontains(*this, str);
-    }
+  /*!
+   * \brief Checks if this string_view contains `str`.
+   * \param str The other string_view to find in this string_view.
+   * \return true if this string_view contains `str`; otherwise false.
+   **/
+  constexpr bool contains(this_type str) const noexcept
+  {
+    return strcontains(*this, str);
+  }
 
-    /*!
-     * \brief Checks if this string_view contains the character `ch`.
-     * \param ch The character to find in this string_view.
-     * \return true if this string_view contains `ch`; otherwise false.
-     **/
-    constexpr bool contains(value_type ch) const noexcept
-    {
-        return traits_type::find(c_str(), size(), ch) != nullptr;
-    }
+  /*!
+   * \brief Checks if this string_view contains the character `ch`.
+   * \param ch The character to find in this string_view.
+   * \return true if this string_view contains `ch`; otherwise false.
+   **/
+  constexpr bool contains(value_type ch) const noexcept
+  {
+    return traits_type::find(c_str(), size(), ch) != nullptr;
+  }
 
-    /*!
-     * \brief Checks if this string_view contains the null-terminated string
-     *        `str`.
-     * \param str The null-terminated string to find in this string_view.
-     * \return true if this string_view contains `str`; otherwise false.
-     **/
-    constexpr bool contains(PL_IN PL_NULL_TERMINATED(const_pointer) str) const
-    {
-        return strcontains(*this, str);
-    }
+  /*!
+   * \brief Checks if this string_view contains the null-terminated string
+   *        `str`.
+   * \param str The null-terminated string to find in this string_view.
+   * \return true if this string_view contains `str`; otherwise false.
+   **/
+  constexpr bool contains(PL_IN PL_NULL_TERMINATED(const_pointer) str) const
+  {
+    return strcontains(*this, str);
+  }
 
 private:
-    const_pointer m_data;
-    size_type     m_size;
+  const_pointer m_data;
+  size_type     m_size;
 };
 
 /*!
@@ -628,15 +627,15 @@ private:
  **/
 template<typename CharT, typename Traits>
 #if (PL_COMPILER != PL_COMPILER_MSVC) \
-    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
+  || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
 constexpr
 #endif
-    void
-    swap(
-        PL_INOUT basic_string_view<CharT, Traits>& first,
-        PL_INOUT basic_string_view<CharT, Traits>& second) noexcept
+  void
+  swap(
+    PL_INOUT basic_string_view<CharT, Traits>& first,
+    PL_INOUT basic_string_view<CharT, Traits>& second) noexcept
 {
-    first.swap(second);
+  first.swap(second);
 }
 
 /*!
@@ -647,250 +646,250 @@ constexpr
  **/
 template<typename CharT, typename Traits>
 std::basic_ostream<CharT, Traits>& operator<<(
-    PL_INOUT std::basic_ostream<CharT, Traits>& os,
-    basic_string_view<CharT, Traits>            string)
+  PL_INOUT std::basic_ostream<CharT, Traits>& os,
+  basic_string_view<CharT, Traits>            string)
 {
-    return os << string.data();
+  return os << string.data();
 }
 
 template<typename CharT, typename Traits>
 constexpr bool operator==(
-    basic_string_view<CharT, Traits> x,
-    basic_string_view<CharT, Traits> y) noexcept
+  basic_string_view<CharT, Traits> x,
+  basic_string_view<CharT, Traits> y) noexcept
 {
-    return x.compare(y) == 0;
+  return x.compare(y) == 0;
 }
 
 template<typename CharT, typename Traits, typename Allocator>
 constexpr bool operator==(
-    basic_string_view<CharT, Traits> x,
-    PL_IN const std::basic_string<CharT, Traits, Allocator>& y) noexcept
+  basic_string_view<CharT, Traits> x,
+  PL_IN const std::basic_string<CharT, Traits, Allocator>& y) noexcept
 {
-    return x == basic_string_view<CharT, Traits>{y};
+  return x == basic_string_view<CharT, Traits>{y};
 }
 
 template<typename CharT, typename Traits, typename Allocator>
 constexpr bool operator==(
-    PL_IN const std::basic_string<CharT, Traits, Allocator>& x,
-    basic_string_view<CharT, Traits>                         y) noexcept
+  PL_IN const std::basic_string<CharT, Traits, Allocator>& x,
+  basic_string_view<CharT, Traits>                         y) noexcept
 {
-    return basic_string_view<CharT, Traits>{x} == y;
+  return basic_string_view<CharT, Traits>{x} == y;
 }
 
 template<typename CharT, typename Traits>
 constexpr bool operator==(
-    basic_string_view<CharT, Traits> x,
-    PL_IN PL_NULL_TERMINATED(const CharT*) y) noexcept
+  basic_string_view<CharT, Traits> x,
+  PL_IN                            PL_NULL_TERMINATED(const CharT*) y) noexcept
 {
-    return x == basic_string_view<CharT, Traits>{y};
+  return x == basic_string_view<CharT, Traits>{y};
 }
 
 template<typename CharT, typename Traits>
 constexpr bool operator==(
-    PL_IN                            PL_NULL_TERMINATED(const CharT*) x,
-    basic_string_view<CharT, Traits> y) noexcept
+  PL_IN                            PL_NULL_TERMINATED(const CharT*) x,
+  basic_string_view<CharT, Traits> y) noexcept
 {
-    return basic_string_view<CharT, Traits>{x} == y;
+  return basic_string_view<CharT, Traits>{x} == y;
 }
 
 template<typename CharT, typename Traits>
 constexpr bool operator!=(
-    basic_string_view<CharT, Traits> x,
-    basic_string_view<CharT, Traits> y) noexcept
+  basic_string_view<CharT, Traits> x,
+  basic_string_view<CharT, Traits> y) noexcept
 {
-    return not(x == y);
+  return not(x == y);
 }
 
 template<typename CharT, typename Traits, typename Allocator>
 constexpr bool operator!=(
-    basic_string_view<CharT, Traits> x,
-    PL_IN const std::basic_string<CharT, Traits, Allocator>& y) noexcept
+  basic_string_view<CharT, Traits> x,
+  PL_IN const std::basic_string<CharT, Traits, Allocator>& y) noexcept
 {
-    return x != basic_string_view<CharT, Traits>{y};
+  return x != basic_string_view<CharT, Traits>{y};
 }
 
 template<typename CharT, typename Traits, typename Allocator>
 constexpr bool operator!=(
-    PL_IN const std::basic_string<CharT, Traits, Allocator>& x,
-    basic_string_view<CharT, Traits>                         y) noexcept
+  PL_IN const std::basic_string<CharT, Traits, Allocator>& x,
+  basic_string_view<CharT, Traits>                         y) noexcept
 {
-    return basic_string_view<CharT, Traits>{x} != y;
+  return basic_string_view<CharT, Traits>{x} != y;
 }
 
 template<typename CharT, typename Traits>
 constexpr bool operator!=(
-    basic_string_view<CharT, Traits> x,
-    PL_IN PL_NULL_TERMINATED(const CharT*) y) noexcept
+  basic_string_view<CharT, Traits> x,
+  PL_IN                            PL_NULL_TERMINATED(const CharT*) y) noexcept
 {
-    return x != basic_string_view<CharT, Traits>{y};
+  return x != basic_string_view<CharT, Traits>{y};
 }
 
 template<typename CharT, typename Traits>
 constexpr bool operator!=(
-    PL_IN                            PL_NULL_TERMINATED(const CharT*) x,
-    basic_string_view<CharT, Traits> y) noexcept
+  PL_IN                            PL_NULL_TERMINATED(const CharT*) x,
+  basic_string_view<CharT, Traits> y) noexcept
 {
-    return basic_string_view<CharT, Traits>{x} != y;
+  return basic_string_view<CharT, Traits>{x} != y;
 }
 
 template<typename CharT, typename Traits>
 constexpr bool operator<(
-    basic_string_view<CharT, Traits> x,
-    basic_string_view<CharT, Traits> y) noexcept
+  basic_string_view<CharT, Traits> x,
+  basic_string_view<CharT, Traits> y) noexcept
 {
-    return x.compare(y) < 0;
+  return x.compare(y) < 0;
 }
 
 template<typename CharT, typename Traits, typename Allocator>
 constexpr bool operator<(
-    basic_string_view<CharT, Traits> x,
-    PL_IN const std::basic_string<CharT, Traits, Allocator>& y) noexcept
+  basic_string_view<CharT, Traits> x,
+  PL_IN const std::basic_string<CharT, Traits, Allocator>& y) noexcept
 {
-    return x < basic_string_view<CharT, Traits>{y};
+  return x < basic_string_view<CharT, Traits>{y};
 }
 
 template<typename CharT, typename Traits, typename Allocator>
 constexpr bool operator<(
-    PL_IN const std::basic_string<CharT, Traits, Allocator>& x,
-    basic_string_view<CharT, Traits>                         y) noexcept
+  PL_IN const std::basic_string<CharT, Traits, Allocator>& x,
+  basic_string_view<CharT, Traits>                         y) noexcept
 {
-    return basic_string_view<CharT, Traits>{x} < y;
+  return basic_string_view<CharT, Traits>{x} < y;
 }
 
 template<typename CharT, typename Traits>
 constexpr bool operator<(
-    basic_string_view<CharT, Traits> x,
-    PL_IN PL_NULL_TERMINATED(const CharT*) y) noexcept
+  basic_string_view<CharT, Traits> x,
+  PL_IN                            PL_NULL_TERMINATED(const CharT*) y) noexcept
 {
-    return x < basic_string_view<CharT, Traits>{y};
+  return x < basic_string_view<CharT, Traits>{y};
 }
 
 template<typename CharT, typename Traits>
 inline bool operator<(
-    PL_IN                            PL_NULL_TERMINATED(const CharT*) x,
-    basic_string_view<CharT, Traits> y) noexcept
+  PL_IN                            PL_NULL_TERMINATED(const CharT*) x,
+  basic_string_view<CharT, Traits> y) noexcept
 {
-    return basic_string_view<CharT, Traits>{x} < y;
+  return basic_string_view<CharT, Traits>{x} < y;
 }
 
 template<typename CharT, typename Traits>
 constexpr bool operator>(
-    basic_string_view<CharT, Traits> x,
-    basic_string_view<CharT, Traits> y) noexcept
+  basic_string_view<CharT, Traits> x,
+  basic_string_view<CharT, Traits> y) noexcept
 {
-    return x.compare(y) > 0;
+  return x.compare(y) > 0;
 }
 
 template<typename CharT, typename Traits, typename Allocator>
 constexpr bool operator>(
-    basic_string_view<CharT, Traits> x,
-    PL_IN const std::basic_string<CharT, Traits, Allocator>& y) noexcept
+  basic_string_view<CharT, Traits> x,
+  PL_IN const std::basic_string<CharT, Traits, Allocator>& y) noexcept
 {
-    return x > basic_string_view<CharT, Traits>{y};
+  return x > basic_string_view<CharT, Traits>{y};
 }
 
 template<typename CharT, typename Traits, typename Allocator>
 constexpr bool operator>(
-    PL_IN const std::basic_string<CharT, Traits, Allocator>& x,
-    basic_string_view<CharT, Traits>                         y) noexcept
+  PL_IN const std::basic_string<CharT, Traits, Allocator>& x,
+  basic_string_view<CharT, Traits>                         y) noexcept
 {
-    return basic_string_view<CharT, Traits>{x} > y;
+  return basic_string_view<CharT, Traits>{x} > y;
 }
 
 template<typename CharT, typename Traits>
 constexpr bool operator>(
-    basic_string_view<CharT, Traits> x,
-    PL_IN PL_NULL_TERMINATED(const CharT*) y) noexcept
+  basic_string_view<CharT, Traits> x,
+  PL_IN                            PL_NULL_TERMINATED(const CharT*) y) noexcept
 {
-    return x > basic_string_view<CharT, Traits>{y};
+  return x > basic_string_view<CharT, Traits>{y};
 }
 
 template<typename CharT, typename Traits>
 constexpr bool operator>(
-    PL_IN                            PL_NULL_TERMINATED(const CharT*) x,
-    basic_string_view<CharT, Traits> y) noexcept
+  PL_IN                            PL_NULL_TERMINATED(const CharT*) x,
+  basic_string_view<CharT, Traits> y) noexcept
 {
-    return basic_string_view<CharT, Traits>{x} > y;
+  return basic_string_view<CharT, Traits>{x} > y;
 }
 
 template<typename CharT, typename Traits>
 constexpr bool operator<=(
-    basic_string_view<CharT, Traits> x,
-    basic_string_view<CharT, Traits> y) noexcept
+  basic_string_view<CharT, Traits> x,
+  basic_string_view<CharT, Traits> y) noexcept
 {
-    return x.compare(y) <= 0;
+  return x.compare(y) <= 0;
 }
 
 template<typename CharT, typename Traits, typename Allocator>
 constexpr bool operator<=(
-    basic_string_view<CharT, Traits> x,
-    PL_IN const std::basic_string<CharT, Traits, Allocator>& y) noexcept
+  basic_string_view<CharT, Traits> x,
+  PL_IN const std::basic_string<CharT, Traits, Allocator>& y) noexcept
 {
-    return x <= basic_string_view<CharT, Traits>{y};
+  return x <= basic_string_view<CharT, Traits>{y};
 }
 
 template<typename CharT, typename Traits, typename Allocator>
 constexpr bool operator<=(
-    PL_IN const std::basic_string<CharT, Traits, Allocator>& x,
-    basic_string_view<CharT, Traits>                         y) noexcept
+  PL_IN const std::basic_string<CharT, Traits, Allocator>& x,
+  basic_string_view<CharT, Traits>                         y) noexcept
 {
-    return basic_string_view<CharT, Traits>{x} <= y;
+  return basic_string_view<CharT, Traits>{x} <= y;
 }
 
 template<typename CharT, typename Traits>
 constexpr bool operator<=(
-    basic_string_view<CharT, Traits> x,
-    PL_IN PL_NULL_TERMINATED(const CharT*) y) noexcept
+  basic_string_view<CharT, Traits> x,
+  PL_IN                            PL_NULL_TERMINATED(const CharT*) y) noexcept
 {
-    return x <= basic_string_view<CharT, Traits>{y};
+  return x <= basic_string_view<CharT, Traits>{y};
 }
 
 template<typename CharT, typename Traits>
 constexpr bool operator<=(
-    PL_IN                            PL_NULL_TERMINATED(const CharT*) x,
-    basic_string_view<CharT, Traits> y) noexcept
+  PL_IN                            PL_NULL_TERMINATED(const CharT*) x,
+  basic_string_view<CharT, Traits> y) noexcept
 {
-    return basic_string_view<CharT, Traits>{x} <= y;
+  return basic_string_view<CharT, Traits>{x} <= y;
 }
 
 template<typename CharT, typename Traits>
 constexpr bool operator>=(
-    basic_string_view<CharT, Traits> x,
-    basic_string_view<CharT, Traits> y) noexcept
+  basic_string_view<CharT, Traits> x,
+  basic_string_view<CharT, Traits> y) noexcept
 {
-    return x.compare(y) >= 0;
+  return x.compare(y) >= 0;
 }
 
 template<typename CharT, typename Traits, typename Allocator>
 constexpr bool operator>=(
-    basic_string_view<CharT, Traits> x,
-    PL_IN const std::basic_string<CharT, Traits, Allocator>& y) noexcept
+  basic_string_view<CharT, Traits> x,
+  PL_IN const std::basic_string<CharT, Traits, Allocator>& y) noexcept
 {
-    return x >= basic_string_view<CharT, Traits>{y};
+  return x >= basic_string_view<CharT, Traits>{y};
 }
 
 template<typename CharT, typename Traits, typename Allocator>
 constexpr bool operator>=(
-    PL_IN const std::basic_string<CharT, Traits, Allocator>& x,
-    basic_string_view<CharT, Traits>                         y) noexcept
+  PL_IN const std::basic_string<CharT, Traits, Allocator>& x,
+  basic_string_view<CharT, Traits>                         y) noexcept
 {
-    return basic_string_view<CharT, Traits>{x} >= y;
+  return basic_string_view<CharT, Traits>{x} >= y;
 }
 
 template<typename CharT, typename Traits>
 constexpr bool operator>=(
-    basic_string_view<CharT, Traits> x,
-    PL_IN PL_NULL_TERMINATED(const CharT*) y) noexcept
+  basic_string_view<CharT, Traits> x,
+  PL_IN                            PL_NULL_TERMINATED(const CharT*) y) noexcept
 {
-    return x >= basic_string_view<CharT, Traits>{y};
+  return x >= basic_string_view<CharT, Traits>{y};
 }
 
 template<typename CharT, typename Traits>
 constexpr bool operator>=(
-    PL_IN                            PL_NULL_TERMINATED(const CharT*) x,
-    basic_string_view<CharT, Traits> y) noexcept
+  PL_IN                            PL_NULL_TERMINATED(const CharT*) x,
+  basic_string_view<CharT, Traits> y) noexcept
 {
-    return basic_string_view<CharT, Traits>{x} >= y;
+  return basic_string_view<CharT, Traits>{x} >= y;
 }
 
 using string_view    = basic_string_view<char>;
@@ -901,31 +900,31 @@ using wstring_view   = basic_string_view<wchar_t>;
 inline namespace literals {
 inline namespace string_view_literals {
 constexpr string_view operator""_sv(
-    PL_IN       PL_NULL_TERMINATED(const char*) string,
-    std::size_t size) noexcept
+  PL_IN       PL_NULL_TERMINATED(const char*) string,
+  std::size_t size) noexcept
 {
-    return string_view{string, size};
+  return string_view{string, size};
 }
 
 constexpr u16string_view operator""_sv(
-    PL_IN       PL_NULL_TERMINATED(const char16_t*) string,
-    std::size_t size) noexcept
+  PL_IN       PL_NULL_TERMINATED(const char16_t*) string,
+  std::size_t size) noexcept
 {
-    return u16string_view{string, size};
+  return u16string_view{string, size};
 }
 
 constexpr u32string_view operator""_sv(
-    PL_IN       PL_NULL_TERMINATED(const char32_t*) string,
-    std::size_t size) noexcept
+  PL_IN       PL_NULL_TERMINATED(const char32_t*) string,
+  std::size_t size) noexcept
 {
-    return u32string_view{string, size};
+  return u32string_view{string, size};
 }
 
 constexpr wstring_view operator""_sv(
-    PL_IN       PL_NULL_TERMINATED(const wchar_t*) string,
-    std::size_t size) noexcept
+  PL_IN       PL_NULL_TERMINATED(const wchar_t*) string,
+  std::size_t size) noexcept
 {
-    return wstring_view{string, size};
+  return wstring_view{string, size};
 }
 } // inline namespace string_view_literals
 } // inline namespace literals
@@ -934,16 +933,16 @@ constexpr wstring_view operator""_sv(
 namespace std {
 template<typename CharT, typename Traits>
 struct hash<::pl::basic_string_view<CharT, Traits>> {
-    size_t operator()(::pl::basic_string_view<CharT, Traits> str_view) const
-    {
-        size_t hash_seed{0U};
+  size_t operator()(::pl::basic_string_view<CharT, Traits> str_view) const
+  {
+    size_t hash_seed{0U};
 
-        for (auto character : str_view) {
-            ::pl::detail::add_hash(hash_seed, character);
-        }
-
-        return hash_seed;
+    for (auto character : str_view) {
+      ::pl::detail::add_hash(hash_seed, character);
     }
+
+    return hash_seed;
+  }
 };
 } // namespace std
 #if PL_COMPILER == PL_COMPILER_MSVC

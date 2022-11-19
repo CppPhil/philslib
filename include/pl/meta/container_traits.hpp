@@ -84,7 +84,7 @@ struct container_traits;
  **/
 template<typename Type, typename Allocator>
 struct container_traits<std::vector<Type, Allocator>> {
-    using category = vectorlike_tag;
+  using category = vectorlike_tag;
 };
 
 /*!
@@ -93,7 +93,7 @@ struct container_traits<std::vector<Type, Allocator>> {
  **/
 template<typename Type, typename Allocator>
 struct container_traits<std::deque<Type, Allocator>> {
-    using category = vectorlike_tag;
+  using category = vectorlike_tag;
 };
 
 /*!
@@ -102,7 +102,7 @@ struct container_traits<std::deque<Type, Allocator>> {
  **/
 template<typename CharT, typename CharTraits, typename Allocator>
 struct container_traits<std::basic_string<CharT, CharTraits, Allocator>> {
-    using category = vectorlike_tag;
+  using category = vectorlike_tag;
 };
 
 /*!
@@ -111,7 +111,7 @@ struct container_traits<std::basic_string<CharT, CharTraits, Allocator>> {
  **/
 template<typename Type, typename Allocator>
 struct container_traits<std::list<Type, Allocator>> {
-    using category = listlike_tag;
+  using category = listlike_tag;
 };
 
 /*!
@@ -120,7 +120,7 @@ struct container_traits<std::list<Type, Allocator>> {
  **/
 template<typename Type, typename Allocator>
 struct container_traits<std::forward_list<Type, Allocator>> {
-    using category = listlike_tag;
+  using category = listlike_tag;
 };
 
 /*!
@@ -129,7 +129,7 @@ struct container_traits<std::forward_list<Type, Allocator>> {
  **/
 template<typename Type, typename Comparator, typename Allocator>
 struct container_traits<std::set<Type, Comparator, Allocator>> {
-    using category = associative_tag;
+  using category = associative_tag;
 };
 
 /*!
@@ -138,7 +138,7 @@ struct container_traits<std::set<Type, Comparator, Allocator>> {
  **/
 template<typename Type, typename Comparator, typename Allocator>
 struct container_traits<std::multiset<Type, Comparator, Allocator>> {
-    using category = associative_tag;
+  using category = associative_tag;
 };
 
 /*!
@@ -147,7 +147,7 @@ struct container_traits<std::multiset<Type, Comparator, Allocator>> {
  **/
 template<typename Type, typename Comparator, typename Allocator>
 struct container_traits<std::unordered_set<Type, Comparator, Allocator>> {
-    using category = associative_tag;
+  using category = associative_tag;
 };
 
 /*!
@@ -156,7 +156,7 @@ struct container_traits<std::unordered_set<Type, Comparator, Allocator>> {
  **/
 template<typename Type, typename Comparator, typename Allocator>
 struct container_traits<std::unordered_multiset<Type, Comparator, Allocator>> {
-    using category = associative_tag;
+  using category = associative_tag;
 };
 
 /*!
@@ -165,7 +165,7 @@ struct container_traits<std::unordered_multiset<Type, Comparator, Allocator>> {
  **/
 template<typename Type, typename Comparator, typename Allocator>
 struct container_traits<std::map<Type, Comparator, Allocator>> {
-    using category = associative_tag;
+  using category = associative_tag;
 };
 
 /*!
@@ -174,7 +174,7 @@ struct container_traits<std::map<Type, Comparator, Allocator>> {
  **/
 template<typename Type, typename Comparator, typename Allocator>
 struct container_traits<std::multimap<Type, Comparator, Allocator>> {
-    using category = associative_tag;
+  using category = associative_tag;
 };
 
 /*!
@@ -183,7 +183,7 @@ struct container_traits<std::multimap<Type, Comparator, Allocator>> {
  **/
 template<typename Type, typename Comparator, typename Allocator>
 struct container_traits<std::unordered_map<Type, Comparator, Allocator>> {
-    using category = associative_tag;
+  using category = associative_tag;
 };
 
 /*!
@@ -192,7 +192,7 @@ struct container_traits<std::unordered_map<Type, Comparator, Allocator>> {
  **/
 template<typename Type, typename Comparator, typename Allocator>
 struct container_traits<std::unordered_multimap<Type, Comparator, Allocator>> {
-    using category = associative_tag;
+  using category = associative_tag;
 };
 
 /*!
@@ -202,7 +202,7 @@ struct container_traits<std::unordered_multimap<Type, Comparator, Allocator>> {
  **/
 template<typename Container>
 using container_traits_category =
-    typename container_traits<Container>::category;
+  typename container_traits<Container>::category;
 } // namespace meta
 } // namespace pl
 #endif // INCG_PL_META_CONTAINER_TRAITS_HPP

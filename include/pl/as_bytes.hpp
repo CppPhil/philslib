@@ -46,7 +46,7 @@ namespace pl {
 template<typename Type>
 constexpr byte* as_bytes(PL_IN Type& object) noexcept
 {
-    return ::pl::unrelated_pointer_cast<byte*>(std::addressof(object));
+  return ::pl::unrelated_pointer_cast<byte*>(std::addressof(object));
 }
 
 /*!
@@ -59,7 +59,7 @@ constexpr byte* as_bytes(PL_IN Type& object) noexcept
 template<typename Type>
 constexpr const byte* as_bytes(PL_IN const Type& object) noexcept
 {
-    return ::pl::unrelated_pointer_cast<const byte*>(std::addressof(object));
+  return ::pl::unrelated_pointer_cast<const byte*>(std::addressof(object));
 }
 
 /*!

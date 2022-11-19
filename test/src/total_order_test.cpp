@@ -40,33 +40,33 @@ namespace pl {
 namespace test {
 namespace {
 struct t1 {
-    int i;
+  int i;
 
-    constexpr friend bool operator<(t1 lhs, t1 rhs)
-    {
-        return lhs.i < rhs.i;
-    }
+  constexpr friend bool operator<(t1 lhs, t1 rhs)
+  {
+    return lhs.i < rhs.i;
+  }
 
-    constexpr friend bool operator==(t1 lhs, t1 rhs)
-    {
-        return lhs.i == rhs.i;
-    }
+  constexpr friend bool operator==(t1 lhs, t1 rhs)
+  {
+    return lhs.i == rhs.i;
+  }
 };
 
 PL_TOTAL_ORDER_CONSTEXPR(t1)
 
 struct t2 {
-    int i;
+  int i;
 
-    friend bool operator<(t2 lhs, t2 rhs)
-    {
-        return lhs.i < rhs.i;
-    }
+  friend bool operator<(t2 lhs, t2 rhs)
+  {
+    return lhs.i < rhs.i;
+  }
 
-    friend bool operator==(t2 lhs, t2 rhs)
-    {
-        return lhs.i == rhs.i;
-    }
+  friend bool operator==(t2 lhs, t2 rhs)
+  {
+    return lhs.i == rhs.i;
+  }
 };
 
 PL_TOTAL_ORDER(t2)
@@ -76,27 +76,27 @@ PL_TOTAL_ORDER(t2)
 
 TEST_CASE("total_order_test")
 {
-    constexpr pl::test::t1 a1{5};
-    constexpr pl::test::t1 b1{6};
+  constexpr pl::test::t1 a1{5};
+  constexpr pl::test::t1 b1{6};
 
-    PL_TEST_STATIC_ASSERT(a1 < b1);
-    PL_TEST_STATIC_ASSERT(a1 == a1);
-    PL_TEST_STATIC_ASSERT(a1 != b1);
-    PL_TEST_STATIC_ASSERT(b1 > a1);
-    PL_TEST_STATIC_ASSERT(a1 <= a1);
-    PL_TEST_STATIC_ASSERT(a1 <= b1);
-    PL_TEST_STATIC_ASSERT(b1 >= b1);
-    PL_TEST_STATIC_ASSERT(b1 >= a1);
+  PL_TEST_STATIC_ASSERT(a1 < b1);
+  PL_TEST_STATIC_ASSERT(a1 == a1);
+  PL_TEST_STATIC_ASSERT(a1 != b1);
+  PL_TEST_STATIC_ASSERT(b1 > a1);
+  PL_TEST_STATIC_ASSERT(a1 <= a1);
+  PL_TEST_STATIC_ASSERT(a1 <= b1);
+  PL_TEST_STATIC_ASSERT(b1 >= b1);
+  PL_TEST_STATIC_ASSERT(b1 >= a1);
 
-    const pl::test::t2 a2{5};
-    const pl::test::t2 b2{6};
+  const pl::test::t2 a2{5};
+  const pl::test::t2 b2{6};
 
-    CHECK_UNARY(a2 < b2);
-    CHECK_UNARY(a2 == a2);
-    CHECK_UNARY(a2 != b2);
-    CHECK_UNARY(b2 > a2);
-    CHECK_UNARY(a2 <= a2);
-    CHECK_UNARY(a2 <= b2);
-    CHECK_UNARY(b2 >= b2);
-    CHECK_UNARY(b2 >= a2);
+  CHECK_UNARY(a2 < b2);
+  CHECK_UNARY(a2 == a2);
+  CHECK_UNARY(a2 != b2);
+  CHECK_UNARY(b2 > a2);
+  CHECK_UNARY(a2 <= a2);
+  CHECK_UNARY(a2 <= b2);
+  CHECK_UNARY(b2 >= b2);
+  CHECK_UNARY(b2 >= a2);
 }

@@ -51,28 +51,27 @@ namespace algo {
  **/
 template<typename ForwardIterator>
 inline void uninitialized_default_construct(
-    ForwardIterator first,
-    ForwardIterator last)
+  ForwardIterator first,
+  ForwardIterator last)
 {
-    using value_type =
-        typename std::iterator_traits<ForwardIterator>::value_type;
+  using value_type = typename std::iterator_traits<ForwardIterator>::value_type;
 
-    ForwardIterator cur{first};
+  ForwardIterator cur{first};
 
-    try {
-        while (cur != last) {
-            ::new (PL_VOIDIFY(*cur)) value_type;
-            ++cur;
-        }
+  try {
+    while (cur != last) {
+      ::new (PL_VOIDIFY(*cur)) value_type;
+      ++cur;
     }
-    catch (...) {
-        while (first != cur) {
-            first->~value_type();
-            ++first;
-        }
-
-        throw;
+  }
+  catch (...) {
+    while (first != cur) {
+      first->~value_type();
+      ++first;
     }
+
+    throw;
+  }
 }
 } // namespace algo
 } // namespace pl

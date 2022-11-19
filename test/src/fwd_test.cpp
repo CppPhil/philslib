@@ -41,18 +41,18 @@ namespace test {
 namespace {
 int f(const int&&)
 {
-    return 0;
+  return 0;
 }
 
 int f(const int&)
 {
-    return 1;
+  return 1;
 }
 
 template<typename Ty>
 int g(Ty&& ty)
 {
-    return f(PL_FWD(ty));
+  return f(PL_FWD(ty));
 }
 } // anonymous namespace
 } // namespace test
@@ -60,18 +60,18 @@ int g(Ty&& ty)
 
 TEST_CASE("fwd_test")
 {
-    int       i{};
-    const int j{};
+  int       i{};
+  const int j{};
 
-    const int res1{pl::test::g(i)};
-    const int res2{pl::test::g(j)};
-    const int res3{pl::test::g(std::move(i))};
-    const int res4{pl::test::g(std::move(j))};
-    const int res5{pl::test::g(1)};
+  const int res1{pl::test::g(i)};
+  const int res2{pl::test::g(j)};
+  const int res3{pl::test::g(std::move(i))};
+  const int res4{pl::test::g(std::move(j))};
+  const int res5{pl::test::g(1)};
 
-    CHECK(res1 == 1);
-    CHECK(res2 == 1);
-    CHECK(res3 == 0);
-    CHECK(res4 == 0);
-    CHECK(res5 == 0);
+  CHECK(res1 == 1);
+  CHECK(res2 == 1);
+  CHECK(res3 == 0);
+  CHECK(res4 == 0);
+  CHECK(res5 == 0);
 }

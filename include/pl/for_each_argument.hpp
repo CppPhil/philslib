@@ -50,10 +50,10 @@ namespace pl {
 template<typename Callable, typename... Args>
 inline Callable for_each_argument(Callable callable, PL_IN Args&&... args)
 {
-    (void)std::initializer_list<int>{
-        ((void)::pl::invoke(callable, std::forward<Args>(args)), 0)...};
+  (void)std::initializer_list<int>{
+    ((void)::pl::invoke(callable, std::forward<Args>(args)), 0)...};
 
-    return callable;
+  return callable;
 }
 } // namespace pl
 #endif // INCG_PL_FOR_EACH_ARGUMENT_HPP

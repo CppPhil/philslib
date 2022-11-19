@@ -47,16 +47,16 @@ namespace detail {
  **/
 template<typename Hashable>
 void add_hash(
-    PL_INOUT std::size_t& hash_seed,
-    PL_IN const Hashable& hashable) noexcept
+  PL_INOUT std::size_t& hash_seed,
+  PL_IN const Hashable& hashable) noexcept
 {
-    static constexpr auto shift_right  = 0x2;
-    static constexpr auto shift_left   = 0x6;
-    static constexpr auto golden_ratio = 0x9E3779B9;
+  static constexpr auto shift_right  = 0x2;
+  static constexpr auto shift_left   = 0x6;
+  static constexpr auto golden_ratio = 0x9E3779B9;
 
-    std::hash<Hashable> hasher{};
-    hash_seed ^= hasher(hashable) + golden_ratio + (hash_seed << shift_left)
-                 + (hash_seed >> shift_right);
+  std::hash<Hashable> hasher{};
+  hash_seed ^= hasher(hashable) + golden_ratio + (hash_seed << shift_left)
+               + (hash_seed >> shift_right);
 }
 } // namespace detail
 
@@ -72,11 +72,11 @@ void add_hash(
 template<typename... Args>
 std::size_t hash(PL_IN const Args&... args) noexcept
 {
-    std::size_t hash_seed{0U};
+  std::size_t hash_seed{0U};
 
-    (void)std::initializer_list<int>{(detail::add_hash(hash_seed, args), 0)...};
+  (void)std::initializer_list<int>{(detail::add_hash(hash_seed, args), 0)...};
 
-    return hash_seed;
+  return hash_seed;
 }
 } // namespace pl
 #endif // INCG_PL_HASH_HPP

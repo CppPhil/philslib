@@ -40,41 +40,41 @@
 
 TEST_CASE("zero_memory_test")
 {
-    auto ary = pl::cont::make_array(
-        static_cast<pl::byte>(0xAB),
-        static_cast<pl::byte>(0xCD),
-        static_cast<pl::byte>(0xEF),
-        static_cast<pl::byte>(0x10));
+  auto ary = pl::cont::make_array(
+    static_cast<pl::byte>(0xAB),
+    static_cast<pl::byte>(0xCD),
+    static_cast<pl::byte>(0xEF),
+    static_cast<pl::byte>(0x10));
 
-    std::uint64_t i{UINT64_C(0x1A1BAABBCCDDEEFF)};
+  std::uint64_t i{UINT64_C(0x1A1BAABBCCDDEEFF)};
+
+  for (pl::byte byte : ary) {
+    REQUIRE(byte != static_cast<pl::byte>(0x00));
+  }
+
+  REQUIRE(i != UINT64_C(0));
+
+  SUBCASE("zero_memory")
+  {
+    pl::zero_memory(ary.data(), ary.size());
 
     for (pl::byte byte : ary) {
-        REQUIRE(byte != static_cast<pl::byte>(0x00));
+      CHECK(byte == static_cast<pl::byte>(0x00));
     }
 
-    REQUIRE(i != UINT64_C(0));
+    pl::zero_memory(&i, sizeof(i));
+    CHECK(i == UINT64_C(0));
+  }
 
-    SUBCASE("zero_memory")
-    {
-        pl::zero_memory(ary.data(), ary.size());
+  SUBCASE("secure_zero_memory")
+  {
+    pl::secure_zero_memory(ary.data(), ary.size());
 
-        for (pl::byte byte : ary) {
-            CHECK(byte == static_cast<pl::byte>(0x00));
-        }
-
-        pl::zero_memory(&i, sizeof(i));
-        CHECK(i == UINT64_C(0));
+    for (pl::byte byte : ary) {
+      CHECK(byte == static_cast<pl::byte>(0x00));
     }
 
-    SUBCASE("secure_zero_memory")
-    {
-        pl::secure_zero_memory(ary.data(), ary.size());
-
-        for (pl::byte byte : ary) {
-            CHECK(byte == static_cast<pl::byte>(0x00));
-        }
-
-        pl::secure_zero_memory(&i, sizeof(i));
-        CHECK(i == UINT64_C(0));
-    }
+    pl::secure_zero_memory(&i, sizeof(i));
+    CHECK(i == UINT64_C(0));
+  }
 }

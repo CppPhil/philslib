@@ -52,41 +52,38 @@ namespace pl {
  *          Invalid characters will be mapped to garbage bytes.
  **/
 inline std::vector<byte> unhexify(
-    string_view hex_string,
-    std::size_t delimiter_size)
+  string_view hex_string,
+  std::size_t delimiter_size)
 {
-    constexpr std::size_t          nibbles_per_byte{2U};
-    constexpr std::size_t          high_nibble_offset{0U};
-    constexpr std::size_t          low_nibble_offset{1U};
-    constexpr std::array<byte, 2U> offsets{{0U, 9U}};
+  constexpr std::size_t          nibbles_per_byte{2U};
+  constexpr std::size_t          high_nibble_offset{0U};
+  constexpr std::size_t          low_nibble_offset{1U};
+  constexpr std::array<byte, 2U> offsets{{0U, 9U}};
 
-    if (hex_string.size() < nibbles_per_byte) {
-        PL_THROW_WITH_SOURCE_INFO(
-            invalid_size_exception, "hex_string was smaller than 2!");
-    }
+  if (hex_string.size() < nibbles_per_byte) {
+    PL_THROW_WITH_SOURCE_INFO(
+      invalid_size_exception, "hex_string was smaller than 2!");
+  }
 
-    const std::size_t stride{nibbles_per_byte + delimiter_size};
-    const std::size_t byte_count{(hex_string.size() + delimiter_size) / stride};
+  const std::size_t stride{nibbles_per_byte + delimiter_size};
+  const std::size_t byte_count{(hex_string.size() + delimiter_size) / stride};
 
-    std::vector<byte> buffer(byte_count);
+  std::vector<byte> buffer(byte_count);
 
-    for (std::size_t i{0U}; i < hex_string.size(); i += stride) {
-        const byte high_nibble{
-            static_cast<byte>(hex_string[i + high_nibble_offset])};
-        const byte low_nibble{
-            static_cast<byte>(hex_string[i + low_nibble_offset])};
+  for (std::size_t i{0U}; i < hex_string.size(); i += stride) {
+    const byte high_nibble{
+      static_cast<byte>(hex_string[i + high_nibble_offset])};
+    const byte low_nibble{static_cast<byte>(hex_string[i + low_nibble_offset])};
 
-        using namespace pl::literals::integer_literals;
+    using namespace pl::literals::integer_literals;
 
-        buffer.at(i / stride) = static_cast<byte>(
-            (((high_nibble & 0xF_byte)
-              + offsets[(high_nibble & 0x40_byte) != 0_byte])
-             << 4_byte)
-            | ((low_nibble & 0xF_byte)
-               + offsets[(low_nibble & 0x40_byte) != 0_byte]));
-    }
+    buffer.at(i / stride) = static_cast<byte>(
+      (((high_nibble & 0xF_byte) + offsets[(high_nibble & 0x40_byte) != 0_byte])
+       << 4_byte)
+      | ((low_nibble & 0xF_byte) + offsets[(low_nibble & 0x40_byte) != 0_byte]));
+  }
 
-    return buffer;
+  return buffer;
 }
 } // namespace pl
 #endif // INCG_PL_UNHEXIFY_HPP

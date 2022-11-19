@@ -44,10 +44,10 @@ namespace detail {
  **/
 template<typename Ty, typename Continuation>
 inline auto then_impl(
-    PL_INOUT std::future<Ty>& future,
-    PL_IN Continuation& continuation) -> decltype(auto)
+  PL_INOUT std::future<Ty>& future,
+  PL_IN Continuation& continuation) -> decltype(auto)
 {
-    return ::pl::invoke(continuation, future.get());
+  return ::pl::invoke(continuation, future.get());
 }
 
 /*!
@@ -56,11 +56,11 @@ inline auto then_impl(
  **/
 template<typename Continuation>
 inline auto then_impl(
-    PL_INOUT std::future<void>& future,
-    PL_IN Continuation& continuation) -> decltype(auto)
+  PL_INOUT std::future<void>& future,
+  PL_IN Continuation& continuation) -> decltype(auto)
 {
-    future.wait();
-    return ::pl::invoke(continuation);
+  future.wait();
+  return ::pl::invoke(continuation);
 }
 } // namespace detail
 
@@ -79,15 +79,15 @@ inline auto then_impl(
  **/
 template<typename Ty, typename Continuation>
 inline auto then(std::future<Ty> future, Continuation continuation)
-    -> decltype(auto)
+  -> decltype(auto)
 {
-    return std::async(
-        std::launch::async,
-        [](std::future<Ty> fut, Continuation cont) {
-            return detail::then_impl(fut, cont);
-        },
-        std::move(future),
-        std::move(continuation));
+  return std::async(
+    std::launch::async,
+    [](std::future<Ty> fut, Continuation cont) {
+      return detail::then_impl(fut, cont);
+    },
+    std::move(future),
+    std::move(continuation));
 }
 } // namespace thd
 } // namespace pl

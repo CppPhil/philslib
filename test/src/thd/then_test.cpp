@@ -40,26 +40,26 @@
 
 TEST_CASE("then_test")
 {
-    std::future<int> fut1{pl::thd::then(
-        pl::thd::then(
-            std::async(
-                std::launch::async, [](int i) { return i * 2; }, 3),
-            [](int j) { return j + 2; }),
-        [](int k) { return k / 2; })};
+  std::future<int> fut1{pl::thd::then(
+    pl::thd::then(
+      std::async(
+        std::launch::async, [](int i) { return i * 2; }, 3),
+      [](int j) { return j + 2; }),
+    [](int k) { return k / 2; })};
 
-    CHECK(fut1.get() == 4);
+  CHECK(fut1.get() == 4);
 
-    std::string string1{};
-    std::string string2{};
+  std::string string1{};
+  std::string string2{};
 
-    std::future<void> fut2{std::async(
-        std::launch::async, [&string1] { string1 = "async task completed"; })};
+  std::future<void> fut2{std::async(
+    std::launch::async, [&string1] { string1 = "async task completed"; })};
 
-    std::future<void> fut3{pl::thd::then(
-        std::move(fut2), [&string2] { string2 = "continuation completed"; })};
+  std::future<void> fut3{pl::thd::then(
+    std::move(fut2), [&string2] { string2 = "continuation completed"; })};
 
-    fut3.wait();
+  fut3.wait();
 
-    CHECK(string1 == "async task completed");
-    CHECK(string2 == "continuation completed");
+  CHECK(string1 == "async task completed");
+  CHECK(string2 == "continuation completed");
 }

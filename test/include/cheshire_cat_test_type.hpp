@@ -34,41 +34,41 @@ namespace pl {
 namespace test {
 class cheshire_cat_test_type {
 public:
-    using this_type = cheshire_cat_test_type;
+  using this_type = cheshire_cat_test_type;
 
-    cheshire_cat_test_type() noexcept;
+  cheshire_cat_test_type() noexcept;
 
-    cheshire_cat_test_type(std::uint32_t a, pl::string_view sv) noexcept;
+  cheshire_cat_test_type(std::uint32_t a, pl::string_view sv) noexcept;
 
-    cheshire_cat_test_type(const this_type&);
+  cheshire_cat_test_type(const this_type&);
 
-    cheshire_cat_test_type(this_type&&) noexcept;
+  cheshire_cat_test_type(this_type&&) noexcept;
 
-    this_type& operator=(const this_type&);
+  this_type& operator=(const this_type&);
 
-    this_type& operator=(this_type&&) noexcept;
+  this_type& operator=(this_type&&) noexcept;
 
-    ~cheshire_cat_test_type();
+  ~cheshire_cat_test_type();
 
-    void swap(this_type& other) noexcept;
+  void swap(this_type& other) noexcept;
 
-    std::uint32_t sum() const noexcept;
+  std::uint32_t sum() const noexcept;
 
-    friend bool operator==(
-        const cheshire_cat_test_type& a,
-        const cheshire_cat_test_type& b) noexcept;
+  friend bool operator==(
+    const cheshire_cat_test_type& a,
+    const cheshire_cat_test_type& b) noexcept;
 
 private:
-    class implementation;
+  class implementation;
 
-    pl::cheshire_cat<implementation, /* bytes */ 48U, /* alignment */ 8U> m_cc;
+  pl::cheshire_cat<implementation, /* bytes */ 48U, /* alignment */ 8U> m_cc;
 };
 
 void swap(cheshire_cat_test_type& a, cheshire_cat_test_type& b) noexcept;
 
 bool operator!=(
-    const cheshire_cat_test_type& a,
-    const cheshire_cat_test_type& b) noexcept;
+  const cheshire_cat_test_type& a,
+  const cheshire_cat_test_type& b) noexcept;
 } // namespace test
 } // namespace pl
 #endif // INCG_PL_TEST_CHESHIRE_CAT_TEST_TYPE_HPP

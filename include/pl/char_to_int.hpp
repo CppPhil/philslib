@@ -42,7 +42,7 @@ namespace pl {
  **/
 constexpr std::uint8_t char_to_int(unsigned char ch)
 {
-    return static_cast<std::uint8_t>(ch - static_cast<unsigned char>('0'));
+  return static_cast<std::uint8_t>(ch - static_cast<unsigned char>('0'));
 }
 } // namespace pl
 #endif // INCG_PL_CHAR_TO_INT_HPP

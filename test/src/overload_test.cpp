@@ -38,23 +38,23 @@
 
 TEST_CASE("overload_simple_test")
 {
-    CHECK(pl::overload([](int i, int j) { return i * j; })(5, 8) == 40);
+  CHECK(pl::overload([](int i, int j) { return i * j; })(5, 8) == 40);
 }
 
 TEST_CASE("overload_advanced_test")
 {
-    const std::string string{"Text"};
+  const std::string string{"Text"};
 
-    auto        l1 = [](int i) { return i * i; };
-    const auto  l2 = [](double d1, double d2) { return d1 + d2; };
-    auto        l3 = [](const std::string& s) { return s.front(); };
-    const auto& r  = l3;
+  auto        l1 = [](int i) { return i * i; };
+  const auto  l2 = [](double d1, double d2) { return d1 + d2; };
+  auto        l3 = [](const std::string& s) { return s.front(); };
+  const auto& r  = l3;
 
-    const auto overload
-        = pl::overload(l1, l2, r, [](float f) { return f * 2.0F; });
+  const auto overload
+    = pl::overload(l1, l2, r, [](float f) { return f * 2.0F; });
 
-    CHECK(overload(5) == 25);
-    CHECK(overload(1.1, 2.2) == doctest::Approx(3.3));
-    CHECK(overload(string) == 'T');
-    CHECK(static_cast<double>(overload(3.0F)) == doctest::Approx(6.0));
+  CHECK(overload(5) == 25);
+  CHECK(overload(1.1, 2.2) == doctest::Approx(3.3));
+  CHECK(overload(string) == 'T');
+  CHECK(static_cast<double>(overload(3.0F)) == doctest::Approx(6.0));
 }

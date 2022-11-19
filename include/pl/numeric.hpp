@@ -42,7 +42,7 @@ namespace pl {
 template<typename Numeric>
 constexpr bool is_even(Numeric numeric)
 {
-    return ((numeric & Numeric{1}) == Numeric{});
+  return ((numeric & Numeric{1}) == Numeric{});
 }
 
 /*!
@@ -54,7 +54,7 @@ constexpr bool is_even(Numeric numeric)
 template<typename Numeric>
 constexpr bool is_odd(Numeric numeric)
 {
-    return not ::pl::is_even(numeric);
+  return not ::pl::is_even(numeric);
 }
 
 /*!
@@ -71,7 +71,7 @@ template<typename Numeric>
 constexpr bool
 is_between(Numeric check_me, Numeric lower_bound, Numeric upper_bound)
 {
-    return ((check_me >= lower_bound) and (check_me <= upper_bound));
+  return ((check_me >= lower_bound) and (check_me <= upper_bound));
 }
 } // namespace pl
 #endif // INCG_PL_NUMERIC_HPP

@@ -49,15 +49,15 @@ namespace {
 // this is just here to suppress pedantic MSVC warnings
 template<typename BidirectionalIterator, typename OutputIterator>
 OutputIterator reverse_copy(
-    BidirectionalIterator first,
-    BidirectionalIterator last,
-    OutputIterator        destination)
+  BidirectionalIterator first,
+  BidirectionalIterator last,
+  OutputIterator        destination)
 {
-    while (first != last) {
-        *(destination++) = *(--last);
-    }
+  while (first != last) {
+    *(destination++) = *(--last);
+  }
 
-    return destination;
+  return destination;
 }
 } // anonymous namespace
 } // namespace test
@@ -65,41 +65,41 @@ OutputIterator reverse_copy(
 
 TEST_CASE("print_bytes_as_hex_test")
 {
-    using namespace std::literals::string_literals;
+  using namespace std::literals::string_literals;
 
-    static constexpr pl::byte array[]{
-        static_cast<pl::byte>('\xDE'),
-        static_cast<pl::byte>('\xAD'),
-        static_cast<pl::byte>('\xC0'),
-        static_cast<pl::byte>('\xDE'),
-        static_cast<pl::byte>('\x00')};
+  static constexpr pl::byte array[]{
+    static_cast<pl::byte>('\xDE'),
+    static_cast<pl::byte>('\xAD'),
+    static_cast<pl::byte>('\xC0'),
+    static_cast<pl::byte>('\xDE'),
+    static_cast<pl::byte>('\x00')};
 
-    std::ostringstream oss{};
+  std::ostringstream oss{};
 
-    PL_TEST_STATIC_ASSERT(CHAR_BIT == 8);
+  PL_TEST_STATIC_ASSERT(CHAR_BIT == 8);
 
-    SUBCASE("default_delimiter")
-    {
-        oss << pl::print_bytes_as_hex{array, sizeof(array)};
-        CHECK(oss.str() == "DE AD C0 DE 00"s);
-    }
+  SUBCASE("default_delimiter")
+  {
+    oss << pl::print_bytes_as_hex{array, sizeof(array)};
+    CHECK(oss.str() == "DE AD C0 DE 00"s);
+  }
 
-    SUBCASE("no_delimiter")
-    {
-        std::uint32_t i{};
-        PL_TEST_STATIC_ASSERT(sizeof(i) <= sizeof(array));
-        std::memcpy(&i, array, sizeof(i));
-        oss << pl::print_bytes_as_hex{&i, sizeof(i), ""};
-        CHECK(oss.str() == "DEADC0DE"s);
-    }
+  SUBCASE("no_delimiter")
+  {
+    std::uint32_t i{};
+    PL_TEST_STATIC_ASSERT(sizeof(i) <= sizeof(array));
+    std::memcpy(&i, array, sizeof(i));
+    oss << pl::print_bytes_as_hex{&i, sizeof(i), ""};
+    CHECK(oss.str() == "DEADC0DE"s);
+  }
 
-    SUBCASE("custom_delimiter")
-    {
-        std::uint32_t i{};
-        PL_TEST_STATIC_ASSERT(sizeof(i) <= sizeof(array));
-        pl::test::reverse_copy(
-            std::cbegin(array), std::cend(array) - 1, pl::as_bytes(i));
-        oss << pl::print_bytes_as_hex{&i, sizeof(i), "-"};
-        CHECK(oss.str() == "DE-C0-AD-DE");
-    }
+  SUBCASE("custom_delimiter")
+  {
+    std::uint32_t i{};
+    PL_TEST_STATIC_ASSERT(sizeof(i) <= sizeof(array));
+    pl::test::reverse_copy(
+      std::cbegin(array), std::cend(array) - 1, pl::as_bytes(i));
+    oss << pl::print_bytes_as_hex{&i, sizeof(i), "-"};
+    CHECK(oss.str() == "DE-C0-AD-DE");
+  }
 }

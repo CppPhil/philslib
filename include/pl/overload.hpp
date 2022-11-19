@@ -42,23 +42,23 @@ namespace pl {
  **/
 template<typename Lambda1, typename... Lambdas>
 class overloaded
-    : public Lambda1
-    , public overloaded<Lambdas...> {
+  : public Lambda1
+  , public overloaded<Lambdas...> {
 public:
-    /*!
-     * \brief Creates an 'overloaded' object.
-     * \param lambda1 The first lambda to construct.
-     * \param lambdas The rest of the lambdas to construct.
-     **/
-    template<typename FirstLambda, typename... OtherLambdas>
-    overloaded(PL_IN FirstLambda&& lambda1, PL_IN OtherLambdas&&... lambdas)
-        : Lambda1{std::forward<FirstLambda>(lambda1)}
-        , overloaded<Lambdas...>{std::forward<OtherLambdas>(lambdas)...}
-    {
-    }
+  /*!
+   * \brief Creates an 'overloaded' object.
+   * \param lambda1 The first lambda to construct.
+   * \param lambdas The rest of the lambdas to construct.
+   **/
+  template<typename FirstLambda, typename... OtherLambdas>
+  overloaded(PL_IN FirstLambda&& lambda1, PL_IN OtherLambdas&&... lambdas)
+    : Lambda1{std::forward<FirstLambda>(lambda1)}
+    , overloaded<Lambdas...>{std::forward<OtherLambdas>(lambdas)...}
+  {
+  }
 
-    using Lambda1::               operator();
-    using overloaded<Lambdas...>::operator();
+  using Lambda1::               operator();
+  using overloaded<Lambdas...>::operator();
 };
 
 /*!
@@ -69,17 +69,17 @@ public:
 template<typename Lambda1>
 class overloaded<Lambda1> : public Lambda1 {
 public:
-    /*!
-     * \brief Constructs an 'overloaded' object.
-     * \param lambda1 The first lambda to construct.
-     **/
-    template<typename FirstLambda>
-    explicit overloaded(PL_IN FirstLambda&& lambda1)
-        : Lambda1{std::forward<FirstLambda>(lambda1)}
-    {
-    }
+  /*!
+   * \brief Constructs an 'overloaded' object.
+   * \param lambda1 The first lambda to construct.
+   **/
+  template<typename FirstLambda>
+  explicit overloaded(PL_IN FirstLambda&& lambda1)
+    : Lambda1{std::forward<FirstLambda>(lambda1)}
+  {
+  }
 
-    using Lambda1::operator();
+  using Lambda1::operator();
 };
 
 /*!
@@ -92,12 +92,12 @@ public:
 template<typename... Lambdas>
 inline auto overload(PL_IN Lambdas&&... lambdas)
 {
-    static_assert(
-        sizeof...(Lambdas) > 0,
-        "You must supply at least one argument to pl::overload");
+  static_assert(
+    sizeof...(Lambdas) > 0,
+    "You must supply at least one argument to pl::overload");
 
-    return overloaded<meta::remove_cvref_t<Lambdas>...>{
-        std::forward<Lambdas>(lambdas)...};
+  return overloaded<meta::remove_cvref_t<Lambdas>...>{
+    std::forward<Lambdas>(lambdas)...};
 }
 } // namespace pl
 #endif // INCG_PL_OVERLOAD_HPP

@@ -42,81 +42,80 @@
 
 TEST_CASE("to_array_general_test")
 {
-    int          c_array1[]{1, 2, 3, 4, 5};
-    const double c_array2[]{1.1, 2.2, 3.3};
+  int          c_array1[]{1, 2, 3, 4, 5};
+  const double c_array2[]{1.1, 2.2, 3.3};
 
-    auto       array1 = pl::cont::to_array(c_array1);
-    const auto array2 = pl::cont::to_array(c_array2);
+  auto       array1 = pl::cont::to_array(c_array1);
+  const auto array2 = pl::cont::to_array(c_array2);
 
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(array1), std::array<int, 5U>>::value);
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(array2), const std::array<double, 3U>>::value);
+  PL_TEST_STATIC_ASSERT(
+    std::is_same<decltype(array1), std::array<int, 5U>>::value);
+  PL_TEST_STATIC_ASSERT(
+    std::is_same<decltype(array2), const std::array<double, 3U>>::value);
 
-    REQUIRE(array1.size() == 5U);
-    CHECK(array1[0U] == 1);
-    CHECK(array1[1U] == 2);
-    CHECK(array1[2U] == 3);
-    CHECK(array1[3U] == 4);
-    CHECK(array1[4U] == 5);
+  REQUIRE(array1.size() == 5U);
+  CHECK(array1[0U] == 1);
+  CHECK(array1[1U] == 2);
+  CHECK(array1[2U] == 3);
+  CHECK(array1[3U] == 4);
+  CHECK(array1[4U] == 5);
 
-    REQUIRE(array2.size() == 3U);
-    CHECK(array2[0U] == doctest::Approx(1.1));
-    CHECK(array2[1U] == doctest::Approx(2.2));
-    CHECK(array2[2U] == doctest::Approx(3.3));
+  REQUIRE(array2.size() == 3U);
+  CHECK(array2[0U] == doctest::Approx(1.1));
+  CHECK(array2[1U] == doctest::Approx(2.2));
+  CHECK(array2[2U] == doctest::Approx(3.3));
 }
 
 TEST_CASE("to_array_one_element_test")
 {
-    const std::string c_array[]{std::string{"Hello World"}};
+  const std::string c_array[]{std::string{"Hello World"}};
 
-    const auto array = pl::cont::to_array(c_array);
+  const auto array = pl::cont::to_array(c_array);
 
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(array), const std::array<std::string, 1U>>::
-            value);
+  PL_TEST_STATIC_ASSERT(
+    std::is_same<decltype(array), const std::array<std::string, 1U>>::value);
 
-    REQUIRE(array.size() == 1U);
-    CHECK(array[0U] == std::string{"Hello World"});
+  REQUIRE(array.size() == 1U);
+  CHECK(array[0U] == std::string{"Hello World"});
 }
 
 TEST_CASE("to_array_constexpr_test")
 {
-    static constexpr int  a[]{1, 2, 3, 4, 5};
-    static constexpr auto std_array = pl::cont::to_array(a);
-    PL_TEST_STATIC_ASSERT(std_array[0U] == 1);
-    PL_TEST_STATIC_ASSERT(std_array[1U] == 2);
-    PL_TEST_STATIC_ASSERT(std_array[2U] == 3);
-    PL_TEST_STATIC_ASSERT(std_array[3U] == 4);
-    PL_TEST_STATIC_ASSERT(std_array[4U] == 5);
+  static constexpr int  a[]{1, 2, 3, 4, 5};
+  static constexpr auto std_array = pl::cont::to_array(a);
+  PL_TEST_STATIC_ASSERT(std_array[0U] == 1);
+  PL_TEST_STATIC_ASSERT(std_array[1U] == 2);
+  PL_TEST_STATIC_ASSERT(std_array[2U] == 3);
+  PL_TEST_STATIC_ASSERT(std_array[3U] == 4);
+  PL_TEST_STATIC_ASSERT(std_array[4U] == 5);
 
-    CHECK_UNARY(true);
+  CHECK_UNARY(true);
 }
 
 TEST_CASE("to_array_c_string_literal_test")
 {
-    const auto stdArray1 = pl::cont::to_array("test");
-    const auto stdArray2 = pl::cont::to_array("");
+  const auto stdArray1 = pl::cont::to_array("test");
+  const auto stdArray2 = pl::cont::to_array("");
 
-    REQUIRE(stdArray1.size() == 5U);
-    CHECK(std::strcmp(stdArray1.data(), "test") == 0);
+  REQUIRE(stdArray1.size() == 5U);
+  CHECK(std::strcmp(stdArray1.data(), "test") == 0);
 
-    REQUIRE(stdArray2.size() == 1U);
-    CHECK(stdArray2.front() == '\0');
+  REQUIRE(stdArray2.size() == 1U);
+  CHECK(stdArray2.front() == '\0');
 }
 
 #if PL_COMPILER != PL_COMPILER_MSVC
 TEST_CASE("to_array_rvalue_test")
 {
-    const auto stdArray1 = pl::cont::to_array({1, 2, 3});
-    const auto stdArray2 = pl::cont::to_array({std::make_unique<int>(20)});
+  const auto stdArray1 = pl::cont::to_array({1, 2, 3});
+  const auto stdArray2 = pl::cont::to_array({std::make_unique<int>(20)});
 
-    REQUIRE(stdArray1.size() == 3U);
-    CHECK(stdArray1[0U] == 1);
-    CHECK(stdArray1[1U] == 2);
-    CHECK(stdArray1[2U] == 3);
+  REQUIRE(stdArray1.size() == 3U);
+  CHECK(stdArray1[0U] == 1);
+  CHECK(stdArray1[1U] == 2);
+  CHECK(stdArray1[2U] == 3);
 
-    REQUIRE(stdArray2.size() == 1U);
-    CHECK(*(stdArray2.front()) == 20);
+  REQUIRE(stdArray2.size() == 1U);
+  CHECK(*(stdArray2.front()) == 20);
 }
 #endif // PL_COMPILER != PL_COMPILER_MSVC

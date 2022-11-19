@@ -44,8 +44,8 @@ namespace meta {
  **/
 template<bool BoolVal, typename Ty = void>
 struct disable_if {
-    // BoolVal is false -> ok.
-    using type = Ty;
+  // BoolVal is false -> ok.
+  using type = Ty;
 };
 
 /*!
@@ -59,7 +59,7 @@ struct disable_if {
  **/
 template<typename Ty>
 struct disable_if<true, Ty> {
-    // BoolVal is true -> SFINAE away.
+  // BoolVal is true -> SFINAE away.
 };
 
 /*!

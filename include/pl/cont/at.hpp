@@ -50,12 +50,12 @@ namespace cont {
 template<typename Ty, std::size_t Size>
 constexpr Ty& at(PL_IN Ty (&arr)[Size], std::size_t index)
 {
-    if (not(index < Size)) {
-        throw std::out_of_range{
-            "index was out of bounds in pl::cont::at (C-Array)"};
-    }
+  if (not(index < Size)) {
+    throw std::out_of_range{
+      "index was out of bounds in pl::cont::at (C-Array)"};
+  }
 
-    return arr[index];
+  return arr[index];
 }
 
 /*!
@@ -68,14 +68,14 @@ constexpr Ty& at(PL_IN Ty (&arr)[Size], std::size_t index)
  **/
 template<typename Container>
 constexpr auto at(PL_IN Container& container, std::size_t index)
-    -> decltype(container[container.size()])
+  -> decltype(container[container.size()])
 {
-    if (not(index < container.size())) {
-        throw std::out_of_range{
-            "index was out of bounds in pl::cont::at (container)"};
-    }
+  if (not(index < container.size())) {
+    throw std::out_of_range{
+      "index was out of bounds in pl::cont::at (container)"};
+  }
 
-    return container[index];
+  return container[index];
 }
 
 /*!
@@ -89,12 +89,12 @@ constexpr auto at(PL_IN Container& container, std::size_t index)
 template<typename Ty>
 constexpr Ty at(std::initializer_list<Ty> il, std::size_t index)
 {
-    if (not(index < il.size())) {
-        throw std::out_of_range{
-            "index was out of bounds in pl::cont::at (initializer_list)"};
-    }
+  if (not(index < il.size())) {
+    throw std::out_of_range{
+      "index was out of bounds in pl::cont::at (initializer_list)"};
+  }
 
-    return *(il.begin() + index);
+  return *(il.begin() + index);
 }
 } // namespace cont
 } // namespace pl

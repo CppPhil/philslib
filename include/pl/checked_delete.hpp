@@ -50,9 +50,9 @@ namespace pl {
 template<typename Ty>
 inline void checked_delete(PL_IN_OPT Ty* p) noexcept
 {
-    using incomplete_type_not_allowed = unsigned char[sizeof(Ty) ? 1 : -1];
-    (void)sizeof(incomplete_type_not_allowed);
-    delete p;
+  using incomplete_type_not_allowed = unsigned char[sizeof(Ty) ? 1 : -1];
+  (void)sizeof(incomplete_type_not_allowed);
+  delete p;
 }
 
 /*!
@@ -68,9 +68,9 @@ inline void checked_delete(PL_IN_OPT Ty* p) noexcept
 template<typename Ty>
 inline void checked_array_delete(PL_IN_OPT Ty* p) noexcept
 {
-    using incomplete_type_not_allowed = unsigned char[sizeof(Ty) ? 1 : -1];
-    (void)sizeof(incomplete_type_not_allowed);
-    delete[] p;
+  using incomplete_type_not_allowed = unsigned char[sizeof(Ty) ? 1 : -1];
+  (void)sizeof(incomplete_type_not_allowed);
+  delete[] p;
 }
 
 /*!
@@ -83,8 +83,8 @@ inline void checked_array_delete(PL_IN_OPT Ty* p) noexcept
 template<typename Ty>
 inline void checked_delete_and_null(PL_INOUT Ty*& p) noexcept
 {
-    ::pl::checked_delete(p);
-    p = nullptr;
+  ::pl::checked_delete(p);
+  p = nullptr;
 }
 
 /*!
@@ -97,8 +97,8 @@ inline void checked_delete_and_null(PL_INOUT Ty*& p) noexcept
 template<typename Ty>
 inline void checked_array_delete_and_null(PL_INOUT Ty*& p) noexcept
 {
-    ::pl::checked_array_delete(p);
-    p = nullptr;
+  ::pl::checked_array_delete(p);
+  p = nullptr;
 }
 } // namespace pl
 #endif // INCG_PL_CHECKED_DELETE_HPP

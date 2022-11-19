@@ -43,24 +43,24 @@ namespace {
 enum class test_enum { a, b, c };
 
 #if (PL_COMPILER != PL_COMPILER_MSVC) \
-    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
+  || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
 constexpr
 #endif
-    string_view
-    to_s(test_enum enm) noexcept
+  string_view
+  to_s(test_enum enm) noexcept
 {
-    using namespace pl::literals::string_view_literals;
+  using namespace pl::literals::string_view_literals;
 
-    switch (enm) {
-    case test_enum::a:
-        return "a"_sv;
-    case test_enum::b:
-        return "b"_sv;
-    case test_enum::c:
-        return "c"_sv;
-    }
+  switch (enm) {
+  case test_enum::a:
+    return "a"_sv;
+  case test_enum::b:
+    return "b"_sv;
+  case test_enum::c:
+    return "c"_sv;
+  }
 
-    PL_UNREACHABLE();
+  PL_UNREACHABLE();
 }
 } // anonymous namespace
 } // namespace test
@@ -68,17 +68,14 @@ constexpr
 
 TEST_CASE("unreachable_test")
 {
-    using namespace pl::literals::string_view_literals;
+  using namespace pl::literals::string_view_literals;
 #if (PL_COMPILER != PL_COMPILER_MSVC) \
-    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
-    PL_TEST_STATIC_ASSERT(
-        pl::test::to_s(pl::test::test_enum::a).front() == 'a');
-    PL_TEST_STATIC_ASSERT(
-        pl::test::to_s(pl::test::test_enum::b).front() == 'b');
-    PL_TEST_STATIC_ASSERT(
-        pl::test::to_s(pl::test::test_enum::c).front() == 'c');
+  || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
+  PL_TEST_STATIC_ASSERT(pl::test::to_s(pl::test::test_enum::a).front() == 'a');
+  PL_TEST_STATIC_ASSERT(pl::test::to_s(pl::test::test_enum::b).front() == 'b');
+  PL_TEST_STATIC_ASSERT(pl::test::to_s(pl::test::test_enum::c).front() == 'c');
 #endif
-    CHECK(pl::test::to_s(pl::test::test_enum::a) == "a"_sv);
-    CHECK(pl::test::to_s(pl::test::test_enum::b) == "b"_sv);
-    CHECK(pl::test::to_s(pl::test::test_enum::c) == "c"_sv);
+  CHECK(pl::test::to_s(pl::test::test_enum::a) == "a"_sv);
+  CHECK(pl::test::to_s(pl::test::test_enum::b) == "b"_sv);
+  CHECK(pl::test::to_s(pl::test::test_enum::c) == "c"_sv);
 }

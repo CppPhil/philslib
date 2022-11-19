@@ -45,11 +45,11 @@ namespace algo {
 template<typename Ty>
 inline void destroy_at(PL_OUT Ty* ptr)
 {
-    PL_DBG_CHECK_PRE(ptr != nullptr);
+  PL_DBG_CHECK_PRE(ptr != nullptr);
 
-    (void)ptr; // suppress msvc warning about parameter 'ptr' being 'unused'.
+  (void)ptr; // suppress msvc warning about parameter 'ptr' being 'unused'.
 
-    ptr->~Ty();
+  ptr->~Ty();
 }
 } // namespace algo
 } // namespace pl

@@ -42,41 +42,40 @@ namespace test {
 namespace {
 int fun(const int&)
 {
-    return 5;
+  return 5;
 }
 
 int fun(const int&&)
 {
-    return 7;
+  return 7;
 }
 
 template<typename Callable, typename Arg>
 int fun2(Callable&& callable, Arg&& arg)
 {
-    return std::forward<Callable>(callable)(std::forward<Arg>(arg));
+  return std::forward<Callable>(callable)(std::forward<Arg>(arg));
 }
 } // anonymous namespace
 } // namespace test
 } // namespace pl
 
-#if (PL_COMPILER != PL_COMPILER_MSVC)      \
-    && ((PL_COMPILER != PL_COMPILER_CLANG) \
-        || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(5, 0, 0)))
+#if (PL_COMPILER != PL_COMPILER_MSVC) \
+  && ((PL_COMPILER != PL_COMPILER_CLANG) || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(5, 0, 0)))
 TEST_CASE("lift_test")
 {
-    int       i{};
-    const int j{};
+  int       i{};
+  const int j{};
 
-    const int res1{pl::test::fun2(PL_LIFT(pl::test::fun), i)};
-    const int res2{pl::test::fun2(PL_LIFT(pl::test::fun), j)};
-    const int res3{pl::test::fun2(PL_LIFT(pl::test::fun), std::move(i))};
-    const int res4{pl::test::fun2(PL_LIFT(pl::test::fun), std::move(j))};
-    const int res5{pl::test::fun2(PL_LIFT(pl::test::fun), 8)};
+  const int res1{pl::test::fun2(PL_LIFT(pl::test::fun), i)};
+  const int res2{pl::test::fun2(PL_LIFT(pl::test::fun), j)};
+  const int res3{pl::test::fun2(PL_LIFT(pl::test::fun), std::move(i))};
+  const int res4{pl::test::fun2(PL_LIFT(pl::test::fun), std::move(j))};
+  const int res5{pl::test::fun2(PL_LIFT(pl::test::fun), 8)};
 
-    CHECK(res1 == 5);
-    CHECK(res2 == 5);
-    CHECK(res3 == 7);
-    CHECK(res4 == 7);
-    CHECK(res5 == 7);
+  CHECK(res1 == 5);
+  CHECK(res2 == 5);
+  CHECK(res3 == 7);
+  CHECK(res4 == 7);
+  CHECK(res5 == 7);
 }
 #endif

@@ -39,78 +39,78 @@
 
 TEST_CASE("test_make_array_basic")
 {
-    auto       array1 = pl::cont::make_array(1, 2, 3, 4, 5);
-    const auto array2 = pl::cont::make_array(5U, 6U, 7U);
+  auto       array1 = pl::cont::make_array(1, 2, 3, 4, 5);
+  const auto array2 = pl::cont::make_array(5U, 6U, 7U);
 
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(array1), std::array<int, 5>>::value);
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(array2), const std::array<unsigned, 3>>::value);
+  PL_TEST_STATIC_ASSERT(
+    std::is_same<decltype(array1), std::array<int, 5>>::value);
+  PL_TEST_STATIC_ASSERT(
+    std::is_same<decltype(array2), const std::array<unsigned, 3>>::value);
 
-    REQUIRE(array1.size() == 5U);
-    CHECK(array1[0U] == 1);
-    CHECK(array1[1U] == 2);
-    CHECK(array1[2U] == 3);
-    CHECK(array1[3U] == 4);
-    CHECK(array1[4U] == 5);
+  REQUIRE(array1.size() == 5U);
+  CHECK(array1[0U] == 1);
+  CHECK(array1[1U] == 2);
+  CHECK(array1[2U] == 3);
+  CHECK(array1[3U] == 4);
+  CHECK(array1[4U] == 5);
 
-    REQUIRE(array2.size() == 3U);
-    CHECK(array2[0U] == 5U);
-    CHECK(array2[1U] == 6U);
-    CHECK(array2[2U] == 7U);
+  REQUIRE(array2.size() == 3U);
+  CHECK(array2[0U] == 5U);
+  CHECK(array2[1U] == 6U);
+  CHECK(array2[2U] == 7U);
 }
 
 TEST_CASE("test_make_array_common_type")
 {
-    const auto array = pl::cont::make_array(1, 1L, 2LL);
+  const auto array = pl::cont::make_array(1, 1L, 2LL);
 
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(array)::value_type, long long>::value);
+  PL_TEST_STATIC_ASSERT(
+    std::is_same<decltype(array)::value_type, long long>::value);
 
-    REQUIRE(array.size() == 3U);
-    CHECK(array[0U] == 1LL);
-    CHECK(array[1U] == 1LL);
-    CHECK(array[2U] == 2LL);
+  REQUIRE(array.size() == 3U);
+  CHECK(array[0U] == 1LL);
+  CHECK(array[1U] == 1LL);
+  CHECK(array[2U] == 2LL);
 
-    const auto another_array = pl::cont::make_array(1.1F, 2.2);
+  const auto another_array = pl::cont::make_array(1.1F, 2.2);
 
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(another_array)::value_type, double>::value);
+  PL_TEST_STATIC_ASSERT(
+    std::is_same<decltype(another_array)::value_type, double>::value);
 
-    REQUIRE(another_array.size() == 2U);
-    CHECK(another_array[0U] == doctest::Approx(1.1));
-    CHECK(another_array[1U] == doctest::Approx(2.2));
+  REQUIRE(another_array.size() == 2U);
+  CHECK(another_array[0U] == doctest::Approx(1.1));
+  CHECK(another_array[1U] == doctest::Approx(2.2));
 }
 
 TEST_CASE("test_make_array_desired_type")
 {
-    const auto array1 = pl::cont::make_array<double>(5.3F, 1.1F);
-    const auto array2
-        = pl::cont::make_array<long long>(1, 2L, static_cast<short>(5));
+  const auto array1 = pl::cont::make_array<double>(5.3F, 1.1F);
+  const auto array2
+    = pl::cont::make_array<long long>(1, 2L, static_cast<short>(5));
 
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(array1)::value_type, double>::value);
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(array2)::value_type, long long>::value);
+  PL_TEST_STATIC_ASSERT(
+    std::is_same<decltype(array1)::value_type, double>::value);
+  PL_TEST_STATIC_ASSERT(
+    std::is_same<decltype(array2)::value_type, long long>::value);
 
-    REQUIRE(array1.size() == 2U);
-    CHECK(array1[0U] == doctest::Approx(5.3));
-    CHECK(array1[1U] == doctest::Approx(1.1));
+  REQUIRE(array1.size() == 2U);
+  CHECK(array1[0U] == doctest::Approx(5.3));
+  CHECK(array1[1U] == doctest::Approx(1.1));
 
-    REQUIRE(array2.size() == 3U);
-    CHECK(array2[0U] == 1LL);
-    CHECK(array2[1U] == 2LL);
-    CHECK(array2[2U] == 5LL);
+  REQUIRE(array2.size() == 3U);
+  CHECK(array2[0U] == 1LL);
+  CHECK(array2[1U] == 2LL);
+  CHECK(array2[2U] == 5LL);
 }
 
 TEST_CASE("make_array_constexpr_test")
 {
-    static constexpr auto a = pl::cont::make_array(1, 2, 3, 4, 5);
-    PL_TEST_STATIC_ASSERT(a[0U] == 1);
-    PL_TEST_STATIC_ASSERT(a[1U] == 2);
-    PL_TEST_STATIC_ASSERT(a[2U] == 3);
-    PL_TEST_STATIC_ASSERT(a[3U] == 4);
-    PL_TEST_STATIC_ASSERT(a[4U] == 5);
+  static constexpr auto a = pl::cont::make_array(1, 2, 3, 4, 5);
+  PL_TEST_STATIC_ASSERT(a[0U] == 1);
+  PL_TEST_STATIC_ASSERT(a[1U] == 2);
+  PL_TEST_STATIC_ASSERT(a[2U] == 3);
+  PL_TEST_STATIC_ASSERT(a[3U] == 4);
+  PL_TEST_STATIC_ASSERT(a[4U] == 5);
 
-    CHECK_UNARY(true);
+  CHECK_UNARY(true);
 }

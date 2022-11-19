@@ -44,26 +44,26 @@ namespace test {
 namespace {
 class vla_test_type {
 public:
-    vla_test_type(std::string s, int i) : m_s{std::move(s)}, m_i{i}
-    {
-    }
-    const std::string& s() const noexcept
-    {
-        return m_s;
-    }
-    int i() const noexcept
-    {
-        return m_i;
-    }
+  vla_test_type(std::string s, int i) : m_s{std::move(s)}, m_i{i}
+  {
+  }
+  const std::string& s() const noexcept
+  {
+    return m_s;
+  }
+  int i() const noexcept
+  {
+    return m_i;
+  }
 
 private:
-    std::string m_s;
-    int         m_i;
+  std::string m_s;
+  int         m_i;
 };
 
 bool operator==(const vla_test_type& a, const vla_test_type& b)
 {
-    return (a.s() == b.s()) and (a.i() == b.i());
+  return (a.s() == b.s()) and (a.i() == b.i());
 }
 } // anonymous namespace
 } // namespace test
@@ -75,34 +75,31 @@ bool operator==(const vla_test_type& a, const vla_test_type& b)
 #endif // PL_COMPILER == PL_COMPILER_GCC
 TEST_CASE("vla_test")
 {
-    using namespace std::literals::string_literals;
+  using namespace std::literals::string_literals;
 
-    static constexpr std::size_t amount{5U};
+  static constexpr std::size_t amount{5U};
 
-    PL_VLA(
-        pl::test::vla_test_type,
-        vla,
-        amount,
-        pl::test::vla_test_type{"Text"s, 5});
+  PL_VLA(
+    pl::test::vla_test_type, vla, amount, pl::test::vla_test_type{"Text"s, 5});
 
-    for (const pl::test::vla_test_type& e : vla) {
-        CHECK(e == pl::test::vla_test_type{"Text"s, 5});
-    }
+  for (const pl::test::vla_test_type& e : vla) {
+    CHECK(e == pl::test::vla_test_type{"Text"s, 5});
+  }
 
-    vla.at(0U) = pl::test::vla_test_type{"Test"s, 5};
-    CHECK(vla.at(0U) == pl::test::vla_test_type{"Test"s, 5});
+  vla.at(0U) = pl::test::vla_test_type{"Test"s, 5};
+  CHECK(vla.at(0U) == pl::test::vla_test_type{"Test"s, 5});
 
-    vla.at(1U) = pl::test::vla_test_type{"Test"s, 6};
-    CHECK(vla.at(1U) == pl::test::vla_test_type{"Test"s, 6});
+  vla.at(1U) = pl::test::vla_test_type{"Test"s, 6};
+  CHECK(vla.at(1U) == pl::test::vla_test_type{"Test"s, 6});
 
-    vla.at(2U) = pl::test::vla_test_type{"Test"s, 7};
-    CHECK(vla.at(2U) == pl::test::vla_test_type{"Test"s, 7});
+  vla.at(2U) = pl::test::vla_test_type{"Test"s, 7};
+  CHECK(vla.at(2U) == pl::test::vla_test_type{"Test"s, 7});
 
-    vla.at(3U) = pl::test::vla_test_type{"Test"s, 8};
-    CHECK(vla.at(3U) == pl::test::vla_test_type{"Test"s, 8});
+  vla.at(3U) = pl::test::vla_test_type{"Test"s, 8};
+  CHECK(vla.at(3U) == pl::test::vla_test_type{"Test"s, 8});
 
-    vla.at(4U) = pl::test::vla_test_type{"Test"s, 9};
-    CHECK(vla.at(4U) == pl::test::vla_test_type{"Test"s, 9});
+  vla.at(4U) = pl::test::vla_test_type{"Test"s, 9};
+  CHECK(vla.at(4U) == pl::test::vla_test_type{"Test"s, 9});
 }
 #if PL_COMPILER == PL_COMPILER_GCC
 #pragma GCC diagnostic pop

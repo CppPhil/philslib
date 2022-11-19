@@ -39,13 +39,13 @@
 
 TEST_CASE("unwrap_ref_decay_test")
 {
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<
-            pl::meta::unwrap_ref_decay_t<std::reference_wrapper<const float>>,
-            const float&>::value);
+  PL_TEST_STATIC_ASSERT(
+    std::is_same<
+      pl::meta::unwrap_ref_decay_t<std::reference_wrapper<const float>>,
+      const float&>::value);
 
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<pl::meta::unwrap_ref_decay_t<int[5]>, int*>::value);
+  PL_TEST_STATIC_ASSERT(
+    std::is_same<pl::meta::unwrap_ref_decay_t<int[5]>, int*>::value);
 
-    CHECK_UNARY(true);
+  CHECK_UNARY(true);
 }

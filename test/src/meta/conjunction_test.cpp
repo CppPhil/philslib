@@ -44,49 +44,48 @@ namespace test {
 namespace {
 template<typename Ty, typename... Args>
 auto foo(Ty&&, Args&&...) -> std::enable_if_t<
-    pl::meta::conjunction<std::is_same<Ty, Args>...>::value,
-    std::true_type>;
+  pl::meta::conjunction<std::is_same<Ty, Args>...>::value,
+  std::true_type>;
 
 template<typename Ty, typename... Args>
 auto foo(Ty&&, Args&&...) -> std::enable_if_t<
-    not pl::meta::conjunction<std::is_same<Ty, Args>...>::value,
-    std::false_type>;
+  not pl::meta::conjunction<std::is_same<Ty, Args>...>::value,
+  std::false_type>;
 } // anonymous namespace
 } // namespace test
 } // namespace pl
 
 TEST_CASE("conjunction_positive_test")
 {
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::test::foo(5, 1, 2)), std::true_type>::value);
+  PL_TEST_STATIC_ASSERT(
+    std::is_same<decltype(pl::test::foo(5, 1, 2)), std::true_type>::value);
 
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::test::foo(5.5, 1.1, 3.3)), std::true_type>::
-            value);
+  PL_TEST_STATIC_ASSERT(
+    std::is_same<decltype(pl::test::foo(5.5, 1.1, 3.3)), std::true_type>::
+      value);
 
-    PL_TEST_STATIC_ASSERT(pl::meta::conjunction<
-                          std::is_same<int, int>,
-                          std::is_pointer<double*>,
-                          std::is_integral<short>>::value);
+  PL_TEST_STATIC_ASSERT(pl::meta::conjunction<
+                        std::is_same<int, int>,
+                        std::is_pointer<double*>,
+                        std::is_integral<short>>::value);
 
-    CHECK_UNARY(true);
+  CHECK_UNARY(true);
 }
 
 TEST_CASE("conjunction_negative_test")
 {
-    using namespace std::literals::string_literals;
+  using namespace std::literals::string_literals;
 
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::test::foo(1, 2, 3, 4U)), std::false_type>::
-            value);
+  PL_TEST_STATIC_ASSERT(
+    std::is_same<decltype(pl::test::foo(1, 2, 3, 4U)), std::false_type>::value);
 
-    PL_TEST_STATIC_ASSERT(std::is_same<
-                          decltype(pl::test::foo("a"s, "b"s, "c")),
-                          std::false_type>::value);
+  PL_TEST_STATIC_ASSERT(
+    std::is_same<decltype(pl::test::foo("a"s, "b"s, "c")), std::false_type>::
+      value);
 
-    PL_TEST_STATIC_ASSERT(not pl::meta::conjunction<
-                          std::is_floating_point<long double>,
-                          std::is_const<int>>::value);
+  PL_TEST_STATIC_ASSERT(not pl::meta::conjunction<
+                        std::is_floating_point<long double>,
+                        std::is_const<int>>::value);
 
-    CHECK_UNARY(true);
+  CHECK_UNARY(true);
 }

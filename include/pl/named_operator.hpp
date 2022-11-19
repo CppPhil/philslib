@@ -41,20 +41,20 @@ namespace detail {
  **/
 template<typename BinaryCallable, typename Type>
 struct binary_callable_with_value {
-    /*!
-     * \brief Constructor.
-     * \param p_binary_callable The BinaryCallable.
-     * \param p_value The left hand side object.
-     **/
-    constexpr binary_callable_with_value(
-        BinaryCallable p_binary_callable,
-        Type&          p_value)
-        : binary_callable{std::move(p_binary_callable)}, value{p_value}
-    {
-    }
+  /*!
+   * \brief Constructor.
+   * \param p_binary_callable The BinaryCallable.
+   * \param p_value The left hand side object.
+   **/
+  constexpr binary_callable_with_value(
+    BinaryCallable p_binary_callable,
+    Type&          p_value)
+    : binary_callable{std::move(p_binary_callable)}, value{p_value}
+  {
+  }
 
-    BinaryCallable binary_callable; /*!< The callable to run in operator> */
-    Type&          value;           /*!< The left hand side value */
+  BinaryCallable binary_callable; /*!< The callable to run in operator> */
+  Type&          value;           /*!< The left hand side value */
 };
 } // namespace detail
 
@@ -64,17 +64,17 @@ struct binary_callable_with_value {
  **/
 template<typename BinaryCallable>
 struct named_oper {
-    /*!
-     * \brief Constructor for named_oper.
-     * \param p_binary_callable The BinaryCallable to use for the
-     *                          named_operator.
-     **/
-    constexpr explicit named_oper(BinaryCallable p_binary_callable)
-        : binary_callable{std::move(p_binary_callable)}
-    {
-    }
+  /*!
+   * \brief Constructor for named_oper.
+   * \param p_binary_callable The BinaryCallable to use for the
+   *                          named_operator.
+   **/
+  constexpr explicit named_oper(BinaryCallable p_binary_callable)
+    : binary_callable{std::move(p_binary_callable)}
+  {
+  }
 
-    BinaryCallable binary_callable; /*!< The callable to run in operator> */
+  BinaryCallable binary_callable; /*!< The callable to run in operator> */
 };
 
 /*!
@@ -85,9 +85,9 @@ struct named_oper {
  **/
 template<typename BinaryCallable>
 constexpr named_oper<BinaryCallable> make_named_operator(
-    BinaryCallable binary_callable)
+  BinaryCallable binary_callable)
 {
-    return named_oper<BinaryCallable>{binary_callable};
+  return named_oper<BinaryCallable>{binary_callable};
 }
 
 inline namespace named_operator {
@@ -99,11 +99,11 @@ inline namespace named_operator {
  **/
 template<typename BinaryCallable, typename Type>
 inline detail::binary_callable_with_value<BinaryCallable, Type> operator<(
-    Type&                      value,
-    named_oper<BinaryCallable> named_operator)
+  Type&                      value,
+  named_oper<BinaryCallable> named_operator)
 {
-    return detail::binary_callable_with_value<BinaryCallable, Type>{
-        named_operator.binary_callable, value};
+  return detail::binary_callable_with_value<BinaryCallable, Type>{
+    named_operator.binary_callable, value};
 }
 
 /*!
@@ -114,11 +114,11 @@ inline detail::binary_callable_with_value<BinaryCallable, Type> operator<(
  **/
 template<typename BinaryCallable, typename Type>
 inline detail::binary_callable_with_value<BinaryCallable, const Type> operator<(
-    const Type&                value,
-    named_oper<BinaryCallable> named_operator)
+  const Type&                value,
+  named_oper<BinaryCallable> named_operator)
 {
-    return detail::binary_callable_with_value<BinaryCallable, const Type>{
-        named_operator.binary_callable, value};
+  return detail::binary_callable_with_value<BinaryCallable, const Type>{
+    named_operator.binary_callable, value};
 }
 
 /*!
@@ -132,12 +132,12 @@ inline detail::binary_callable_with_value<BinaryCallable, const Type> operator<(
  **/
 template<typename BinaryCallable, typename Type1, typename Type2>
 inline auto operator>(
-    const detail::binary_callable_with_value<BinaryCallable, Type1>&
-                 callable_with_value,
-    const Type2& value) -> decltype(auto)
+  const detail::binary_callable_with_value<BinaryCallable, Type1>&
+               callable_with_value,
+  const Type2& value) -> decltype(auto)
 {
-    return ::pl::invoke(
-        callable_with_value.binary_callable, callable_with_value.value, value);
+  return ::pl::invoke(
+    callable_with_value.binary_callable, callable_with_value.value, value);
 }
 
 /*!
@@ -153,11 +153,11 @@ inline auto operator>(
  **/
 template<typename BinaryCallable, typename Type1, typename Type2>
 inline auto operator>=(
-    const detail::binary_callable_with_value<BinaryCallable, Type1>&
-                 callable_with_value,
-    const Type2& value) -> decltype(auto)
+  const detail::binary_callable_with_value<BinaryCallable, Type1>&
+               callable_with_value,
+  const Type2& value) -> decltype(auto)
 {
-    return callable_with_value.value = callable_with_value > value;
+  return callable_with_value.value = callable_with_value > value;
 }
 } // inline namespace named_operator
 } // namespace pl

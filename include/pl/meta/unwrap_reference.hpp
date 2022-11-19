@@ -44,7 +44,7 @@ namespace meta {
  **/
 template<typename Type>
 struct unwrap_reference {
-    using type = Type;
+  using type = Type;
 };
 
 /*!
@@ -57,7 +57,7 @@ struct unwrap_reference {
  **/
 template<typename Type>
 struct unwrap_reference<std::reference_wrapper<Type>> {
-    using type = Type&;
+  using type = Type&;
 };
 
 /*!

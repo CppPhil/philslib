@@ -39,15 +39,15 @@
 
 TEST_CASE("timer_test")
 {
-    namespace chrono = std::chrono;
-    using namespace std::literals::chrono_literals;
-    using Ms = chrono::milliseconds;
+  namespace chrono = std::chrono;
+  using namespace std::literals::chrono_literals;
+  using Ms = chrono::milliseconds;
 
-    pl::timer timer{};
-    std::this_thread::sleep_for(100ms);
-    CHECK(chrono::duration_cast<Ms>(timer.elapsed_time()) >= 100ms);
+  pl::timer timer{};
+  std::this_thread::sleep_for(100ms);
+  CHECK(chrono::duration_cast<Ms>(timer.elapsed_time()) >= 100ms);
 
-    timer.reset();
-    std::this_thread::sleep_for(150ms);
-    CHECK(chrono::duration_cast<Ms>(timer.elapsed_time()) >= 150ms);
+  timer.reset();
+  std::this_thread::sleep_for(150ms);
+  CHECK(chrono::duration_cast<Ms>(timer.elapsed_time()) >= 150ms);
 }

@@ -50,12 +50,12 @@ PL_DEFINE_EXCEPTION_TYPE(test_exception, std::runtime_error);
 
 [[noreturn]] void throw_with_source_info(const char* message)
 {
-    PL_THROW_WITH_SOURCE_INFO(::pl::test::test_exception, message);
+  PL_THROW_WITH_SOURCE_INFO(::pl::test::test_exception, message);
 }
 
 [[noreturn]] void not_yet_implemented()
 {
-    PL_NOT_YET_IMPLEMENTED();
+  PL_NOT_YET_IMPLEMENTED();
 }
 } // anonymous namespace
 } // namespace test
@@ -63,39 +63,39 @@ PL_DEFINE_EXCEPTION_TYPE(test_exception, std::runtime_error);
 
 TEST_CASE("define_exception_type_test")
 {
-    using namespace std::literals::string_literals;
+  using namespace std::literals::string_literals;
 
-    PL_TEST_STATIC_ASSERT(
-        std::is_base_of<std::runtime_error, pl::test::test_exception>::value);
+  PL_TEST_STATIC_ASSERT(
+    std::is_base_of<std::runtime_error, pl::test::test_exception>::value);
 
-    try {
-        throw pl::test::test_exception{"test1"};
-    }
-    catch (const pl::test::test_exception& ex) {
-        CHECK(std::strcmp(ex.what(), "test1") == 0);
-    }
+  try {
+    throw pl::test::test_exception{"test1"};
+  }
+  catch (const pl::test::test_exception& ex) {
+    CHECK(std::strcmp(ex.what(), "test1") == 0);
+  }
 
-    try {
-        throw pl::test::test_exception{"test2"s};
-    }
-    catch (const pl::test::test_exception& ex) {
-        CHECK(ex.what() == "test2"s);
-    }
+  try {
+    throw pl::test::test_exception{"test2"s};
+  }
+  catch (const pl::test::test_exception& ex) {
+    CHECK(ex.what() == "test2"s);
+  }
 }
 
 TEST_CASE("throw_with_source_info_test")
 {
-    try {
-        pl::test::throw_with_source_info("test1");
-    }
-    catch (const pl::test::test_exception& ex) {
-        const char* const msg{ex.what()};
+  try {
+    pl::test::throw_with_source_info("test1");
+  }
+  catch (const pl::test::test_exception& ex) {
+    const char* const msg{ex.what()};
 
-        CHECK(std::strstr(msg, "test1") != nullptr);
-        CHECK(std::strstr(msg, "except_test.cpp") != nullptr);
-        CHECK(std::strstr(msg, "line: 53") != nullptr);
-        CHECK(std::strstr(msg, "throw_with_source_info") != nullptr);
-    }
+    CHECK(std::strstr(msg, "test1") != nullptr);
+    CHECK(std::strstr(msg, "except_test.cpp") != nullptr);
+    CHECK(std::strstr(msg, "line: 53") != nullptr);
+    CHECK(std::strstr(msg, "throw_with_source_info") != nullptr);
+  }
 }
 
 #if PL_COMPILER == PL_COMPILER_MSVC
@@ -104,26 +104,26 @@ TEST_CASE("throw_with_source_info_test")
 #endif // PL_COMPILER == PL_COMPILER_MSVC
 TEST_CASE("throw_if_null_test")
 {
-    const void* const p1{nullptr};
-    const void* const p2{
-        reinterpret_cast<const void*>(static_cast<std::uintptr_t>(0xDEADC0DE))};
-    const std::nullptr_t             null{nullptr};
-    const std::unique_ptr<const int> up1{nullptr};
-    const std::unique_ptr<const int> up2{std::make_unique<int>(3)};
+  const void* const p1{nullptr};
+  const void* const p2{
+    reinterpret_cast<const void*>(static_cast<std::uintptr_t>(0xDEADC0DE))};
+  const std::nullptr_t             null{nullptr};
+  const std::unique_ptr<const int> up1{nullptr};
+  const std::unique_ptr<const int> up2{std::make_unique<int>(3)};
 
-    CHECK_THROWS_AS(PL_THROW_IF_NULL(p1), pl::null_pointer_exception);
-    CHECK_NOTHROW(PL_THROW_IF_NULL(p2));
-    CHECK_THROWS_AS(PL_THROW_IF_NULL(null), pl::null_pointer_exception);
-    CHECK_THROWS_AS(PL_THROW_IF_NULL(up1), pl::null_pointer_exception);
-    CHECK_NOTHROW(PL_THROW_IF_NULL(up2));
+  CHECK_THROWS_AS(PL_THROW_IF_NULL(p1), pl::null_pointer_exception);
+  CHECK_NOTHROW(PL_THROW_IF_NULL(p2));
+  CHECK_THROWS_AS(PL_THROW_IF_NULL(null), pl::null_pointer_exception);
+  CHECK_THROWS_AS(PL_THROW_IF_NULL(up1), pl::null_pointer_exception);
+  CHECK_NOTHROW(PL_THROW_IF_NULL(up2));
 
-    try {
-        int* p{nullptr};
-        PL_THROW_IF_NULL(p);
-    }
-    catch (const pl::null_pointer_exception& ex) {
-        CHECK(std::strstr(ex.what(), "p was null!") != nullptr);
-    }
+  try {
+    int* p{nullptr};
+    PL_THROW_IF_NULL(p);
+  }
+  catch (const pl::null_pointer_exception& ex) {
+    CHECK(std::strstr(ex.what(), "p was null!") != nullptr);
+  }
 }
 #if PL_COMPILER == PL_COMPILER_MSVC
 #pragma warning(pop)
@@ -131,17 +131,16 @@ TEST_CASE("throw_if_null_test")
 
 TEST_CASE("not_yet_implemented_test")
 {
-    CHECK_THROWS_AS(
-        pl::test::not_yet_implemented(), pl::not_yet_implemented_exception);
+  CHECK_THROWS_AS(
+    pl::test::not_yet_implemented(), pl::not_yet_implemented_exception);
 
-    try {
-        pl::test::not_yet_implemented();
-    }
-    catch (const pl::not_yet_implemented_exception& ex) {
-        const char* const msg{ex.what()};
-        CHECK(
-            std::strstr(msg, "function has not yet been implemented!")
-            != nullptr);
-        CHECK(std::strstr(msg, "not_yet_implemented") != nullptr);
-    }
+  try {
+    pl::test::not_yet_implemented();
+  }
+  catch (const pl::not_yet_implemented_exception& ex) {
+    const char* const msg{ex.what()};
+    CHECK(
+      std::strstr(msg, "function has not yet been implemented!") != nullptr);
+    CHECK(std::strstr(msg, "not_yet_implemented") != nullptr);
+  }
 }

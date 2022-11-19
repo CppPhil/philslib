@@ -57,10 +57,7 @@ struct disjunction<Trait1> : public Trait1 {
  **/
 template<typename Trait1, typename... Traits>
 struct disjunction<Trait1, Traits...>
-    : public conditional_t<
-          bool(Trait1::value),
-          Trait1,
-          disjunction<Traits...>> {
+  : public conditional_t<bool(Trait1::value), Trait1, disjunction<Traits...>> {
 };
 } // namespace meta
 } // namespace pl

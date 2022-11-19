@@ -40,46 +40,44 @@
 
 TEST_CASE("bool_constant_type_test")
 {
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<pl::meta::bool_constant<true>, std::true_type>::value);
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<pl::meta::bool_constant<false>, std::false_type>::value);
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<pl::meta::bool_constant<true>::type, std::true_type>::
-            value);
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<pl::meta::bool_constant<false>::type, std::false_type>::
-            value);
+  PL_TEST_STATIC_ASSERT(
+    std::is_same<pl::meta::bool_constant<true>, std::true_type>::value);
+  PL_TEST_STATIC_ASSERT(
+    std::is_same<pl::meta::bool_constant<false>, std::false_type>::value);
+  PL_TEST_STATIC_ASSERT(
+    std::is_same<pl::meta::bool_constant<true>::type, std::true_type>::value);
+  PL_TEST_STATIC_ASSERT(
+    std::is_same<pl::meta::bool_constant<false>::type, std::false_type>::value);
 
-    CHECK_UNARY(true);
+  CHECK_UNARY(true);
 }
 
 TEST_CASE("bool_constant_value_type_test")
 {
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<pl::meta::bool_constant<true>::value_type, bool>::value);
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<pl::meta::bool_constant<false>::value_type, bool>::value);
+  PL_TEST_STATIC_ASSERT(
+    std::is_same<pl::meta::bool_constant<true>::value_type, bool>::value);
+  PL_TEST_STATIC_ASSERT(
+    std::is_same<pl::meta::bool_constant<false>::value_type, bool>::value);
 
-    CHECK_UNARY(true);
+  CHECK_UNARY(true);
 }
 
 TEST_CASE("bool_constant_value_test")
 {
-    PL_TEST_STATIC_ASSERT(pl::meta::bool_constant<true>::value);
-    PL_TEST_STATIC_ASSERT(not pl::meta::bool_constant<false>::value);
+  PL_TEST_STATIC_ASSERT(pl::meta::bool_constant<true>::value);
+  PL_TEST_STATIC_ASSERT(not pl::meta::bool_constant<false>::value);
 
-    CHECK_UNARY(true);
+  CHECK_UNARY(true);
 }
 
 TEST_CASE("bool_constant_operator_test")
 {
-    PL_TEST_STATIC_ASSERT(static_cast<bool>(pl::meta::bool_constant<true>{}));
-    PL_TEST_STATIC_ASSERT(
-        not static_cast<bool>(pl::meta::bool_constant<false>{}));
+  PL_TEST_STATIC_ASSERT(static_cast<bool>(pl::meta::bool_constant<true>{}));
+  PL_TEST_STATIC_ASSERT(
+    not static_cast<bool>(pl::meta::bool_constant<false>{}));
 
-    PL_TEST_STATIC_ASSERT(pl::meta::bool_constant<true>{}());
-    PL_TEST_STATIC_ASSERT(not pl::meta::bool_constant<false>{}());
+  PL_TEST_STATIC_ASSERT(pl::meta::bool_constant<true>{}());
+  PL_TEST_STATIC_ASSERT(not pl::meta::bool_constant<false>{}());
 
-    CHECK_UNARY(true);
+  CHECK_UNARY(true);
 }

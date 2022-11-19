@@ -70,20 +70,20 @@ namespace algo {
  **/
 template<typename Ty, typename BinaryComparator>
 constexpr const Ty& clamp(
-    PL_IN const Ty& value,
-    PL_IN const Ty& lower_bound,
-    PL_IN const Ty&  upper_bound,
-    BinaryComparator comp)
+  PL_IN const Ty& value,
+  PL_IN const Ty& lower_bound,
+  PL_IN const Ty&  upper_bound,
+  BinaryComparator comp)
 {
 #if (PL_COMPILER != PL_COMPILER_MSVC) \
-    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
-    const Ty* output{comp(value, lower_bound) ? &lower_bound : &value};
-    output = comp(upper_bound, *output) ? &upper_bound : output;
-    return *output;
+  || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
+  const Ty* output{comp(value, lower_bound) ? &lower_bound : &value};
+  output = comp(upper_bound, *output) ? &upper_bound : output;
+  return *output;
 #else
-    return comp(value, lower_bound)   ? lower_bound
-           : comp(upper_bound, value) ? upper_bound
-                                      : value;
+  return comp(value, lower_bound)   ? lower_bound
+         : comp(upper_bound, value) ? upper_bound
+                                    : value;
 #endif
 }
 
@@ -110,11 +110,11 @@ constexpr const Ty& clamp(
  **/
 template<typename Ty>
 constexpr const Ty& clamp(
-    PL_IN const Ty& value,
-    PL_IN const Ty& lower_bound,
-    PL_IN const Ty& upper_bound)
+  PL_IN const Ty& value,
+  PL_IN const Ty& lower_bound,
+  PL_IN const Ty& upper_bound)
 {
-    return ::pl::algo::clamp(value, lower_bound, upper_bound, std::less<>{});
+  return ::pl::algo::clamp(value, lower_bound, upper_bound, std::less<>{});
 }
 } // namespace algo
 } // namespace pl

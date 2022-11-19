@@ -37,6 +37,5 @@
  * \brief Returns a void* to the object given. Used for placement new.
  **/
 #define PL_VOIDIFY(object) \
-    const_cast<void*>(     \
-        static_cast<const volatile void*>(::std::addressof(object)))
+  const_cast<void*>(static_cast<const volatile void*>(::std::addressof(object)))
 #endif // INCG_PL_VOIDIFY_HPP

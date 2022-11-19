@@ -52,21 +52,21 @@
  *        types a lot more convenient by generating a lot of boilerplate code.
  **/
 #define PL_DEFINE_EXCEPTION_TYPE(exception_type_identifier, base_class) \
-    class exception_type_identifier : public base_class {               \
-    public:                                                             \
-        using this_type = exception_type_identifier;                    \
-        using base_type = base_class;                                   \
+  class exception_type_identifier : public base_class {                 \
+  public:                                                               \
+    using this_type = exception_type_identifier;                        \
+    using base_type = base_class;                                       \
                                                                         \
-        explicit exception_type_identifier(const std::string& what_arg) \
-            : base_type{what_arg}                                       \
-        {                                                               \
-        }                                                               \
+    explicit exception_type_identifier(const std::string& what_arg)     \
+      : base_type{what_arg}                                             \
+    {                                                                   \
+    }                                                                   \
                                                                         \
-        explicit exception_type_identifier(const char* what_arg)        \
-            : base_type{what_arg}                                       \
-        {                                                               \
-        }                                                               \
-    }
+    explicit exception_type_identifier(const char* what_arg)            \
+      : base_type{what_arg}                                             \
+    {                                                                   \
+    }                                                                   \
+  }
 
 /*!
  * \def PL_THROW_WITH_SOURCE_INFO(exception_type, message)
@@ -82,17 +82,17 @@
  * of the user to include in the exception object's message, std::string must
  * be constructible from message.
  **/
-#define PL_THROW_WITH_SOURCE_INFO(exception_type, message)  \
-    throw exception_type                                    \
-    {                                                       \
-        "Message: " + std::string{message}                  \
-            + "\nexception was thrown at:\nfile: " __FILE__ \
-              "\nline: " PL_SOURCE_LINE "\nfunction: "      \
-            + std::string                                   \
-        {                                                   \
-            PL_CURRENT_FUNCTION                             \
-        }                                                   \
-    }
+#define PL_THROW_WITH_SOURCE_INFO(exception_type, message) \
+  throw exception_type                                     \
+  {                                                        \
+    "Message: " + std::string{message}                     \
+      + "\nexception was thrown at:\nfile: " __FILE__      \
+        "\nline: " PL_SOURCE_LINE "\nfunction: "           \
+      + std::string                                        \
+    {                                                      \
+      PL_CURRENT_FUNCTION                                  \
+    }                                                      \
+  }
 
 /*!
  * \def PL_THROW_IF_NULL(pointer)
@@ -100,13 +100,13 @@
  * \note Uses PL_THROW_WITH_SOURCE_INFO internally.
  * \see PL_THROW_WITH_SOURCE_INFO
  **/
-#define PL_THROW_IF_NULL(pointer)                                            \
-    PL_BEGIN_MACRO                                                           \
-    if ((pointer) == nullptr) {                                              \
-        PL_THROW_WITH_SOURCE_INFO(                                           \
-            pl::null_pointer_exception, PL_STRINGIFY(pointer) " was null!"); \
-    }                                                                        \
-    PL_END_MACRO
+#define PL_THROW_IF_NULL(pointer)                                      \
+  PL_BEGIN_MACRO                                                       \
+  if ((pointer) == nullptr) {                                          \
+    PL_THROW_WITH_SOURCE_INFO(                                         \
+      pl::null_pointer_exception, PL_STRINGIFY(pointer) " was null!"); \
+  }                                                                    \
+  PL_END_MACRO
 
 /*!
  * \def PL_NOT_YET_IMPLEMENTED
@@ -115,10 +115,10 @@
  * \note Uses PL_THROW_WITH_SOURCE_INFO internally.
  * \see PL_THROW_WITH_SOURCE_INFO
  **/
-#define PL_NOT_YET_IMPLEMENTED()           \
-    PL_THROW_WITH_SOURCE_INFO(             \
-        pl::not_yet_implemented_exception, \
-        "function has not yet been implemented!")
+#define PL_NOT_YET_IMPLEMENTED()       \
+  PL_THROW_WITH_SOURCE_INFO(           \
+    pl::not_yet_implemented_exception, \
+    "function has not yet been implemented!")
 
 namespace pl {
 /*!
@@ -128,7 +128,7 @@ namespace pl {
  **/
 class assertion_violation_exception : public std::runtime_error {
 public:
-    using std::runtime_error::runtime_error;
+  using std::runtime_error::runtime_error;
 };
 
 /*!
@@ -138,7 +138,7 @@ public:
  **/
 class precondition_violation_exception : public assertion_violation_exception {
 public:
-    using assertion_violation_exception::assertion_violation_exception;
+  using assertion_violation_exception::assertion_violation_exception;
 };
 
 /*!
@@ -148,7 +148,7 @@ public:
  **/
 class postcondition_violation_exception : public assertion_violation_exception {
 public:
-    using assertion_violation_exception::assertion_violation_exception;
+  using assertion_violation_exception::assertion_violation_exception;
 };
 
 /*!
@@ -156,7 +156,7 @@ public:
  **/
 class null_pointer_exception : public std::runtime_error {
 public:
-    using std::runtime_error::runtime_error;
+  using std::runtime_error::runtime_error;
 };
 
 /*!
@@ -164,7 +164,7 @@ public:
  **/
 class not_yet_implemented_exception : public std::runtime_error {
 public:
-    using std::runtime_error::runtime_error;
+  using std::runtime_error::runtime_error;
 };
 
 /*!
@@ -172,7 +172,7 @@ public:
  **/
 class arithmetic_exception : public std::runtime_error {
 public:
-    using std::runtime_error::runtime_error;
+  using std::runtime_error::runtime_error;
 };
 
 /*!
@@ -180,7 +180,7 @@ public:
  **/
 class illegal_argument_exception : public std::runtime_error {
 public:
-    using std::runtime_error::runtime_error;
+  using std::runtime_error::runtime_error;
 };
 
 /*!
@@ -188,7 +188,7 @@ public:
  **/
 class index_out_of_bounds_exception : public std::runtime_error {
 public:
-    using std::runtime_error::runtime_error;
+  using std::runtime_error::runtime_error;
 };
 
 /*!
@@ -197,7 +197,7 @@ public:
  **/
 class operation_not_supported_exception : public std::runtime_error {
 public:
-    using std::runtime_error::runtime_error;
+  using std::runtime_error::runtime_error;
 };
 
 /*!
@@ -205,7 +205,7 @@ public:
  **/
 class invalid_size_exception : public std::runtime_error {
 public:
-    using std::runtime_error::runtime_error;
+  using std::runtime_error::runtime_error;
 };
 
 #if PL_COMPILER == PL_COMPILER_MSVC
@@ -235,94 +235,92 @@ public:
  **/
 inline void handle_exceptions()
 {
-    static constexpr char function_name[] = "pl::handle_exceptions";
+  static constexpr char function_name[] = "pl::handle_exceptions";
 
-    try {
-        throw;
-    }
-    catch (const std::bad_array_new_length& e) {
-        std::cerr << function_name
-                  << " caught std::bad_array_new_length exception:\n"
-                  << e.what() << '\n';
-    }
-    catch (const std::bad_alloc& e) {
-        std::cerr << function_name << " caught std::bad_alloc exception:\n"
-                  << e.what() << '\n';
-    }
-    catch (const std::ios_base::failure& e) {
-        std::cerr << function_name
-                  << " caught std::bad_ios_base::failure exception:\n"
-                  << e.what() << '\n';
-    }
-    catch (const std::system_error& e) {
-        std::cerr << function_name << " caught std::system_error exception:\n"
-                  << e.what() << '\n';
-    }
-    catch (const std::out_of_range& e) {
-        std::cerr << function_name << " caught std::out_of_range exception:\n"
-                  << e.what() << '\n';
-    }
-    catch (const std::length_error& e) {
-        std::cerr << function_name << " caught std::length_error exception:\n"
-                  << e.what() << '\n';
-    }
-    catch (const std::invalid_argument& e) {
-        std::cerr << function_name
-                  << " caught std::invalid_argument exception:\n"
-                  << e.what() << '\n';
-    }
-    catch (const std::future_error& e) {
-        std::cerr << function_name << " caught std::future_error exception:\n"
-                  << e.what() << '\n';
-    }
-    catch (const std::domain_error& e) {
-        std::cerr << function_name << " caught std::domain_error exception:\n"
-                  << e.what() << '\n';
-    }
-    catch (const std::logic_error& e) {
-        std::cerr << function_name << " caught std::logic_error exception:\n"
-                  << e.what() << '\n';
-    }
-    catch (const std::overflow_error& e) {
-        std::cerr << function_name << " caught std::overflow_error exception:\n"
-                  << e.what() << '\n';
-    }
-    catch (const std::underflow_error& e) {
-        std::cerr << function_name
-                  << " caught std::underflow_error exception:\n"
-                  << e.what() << '\n';
-    }
-    catch (const std::range_error& e) {
-        std::cerr << function_name << " caught std::range_error exception:\n"
-                  << e.what() << '\n';
-    }
-    catch (const std::runtime_error& e) {
-        std::cerr << function_name << " caught std::runtime_error exception:\n"
-                  << e.what() << '\n';
-    }
-    catch (const std::bad_weak_ptr& e) {
-        std::cerr << function_name << " caught std::bad_weak_ptr exception:\n"
-                  << e.what() << '\n';
-    }
-    catch (const std::bad_typeid& e) {
-        std::cerr << function_name << " caught std::bad_typeid exception:\n"
-                  << e.what() << '\n';
-    }
-    catch (const std::bad_exception& e) {
-        std::cerr << function_name << " caught std::bad_exception exception:\n"
-                  << e.what() << '\n';
-    }
-    catch (const std::bad_cast& e) {
-        std::cerr << function_name << " caught std::bad_cast exception:\n"
-                  << e.what() << '\n';
-    }
-    catch (const std::exception& e) {
-        std::cerr << function_name << " caught std::exception exception:\n"
-                  << e.what() << '\n';
-    }
-    catch (...) {
-        std::cerr << function_name << " caught unknown exception!\n";
-    }
+  try {
+    throw;
+  }
+  catch (const std::bad_array_new_length& e) {
+    std::cerr << function_name
+              << " caught std::bad_array_new_length exception:\n"
+              << e.what() << '\n';
+  }
+  catch (const std::bad_alloc& e) {
+    std::cerr << function_name << " caught std::bad_alloc exception:\n"
+              << e.what() << '\n';
+  }
+  catch (const std::ios_base::failure& e) {
+    std::cerr << function_name
+              << " caught std::bad_ios_base::failure exception:\n"
+              << e.what() << '\n';
+  }
+  catch (const std::system_error& e) {
+    std::cerr << function_name << " caught std::system_error exception:\n"
+              << e.what() << '\n';
+  }
+  catch (const std::out_of_range& e) {
+    std::cerr << function_name << " caught std::out_of_range exception:\n"
+              << e.what() << '\n';
+  }
+  catch (const std::length_error& e) {
+    std::cerr << function_name << " caught std::length_error exception:\n"
+              << e.what() << '\n';
+  }
+  catch (const std::invalid_argument& e) {
+    std::cerr << function_name << " caught std::invalid_argument exception:\n"
+              << e.what() << '\n';
+  }
+  catch (const std::future_error& e) {
+    std::cerr << function_name << " caught std::future_error exception:\n"
+              << e.what() << '\n';
+  }
+  catch (const std::domain_error& e) {
+    std::cerr << function_name << " caught std::domain_error exception:\n"
+              << e.what() << '\n';
+  }
+  catch (const std::logic_error& e) {
+    std::cerr << function_name << " caught std::logic_error exception:\n"
+              << e.what() << '\n';
+  }
+  catch (const std::overflow_error& e) {
+    std::cerr << function_name << " caught std::overflow_error exception:\n"
+              << e.what() << '\n';
+  }
+  catch (const std::underflow_error& e) {
+    std::cerr << function_name << " caught std::underflow_error exception:\n"
+              << e.what() << '\n';
+  }
+  catch (const std::range_error& e) {
+    std::cerr << function_name << " caught std::range_error exception:\n"
+              << e.what() << '\n';
+  }
+  catch (const std::runtime_error& e) {
+    std::cerr << function_name << " caught std::runtime_error exception:\n"
+              << e.what() << '\n';
+  }
+  catch (const std::bad_weak_ptr& e) {
+    std::cerr << function_name << " caught std::bad_weak_ptr exception:\n"
+              << e.what() << '\n';
+  }
+  catch (const std::bad_typeid& e) {
+    std::cerr << function_name << " caught std::bad_typeid exception:\n"
+              << e.what() << '\n';
+  }
+  catch (const std::bad_exception& e) {
+    std::cerr << function_name << " caught std::bad_exception exception:\n"
+              << e.what() << '\n';
+  }
+  catch (const std::bad_cast& e) {
+    std::cerr << function_name << " caught std::bad_cast exception:\n"
+              << e.what() << '\n';
+  }
+  catch (const std::exception& e) {
+    std::cerr << function_name << " caught std::exception exception:\n"
+              << e.what() << '\n';
+  }
+  catch (...) {
+    std::cerr << function_name << " caught unknown exception!\n";
+  }
 }
 
 #if PL_COMPILER == PL_COMPILER_MSVC

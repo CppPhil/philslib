@@ -42,20 +42,20 @@ int g_int_val{0};
 
 void f(int v)
 {
-    g_int_val += v;
+  g_int_val += v;
 }
 struct structure {
-    void mem_fun() const
-    {
-        ++g_int_val;
-    }
-    void operator()(int v)
-    {
-        g_int_val += v;
-        m_val = g_int_val;
-    }
+  void mem_fun() const
+  {
+    ++g_int_val;
+  }
+  void operator()(int v)
+  {
+    g_int_val += v;
+    m_val = g_int_val;
+  }
 
-    int m_val = 0;
+  int m_val = 0;
 };
 } // anonymous namespace
 } // namespace test
@@ -63,52 +63,52 @@ struct structure {
 
 TEST_CASE("for_each_argument_test")
 {
-    void (*fp)(int){&pl::test::f};
+  void (*fp)(int){&pl::test::f};
 
-    void (pl::test::structure::*mem_fun_ptr)()
-        const {&pl::test::structure::mem_fun};
+  void (pl::test::structure::*mem_fun_ptr)()
+    const {&pl::test::structure::mem_fun};
 
-    int pl::test::structure::*mem_obj_ptr{&pl::test::structure::m_val};
+  int pl::test::structure::*mem_obj_ptr{&pl::test::structure::m_val};
 
-    pl::test::structure functor{};
+  pl::test::structure functor{};
 
-    auto lambda = [](int value) { pl::test::g_int_val += value; };
+  auto lambda = [](int value) { pl::test::g_int_val += value; };
 
-    pl::test::g_int_val = 0;
+  pl::test::g_int_val = 0;
 
-    SUBCASE("function_pointer_test")
-    {
-        const auto ret_val = pl::for_each_argument(fp, 1, 2, 3, 4, 5);
-        CHECK(pl::test::g_int_val == 15);
-        CHECK(ret_val == fp);
-    }
+  SUBCASE("function_pointer_test")
+  {
+    const auto ret_val = pl::for_each_argument(fp, 1, 2, 3, 4, 5);
+    CHECK(pl::test::g_int_val == 15);
+    CHECK(ret_val == fp);
+  }
 
-    SUBCASE("member_function_pointer_test")
-    {
-        const auto ret_val = pl::for_each_argument(
-            mem_fun_ptr, functor, &functor, pl::test::structure{});
-        CHECK(pl::test::g_int_val == 3);
-        CHECK(ret_val == mem_fun_ptr);
-    }
+  SUBCASE("member_function_pointer_test")
+  {
+    const auto ret_val = pl::for_each_argument(
+      mem_fun_ptr, functor, &functor, pl::test::structure{});
+    CHECK(pl::test::g_int_val == 3);
+    CHECK(ret_val == mem_fun_ptr);
+  }
 
-    SUBCASE("member_object_pointer_test")
-    {
-        const auto ret_val = pl::for_each_argument(
-            mem_obj_ptr, functor, &functor, pl::test::structure{});
-        CHECK(pl::test::g_int_val == 0);
-        CHECK(ret_val == mem_obj_ptr);
-    }
+  SUBCASE("member_object_pointer_test")
+  {
+    const auto ret_val = pl::for_each_argument(
+      mem_obj_ptr, functor, &functor, pl::test::structure{});
+    CHECK(pl::test::g_int_val == 0);
+    CHECK(ret_val == mem_obj_ptr);
+  }
 
-    SUBCASE("functor_test")
-    {
-        const auto ret_val = pl::for_each_argument(functor, 1, 2, 3);
-        CHECK(pl::test::g_int_val == 6);
-        CHECK(ret_val.m_val == 6);
-    }
+  SUBCASE("functor_test")
+  {
+    const auto ret_val = pl::for_each_argument(functor, 1, 2, 3);
+    CHECK(pl::test::g_int_val == 6);
+    CHECK(ret_val.m_val == 6);
+  }
 
-    SUBCASE("lambda_test")
-    {
-        pl::for_each_argument(lambda, 4, 5, 6);
-        CHECK(pl::test::g_int_val == 15);
-    }
+  SUBCASE("lambda_test")
+  {
+    pl::for_each_argument(lambda, 4, 5, 6);
+    CHECK(pl::test::g_int_val == 15);
+  }
 }

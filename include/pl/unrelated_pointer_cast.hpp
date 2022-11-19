@@ -73,12 +73,12 @@ namespace pl {
 template<typename CastTo>
 constexpr CastTo unrelated_pointer_cast(PL_IN_OPT void* p) noexcept
 {
-    static_assert(
-        std::is_pointer<CastTo>::value,
-        "The type to cast to must be a raw pointer type in "
-        "pl::unrelated_pointer_cast (non-const)");
+  static_assert(
+    std::is_pointer<CastTo>::value,
+    "The type to cast to must be a raw pointer type in "
+    "pl::unrelated_pointer_cast (non-const)");
 
-    return static_cast<CastTo>(p);
+  return static_cast<CastTo>(p);
 }
 
 /*!
@@ -120,16 +120,16 @@ constexpr CastTo unrelated_pointer_cast(PL_IN_OPT void* p) noexcept
 template<typename CastTo>
 constexpr CastTo unrelated_pointer_cast(PL_IN_OPT const void* p) noexcept
 {
-    static_assert(
-        std::is_pointer<CastTo>::value,
-        "The type to cast to must be a raw pointer type in "
-        "pl::unrelated_pointer_cast (const)");
-    static_assert(
-        std::is_const<remove_pointer_t<CastTo>>::value,
-        "The type to cast to must have low level constness in "
-        "pl::unrelated_pointer_cast (const)");
+  static_assert(
+    std::is_pointer<CastTo>::value,
+    "The type to cast to must be a raw pointer type in "
+    "pl::unrelated_pointer_cast (const)");
+  static_assert(
+    std::is_const<remove_pointer_t<CastTo>>::value,
+    "The type to cast to must have low level constness in "
+    "pl::unrelated_pointer_cast (const)");
 
-    return static_cast<CastTo>(p);
+  return static_cast<CastTo>(p);
 }
 } // namespace pl
 #endif // INCG_PL_UNRELATED_POINTER_CAST_HPP

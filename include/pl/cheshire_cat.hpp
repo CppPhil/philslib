@@ -45,10 +45,10 @@ namespace pl {
  *        cheshire_cat objects.
  **/
 struct in_place_t {
-    /*!
-     * \brief Default constructs an in_place_t object.
-     **/
-    explicit in_place_t() = default;
+  /*!
+   * \brief Default constructs an in_place_t object.
+   **/
+  explicit in_place_t() = default;
 };
 
 /*!
@@ -76,310 +76,308 @@ struct in_place_t {
  * alignof(std::max_align_t).
  **/
 template<
-    typename ElementType,
-    std::size_t BufferByteSize,
-    std::size_t Alignment = alignof(std::max_align_t)>
+  typename ElementType,
+  std::size_t BufferByteSize,
+  std::size_t Alignment = alignof(std::max_align_t)>
 class cheshire_cat {
 public:
-    using this_type       = cheshire_cat;
-    using element_type    = ElementType;
-    using value_type      = element_type;
-    using pointer         = element_type*;
-    using const_pointer   = const element_type*;
-    using reference       = element_type&;
-    using const_reference = const element_type&;
+  using this_type       = cheshire_cat;
+  using element_type    = ElementType;
+  using value_type      = element_type;
+  using pointer         = element_type*;
+  using const_pointer   = const element_type*;
+  using reference       = element_type&;
+  using const_reference = const element_type&;
 
-    static constexpr std::size_t buffer_byte_size = BufferByteSize;
-    static constexpr std::size_t alignment        = Alignment;
+  static constexpr std::size_t buffer_byte_size = BufferByteSize;
+  static constexpr std::size_t alignment        = Alignment;
 
-    struct storage_type {
-        alignas(alignment) unsigned char data[buffer_byte_size];
-    };
+  struct storage_type {
+    alignas(alignment) unsigned char data[buffer_byte_size];
+  };
 
 private:
-    template<typename... Args>
-    void create(PL_INOUT Args&&... args) noexcept(
-        std::is_nothrow_constructible<element_type, Args&&...>::value)
-    {
-        using incomplete_type_not_allowed
-            = unsigned char[sizeof(ElementType) ? 1 : -1];
-        (void)sizeof(incomplete_type_not_allowed);
+  template<typename... Args>
+  void create(PL_INOUT Args&&... args) noexcept(
+    std::is_nothrow_constructible<element_type, Args&&...>::value)
+  {
+    using incomplete_type_not_allowed
+      = unsigned char[sizeof(ElementType) ? 1 : -1];
+    (void)sizeof(incomplete_type_not_allowed);
 
-        static_assert(
-            sizeof(element_type) <= sizeof(m_storage),
-            "An object of element_type would be too large.");
-        static_assert(
-            (alignof(storage_type) % alignof(element_type)) == 0U,
-            "The alignment requirement is not a divisor of the alignment "
-            "provided by the storage_type.");
+    static_assert(
+      sizeof(element_type) <= sizeof(m_storage),
+      "An object of element_type would be too large.");
+    static_assert(
+      (alignof(storage_type) % alignof(element_type)) == 0U,
+      "The alignment requirement is not a divisor of the alignment "
+      "provided by the storage_type.");
 
 #ifndef __cpp_lib_launder
-        m_ptr =
+    m_ptr =
 #endif
-            ::new (PL_VOIDIFY(m_storage))
-                element_type(std::forward<Args>(args)...);
-    }
+      ::new (PL_VOIDIFY(m_storage)) element_type(std::forward<Args>(args)...);
+  }
 
 public:
-    /*!
-     * \brief Default constructs the element_type.
-     **/
-    cheshire_cat() : m_storage
-    {
-    }
+  /*!
+   * \brief Default constructs the element_type.
+   **/
+  cheshire_cat() : m_storage
+  {
+  }
 #ifndef __cpp_lib_launder
-    , m_ptr
-    {
-    }
+  , m_ptr
+  {
+  }
 #endif
-    {
-        create();
-    }
+  {
+    create();
+  }
 
-    /*!
-     * \brief Copy constructor.
-     * \param other The other cheshire_cat to copy construct from.
-     **/
-    cheshire_cat(PL_IN const this_type& other) : cheshire_cat{*other}
-    {
-    }
-    /*!
-     * \brief Move constructor.
-     * \param other The other cheshire_cat to move construct from.
-     * \note 'other' will be left in its moved-from state.
-     **/
-    cheshire_cat(PL_INOUT this_type&& other) noexcept : cheshire_cat{*other}
-    {
-    }
-    /*!
-     * \brief Creates a cheshire_cat from an lvalue element_type.
-     * \param value The lvalue element_type to construct from.
-     **/
-    explicit cheshire_cat(PL_IN const_reference value) : m_storage
-    {
-    }
+  /*!
+   * \brief Copy constructor.
+   * \param other The other cheshire_cat to copy construct from.
+   **/
+  cheshire_cat(PL_IN const this_type& other) : cheshire_cat{*other}
+  {
+  }
+  /*!
+   * \brief Move constructor.
+   * \param other The other cheshire_cat to move construct from.
+   * \note 'other' will be left in its moved-from state.
+   **/
+  cheshire_cat(PL_INOUT this_type&& other) noexcept : cheshire_cat{*other}
+  {
+  }
+  /*!
+   * \brief Creates a cheshire_cat from an lvalue element_type.
+   * \param value The lvalue element_type to construct from.
+   **/
+  explicit cheshire_cat(PL_IN const_reference value) : m_storage
+  {
+  }
 #ifndef __cpp_lib_launder
-    , m_ptr
-    {
-    }
+  , m_ptr
+  {
+  }
 #endif
-    {
-        create(value);
-    }
+  {
+    create(value);
+  }
 
-    /*!
-     * \brief Creates a cheshire_cat from an rvalue element_type
-     * \param value The rvalue element_type to construct from.
-     * \note 'value' will be left in its moved-from state.
-     **/
-    explicit cheshire_cat(PL_INOUT element_type&& value) noexcept : m_storage
-    {
-    }
+  /*!
+   * \brief Creates a cheshire_cat from an rvalue element_type
+   * \param value The rvalue element_type to construct from.
+   * \note 'value' will be left in its moved-from state.
+   **/
+  explicit cheshire_cat(PL_INOUT element_type&& value) noexcept : m_storage
+  {
+  }
 #ifndef __cpp_lib_launder
-    , m_ptr
-    {
-    }
+  , m_ptr
+  {
+  }
 #endif
-    {
-        create(std::move(value));
-    }
+  {
+    create(std::move(value));
+  }
 
-    /*!
-     * \brief In place constructor. Constructs an element_type from the 'args'
-     *        provided.
-     * \param args The arguments to in place construct from.
-     **/
-    template<
-        typename... Args,
-        typename
-        = enable_if_t<std::is_constructible<element_type, Args...>::value>>
-    explicit cheshire_cat(in_place_t, PL_INOUT Args&&... args) : m_storage
-    {
-    }
+  /*!
+   * \brief In place constructor. Constructs an element_type from the 'args'
+   *        provided.
+   * \param args The arguments to in place construct from.
+   **/
+  template<
+    typename... Args,
+    typename = enable_if_t<std::is_constructible<element_type, Args...>::value>>
+  explicit cheshire_cat(in_place_t, PL_INOUT Args&&... args) : m_storage
+  {
+  }
 #ifndef __cpp_lib_launder
-    , m_ptr
-    {
-    }
+  , m_ptr
+  {
+  }
 #endif
-    {
-        create(std::forward<Args>(args)...);
-    }
+  {
+    create(std::forward<Args>(args)...);
+  }
 
-    /*!
-     * \brief In place initializer_list constructor.
-     * \param il The initializer_list to in place construct from.
-     * \param args Additional arguments to forward to the constructor of
-     *             element_type along with the initializer_list.
-     **/
-    template<
-        typename Ty,
-        typename... Args,
-        typename = enable_if_t<std::is_constructible<
-            element_type,
-            std::initializer_list<Ty>&,
-            Args&&...>::value>>
-    explicit cheshire_cat(
-        in_place_t,
-        std::initializer_list<Ty> il,
-        PL_INOUT                  Args&&... args)
-        : m_storage
-    {
-    }
+  /*!
+   * \brief In place initializer_list constructor.
+   * \param il The initializer_list to in place construct from.
+   * \param args Additional arguments to forward to the constructor of
+   *             element_type along with the initializer_list.
+   **/
+  template<
+    typename Ty,
+    typename... Args,
+    typename = enable_if_t<std::is_constructible<
+      element_type,
+      std::initializer_list<Ty>&,
+      Args&&...>::value>>
+  explicit cheshire_cat(
+    in_place_t,
+    std::initializer_list<Ty> il,
+    PL_INOUT                  Args&&... args)
+    : m_storage
+  {
+  }
 #ifndef __cpp_lib_launder
-    , m_ptr
-    {
-    }
+  , m_ptr
+  {
+  }
 #endif
-    {
-        create(il, std::forward<Args>(args)...);
-    }
+  {
+    create(il, std::forward<Args>(args)...);
+  }
 
-    /*!
-     * \brief Copy assignment operator.
-     * \param other The other cheshire_cat to copy assign with.
-     * \return A reference to this object.
-     **/
-    this_type& operator=(PL_IN const this_type& other)
-    {
-        *this = *other;
-        return *this;
-    }
+  /*!
+   * \brief Copy assignment operator.
+   * \param other The other cheshire_cat to copy assign with.
+   * \return A reference to this object.
+   **/
+  this_type& operator=(PL_IN const this_type& other)
+  {
+    *this = *other;
+    return *this;
+  }
 
-    /*!
-     * \brief Move assignment operator.
-     * \param other The other cheshire_cat to move assign with.
-     * \return A reference to this object.
-     * \note 'other' will be left in its moved-from state.
-     **/
-    this_type& operator=(PL_INOUT this_type&& other) noexcept
-    {
-        *this = *other;
-        return *this;
-    }
+  /*!
+   * \brief Move assignment operator.
+   * \param other The other cheshire_cat to move assign with.
+   * \return A reference to this object.
+   * \note 'other' will be left in its moved-from state.
+   **/
+  this_type& operator=(PL_INOUT this_type&& other) noexcept
+  {
+    *this = *other;
+    return *this;
+  }
 
-    /*!
-     * \brief Assigns with an lvalue element_type.
-     * \param value The lvalue element_type to assign with.
-     * \return A reference to this object.
-     **/
-    this_type& operator=(PL_IN const_reference value)
-    {
-        **this = value;
-        return *this;
-    }
+  /*!
+   * \brief Assigns with an lvalue element_type.
+   * \param value The lvalue element_type to assign with.
+   * \return A reference to this object.
+   **/
+  this_type& operator=(PL_IN const_reference value)
+  {
+    **this = value;
+    return *this;
+  }
 
-    /*!
-     * \brief Assigns with an rvalue element_type
-     * \param value The rvalue element_type to assign with.
-     * \return A reference to this object.
-     * \note 'value' will be left in its moved-from state.
-     **/
-    this_type& operator=(PL_INOUT element_type&& value) noexcept
-    {
-        **this = std::move(value);
-        return *this;
-    }
+  /*!
+   * \brief Assigns with an rvalue element_type
+   * \param value The rvalue element_type to assign with.
+   * \return A reference to this object.
+   * \note 'value' will be left in its moved-from state.
+   **/
+  this_type& operator=(PL_INOUT element_type&& value) noexcept
+  {
+    **this = std::move(value);
+    return *this;
+  }
 
-    /*!
-     * \brief The destructor. Destroys the underlying element_type object.
-     **/
-    ~cheshire_cat() noexcept
-    {
-        destroy();
-    }
-    /*!
-     * \brief Returns a low level const qualified pointer to the element_type
-     *        object.
-     * \return A low level const qualified pointer to the element_type object.
-     **/
-    const_pointer get() const noexcept
-    {
-        return const_cast<this_type*>(this)->get();
-    }
+  /*!
+   * \brief The destructor. Destroys the underlying element_type object.
+   **/
+  ~cheshire_cat() noexcept
+  {
+    destroy();
+  }
+  /*!
+   * \brief Returns a low level const qualified pointer to the element_type
+   *        object.
+   * \return A low level const qualified pointer to the element_type object.
+   **/
+  const_pointer get() const noexcept
+  {
+    return const_cast<this_type*>(this)->get();
+  }
 
-    /*!
-     * \brief Returns a pointer to the element_type object.
-     * \return A pointer to the element_type object.
-     **/
-    pointer get() noexcept
-    {
+  /*!
+   * \brief Returns a pointer to the element_type object.
+   * \return A pointer to the element_type object.
+   **/
+  pointer get() noexcept
+  {
 #ifdef __cpp_lib_launder
-        return std::launder(
-            reinterpret_cast<element_type*>(std::addressof(m_storage)));
+    return std::launder(
+      reinterpret_cast<element_type*>(std::addressof(m_storage)));
 #else
-        return m_ptr;
+    return m_ptr;
 #endif
-    }
+  }
 
-    /*!
-     * \brief Returns a low level const qualified pointer to the element_type
-     *        object.
-     * \return A low level const qualified pointer to the element_type object.
-     **/
-    const_pointer operator->() const noexcept
-    {
-        return const_cast<this_type*>(this)->operator->();
-    }
+  /*!
+   * \brief Returns a low level const qualified pointer to the element_type
+   *        object.
+   * \return A low level const qualified pointer to the element_type object.
+   **/
+  const_pointer operator->() const noexcept
+  {
+    return const_cast<this_type*>(this)->operator->();
+  }
 
-    /*!
-     * \brief Returns a pointer to the element_type object.
-     * \return A pointer to the element_type object.
-     **/
-    pointer operator->() noexcept
-    {
-        return get();
-    }
-    /*!
-     * \brief Returns a const lvalue reference to the element_type object.
-     * \return A const lvalue reference to the element_type object.
-     **/
-    const_reference operator*() const& noexcept
-    {
-        return *get();
-    }
-    /*!
-     * \brief Returns an lvalue reference to the element_type object.
-     * \return An lvalue reference to the element_type object.
-     **/
-    reference operator*() & noexcept
-    {
-        return *get();
-    }
-    /*!
-     * \brief Returns a const rvalue reference to the element_type object.
-     * \return A const rvalue reference to the element_type object.
-     **/
-    const element_type&& operator*() const&& noexcept
-    {
-        return std::move(*get());
-    }
+  /*!
+   * \brief Returns a pointer to the element_type object.
+   * \return A pointer to the element_type object.
+   **/
+  pointer operator->() noexcept
+  {
+    return get();
+  }
+  /*!
+   * \brief Returns a const lvalue reference to the element_type object.
+   * \return A const lvalue reference to the element_type object.
+   **/
+  const_reference operator*() const& noexcept
+  {
+    return *get();
+  }
+  /*!
+   * \brief Returns an lvalue reference to the element_type object.
+   * \return An lvalue reference to the element_type object.
+   **/
+  reference operator*() & noexcept
+  {
+    return *get();
+  }
+  /*!
+   * \brief Returns a const rvalue reference to the element_type object.
+   * \return A const rvalue reference to the element_type object.
+   **/
+  const element_type&& operator*() const&& noexcept
+  {
+    return std::move(*get());
+  }
 
-    /*!
-     * \brief Returns an rvalue reference to the element_type object.
-     * \return An rvalue reference to the element_type object.
-     **/
-    element_type&& operator*() && noexcept
-    {
-        return std::move(*get());
-    }
-    /*!
-     * \brief Swaps this cheshire_cat with another one.
-     * \param other The other cheshire_cat to swap with.
-     **/
-    void swap(this_type& other) noexcept
-    {
-        using std::swap;
-        swap(**this, *other);
-    }
+  /*!
+   * \brief Returns an rvalue reference to the element_type object.
+   * \return An rvalue reference to the element_type object.
+   **/
+  element_type&& operator*() && noexcept
+  {
+    return std::move(*get());
+  }
+  /*!
+   * \brief Swaps this cheshire_cat with another one.
+   * \param other The other cheshire_cat to swap with.
+   **/
+  void swap(this_type& other) noexcept
+  {
+    using std::swap;
+    swap(**this, *other);
+  }
 
 private:
-    void destroy() noexcept
-    {
-        get()->~element_type();
-    }
-    storage_type m_storage;
+  void destroy() noexcept
+  {
+    get()->~element_type();
+  }
+  storage_type m_storage;
 #ifndef __cpp_lib_launder
-    element_type* m_ptr;
+  element_type* m_ptr;
 #endif
 };
 
@@ -390,15 +388,15 @@ private:
  * \note Swaps the two arguments provided as if by first.swap(second);
  **/
 template<
-    typename ElementType,
-    std::size_t BufferByteSize,
-    std::size_t Alignment>
+  typename ElementType,
+  std::size_t BufferByteSize,
+  std::size_t Alignment>
 inline void swap(
-    PL_INOUT cheshire_cat<ElementType, BufferByteSize, Alignment>& first,
-    PL_INOUT cheshire_cat<ElementType, BufferByteSize, Alignment>&
-             second) noexcept
+  PL_INOUT cheshire_cat<ElementType, BufferByteSize, Alignment>& first,
+  PL_INOUT cheshire_cat<ElementType, BufferByteSize, Alignment>&
+           second) noexcept
 {
-    first.swap(second);
+  first.swap(second);
 }
 } // namespace pl
 #endif // INCG_PL_CHESHIRE_CAT_HPP

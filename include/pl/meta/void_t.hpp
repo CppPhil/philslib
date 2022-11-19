@@ -39,7 +39,7 @@ namespace detail {
  **/
 template<typename... Args>
 struct void_t_impl {
-    using type = void; /* C++14 compatibility */
+  using type = void; /* C++14 compatibility */
 };
 } // namespace detail
 

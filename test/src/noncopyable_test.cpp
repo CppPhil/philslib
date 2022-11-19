@@ -46,7 +46,7 @@ class copyable {
 
 class non_copyable {
 public:
-    PL_NONCOPYABLE(non_copyable);
+  PL_NONCOPYABLE(non_copyable);
 };
 } // anonymous namespace
 } // namespace test
@@ -54,14 +54,13 @@ public:
 
 TEST_CASE("noncopyable_test")
 {
-    PL_TEST_STATIC_ASSERT(
-        std::is_copy_constructible<pl::test::copyable>::value);
-    PL_TEST_STATIC_ASSERT(std::is_copy_assignable<pl::test::copyable>::value);
+  PL_TEST_STATIC_ASSERT(std::is_copy_constructible<pl::test::copyable>::value);
+  PL_TEST_STATIC_ASSERT(std::is_copy_assignable<pl::test::copyable>::value);
 
-    PL_TEST_STATIC_ASSERT(
-        not std::is_copy_constructible<pl::test::non_copyable>::value);
-    PL_TEST_STATIC_ASSERT(
-        not std::is_copy_assignable<pl::test::non_copyable>::value);
+  PL_TEST_STATIC_ASSERT(
+    not std::is_copy_constructible<pl::test::non_copyable>::value);
+  PL_TEST_STATIC_ASSERT(
+    not std::is_copy_assignable<pl::test::non_copyable>::value);
 
-    CHECK_UNARY(true);
+  CHECK_UNARY(true);
 }

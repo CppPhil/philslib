@@ -42,31 +42,31 @@ namespace test {
 namespace {
 std::uint64_t f(std::uint64_t v, std::uint64_t multiplier)
 {
-    return v * multiplier;
+  return v * multiplier;
 }
 
 std::uint64_t f(std::uint64_t v)
 {
-    return f(v, 2U);
+  return f(v, 2U);
 }
 class test_class {
 public:
-    explicit test_class(std::uint64_t v) : m_v{v}
-    {
-    }
-    std::uint64_t mem_fun(std::uint64_t v) const
-    {
-        return f(v, m_v);
-    }
-    std::uint64_t m_v;
+  explicit test_class(std::uint64_t v) : m_v{v}
+  {
+  }
+  std::uint64_t mem_fun(std::uint64_t v) const
+  {
+    return f(v, m_v);
+  }
+  std::uint64_t m_v;
 };
 
 class functor {
 public:
-    std::uint64_t operator()(std::uint64_t v) const
-    {
-        return f(v);
-    }
+  std::uint64_t operator()(std::uint64_t v) const
+  {
+    return f(v);
+  }
 };
 } // anonymous namespace
 } // namespace test
@@ -74,57 +74,57 @@ public:
 
 TEST_CASE("invoke_test_function_pointer")
 {
-    static constexpr std::uint64_t arg{5U};
-    static constexpr std::uint64_t expected{10U};
+  static constexpr std::uint64_t arg{5U};
+  static constexpr std::uint64_t expected{10U};
 
-    std::uint64_t (*fp)(std::uint64_t){&pl::test::f};
+  std::uint64_t (*fp)(std::uint64_t){&pl::test::f};
 
-    CHECK(pl::invoke(fp, arg) == expected);
+  CHECK(pl::invoke(fp, arg) == expected);
 }
 
 TEST_CASE("invoke_test_member_function_pointer")
 {
-    static constexpr std::uint64_t arg{7U};
-    static constexpr std::uint64_t multiplier{3U};
-    static constexpr std::uint64_t expected{21U};
+  static constexpr std::uint64_t arg{7U};
+  static constexpr std::uint64_t multiplier{3U};
+  static constexpr std::uint64_t expected{21U};
 
-    std::uint64_t (pl::test::test_class::*member_function_pointer)(
-        std::uint64_t) const {&pl::test::test_class::mem_fun};
+  std::uint64_t (pl::test::test_class::*member_function_pointer)(std::uint64_t)
+    const {&pl::test::test_class::mem_fun};
 
-    pl::test::test_class  object{multiplier};
-    pl::test::test_class* p_object{&object};
+  pl::test::test_class  object{multiplier};
+  pl::test::test_class* p_object{&object};
 
-    CHECK(pl::invoke(member_function_pointer, object, arg) == expected);
-    CHECK(pl::invoke(member_function_pointer, p_object, arg) == expected);
+  CHECK(pl::invoke(member_function_pointer, object, arg) == expected);
+  CHECK(pl::invoke(member_function_pointer, p_object, arg) == expected);
 }
 
 TEST_CASE("invoke_test_member_object_pointer")
 {
-    static constexpr std::uint64_t v{5U};
+  static constexpr std::uint64_t v{5U};
 
-    std::uint64_t pl::test::test_class::*member_object_pointer{
-        &pl::test::test_class::m_v};
+  std::uint64_t pl::test::test_class::*member_object_pointer{
+    &pl::test::test_class::m_v};
 
-    pl::test::test_class  object{v};
-    pl::test::test_class* p_object{&object};
+  pl::test::test_class  object{v};
+  pl::test::test_class* p_object{&object};
 
-    CHECK(pl::invoke(member_object_pointer, object) == v);
-    CHECK(pl::invoke(member_object_pointer, p_object) == v);
+  CHECK(pl::invoke(member_object_pointer, object) == v);
+  CHECK(pl::invoke(member_object_pointer, p_object) == v);
 }
 
 TEST_CASE("invoke_test_functor")
 {
-    using binary_function_pointer
-        = std::uint64_t (*)(std::uint64_t, std::uint64_t);
+  using binary_function_pointer
+    = std::uint64_t (*)(std::uint64_t, std::uint64_t);
 
-    pl::test::functor functor{};
-    const auto        lambda = [](std::uint64_t v) { return v * 5U; };
-    const auto        bind   = std::bind(
-        static_cast<binary_function_pointer>(&pl::test::f),
-        std::placeholders::_1,
-        25U);
+  pl::test::functor functor{};
+  const auto        lambda = [](std::uint64_t v) { return v * 5U; };
+  const auto        bind   = std::bind(
+    static_cast<binary_function_pointer>(&pl::test::f),
+    std::placeholders::_1,
+    25U);
 
-    CHECK(pl::invoke(functor, 7U) == 14U);
-    CHECK(pl::invoke(lambda, 50U) == 250U);
-    CHECK(pl::invoke(bind, 3U) == 75U);
+  CHECK(pl::invoke(functor, 7U) == 14U);
+  CHECK(pl::invoke(lambda, 50U) == 250U);
+  CHECK(pl::invoke(bind, 3U) == 75U);
 }

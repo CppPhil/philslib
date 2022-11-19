@@ -40,19 +40,18 @@
 
 TEST_CASE("negation_positive_test")
 {
-    PL_TEST_STATIC_ASSERT(pl::meta::negation<std::is_same<int, double>>::value);
-    PL_TEST_STATIC_ASSERT(
-        pl::meta::negation<std::is_floating_point<short>>::value);
+  PL_TEST_STATIC_ASSERT(pl::meta::negation<std::is_same<int, double>>::value);
+  PL_TEST_STATIC_ASSERT(
+    pl::meta::negation<std::is_floating_point<short>>::value);
 
-    CHECK_UNARY(true);
+  CHECK_UNARY(true);
 }
 
 TEST_CASE("negation_negative_test")
 {
-    PL_TEST_STATIC_ASSERT(
-        not pl::meta::negation<std::is_integral<char>>::value);
-    PL_TEST_STATIC_ASSERT(
-        not pl::meta::negation<std::is_trivially_constructible<long>>::value);
+  PL_TEST_STATIC_ASSERT(not pl::meta::negation<std::is_integral<char>>::value);
+  PL_TEST_STATIC_ASSERT(
+    not pl::meta::negation<std::is_trivially_constructible<long>>::value);
 
-    CHECK_UNARY(true);
+  CHECK_UNARY(true);
 }

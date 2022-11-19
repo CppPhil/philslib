@@ -37,19 +37,19 @@
 
 TEST_CASE("hexify_test")
 {
-    const unsigned char data[] = {0x00, 0xAB, 0xFF};
+  const unsigned char data[] = {0x00, 0xAB, 0xFF};
 
-    SUBCASE("no delimiter")
-    {
-        const std::string expected{"00ABFF"};
+  SUBCASE("no delimiter")
+  {
+    const std::string expected{"00ABFF"};
 
-        CHECK(expected == pl::hexify(data, sizeof(data), ""));
-    }
+    CHECK(expected == pl::hexify(data, sizeof(data), ""));
+  }
 
-    SUBCASE("delimiter")
-    {
-        const std::string expected{"00DELABDELFF"};
+  SUBCASE("delimiter")
+  {
+    const std::string expected{"00DELABDELFF"};
 
-        CHECK(expected == pl::hexify(data, sizeof(data), "DEL"));
-    }
+    CHECK(expected == pl::hexify(data, sizeof(data), "DEL"));
+  }
 }

@@ -40,27 +40,27 @@
 
 TEST_CASE("concurrent_test")
 {
-    pl::thd::concurrent<std::vector<int>> concurrent{std::vector<int>{}};
+  pl::thd::concurrent<std::vector<int>> concurrent{std::vector<int>{}};
 
-    std::future<std::vector<int>::size_type> fut1{
-        concurrent([](std::vector<int>& v) {
-            v.push_back(1);
-            return v.size();
-        })};
-
-    std::future<int> fut2{concurrent([](std::vector<int>& v) {
-        v.push_back(2);
-        return v.front();
+  std::future<std::vector<int>::size_type> fut1{
+    concurrent([](std::vector<int>& v) {
+      v.push_back(1);
+      return v.size();
     })};
 
-    std::future<std::vector<int>::size_type> fut3{
-        concurrent(&std::vector<int>::size)};
+  std::future<int> fut2{concurrent([](std::vector<int>& v) {
+    v.push_back(2);
+    return v.front();
+  })};
 
-    std::future<void> fut4{concurrent(
-        [](std::vector<int>&) { throw std::logic_error{"test error"}; })};
+  std::future<std::vector<int>::size_type> fut3{
+    concurrent(&std::vector<int>::size)};
 
-    CHECK(fut1.get() == 1U);
-    CHECK(fut2.get() == 1);
-    CHECK(fut3.get() == 2U);
-    CHECK_THROWS_AS(fut4.get(), std::logic_error);
+  std::future<void> fut4{concurrent(
+    [](std::vector<int>&) { throw std::logic_error{"test error"}; })};
+
+  CHECK(fut1.get() == 1U);
+  CHECK(fut2.get() == 1);
+  CHECK(fut3.get() == 2U);
+  CHECK_THROWS_AS(fut4.get(), std::logic_error);
 }

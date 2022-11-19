@@ -42,60 +42,60 @@ namespace test {
 namespace {
 int nullary_function() noexcept
 {
-    return 5;
+  return 5;
 }
 int unary_function(int i) noexcept
 {
-    return i * 2;
+  return i * 2;
 }
 template<typename Ty>
 Ty unary_function_template(Ty ty)
 {
-    return ty;
+  return ty;
 }
 
 class type {
 public:
-    explicit type(int i) noexcept : data{i}
-    {
-    }
-    int nullary_mem_fun() const noexcept
-    {
-        return 5;
-    }
-    int unary_mem_fun(int i) const noexcept
-    {
-        return 7 + i;
-    }
-    template<typename Ty>
-    Ty unary_mem_fun_template(Ty ty) const
-    {
-        return ty;
-    }
+  explicit type(int i) noexcept : data{i}
+  {
+  }
+  int nullary_mem_fun() const noexcept
+  {
+    return 5;
+  }
+  int unary_mem_fun(int i) const noexcept
+  {
+    return 7 + i;
+  }
+  template<typename Ty>
+  Ty unary_mem_fun_template(Ty ty) const
+  {
+    return ty;
+  }
 
-    int data;
+  int data;
 };
 
 struct nullary_functor {
-    int operator()() const noexcept
-    {
-        return 27;
-    }
+  int operator()() const noexcept
+  {
+    return 27;
+  }
 };
 
 struct unary_functor {
-    int operator()(int i) const noexcept
-    {
-        return i / 2;
-    }
+  int operator()(int i) const noexcept
+  {
+    return i / 2;
+  }
 };
 
 struct generic_functor {
-    template<typename Ty>
-    Ty operator()(Ty ty) const
-    {
-        return ty;
-    }
+  template<typename Ty>
+  Ty operator()(Ty ty) const
+  {
+    return ty;
+  }
 };
 } // anonymous namespace
 } // namespace test
@@ -103,70 +103,62 @@ struct generic_functor {
 
 TEST_CASE("apply_test")
 {
-    const pl::test::type        obj{20};
-    const pl::test::type* const ptr{&obj};
+  const pl::test::type        obj{20};
+  const pl::test::type* const ptr{&obj};
 
-    const auto nullary_lambda = [] { return 50; };
-    const auto unary_lambda   = [](int i) { return i * i; };
-    const auto generic_lambda = [](auto val) { return val * 5; };
+  const auto nullary_lambda = [] { return 50; };
+  const auto unary_lambda   = [](int i) { return i * i; };
+  const auto generic_lambda = [](auto val) { return val * 5; };
 
-    SUBCASE("function_pointers")
-    {
-        CHECK(pl::apply(&pl::test::nullary_function, std::make_tuple()) == 5);
-        CHECK(pl::apply(&pl::test::unary_function, std::make_tuple(3)) == 6);
-        CHECK(
-            pl::apply(
-                &pl::test::unary_function_template<int>, std::make_tuple(4))
-            == 4);
-    }
+  SUBCASE("function_pointers")
+  {
+    CHECK(pl::apply(&pl::test::nullary_function, std::make_tuple()) == 5);
+    CHECK(pl::apply(&pl::test::unary_function, std::make_tuple(3)) == 6);
+    CHECK(
+      pl::apply(&pl::test::unary_function_template<int>, std::make_tuple(4))
+      == 4);
+  }
 
-    SUBCASE("member_function_pointers")
-    {
-        CHECK(
-            pl::apply(&pl::test::type::nullary_mem_fun, std::make_tuple(obj))
-            == 5);
-        CHECK(
-            pl::apply(&pl::test::type::nullary_mem_fun, std::make_tuple(ptr))
-            == 5);
-        CHECK(
-            pl::apply(&pl::test::type::unary_mem_fun, std::make_tuple(obj, 3))
-            == 10);
-        CHECK(
-            pl::apply(&pl::test::type::unary_mem_fun, std::make_tuple(ptr, 3))
-            == 10);
-        CHECK(
-            pl::apply(
-                &pl::test::type::unary_mem_fun_template<int>,
-                std::make_tuple(obj, 4))
-            == 4);
-        CHECK(
-            pl::apply(
-                &pl::test::type::unary_mem_fun_template<int>,
-                std::make_tuple(ptr, 4))
-            == 4);
-    }
+  SUBCASE("member_function_pointers")
+  {
+    CHECK(
+      pl::apply(&pl::test::type::nullary_mem_fun, std::make_tuple(obj)) == 5);
+    CHECK(
+      pl::apply(&pl::test::type::nullary_mem_fun, std::make_tuple(ptr)) == 5);
+    CHECK(
+      pl::apply(&pl::test::type::unary_mem_fun, std::make_tuple(obj, 3)) == 10);
+    CHECK(
+      pl::apply(&pl::test::type::unary_mem_fun, std::make_tuple(ptr, 3)) == 10);
+    CHECK(
+      pl::apply(
+        &pl::test::type::unary_mem_fun_template<int>, std::make_tuple(obj, 4))
+      == 4);
+    CHECK(
+      pl::apply(
+        &pl::test::type::unary_mem_fun_template<int>, std::make_tuple(ptr, 4))
+      == 4);
+  }
 
-    SUBCASE("member_object_pointer")
-    {
-        CHECK(pl::apply(&pl::test::type::data, std::make_tuple(obj)) == 20);
-        CHECK(pl::apply(&pl::test::type::data, std::make_tuple(ptr)) == 20);
-    }
+  SUBCASE("member_object_pointer")
+  {
+    CHECK(pl::apply(&pl::test::type::data, std::make_tuple(obj)) == 20);
+    CHECK(pl::apply(&pl::test::type::data, std::make_tuple(ptr)) == 20);
+  }
 
-    SUBCASE("functors")
-    {
-        CHECK(pl::apply(pl::test::nullary_functor{}, std::make_tuple()) == 27);
-        CHECK(pl::apply(pl::test::unary_functor{}, std::make_tuple(4)) == 2);
-        CHECK(
-            pl::apply(
-                pl::test::generic_functor{},
-                std::make_tuple(std::string{"text"}))
-            == "text");
-    }
+  SUBCASE("functors")
+  {
+    CHECK(pl::apply(pl::test::nullary_functor{}, std::make_tuple()) == 27);
+    CHECK(pl::apply(pl::test::unary_functor{}, std::make_tuple(4)) == 2);
+    CHECK(
+      pl::apply(
+        pl::test::generic_functor{}, std::make_tuple(std::string{"text"}))
+      == "text");
+  }
 
-    SUBCASE("lambdas")
-    {
-        CHECK(pl::apply(nullary_lambda, std::make_tuple()) == 50);
-        CHECK(pl::apply(unary_lambda, std::make_tuple(5)) == 25);
-        CHECK(pl::apply(generic_lambda, std::make_tuple(20)) == 100);
-    }
+  SUBCASE("lambdas")
+  {
+    CHECK(pl::apply(nullary_lambda, std::make_tuple()) == 50);
+    CHECK(pl::apply(unary_lambda, std::make_tuple(5)) == 25);
+    CHECK(pl::apply(generic_lambda, std::make_tuple(20)) == 100);
+  }
 }

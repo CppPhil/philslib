@@ -42,7 +42,7 @@ namespace pl {
 template<typename Ty>
 constexpr add_const_t<Ty>& as_const(PL_IN Ty& ty) noexcept
 {
-    return ty;
+  return ty;
 }
 
 /*!

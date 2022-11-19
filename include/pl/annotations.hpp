@@ -127,7 +127,7 @@
 #define PL_NODISCARD   /* nothing */
 #endif
 #define PL_PRINTF_FUNCTION(format_str_pos, var_args_pos) \
-    __attribute__((format(printf, format_str_pos, var_args_pos)))
+  __attribute__((format(printf, format_str_pos, var_args_pos)))
 #elif PL_COMPILER == PL_COMPILER_CLANG
 #if PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(3, 5, 0)
 #define PL_FALLTHROUGH [[clang::fallthrough]];
@@ -135,16 +135,16 @@
 #define PL_FALLTHROUGH /* nothing */
 #endif
 #if (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(3, 9, 0)) \
-    && !defined(PL_NO_CPP17)
+  && !defined(PL_NO_CPP17)
 #define PL_NODISCARD [[nodiscard]]
 #else
 #define PL_NODISCARD /* nothing */
 #endif
 #define PL_PRINTF_FUNCTION(format_str_pos, var_args_pos) \
-    __attribute__((format(printf, format_str_pos, var_args_pos)))
+  __attribute__((format(printf, format_str_pos, var_args_pos)))
 #elif PL_COMPILER == PL_COMPILER_MSVC
 #if (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0)) \
-    && !defined(PL_NO_CPP17)
+  && !defined(PL_NO_CPP17)
 #define PL_FALLTHROUGH [[fallthrough]];
 #define PL_NODISCARD [[nodiscard]]
 #else

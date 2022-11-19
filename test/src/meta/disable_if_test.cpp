@@ -43,36 +43,36 @@ namespace test {
 namespace {
 template<typename Ty>
 auto foo(Ty&&)
-    -> pl::meta::disable_if_t<not std::is_same<Ty, int>::value, std::true_type>;
+  -> pl::meta::disable_if_t<not std::is_same<Ty, int>::value, std::true_type>;
 
 template<typename Ty>
 auto foo(Ty&&)
-    -> pl::meta::disable_if_t<std::is_same<Ty, int>::value, std::false_type>;
+  -> pl::meta::disable_if_t<std::is_same<Ty, int>::value, std::false_type>;
 } // anonymous namespace
 } // namespace test
 } // namespace pl
 
 TEST_CASE("disable_if_positive_test")
 {
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::test::foo(true)), std::false_type>::value);
+  PL_TEST_STATIC_ASSERT(
+    std::is_same<decltype(pl::test::foo(true)), std::false_type>::value);
 
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::test::foo('a')), std::false_type>::value);
+  PL_TEST_STATIC_ASSERT(
+    std::is_same<decltype(pl::test::foo('a')), std::false_type>::value);
 
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::test::foo(4U)), std::false_type>::value);
+  PL_TEST_STATIC_ASSERT(
+    std::is_same<decltype(pl::test::foo(4U)), std::false_type>::value);
 
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::test::foo("text")), std::false_type>::value);
+  PL_TEST_STATIC_ASSERT(
+    std::is_same<decltype(pl::test::foo("text")), std::false_type>::value);
 
-    CHECK_UNARY(true);
+  CHECK_UNARY(true);
 }
 
 TEST_CASE("disable_if_negative_test")
 {
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::test::foo(1)), std::true_type>::value);
+  PL_TEST_STATIC_ASSERT(
+    std::is_same<decltype(pl::test::foo(1)), std::true_type>::value);
 
-    CHECK_UNARY(true);
+  CHECK_UNARY(true);
 }

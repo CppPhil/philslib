@@ -50,12 +50,12 @@ namespace {
 PL_PRINTF_FUNCTION(1, 2)
 int eprintf(PL_IN PL_FMT_STR(const char*) format_string, ...) noexcept
 {
-    std::va_list args{};
-    va_start(args, format_string);
-    const auto ret_val = std::vfprintf(stderr, format_string, args);
-    va_end(args);
+  std::va_list args{};
+  va_start(args, format_string);
+  const auto ret_val = std::vfprintf(stderr, format_string, args);
+  va_end(args);
 
-    return ret_val;
+  return ret_val;
 }
 } // anonymous namespace
 } // namespace pl

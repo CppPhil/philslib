@@ -45,23 +45,22 @@
 #endif // PL_COMPILER == PL_COMPILER_GCC
 TEST_CASE("alloca_test")
 {
-    static constexpr std::size_t byte_count{20U};
-    static constexpr pl::byte    fill_byte{0xAB};
+  static constexpr std::size_t byte_count{20U};
+  static constexpr pl::byte    fill_byte{0xAB};
 
-    void* memory = PL_ALLOCA(byte_count);
+  void* memory = PL_ALLOCA(byte_count);
 
-    REQUIRE(memory != nullptr);
+  REQUIRE(memory != nullptr);
 
-    auto* begin = static_cast<pl::byte*>(memory);
-    auto* end   = begin + byte_count;
+  auto* begin = static_cast<pl::byte*>(memory);
+  auto* end   = begin + byte_count;
 
-    REQUIRE(
-        std::distance(begin, end) == static_cast<std::ptrdiff_t>(byte_count));
+  REQUIRE(std::distance(begin, end) == static_cast<std::ptrdiff_t>(byte_count));
 
-    std::fill(begin, end, fill_byte);
+  std::fill(begin, end, fill_byte);
 
-    CHECK_UNARY(std::all_of(
-        begin, end, [](pl::byte byte) { return byte == fill_byte; }));
+  CHECK_UNARY(
+    std::all_of(begin, end, [](pl::byte byte) { return byte == fill_byte; }));
 }
 #if PL_COMPILER == PL_COMPILER_GCC
 #pragma GCC diagnostic pop

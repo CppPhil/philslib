@@ -38,7 +38,7 @@
 
 TEST_CASE("source_line_test")
 {
-    static constexpr char source_line_string[]{PL_SOURCE_LINE};
+  static constexpr char source_line_string[]{PL_SOURCE_LINE};
 
-    CHECK(std::strcmp(source_line_string, "41") == 0);
+  CHECK(std::strcmp(source_line_string, "41") == 0);
 }

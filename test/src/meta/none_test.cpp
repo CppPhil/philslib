@@ -41,40 +41,38 @@
 
 TEST_CASE("none_positive_test")
 {
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<pl::meta::none<>::type, std::true_type>::value);
+  PL_TEST_STATIC_ASSERT(
+    std::is_same<pl::meta::none<>::type, std::true_type>::value);
 
-    PL_TEST_STATIC_ASSERT(std::is_same<
-                          pl::meta::none<std::is_pod<std::vector<int>>>::type,
-                          std::true_type>::value);
+  PL_TEST_STATIC_ASSERT(std::is_same<
+                        pl::meta::none<std::is_pod<std::vector<int>>>::type,
+                        std::true_type>::value);
 
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<
-            pl::meta::none<std::is_array<void>, std::is_pointer<std::string>>::
-                type,
-            std::true_type>::value);
+  PL_TEST_STATIC_ASSERT(
+    std::is_same<
+      pl::meta::none<std::is_array<void>, std::is_pointer<std::string>>::type,
+      std::true_type>::value);
 
-    CHECK_UNARY(true);
+  CHECK_UNARY(true);
 }
 
 TEST_CASE("none_negative_test")
 {
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<pl::meta::none<std::is_pod<int>>::type, std::false_type>::
-            value);
+  PL_TEST_STATIC_ASSERT(
+    std::is_same<pl::meta::none<std::is_pod<int>>::type, std::false_type>::
+      value);
 
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<
-            pl::meta::none<std::is_array<double[]>, std::is_pointer<void*>>::
-                type,
-            std::false_type>::value);
+  PL_TEST_STATIC_ASSERT(
+    std::is_same<
+      pl::meta::none<std::is_array<double[]>, std::is_pointer<void*>>::type,
+      std::false_type>::value);
 
-    PL_TEST_STATIC_ASSERT(std::is_same<
-                          pl::meta::none<
-                              std::is_floating_point<char*>,
-                              std::is_array<short&&>,
-                              std::is_same<int*, int*>>::type,
-                          std::false_type>::value);
+  PL_TEST_STATIC_ASSERT(std::is_same<
+                        pl::meta::none<
+                          std::is_floating_point<char*>,
+                          std::is_array<short&&>,
+                          std::is_same<int*, int*>>::type,
+                        std::false_type>::value);
 
-    CHECK_UNARY(true);
+  CHECK_UNARY(true);
 }

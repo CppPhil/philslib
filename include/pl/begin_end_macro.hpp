@@ -46,7 +46,7 @@
  * \see PL_BEGIN_MACRO
  **/
 #define PL_END_MACRO \
-    }                \
-    while ((void)0, 0) /* avoid warnings */
+  }                  \
+  while ((void)0, 0) /* avoid warnings */
 
 #endif // INCG_PL_BEGIN_END_MACRO_HPP

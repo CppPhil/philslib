@@ -47,94 +47,93 @@
 
 TEST_CASE("std_array_back_test")
 {
-    static constexpr std::size_t size{5U};
-    const std::array<int, size>  array{{1, 2, 3, 4, 5}};
-    CHECK(pl::cont::back(array) == 5);
+  static constexpr std::size_t size{5U};
+  const std::array<int, size>  array{{1, 2, 3, 4, 5}};
+  CHECK(pl::cont::back(array) == 5);
 }
 
 TEST_CASE("std_vector_back_test")
 {
-    const std::vector<int> v{1, 2, 3};
-    CHECK(pl::cont::back(v) == 3);
+  const std::vector<int> v{1, 2, 3};
+  CHECK(pl::cont::back(v) == 3);
 }
 
 TEST_CASE("std_deque_back_test")
 {
-    const std::deque<int> deque{0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-    CHECK(pl::cont::back(deque) == 9);
+  const std::deque<int> deque{0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+  CHECK(pl::cont::back(deque) == 9);
 }
 
 TEST_CASE("std_list_back_test")
 {
-    const std::list<int> list{1, 2, 3, 4, 5};
-    CHECK(pl::cont::back(list) == 5);
+  const std::list<int> list{1, 2, 3, 4, 5};
+  CHECK(pl::cont::back(list) == 5);
 }
 
 TEST_CASE("c_array_back_test")
 {
-    const int  c_array[]  = {1, 2, 3, 4, 5, 6, 7};
-    const char c_string[] = "Text";
-    CHECK(pl::cont::back(c_array) == 7);
-    CHECK(pl::cont::back(c_string) == '\0');
+  const int  c_array[]  = {1, 2, 3, 4, 5, 6, 7};
+  const char c_string[] = "Text";
+  CHECK(pl::cont::back(c_array) == 7);
+  CHECK(pl::cont::back(c_string) == '\0');
 }
 
 TEST_CASE("std_queue_back_test")
 {
-    std::queue<int> queue{};
-    queue.push(1);
-    queue.push(2);
-    queue.push(3);
-    CHECK(pl::cont::back(queue) == 3);
+  std::queue<int> queue{};
+  queue.push(1);
+  queue.push(2);
+  queue.push(3);
+  CHECK(pl::cont::back(queue) == 3);
 }
 
 TEST_CASE("std_string_back_test")
 {
-    const std::string string{"Hello World!"};
-    CHECK(pl::cont::back(string) == '!');
+  const std::string string{"Hello World!"};
+  CHECK(pl::cont::back(string) == '!');
 }
 
 TEST_CASE("initializer_list_test")
 {
-    using namespace std::literals::string_literals;
+  using namespace std::literals::string_literals;
 
-    std::initializer_list<int>               il{1, 2, 3, 4, 5};
-    const std::initializer_list<std::string> il2{"text"s};
+  std::initializer_list<int>               il{1, 2, 3, 4, 5};
+  const std::initializer_list<std::string> il2{"text"s};
 
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::cont::back(il)), const int&>::value);
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(pl::cont::back(il2)), const std::string&>::value);
+  PL_TEST_STATIC_ASSERT(
+    std::is_same<decltype(pl::cont::back(il)), const int&>::value);
+  PL_TEST_STATIC_ASSERT(
+    std::is_same<decltype(pl::cont::back(il2)), const std::string&>::value);
 
-    CHECK(pl::cont::back(il) == 5);
-    CHECK(pl::cont::back(il2) == "text"s);
+  CHECK(pl::cont::back(il) == 5);
+  CHECK(pl::cont::back(il2) == "text"s);
 }
 
 TEST_CASE("back_constexpr_array_test")
 {
-    static constexpr int a[]{1, 2, 3};
-    PL_TEST_STATIC_ASSERT(pl::cont::back(a) == 3);
+  static constexpr int a[]{1, 2, 3};
+  PL_TEST_STATIC_ASSERT(pl::cont::back(a) == 3);
 
-    CHECK_UNARY(true);
+  CHECK_UNARY(true);
 }
 
 #if (PL_COMPILER != PL_COMPILER_GCC) \
-    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(6, 4, 0))
+  || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(6, 4, 0))
 TEST_CASE("back_constexpr_std_array_test")
 {
-    static constexpr std::array<int, 5U> a{{1, 2, 3, 4, 5}};
-    PL_TEST_STATIC_ASSERT(pl::cont::back(a) == 5);
+  static constexpr std::array<int, 5U> a{{1, 2, 3, 4, 5}};
+  PL_TEST_STATIC_ASSERT(pl::cont::back(a) == 5);
 
-    CHECK_UNARY(true);
+  CHECK_UNARY(true);
 }
 #endif
 
 #if PL_COMPILER == PL_COMPILER_GCC
 TEST_CASE("back_constexpr_initializer_list_test")
 {
-    static constexpr std::initializer_list<int> il{
-        1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-    PL_TEST_STATIC_ASSERT(pl::cont::back(il) == 10);
+  static constexpr std::initializer_list<int> il{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+  PL_TEST_STATIC_ASSERT(pl::cont::back(il) == 10);
 
-    CHECK_UNARY(true);
+  CHECK_UNARY(true);
 }
 #endif

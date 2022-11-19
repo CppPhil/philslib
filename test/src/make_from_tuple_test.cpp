@@ -47,51 +47,51 @@ namespace test {
 namespace {
 class test_type {
 public:
-    test_type(std::string s, std::uint32_t i, void* p)
-        : m_s{std::move(s)}, m_i{i}, m_p{p}
-    {
-    }
+  test_type(std::string s, std::uint32_t i, void* p)
+    : m_s{std::move(s)}, m_i{i}, m_p{p}
+  {
+  }
 
-    test_type(std::string s, std::uint32_t i)
-        : test_type{std::move(s), i, nullptr}
-    {
-    }
+  test_type(std::string s, std::uint32_t i)
+    : test_type{std::move(s), i, nullptr}
+  {
+  }
 
-    test_type(std::uint32_t a1, std::uint32_t a2)
-        : test_type{std::to_string(a1), a2}
-    {
-    }
+  test_type(std::uint32_t a1, std::uint32_t a2)
+    : test_type{std::to_string(a1), a2}
+  {
+  }
 
-    test_type(const test_type&) = default;
+  test_type(const test_type&) = default;
 
-    test_type& operator=(const test_type&) = default;
+  test_type& operator=(const test_type&) = default;
 
-    const std::string& s() const noexcept
-    {
-        return m_s;
-    }
-    std::uint32_t i() const noexcept
-    {
-        return m_i;
-    }
-    void* p() const noexcept
-    {
-        return m_p;
-    }
+  const std::string& s() const noexcept
+  {
+    return m_s;
+  }
+  std::uint32_t i() const noexcept
+  {
+    return m_i;
+  }
+  void* p() const noexcept
+  {
+    return m_p;
+  }
 
 private:
-    std::string   m_s;
-    std::uint32_t m_i;
-    void*         m_p;
+  std::string   m_s;
+  std::uint32_t m_i;
+  void*         m_p;
 };
 
 class type {
 public:
-    constexpr type(int p_i, int p_j) : i{p_i}, j{p_j}
-    {
-    }
-    int i;
-    int j;
+  constexpr type(int p_i, int p_j) : i{p_i}, j{p_j}
+  {
+  }
+  int i;
+  int j;
 };
 } // anonymous namespace
 } // namespace test
@@ -99,36 +99,36 @@ public:
 
 TEST_CASE("make_from_tuple_test")
 {
-    using namespace std::literals::string_literals;
+  using namespace std::literals::string_literals;
 
-    const pl::test::test_type a{pl::make_from_tuple<pl::test::test_type>(
-        std::make_tuple("test"s, UINT32_C(25), nullptr))};
+  const pl::test::test_type a{pl::make_from_tuple<pl::test::test_type>(
+    std::make_tuple("test"s, UINT32_C(25), nullptr))};
 
-    CHECK(a.s() == "test"s);
-    CHECK(a.i() == UINT32_C(25));
-    CHECK(a.p() == nullptr);
+  CHECK(a.s() == "test"s);
+  CHECK(a.i() == UINT32_C(25));
+  CHECK(a.p() == nullptr);
 
-    const pl::test::test_type b{pl::make_from_tuple<pl::test::test_type>(
-        std::make_pair("text"s, UINT32_C(50)))};
+  const pl::test::test_type b{pl::make_from_tuple<pl::test::test_type>(
+    std::make_pair("text"s, UINT32_C(50)))};
 
-    CHECK(b.s() == "text"s);
-    CHECK(b.i() == UINT32_C(50));
-    CHECK(b.p() == nullptr);
+  CHECK(b.s() == "text"s);
+  CHECK(b.i() == UINT32_C(50));
+  CHECK(b.p() == nullptr);
 
-    const pl::test::test_type c{pl::make_from_tuple<pl::test::test_type>(
-        pl::cont::make_array(UINT32_C(7), UINT32_C(500)))};
+  const pl::test::test_type c{pl::make_from_tuple<pl::test::test_type>(
+    pl::cont::make_array(UINT32_C(7), UINT32_C(500)))};
 
-    CHECK(c.s() == "7"s);
-    CHECK(c.i() == UINT32_C(500));
-    CHECK(c.p() == nullptr);
+  CHECK(c.s() == "7"s);
+  CHECK(c.i() == UINT32_C(500));
+  CHECK(c.p() == nullptr);
 }
 
 TEST_CASE("make_from_tuple_constexpr_test")
 {
-    static constexpr auto obj
-        = pl::make_from_tuple<pl::test::type>(std::make_tuple(1, 2));
-    PL_TEST_STATIC_ASSERT(obj.i == 1);
-    PL_TEST_STATIC_ASSERT(obj.j == 2);
+  static constexpr auto obj
+    = pl::make_from_tuple<pl::test::type>(std::make_tuple(1, 2));
+  PL_TEST_STATIC_ASSERT(obj.i == 1);
+  PL_TEST_STATIC_ASSERT(obj.j == 2);
 
-    CHECK_UNARY(true);
+  CHECK_UNARY(true);
 }

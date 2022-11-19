@@ -53,32 +53,31 @@ namespace algo {
  **/
 template<typename ForwardIterator, typename SizeType>
 inline ForwardIterator uninitialized_value_construct_n(
-    ForwardIterator first,
-    SizeType        n)
+  ForwardIterator first,
+  SizeType        n)
 {
-    using value_type =
-        typename std::iterator_traits<ForwardIterator>::value_type;
+  using value_type = typename std::iterator_traits<ForwardIterator>::value_type;
 
-    ForwardIterator cur{first};
+  ForwardIterator cur{first};
 
-    try {
-        while (n > 0) {
-            ::new (PL_VOIDIFY(*cur)) value_type();
+  try {
+    while (n > 0) {
+      ::new (PL_VOIDIFY(*cur)) value_type();
 
-            ++cur;
-            --n;
-        }
-
-        return cur;
+      ++cur;
+      --n;
     }
-    catch (...) {
-        while (first != cur) {
-            first->~value_type();
-            ++first;
-        }
 
-        throw;
+    return cur;
+  }
+  catch (...) {
+    while (first != cur) {
+      first->~value_type();
+      ++first;
     }
+
+    throw;
+  }
 }
 } // namespace algo
 } // namespace pl

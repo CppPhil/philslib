@@ -43,34 +43,34 @@ namespace test {
 namespace {
 class monitor_test_type {
 public:
-    using this_type = monitor_test_type;
+  using this_type = monitor_test_type;
 
-    monitor_test_type(int i, double d, std::string s)
-        : m_i{i}, m_d{d}, m_s{std::move(s)}
-    {
-    }
+  monitor_test_type(int i, double d, std::string s)
+    : m_i{i}, m_d{d}, m_s{std::move(s)}
+  {
+  }
 
-    double d() const noexcept
-    {
-        return m_d;
-    }
-    void d(double d) noexcept
-    {
-        m_d = d;
-    }
-    void set_d_to_25() noexcept
-    {
-        d(25.0);
-    }
-    const char* str() const noexcept
-    {
-        return m_s.data();
-    }
-    int m_i;
+  double d() const noexcept
+  {
+    return m_d;
+  }
+  void d(double d) noexcept
+  {
+    m_d = d;
+  }
+  void set_d_to_25() noexcept
+  {
+    d(25.0);
+  }
+  const char* str() const noexcept
+  {
+    return m_s.data();
+  }
+  int m_i;
 
 private:
-    double      m_d;
-    std::string m_s;
+  double      m_d;
+  std::string m_s;
 };
 } // anonymous namespace
 } // namespace test
@@ -78,21 +78,21 @@ private:
 
 TEST_CASE("monitor_test")
 {
-    pl::thd::monitor<pl::test::monitor_test_type> monitor{
-        pl::test::monitor_test_type{1, 2.0, "text"}};
+  pl::thd::monitor<pl::test::monitor_test_type> monitor{
+    pl::test::monitor_test_type{1, 2.0, "text"}};
 
-    CHECK(
-        monitor([](pl::test::monitor_test_type& o) { return o.d(); })
-        == doctest::Approx{2.0});
+  CHECK(
+    monitor([](pl::test::monitor_test_type& o) { return o.d(); })
+    == doctest::Approx{2.0});
 
-    monitor(&pl::test::monitor_test_type::set_d_to_25);
+  monitor(&pl::test::monitor_test_type::set_d_to_25);
 
-    CHECK(
-        monitor(static_cast<double (pl::test::monitor_test_type::*)() const>(
-            &pl::test::monitor_test_type::d))
-        == doctest::Approx{25.0});
+  CHECK(
+    monitor(static_cast<double (pl::test::monitor_test_type::*)() const>(
+      &pl::test::monitor_test_type::d))
+    == doctest::Approx{25.0});
 
-    CHECK(std::strcmp(monitor(&pl::test::monitor_test_type::str), "text") == 0);
+  CHECK(std::strcmp(monitor(&pl::test::monitor_test_type::str), "text") == 0);
 
-    CHECK(monitor(&pl::test::monitor_test_type::m_i) == 1);
+  CHECK(monitor(&pl::test::monitor_test_type::m_i) == 1);
 }

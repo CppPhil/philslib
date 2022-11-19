@@ -38,57 +38,57 @@
 
 TEST_CASE("thread_safe_queue_test")
 {
-    pl::thd::thread_safe_queue<int> q{};
+  pl::thd::thread_safe_queue<int> q{};
 
-    CHECK_UNARY(q.empty());
-    CHECK(q.size() == 0U);
+  CHECK_UNARY(q.empty());
+  CHECK(q.size() == 0U);
 
-    static constexpr int i{5};
+  static constexpr int i{5};
 
+  q.push(1);
+  q.push(i);
+
+  CHECK_UNARY_FALSE(q.empty());
+  CHECK(q.size() == 2U);
+
+  SUBCASE("add_elements")
+  {
     q.push(1);
     q.push(i);
 
     CHECK_UNARY_FALSE(q.empty());
-    CHECK(q.size() == 2U);
+    CHECK(q.size() == 4U);
+  }
 
-    SUBCASE("add_elements")
-    {
-        q.push(1);
-        q.push(i);
+  SUBCASE("remove_elements")
+  {
+    int val{};
 
-        CHECK_UNARY_FALSE(q.empty());
-        CHECK(q.size() == 4U);
-    }
+    val = q.pop();
 
-    SUBCASE("remove_elements")
-    {
-        int val{};
+    CHECK(val == 1);
+    CHECK_UNARY_FALSE(q.empty());
+    CHECK(q.size() == 1U);
 
-        val = q.pop();
+    val = q.pop();
 
-        CHECK(val == 1);
-        CHECK_UNARY_FALSE(q.empty());
-        CHECK(q.size() == 1U);
+    CHECK(val == i);
+    CHECK_UNARY(q.empty());
+    CHECK(q.size() == 0U);
+  }
 
-        val = q.pop();
+  SUBCASE("multithreaded")
+  {
+    std::future<int> fut{std::async(std::launch::async, [&q] {
+      q.pop();
+      q.pop();
+      return q.pop();
+    })};
 
-        CHECK(val == i);
-        CHECK_UNARY(q.empty());
-        CHECK(q.size() == 0U);
-    }
+    q.push(20);
+    CHECK(fut.get() == 20);
 
-    SUBCASE("multithreaded")
-    {
-        std::future<int> fut{std::async(std::launch::async, [&q] {
-            q.pop();
-            q.pop();
-            return q.pop();
-        })};
-
-        q.push(20);
-        CHECK(fut.get() == 20);
-
-        CHECK_UNARY(q.empty());
-        CHECK(q.size() == 0U);
-    }
+    CHECK_UNARY(q.empty());
+    CHECK(q.size() == 0U);
+  }
 }

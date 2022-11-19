@@ -66,68 +66,68 @@ namespace pl {
 template<typename WatchedType>
 class observer_ptr {
 public:
-    /*!
-     * \brief The type of the object watched by this observer_ptr.
-     **/
-    using element_type = WatchedType;
+  /*!
+   * \brief The type of the object watched by this observer_ptr.
+   **/
+  using element_type = WatchedType;
 
-    /*!
-     * \brief Constructs an observer_ptr that has no corresponding watched
-     *        object.
-     **/
-    constexpr observer_ptr() noexcept : observer_ptr{nullptr}
-    {
-    }
-    /*!
-     * \brief Constructs an observer_ptr that has no corresponding watched
-     *        object.
-     **/
-    PL_IMPLICIT constexpr observer_ptr(std::nullptr_t) noexcept : m_p{nullptr}
-    {
-    }
-    /*!
-     * \brief Constructs an observer_ptr that watches p.
-     * \param p Pointer to the object to watch.
-     **/
-    explicit observer_ptr(PL_IN_OPT element_type* p) noexcept : m_p{p}
-    {
-    }
-    /*!
-     * \brief Constructs an observer_ptr that watches other.get().
-     * \note This constructor does not participate in overload resolution
-     *       unless WatchedType2 *is convertible to element_type *.
-     * \warning Do not replace the second template type parameter!
-     **/
-    template<
-        typename WatchedType2,
-        typename
-        = enable_if_t<std::is_convertible<WatchedType2*, element_type*>::value>>
-    PL_IMPLICIT observer_ptr(observer_ptr<WatchedType2> other) noexcept
-        : m_p{other.get()}
-    {
-    }
+  /*!
+   * \brief Constructs an observer_ptr that has no corresponding watched
+   *        object.
+   **/
+  constexpr observer_ptr() noexcept : observer_ptr{nullptr}
+  {
+  }
+  /*!
+   * \brief Constructs an observer_ptr that has no corresponding watched
+   *        object.
+   **/
+  PL_IMPLICIT constexpr observer_ptr(std::nullptr_t) noexcept : m_p{nullptr}
+  {
+  }
+  /*!
+   * \brief Constructs an observer_ptr that watches p.
+   * \param p Pointer to the object to watch.
+   **/
+  explicit observer_ptr(PL_IN_OPT element_type* p) noexcept : m_p{p}
+  {
+  }
+  /*!
+   * \brief Constructs an observer_ptr that watches other.get().
+   * \note This constructor does not participate in overload resolution
+   *       unless WatchedType2 *is convertible to element_type *.
+   * \warning Do not replace the second template type parameter!
+   **/
+  template<
+    typename WatchedType2,
+    typename
+    = enable_if_t<std::is_convertible<WatchedType2*, element_type*>::value>>
+  PL_IMPLICIT observer_ptr(observer_ptr<WatchedType2> other) noexcept
+    : m_p{other.get()}
+  {
+  }
 
-    /*!
-     * \brief Stop watching the watched object, if any.
-     * \note .get() returns nullptr after the call.
-     * \return A pointer to the previously watched object,
-     *         or nullptr if there was no watched object,
-     *         i.e. the value which would be returned by get() before the call.
-     * \note Not a constexpr function on msvc15.
-     **/
-    PL_NODISCARD
+  /*!
+   * \brief Stop watching the watched object, if any.
+   * \note .get() returns nullptr after the call.
+   * \return A pointer to the previously watched object,
+   *         or nullptr if there was no watched object,
+   *         i.e. the value which would be returned by get() before the call.
+   * \note Not a constexpr function on msvc15.
+   **/
+  PL_NODISCARD
 #if (PL_COMPILER != PL_COMPILER_MSVC) \
-    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
-    constexpr
+  || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
+  constexpr
 #endif
-        element_type*
-        release() noexcept
-    {
-        auto* return_value = m_p;
-        m_p                = nullptr;
+    element_type*
+    release() noexcept
+  {
+    auto* return_value = m_p;
+    m_p                = nullptr;
 
-        return return_value;
-    }
+    return return_value;
+  }
 
 /*!
  * \brief Set *this to watch the object pointed to by p.
@@ -136,14 +136,14 @@ public:
  * \note Not a constexpr function on msvc15.
  **/
 #if (PL_COMPILER != PL_COMPILER_MSVC) \
-    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
-    constexpr
+  || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
+  constexpr
 #endif
-        void
-        reset(PL_IN_OPT element_type* p = nullptr) noexcept
-    {
-        m_p = p;
-    }
+    void
+    reset(PL_IN_OPT element_type* p = nullptr) noexcept
+  {
+    m_p = p;
+  }
 
 /*!
  * \brief Swaps the watched object of *this and another observer_ptr.
@@ -154,67 +154,67 @@ public:
  * by invoking swap on the stored pointers of *this and other.
  **/
 #if (PL_COMPILER != PL_COMPILER_MSVC) \
-    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
-    constexpr
+  || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
+  constexpr
 #endif
-        void
-        swap(PL_INOUT::pl::observer_ptr<element_type>& other) noexcept
-    {
-        ::std::swap(m_p, other.m_p);
-    }
+    void
+    swap(PL_INOUT::pl::observer_ptr<element_type>& other) noexcept
+  {
+    ::std::swap(m_p, other.m_p);
+  }
 
-    /*!
-     * \brief Returns a pointer to the watched object
-     *        or nullptr if no object is watched.
-     * \return Pointer to the watched object or nullptr if no object is watched.
-     **/
-    PL_NODISCARD constexpr element_type* get() const noexcept
-    {
-        return m_p;
-    }
-    /*!
-     * \brief Checks whether *this has an associated watched object.
-     * \return true if *this has an associated watched object, false otherwise.
-     *
-     * Checks whether *this has an associated watched object,
-     * i.e. whether get() != nullptr.
-     **/
-    PL_NODISCARD constexpr explicit operator bool() const noexcept
-    {
-        return get() != nullptr;
-    }
+  /*!
+   * \brief Returns a pointer to the watched object
+   *        or nullptr if no object is watched.
+   * \return Pointer to the watched object or nullptr if no object is watched.
+   **/
+  PL_NODISCARD constexpr element_type* get() const noexcept
+  {
+    return m_p;
+  }
+  /*!
+   * \brief Checks whether *this has an associated watched object.
+   * \return true if *this has an associated watched object, false otherwise.
+   *
+   * Checks whether *this has an associated watched object,
+   * i.e. whether get() != nullptr.
+   **/
+  PL_NODISCARD constexpr explicit operator bool() const noexcept
+  {
+    return get() != nullptr;
+  }
 
-    /*!
-     * \brief Provides access to the object watched by *this.
-     * \return Returns the object watched by *this, equivalent to *get().
-     * \warning The behavior is undefined if get() == nullptr.
-     **/
-    constexpr add_lvalue_reference_t<element_type> operator*() const noexcept
-    {
-        return *get();
-    }
+  /*!
+   * \brief Provides access to the object watched by *this.
+   * \return Returns the object watched by *this, equivalent to *get().
+   * \warning The behavior is undefined if get() == nullptr.
+   **/
+  constexpr add_lvalue_reference_t<element_type> operator*() const noexcept
+  {
+    return *get();
+  }
 
-    /*!
-     * \brief Provides access to the object watched by *this.
-     * \return Returns a pointer to the object watched by *this, i.e. get().
-     * \warning Do not call this function if get() == nullptr.
-     **/
-    constexpr element_type* operator->() const noexcept
-    {
-        return get();
-    }
+  /*!
+   * \brief Provides access to the object watched by *this.
+   * \return Returns a pointer to the object watched by *this, i.e. get().
+   * \warning Do not call this function if get() == nullptr.
+   **/
+  constexpr element_type* operator->() const noexcept
+  {
+    return get();
+  }
 
-    /*!
-     * \brief Provides an explicit conversion to the type of the stored pointer.
-     * \return A pointer to the watched object, i.e., get().
-     */
-    constexpr explicit operator element_type*() const noexcept
-    {
-        return get();
-    }
+  /*!
+   * \brief Provides an explicit conversion to the type of the stored pointer.
+   * \return A pointer to the watched object, i.e., get().
+   */
+  constexpr explicit operator element_type*() const noexcept
+  {
+    return get();
+  }
 
 private:
-    element_type* m_p; /*!< The underlying pointer to the watched object. */
+  element_type* m_p; /*!< The underlying pointer to the watched object. */
 };
 
 /*!
@@ -226,9 +226,9 @@ private:
  **/
 template<typename WatchedType>
 inline observer_ptr<WatchedType> make_observer(
-    PL_IN_OPT WatchedType* p) noexcept
+  PL_IN_OPT WatchedType* p) noexcept
 {
-    return observer_ptr<WatchedType>(p);
+  return observer_ptr<WatchedType>(p);
 }
 
 /*!
@@ -240,10 +240,10 @@ inline observer_ptr<WatchedType> make_observer(
  **/
 template<typename WatchedType1, typename WatchedType2>
 inline bool operator==(
-    PL_IN const observer_ptr<WatchedType1>& p1,
-    PL_IN const observer_ptr<WatchedType2>& p2)
+  PL_IN const observer_ptr<WatchedType1>& p1,
+  PL_IN const observer_ptr<WatchedType2>& p2)
 {
-    return p1.get() == p2.get();
+  return p1.get() == p2.get();
 }
 
 /*!
@@ -255,10 +255,10 @@ inline bool operator==(
  **/
 template<typename WatchedType1, typename WatchedType2>
 inline bool operator!=(
-    PL_IN const observer_ptr<WatchedType1>& p1,
-    PL_IN const observer_ptr<WatchedType2>& p2)
+  PL_IN const observer_ptr<WatchedType1>& p1,
+  PL_IN const observer_ptr<WatchedType2>& p2)
 {
-    return not(p1 == p2);
+  return not(p1 == p2);
 }
 
 /*!
@@ -268,10 +268,10 @@ inline bool operator!=(
  **/
 template<typename WatchedType>
 inline bool operator==(
-    PL_IN const observer_ptr<WatchedType>& p,
-    std::nullptr_t) noexcept
+  PL_IN const observer_ptr<WatchedType>& p,
+  std::nullptr_t) noexcept
 {
-    return p.get() == nullptr;
+  return p.get() == nullptr;
 }
 
 /*!
@@ -281,10 +281,10 @@ inline bool operator==(
  **/
 template<typename WatchedType>
 inline bool operator==(
-    std::nullptr_t,
-    PL_IN const observer_ptr<WatchedType>& p) noexcept
+  std::nullptr_t,
+  PL_IN const observer_ptr<WatchedType>& p) noexcept
 {
-    return ::pl::operator==(p, nullptr);
+  return ::pl::operator==(p, nullptr);
 }
 
 /*!
@@ -294,10 +294,10 @@ inline bool operator==(
  **/
 template<typename WatchedType>
 inline bool operator!=(
-    PL_IN const observer_ptr<WatchedType>& p,
-    std::nullptr_t) noexcept
+  PL_IN const observer_ptr<WatchedType>& p,
+  std::nullptr_t) noexcept
 {
-    return static_cast<bool>(p);
+  return static_cast<bool>(p);
 }
 
 /*!
@@ -307,10 +307,10 @@ inline bool operator!=(
  **/
 template<typename WatchedType>
 inline bool operator!=(
-    std::nullptr_t,
-    PL_IN const observer_ptr<WatchedType>& p) noexcept
+  std::nullptr_t,
+  PL_IN const observer_ptr<WatchedType>& p) noexcept
 {
-    return ::pl::operator!=(p, nullptr);
+  return ::pl::operator!=(p, nullptr);
 }
 
 /*!
@@ -323,11 +323,11 @@ inline bool operator!=(
  **/
 template<typename WatchedType1, typename WatchedType2>
 inline bool operator<(
-    PL_IN const observer_ptr<WatchedType1>& p1,
-    PL_IN const observer_ptr<WatchedType2>& p2)
+  PL_IN const observer_ptr<WatchedType1>& p1,
+  PL_IN const observer_ptr<WatchedType2>& p2)
 {
-    return static_cast<const void*>(p1.get())
-           < static_cast<const void*>(p2.get());
+  return static_cast<const void*>(p1.get())
+         < static_cast<const void*>(p2.get());
 }
 
 /*!
@@ -339,10 +339,10 @@ inline bool operator<(
  **/
 template<typename WatchedType1, typename WatchedType2>
 inline bool operator>(
-    PL_IN const observer_ptr<WatchedType1>& p1,
-    PL_IN const observer_ptr<WatchedType2>& p2)
+  PL_IN const observer_ptr<WatchedType1>& p1,
+  PL_IN const observer_ptr<WatchedType2>& p2)
 {
-    return p2 < p1;
+  return p2 < p1;
 }
 
 /*!
@@ -354,10 +354,10 @@ inline bool operator>(
  **/
 template<typename WatchedType1, typename WatchedType2>
 inline bool operator<=(
-    PL_IN const observer_ptr<WatchedType1>& p1,
-    PL_IN const observer_ptr<WatchedType2>& p2)
+  PL_IN const observer_ptr<WatchedType1>& p1,
+  PL_IN const observer_ptr<WatchedType2>& p2)
 {
-    return not(p2 < p1);
+  return not(p2 < p1);
 }
 
 /*!
@@ -369,10 +369,10 @@ inline bool operator<=(
  **/
 template<typename WatchedType1, typename WatchedType2>
 inline bool operator>=(
-    PL_IN const observer_ptr<WatchedType1>& p1,
-    PL_IN const observer_ptr<WatchedType2>& p2)
+  PL_IN const observer_ptr<WatchedType1>& p1,
+  PL_IN const observer_ptr<WatchedType2>& p2)
 {
-    return not(p1 < p2);
+  return not(p1 < p2);
 }
 
 /*!
@@ -386,10 +386,10 @@ inline bool operator>=(
  **/
 template<typename WatchedType>
 inline void swap(
-    PL_INOUT::pl::observer_ptr<WatchedType>& lhs,
-    PL_INOUT::pl::observer_ptr<WatchedType>& rhs) noexcept
+  PL_INOUT::pl::observer_ptr<WatchedType>& lhs,
+  PL_INOUT::pl::observer_ptr<WatchedType>& rhs) noexcept
 {
-    lhs.swap(rhs);
+  lhs.swap(rhs);
 }
 } // namespace pl
 
@@ -402,11 +402,10 @@ namespace std {
  **/
 template<typename Ty>
 struct hash<::pl::observer_ptr<Ty>> {
-    std::size_t operator()(
-        PL_IN const ::pl::observer_ptr<Ty>& observerPtr) const
-    {
-        return std::hash<Ty*>{}(observerPtr.get());
-    }
+  std::size_t operator()(PL_IN const ::pl::observer_ptr<Ty>& observerPtr) const
+  {
+    return std::hash<Ty*>{}(observerPtr.get());
+  }
 };
 } // namespace std
 #if PL_COMPILER == PL_COMPILER_MSVC

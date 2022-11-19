@@ -41,7 +41,7 @@ namespace test {
 namespace {
 const char* current_function_test() noexcept
 {
-    return PL_CURRENT_FUNCTION;
+  return PL_CURRENT_FUNCTION;
 }
 } // anonymous namespace
 } // namespace test
@@ -49,7 +49,7 @@ const char* current_function_test() noexcept
 
 TEST_CASE("current_function_test")
 {
-    CHECK(
-        std::strstr(pl::test::current_function_test(), "current_function_test")
-        != nullptr);
+  CHECK(
+    std::strstr(pl::test::current_function_test(), "current_function_test")
+    != nullptr);
 }

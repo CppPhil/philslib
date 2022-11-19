@@ -41,25 +41,25 @@
 
 TEST_CASE("disjunction_positive_test")
 {
-    PL_TEST_STATIC_ASSERT(pl::meta::disjunction<
-                          std::is_same<int, int>, // true
-                          std::is_integral<int>   // true
-                          >::value);
+  PL_TEST_STATIC_ASSERT(pl::meta::disjunction<
+                        std::is_same<int, int>, // true
+                        std::is_integral<int>   // true
+                        >::value);
 
-    PL_TEST_STATIC_ASSERT(pl::meta::disjunction<
-                          std::is_same<double, float>,     // false
-                          std::is_trivially_copyable<long> // true
-                          >::value);
+  PL_TEST_STATIC_ASSERT(pl::meta::disjunction<
+                        std::is_same<double, float>,     // false
+                        std::is_trivially_copyable<long> // true
+                        >::value);
 
-    CHECK_UNARY(true);
+  CHECK_UNARY(true);
 }
 
 TEST_CASE("disjunction_negative_test")
 {
-    PL_TEST_STATIC_ASSERT(not pl::meta::disjunction<
-                          std::is_same<int, double>,         // false
-                          std::is_pod<std::vector<unsigned>> // false
-                          >::value);
+  PL_TEST_STATIC_ASSERT(not pl::meta::disjunction<
+                        std::is_same<int, double>,         // false
+                        std::is_pod<std::vector<unsigned>> // false
+                        >::value);
 
-    CHECK_UNARY(true);
+  CHECK_UNARY(true);
 }

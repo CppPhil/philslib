@@ -46,11 +46,11 @@ namespace algo {
 template<typename ForwardIterator>
 inline void destroy(ForwardIterator first, ForwardIterator last)
 {
-    while (first != last) {
-        ::pl::algo::destroy_at(std::addressof(*first));
+  while (first != last) {
+    ::pl::algo::destroy_at(std::addressof(*first));
 
-        ++first;
-    }
+    ++first;
+  }
 }
 } // namespace algo
 } // namespace pl

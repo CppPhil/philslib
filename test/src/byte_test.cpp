@@ -41,23 +41,21 @@
 
 TEST_CASE("byte_test")
 {
-    using namespace pl::literals::integer_literals;
+  using namespace pl::literals::integer_literals;
 
-    PL_TEST_STATIC_ASSERT(CHAR_BIT == 8);
+  PL_TEST_STATIC_ASSERT(CHAR_BIT == 8);
 
-    static constexpr auto min_val = 0x00_byte;
-    static constexpr auto max_val = 0xFF_byte;
+  static constexpr auto min_val = 0x00_byte;
+  static constexpr auto max_val = 0xFF_byte;
 
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(min_val), const pl::byte>::value);
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<decltype(max_val), const pl::byte>::value);
+  PL_TEST_STATIC_ASSERT(std::is_same<decltype(min_val), const pl::byte>::value);
+  PL_TEST_STATIC_ASSERT(std::is_same<decltype(max_val), const pl::byte>::value);
 
-    PL_TEST_STATIC_ASSERT(sizeof(pl::byte) == sizeof(unsigned char));
+  PL_TEST_STATIC_ASSERT(sizeof(pl::byte) == sizeof(unsigned char));
 
-    const unsigned char a{static_cast<unsigned char>('\x0')};
-    const unsigned char b{static_cast<unsigned char>('\xFF')};
+  const unsigned char a{static_cast<unsigned char>('\x0')};
+  const unsigned char b{static_cast<unsigned char>('\xFF')};
 
-    CHECK(std::memcmp(&min_val, &a, sizeof(pl::byte)) == 0);
-    CHECK(std::memcmp(&max_val, &b, sizeof(pl::byte)) == 0);
+  CHECK(std::memcmp(&min_val, &a, sizeof(pl::byte)) == 0);
+  CHECK(std::memcmp(&max_val, &b, sizeof(pl::byte)) == 0);
 }

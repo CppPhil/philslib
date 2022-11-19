@@ -34,13 +34,13 @@ destroy_test_type::destroy_test_type(bool* p) : m_p{p}
 destroy_test_type::destroy_test_type(const destroy_test_type&) = default;
 
 destroy_test_type& destroy_test_type::operator=(const destroy_test_type&)
-    = default;
+  = default;
 
 destroy_test_type::~destroy_test_type()
 {
-    // replace the previous value (should be false) of the bool with true.
-    // this way a test can observe this destructor having been called.
-    *m_p = true;
+  // replace the previous value (should be false) of the bool with true.
+  // this way a test can observe this destructor having been called.
+  *m_p = true;
 }
 } // namespace test
 } // namespace pl

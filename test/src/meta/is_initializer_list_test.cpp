@@ -55,21 +55,21 @@ using ty6 = std::vector<std::string>;
 
 TEST_CASE("is_initializer_list_positive_tests")
 {
-    PL_TEST_STATIC_ASSERT(pl::meta::is_initializer_list<pl::test::ty1>::value);
-    PL_TEST_STATIC_ASSERT(pl::meta::is_initializer_list<pl::test::ty2>::value);
-    PL_TEST_STATIC_ASSERT(pl::meta::is_initializer_list<pl::test::ty3>::value);
+  PL_TEST_STATIC_ASSERT(pl::meta::is_initializer_list<pl::test::ty1>::value);
+  PL_TEST_STATIC_ASSERT(pl::meta::is_initializer_list<pl::test::ty2>::value);
+  PL_TEST_STATIC_ASSERT(pl::meta::is_initializer_list<pl::test::ty3>::value);
 
-    CHECK_UNARY(true);
+  CHECK_UNARY(true);
 }
 
 TEST_CASE("is_initializer_list_negative_tests")
 {
-    PL_TEST_STATIC_ASSERT(
-        not pl::meta::is_initializer_list<pl::test::ty4>::value);
-    PL_TEST_STATIC_ASSERT(
-        not pl::meta::is_initializer_list<pl::test::ty5>::value);
-    PL_TEST_STATIC_ASSERT(
-        not pl::meta::is_initializer_list<pl::test::ty6>::value);
+  PL_TEST_STATIC_ASSERT(
+    not pl::meta::is_initializer_list<pl::test::ty4>::value);
+  PL_TEST_STATIC_ASSERT(
+    not pl::meta::is_initializer_list<pl::test::ty5>::value);
+  PL_TEST_STATIC_ASSERT(
+    not pl::meta::is_initializer_list<pl::test::ty6>::value);
 
-    CHECK_UNARY(true);
+  CHECK_UNARY(true);
 }

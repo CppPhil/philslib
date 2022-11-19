@@ -43,33 +43,33 @@
 
 TEST_CASE("char_to_int_test")
 {
-    static constexpr std::size_t digits{10U};
+  static constexpr std::size_t digits{10U};
 
-    const std::array<unsigned char, digits> characters{
-        {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'}};
+  const std::array<unsigned char, digits> characters{
+    {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'}};
 
-    const std::array<std::uint8_t, digits> integers{
-        {1, 2, 3, 4, 5, 6, 7, 8, 9, 0}};
+  const std::array<std::uint8_t, digits> integers{
+    {1, 2, 3, 4, 5, 6, 7, 8, 9, 0}};
 
-    std::array<std::uint8_t, digits> result{{0U}};
+  std::array<std::uint8_t, digits> result{{0U}};
 
-    pl::algo::transform(characters, std::begin(result), &pl::char_to_int);
+  pl::algo::transform(characters, std::begin(result), &pl::char_to_int);
 
-    CHECK(result == integers);
+  CHECK(result == integers);
 }
 
 TEST_CASE("char_to_int_constexpr_test")
 {
-    PL_TEST_STATIC_ASSERT(pl::char_to_int('1') == 1);
-    PL_TEST_STATIC_ASSERT(pl::char_to_int('2') == 2);
-    PL_TEST_STATIC_ASSERT(pl::char_to_int('3') == 3);
-    PL_TEST_STATIC_ASSERT(pl::char_to_int('4') == 4);
-    PL_TEST_STATIC_ASSERT(pl::char_to_int('5') == 5);
-    PL_TEST_STATIC_ASSERT(pl::char_to_int('6') == 6);
-    PL_TEST_STATIC_ASSERT(pl::char_to_int('7') == 7);
-    PL_TEST_STATIC_ASSERT(pl::char_to_int('8') == 8);
-    PL_TEST_STATIC_ASSERT(pl::char_to_int('9') == 9);
-    PL_TEST_STATIC_ASSERT(pl::char_to_int('0') == 0);
+  PL_TEST_STATIC_ASSERT(pl::char_to_int('1') == 1);
+  PL_TEST_STATIC_ASSERT(pl::char_to_int('2') == 2);
+  PL_TEST_STATIC_ASSERT(pl::char_to_int('3') == 3);
+  PL_TEST_STATIC_ASSERT(pl::char_to_int('4') == 4);
+  PL_TEST_STATIC_ASSERT(pl::char_to_int('5') == 5);
+  PL_TEST_STATIC_ASSERT(pl::char_to_int('6') == 6);
+  PL_TEST_STATIC_ASSERT(pl::char_to_int('7') == 7);
+  PL_TEST_STATIC_ASSERT(pl::char_to_int('8') == 8);
+  PL_TEST_STATIC_ASSERT(pl::char_to_int('9') == 9);
+  PL_TEST_STATIC_ASSERT(pl::char_to_int('0') == 0);
 
-    CHECK_UNARY(true);
+  CHECK_UNARY(true);
 }

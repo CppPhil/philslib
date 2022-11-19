@@ -40,10 +40,10 @@ namespace meta {
  * \warning Do not instantiate this type.
  **/
 struct nonesuch {
-    nonesuch()                = delete;
-    ~nonesuch()               = delete;
-    nonesuch(const nonesuch&) = delete;
-    void operator=(const nonesuch&) = delete;
+  nonesuch()                = delete;
+  ~nonesuch()               = delete;
+  nonesuch(const nonesuch&) = delete;
+  void operator=(const nonesuch&) = delete;
 };
 
 namespace detail {
@@ -53,14 +53,14 @@ namespace detail {
  * \note Not to be used directly.
  **/
 template<
-    typename Default,
-    typename AlwaysVoid,
-    template<typename...>
-    class Op,
-    typename... Args>
+  typename Default,
+  typename AlwaysVoid,
+  template<typename...>
+  class Op,
+  typename... Args>
 struct detector {
-    using value_t = std::false_type;
-    using type    = Default;
+  using value_t = std::false_type;
+  using type    = Default;
 };
 
 /*!
@@ -70,8 +70,8 @@ struct detector {
  **/
 template<typename Default, template<typename...> class Op, typename... Args>
 struct detector<Default, ::pl::meta::void_t<Op<Args...>>, Op, Args...> {
-    using value_t = std::true_type;
-    using type    = Op<Args...>;
+  using value_t = std::true_type;
+  using type    = Op<Args...>;
 };
 } // namespace detail
 
@@ -85,7 +85,7 @@ struct detector<Default, ::pl::meta::void_t<Op<Args...>>, Op, Args...> {
  **/
 template<template<typename...> class Op, typename... Args>
 using is_detected =
-    typename detail::detector<nonesuch, void, Op, Args...>::value_t;
+  typename detail::detector<nonesuch, void, Op, Args...>::value_t;
 
 /*!
  * \brief Behaves like is_detected except for that it will be an alias
@@ -131,7 +131,7 @@ using is_detected_exact = std::is_same<Expected, detected_t<Op, Args...>>;
  **/
 template<typename To, template<typename...> class Op, typename... Args>
 using is_detected_convertible
-    = std::is_convertible<detected_t<Op, Args...>, To>;
+  = std::is_convertible<detected_t<Op, Args...>, To>;
 } // namespace meta
 } // namespace pl
 #endif // INCG_PL_META_DETECTION_IDIOM_HPP

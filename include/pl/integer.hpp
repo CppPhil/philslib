@@ -39,22 +39,22 @@ struct int_impl;
 
 template<>
 struct int_impl<8> {
-    using type = std::int8_t;
+  using type = std::int8_t;
 };
 
 template<>
 struct int_impl<16> {
-    using type = std::int16_t;
+  using type = std::int16_t;
 };
 
 template<>
 struct int_impl<32> {
-    using type = std::int32_t;
+  using type = std::int32_t;
 };
 
 template<>
 struct int_impl<64> {
-    using type = std::int64_t;
+  using type = std::int64_t;
 };
 
 template<int Bits>
@@ -62,22 +62,22 @@ struct uint_impl;
 
 template<>
 struct uint_impl<8> {
-    using type = std::uint8_t;
+  using type = std::uint8_t;
 };
 
 template<>
 struct uint_impl<16> {
-    using type = std::uint16_t;
+  using type = std::uint16_t;
 };
 
 template<>
 struct uint_impl<32> {
-    using type = std::uint32_t;
+  using type = std::uint32_t;
 };
 
 template<>
 struct uint_impl<64> {
-    using type = std::uint64_t;
+  using type = std::uint64_t;
 };
 } // namespace detail
 

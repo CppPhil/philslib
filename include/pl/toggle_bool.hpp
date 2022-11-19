@@ -47,16 +47,16 @@ namespace pl {
  * value return will be true.
  **/
 #if (PL_COMPILER != PL_COMPILER_MSVC) \
-    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
+  || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
 constexpr
 #else
 inline
 #endif
-    bool
-    toggle_bool(PL_INOUT bool& b) noexcept
+  bool
+  toggle_bool(PL_INOUT bool& b) noexcept
 {
-    b = not b;
-    return b;
+  b = not b;
+  return b;
 }
 } // namespace pl
 #endif // INCG_PL_TOGGLE_BOOL_HPP

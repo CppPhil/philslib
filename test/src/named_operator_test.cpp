@@ -41,25 +41,25 @@
 
 TEST_CASE("named_operator_test")
 {
-    using namespace pl::named_operator;
+  using namespace pl::named_operator;
 
-    const auto pow = pl::make_named_operator(
-        [](double base, double exponent) { return std::pow(base, exponent); });
+  const auto pow = pl::make_named_operator(
+    [](double base, double exponent) { return std::pow(base, exponent); });
 
-    const auto contains
-        = pl::make_named_operator([](const auto& container, const auto& value) {
-              const auto end = std::end(container);
-              return std::find(std::begin(container), end, value) != end;
-          });
+  const auto contains
+    = pl::make_named_operator([](const auto& container, const auto& value) {
+        const auto end = std::end(container);
+        return std::find(std::begin(container), end, value) != end;
+      });
 
-    CHECK((2.0 < pow > 3.0) == doctest::Approx(8.0));
+  CHECK((2.0 < pow > 3.0) == doctest::Approx(8.0));
 
-    double val{2.0};
-    val < pow >= 4.0;
+  double val{2.0};
+  val < pow >= 4.0;
 
-    CHECK(val == doctest::Approx(16.0));
+  CHECK(val == doctest::Approx(16.0));
 
-    const std::vector<int> v{1, 2, 3, 4, 5};
-    CHECK_UNARY(v<contains> 3);
-    CHECK_UNARY_FALSE(v<contains> 0);
+  const std::vector<int> v{1, 2, 3, 4, 5};
+  CHECK_UNARY(v<contains> 3);
+  CHECK_UNARY_FALSE(v<contains> 0);
 }

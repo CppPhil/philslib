@@ -46,7 +46,7 @@ namespace detail {
  **/
 template<typename DesiredType, typename...>
 struct return_type_helper {
-    using type = DesiredType;
+  using type = DesiredType;
 };
 
 /*!
@@ -54,10 +54,10 @@ struct return_type_helper {
  **/
 template<typename... Types>
 struct return_type_helper<void, Types...> : public std::common_type<Types...> {
-    static_assert(
-        ::pl::meta::conjunction<
-            ::pl::meta::is_not_reference_wrapper<Types>...>::value,
-        "Types cannot contain reference_wrappers when DesiredType is void");
+  static_assert(
+    ::pl::meta::conjunction<
+      ::pl::meta::is_not_reference_wrapper<Types>...>::value,
+    "Types cannot contain reference_wrappers when DesiredType is void");
 };
 
 /*!
@@ -65,8 +65,8 @@ struct return_type_helper<void, Types...> : public std::common_type<Types...> {
  **/
 template<typename DesiredType, typename... Types>
 using return_type = std::array<
-    typename return_type_helper<DesiredType, Types...>::type,
-    sizeof...(Types)>;
+  typename return_type_helper<DesiredType, Types...>::type,
+  sizeof...(Types)>;
 } // namespace detail
 
 /*!
@@ -76,9 +76,9 @@ using return_type = std::array<
  **/
 template<typename DesiredType = void, typename... Args>
 constexpr detail::return_type<DesiredType, Args...> make_array(
-    PL_IN Args&&... args)
+  PL_IN Args&&... args)
 {
-    return {{std::forward<Args>(args)...}};
+  return {{std::forward<Args>(args)...}};
 }
 } // namespace cont
 } // namespace pl

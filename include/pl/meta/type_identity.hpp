@@ -44,7 +44,7 @@ namespace meta {
  **/
 template<typename Ty>
 struct type_identity {
-    using type = Ty;
+  using type = Ty;
 };
 
 /*!

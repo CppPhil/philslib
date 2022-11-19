@@ -44,20 +44,20 @@ namespace test {
 namespace {
 int f1(int i) noexcept
 {
-    return i * 2;
+  return i * 2;
 }
 void f2() noexcept
 {
 }
 class type {
 public:
-    double mem_fn1(double a) const noexcept
-    {
-        return a * 3.0;
-    }
-    void mem_fn2() const noexcept
-    {
-    }
+  double mem_fn1(double a) const noexcept
+  {
+    return a * 3.0;
+  }
+  void mem_fn2() const noexcept
+  {
+  }
 };
 } // anonymous namespace
 } // namespace test
@@ -65,44 +65,43 @@ public:
 
 TEST_CASE("thread_pool_test")
 {
-    static constexpr std::size_t no_threads{0U};
-    static constexpr std::size_t two_threads{2U};
+  static constexpr std::size_t no_threads{0U};
+  static constexpr std::size_t two_threads{2U};
 
-    const unsigned hw_concurrency{std::thread::hardware_concurrency()};
+  const unsigned hw_concurrency{std::thread::hardware_concurrency()};
 
-    REQUIRE(hw_concurrency != 0U);
+  REQUIRE(hw_concurrency != 0U);
 
-    pl::thd::thread_pool empty_thread_pool{no_threads};
-    pl::thd::thread_pool two_threads_thread_pool{two_threads};
-    pl::thd::thread_pool hw_concurrency_thread_pool{hw_concurrency};
+  pl::thd::thread_pool empty_thread_pool{no_threads};
+  pl::thd::thread_pool two_threads_thread_pool{two_threads};
+  pl::thd::thread_pool hw_concurrency_thread_pool{hw_concurrency};
 
-    SUBCASE("thread_count_test")
-    {
-        CHECK(empty_thread_pool.thread_count() == no_threads);
-        CHECK(two_threads_thread_pool.thread_count() == two_threads);
-        CHECK(hw_concurrency_thread_pool.thread_count() == hw_concurrency);
-    }
+  SUBCASE("thread_count_test")
+  {
+    CHECK(empty_thread_pool.thread_count() == no_threads);
+    CHECK(two_threads_thread_pool.thread_count() == two_threads);
+    CHECK(hw_concurrency_thread_pool.thread_count() == hw_concurrency);
+  }
 
-    SUBCASE("task_test")
-    {
-        pl::thd::thread_pool& tp{two_threads_thread_pool};
+  SUBCASE("task_test")
+  {
+    pl::thd::thread_pool& tp{two_threads_thread_pool};
 
-        std::future<int>    fut1{tp.add_task(&pl::test::f1, 5)};
-        std::future<void>   fut2{tp.add_task(&pl::test::f2)};
-        std::future<double> fut3{
-            tp.add_task(&pl::test::type::mem_fn1, pl::test::type{}, 5.0)};
-        std::future<void> fut4{
-            tp.add_task(&pl::test::type::mem_fn2, pl::test::type{})};
-        std::future<std::string> fut5{tp.add_task(
-            [](const char* str) { return std::string{"text "} + str; },
-            "test")};
-        std::future<void>        fut6{tp.add_task([] {})};
+    std::future<int>    fut1{tp.add_task(&pl::test::f1, 5)};
+    std::future<void>   fut2{tp.add_task(&pl::test::f2)};
+    std::future<double> fut3{
+      tp.add_task(&pl::test::type::mem_fn1, pl::test::type{}, 5.0)};
+    std::future<void> fut4{
+      tp.add_task(&pl::test::type::mem_fn2, pl::test::type{})};
+    std::future<std::string> fut5{tp.add_task(
+      [](const char* str) { return std::string{"text "} + str; }, "test")};
+    std::future<void>        fut6{tp.add_task([] {})};
 
-        CHECK(fut1.get() == 10);
-        fut2.wait();
-        CHECK(fut3.get() == doctest::Approx{15.0});
-        fut4.wait();
-        CHECK(fut5.get() == "text test");
-        fut6.wait();
-    }
+    CHECK(fut1.get() == 10);
+    fut2.wait();
+    CHECK(fut3.get() == doctest::Approx{15.0});
+    fut4.wait();
+    CHECK(fut5.get() == "text test");
+    fut6.wait();
+  }
 }

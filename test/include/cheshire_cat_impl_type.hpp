@@ -32,29 +32,29 @@ namespace pl {
 namespace test {
 class cheshire_cat_impl_type {
 public:
-    cheshire_cat_impl_type();
+  cheshire_cat_impl_type();
 
-    explicit cheshire_cat_impl_type(int val);
+  explicit cheshire_cat_impl_type(int val);
 
-    cheshire_cat_impl_type(std::initializer_list<int> il);
+  cheshire_cat_impl_type(std::initializer_list<int> il);
 
-    cheshire_cat_impl_type(const cheshire_cat_impl_type& other);
+  cheshire_cat_impl_type(const cheshire_cat_impl_type& other);
 
-    cheshire_cat_impl_type(cheshire_cat_impl_type&& other) noexcept;
+  cheshire_cat_impl_type(cheshire_cat_impl_type&& other) noexcept;
 
-    cheshire_cat_impl_type& operator=(
-        const cheshire_cat_impl_type& other) noexcept;
+  cheshire_cat_impl_type& operator=(
+    const cheshire_cat_impl_type& other) noexcept;
 
-    cheshire_cat_impl_type& operator=(cheshire_cat_impl_type&& other) noexcept;
+  cheshire_cat_impl_type& operator=(cheshire_cat_impl_type&& other) noexcept;
 
-    ~cheshire_cat_impl_type();
+  ~cheshire_cat_impl_type();
 
-    int value() const noexcept;
+  int value() const noexcept;
 
-    void swap(cheshire_cat_impl_type& other) noexcept;
+  void swap(cheshire_cat_impl_type& other) noexcept;
 
 private:
-    int* m_p;
+  int* m_p;
 };
 
 void swap(cheshire_cat_impl_type& a, cheshire_cat_impl_type& b) noexcept;

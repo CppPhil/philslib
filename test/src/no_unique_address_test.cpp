@@ -42,8 +42,8 @@ struct Empty {
 };
 
 struct Struct {
-    std::int32_t               value;
-    PL_NO_UNIQUE_ADDRESS Empty empty;
+  std::int32_t               value;
+  PL_NO_UNIQUE_ADDRESS Empty empty;
 };
 } // anonymous namespace
 } // namespace test
@@ -52,23 +52,23 @@ TEST_CASE("no_unique_address_test")
 {
 #if PL_COMPILER == PL_COMPILER_MSVC
 #if _MSC_FULL_VER >= 192829913
-    CHECK(sizeof(test::Struct) == sizeof(std::int32_t));
+  CHECK(sizeof(test::Struct) == sizeof(std::int32_t));
 #else
-    CHECK(sizeof(test::Struct) > sizeof(std::int32_t));
+  CHECK(sizeof(test::Struct) > sizeof(std::int32_t));
 #endif
 #elif PL_COMPILER == PL_COMPILER_GCC
 #if PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(9, 0, 0)
-    CHECK(sizeof(test::Struct) == sizeof(std::int32_t));
+  CHECK(sizeof(test::Struct) == sizeof(std::int32_t));
 #else
-    CHECK(sizeof(test::Struct) > sizeof(std::int32_t));
+  CHECK(sizeof(test::Struct) > sizeof(std::int32_t));
 #endif
 #elif PL_COMPILER == PL_COMPILER_CLANG
 #if PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(9, 0, 0)
-    CHECK(sizeof(test::Struct) == sizeof(std::int32_t));
+  CHECK(sizeof(test::Struct) == sizeof(std::int32_t));
 #else
-    CHECK(sizeof(test::Struct) > sizeof(std::int32_t));
+  CHECK(sizeof(test::Struct) > sizeof(std::int32_t));
 #endif
 #else
-    CHECK(sizeof(test::Struct) > sizeof(std::int32_t));
+  CHECK(sizeof(test::Struct) > sizeof(std::int32_t));
 #endif
 }

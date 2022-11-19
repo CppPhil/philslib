@@ -52,33 +52,32 @@ namespace algo {
  **/
 template<typename InputIterator, typename ForwardIterator>
 inline ForwardIterator uninitialized_move(
-    InputIterator   first,
-    InputIterator   last,
-    ForwardIterator dest)
+  InputIterator   first,
+  InputIterator   last,
+  ForwardIterator dest)
 {
-    using value_type =
-        typename std::iterator_traits<ForwardIterator>::value_type;
+  using value_type = typename std::iterator_traits<ForwardIterator>::value_type;
 
-    ForwardIterator cur{dest};
+  ForwardIterator cur{dest};
 
-    try {
-        while (first != last) {
-            ::new (PL_VOIDIFY(*cur)) value_type(std::move(*first));
+  try {
+    while (first != last) {
+      ::new (PL_VOIDIFY(*cur)) value_type(std::move(*first));
 
-            ++first;
-            ++cur;
-        }
-
-        return cur;
+      ++first;
+      ++cur;
     }
-    catch (...) {
-        while (dest != cur) {
-            dest->~value_type();
-            ++dest;
-        }
 
-        throw;
+    return cur;
+  }
+  catch (...) {
+    while (dest != cur) {
+      dest->~value_type();
+      ++dest;
     }
+
+    throw;
+  }
 }
 } // namespace algo
 } // namespace pl

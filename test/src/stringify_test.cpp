@@ -38,14 +38,14 @@
 
 TEST_CASE("stringify_test")
 {
-    static constexpr char str1[]{PL_STRINGIFY(a)};
-    static constexpr char str2[]{PL_STRINGIFY(text)};
+  static constexpr char str1[]{PL_STRINGIFY(a)};
+  static constexpr char str2[]{PL_STRINGIFY(text)};
 
-    REQUIRE(std::strlen(str1) == 1U);
-    CHECK(str1[0U] == 'a');
-    CHECK(str1[1U] == '\0');
+  REQUIRE(std::strlen(str1) == 1U);
+  CHECK(str1[0U] == 'a');
+  CHECK(str1[1U] == '\0');
 
-    REQUIRE(std::strlen(str2) == 4U);
-    CHECK(std::strcmp(str2, "text") == 0);
-    CHECK(str2[4U] == '\0');
+  REQUIRE(std::strlen(str2) == 4U);
+  CHECK(std::strcmp(str2, "text") == 0);
+  CHECK(str2[4U] == '\0');
 }

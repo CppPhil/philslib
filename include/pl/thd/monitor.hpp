@@ -46,48 +46,48 @@ namespace thd {
 template<typename SharedData>
 class monitor {
 public:
-    using this_type    = monitor;
-    using element_type = SharedData;
+  using this_type    = monitor;
+  using element_type = SharedData;
 
-    /*!
-     * \brief Creates a monitor.
-     * \param shared_data the data to be protected by the Monitor.
-     **/
-    explicit monitor(element_type shared_data)
-        : m_shared_data{std::move(shared_data)}, m_mutex{}
-    {
-    }
+  /*!
+   * \brief Creates a monitor.
+   * \param shared_data the data to be protected by the Monitor.
+   **/
+  explicit monitor(element_type shared_data)
+    : m_shared_data{std::move(shared_data)}, m_mutex{}
+  {
+  }
 
-    /*!
-     * \brief This type is non-copyable.
-     **/
-    monitor(const this_type&) = delete;
+  /*!
+   * \brief This type is non-copyable.
+   **/
+  monitor(const this_type&) = delete;
 
-    /*!
-     * \brief This type is non-copyable.
-     **/
-    this_type& operator=(const this_type&) = delete;
+  /*!
+   * \brief This type is non-copyable.
+   **/
+  this_type& operator=(const this_type&) = delete;
 
-    /*!
-     * \brief Receives a callable and invokes that callable by passing the
-     *        shared data to it. The call itself is protected by a mutex.
-     * \param callable The callable to be used to operate on the shared data.
-     * \return The result of calling the callable passed in with the shared data
-     *         as the callable's call operator's argument.
-     **/
-    template<typename Callable>
-    auto operator()(PL_IN Callable&& callable) -> decltype(auto)
-    {
-        std::lock_guard<std::mutex> lock_guard{m_mutex};
-        (void)lock_guard;
-        return ::pl::invoke(std::forward<Callable>(callable), m_shared_data);
-    }
+  /*!
+   * \brief Receives a callable and invokes that callable by passing the
+   *        shared data to it. The call itself is protected by a mutex.
+   * \param callable The callable to be used to operate on the shared data.
+   * \return The result of calling the callable passed in with the shared data
+   *         as the callable's call operator's argument.
+   **/
+  template<typename Callable>
+  auto operator()(PL_IN Callable&& callable) -> decltype(auto)
+  {
+    std::lock_guard<std::mutex> lock_guard{m_mutex};
+    (void)lock_guard;
+    return ::pl::invoke(std::forward<Callable>(callable), m_shared_data);
+  }
 
 private:
-    element_type m_shared_data; //!< the shared data
-    std::mutex   m_mutex;       /*!< the mutex to guard access
-                                 *   to the shared data
-                                 **/
+  element_type m_shared_data; //!< the shared data
+  std::mutex   m_mutex;       /*!< the mutex to guard access
+                               *   to the shared data
+                               **/
 };
 } // namespace thd
 } // namespace pl

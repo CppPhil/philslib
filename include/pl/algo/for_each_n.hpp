@@ -63,12 +63,12 @@ template<typename InputIterator, typename SizeType, typename UnaryInvocable>
 inline InputIterator
 for_each_n(InputIterator first, SizeType n, UnaryInvocable unary_invocable)
 {
-    for (SizeType i{}; i < n; ++first) {
-        ::pl::invoke(unary_invocable, *first);
-        ++i;
-    }
+  for (SizeType i{}; i < n; ++first) {
+    ::pl::invoke(unary_invocable, *first);
+    ++i;
+  }
 
-    return first;
+  return first;
 }
 } // namespace algo
 } // namespace pl

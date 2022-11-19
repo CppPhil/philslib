@@ -37,16 +37,16 @@
 
 TEST_CASE("toggle_bool_false")
 {
-    bool b{false};
+  bool b{false};
 
-    CHECK_UNARY(pl::toggle_bool(b));
-    CHECK_UNARY(b);
+  CHECK_UNARY(pl::toggle_bool(b));
+  CHECK_UNARY(b);
 }
 
 TEST_CASE("toogle_bool_true")
 {
-    bool b{true};
+  bool b{true};
 
-    CHECK_UNARY_FALSE(pl::toggle_bool(b));
-    CHECK_UNARY_FALSE(b);
+  CHECK_UNARY_FALSE(pl::toggle_bool(b));
+  CHECK_UNARY_FALSE(b);
 }

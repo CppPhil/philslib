@@ -63,7 +63,7 @@ struct is_random_access_tag : public std::false_type {
  **/
 template<>
 struct is_random_access_tag<std::random_access_iterator_tag>
-    : public std::true_type {
+  : public std::true_type {
 };
 
 /*!
@@ -157,8 +157,8 @@ struct is_input_tag<std::random_access_iterator_tag> : public std::true_type {
  **/
 template<typename Iter>
 struct iterator_category {
-    using type = typename std::iterator_traits<
-        std::remove_cv_t<std::remove_reference_t<Iter>>>::iterator_category;
+  using type = typename std::iterator_traits<
+    std::remove_cv_t<std::remove_reference_t<Iter>>>::iterator_category;
 };
 
 /*!
@@ -181,7 +181,7 @@ using iterator_category_t = typename iterator_category<Iter>::type;
  **/
 template<typename Iter>
 struct is_output_iterator
-    : public detail::is_output_tag<detail::iterator_category_t<Iter>> {
+  : public detail::is_output_tag<detail::iterator_category_t<Iter>> {
 };
 
 /*!
@@ -204,7 +204,7 @@ using is_output_iterator_t = typename is_output_iterator<Iter>::type;
  **/
 template<typename Iter>
 struct is_random_access_iterator
-    : public detail::is_random_access_tag<detail::iterator_category_t<Iter>> {
+  : public detail::is_random_access_tag<detail::iterator_category_t<Iter>> {
 };
 
 /*!
@@ -213,7 +213,7 @@ struct is_random_access_iterator
  **/
 template<typename Iter>
 using is_random_access_iterator_t =
-    typename is_random_access_iterator<Iter>::type;
+  typename is_random_access_iterator<Iter>::type;
 
 /*!
  * \brief Type trait to check if an iterator is a bidirectional iterator.
@@ -228,7 +228,7 @@ using is_random_access_iterator_t =
  **/
 template<typename Iter>
 struct is_bidirectional_iterator
-    : public detail::is_bidi_tag<detail::iterator_category_t<Iter>> {
+  : public detail::is_bidi_tag<detail::iterator_category_t<Iter>> {
 };
 
 /*!
@@ -237,7 +237,7 @@ struct is_bidirectional_iterator
  **/
 template<typename Iter>
 using is_bidirectional_iterator_t =
-    typename is_bidirectional_iterator<Iter>::type;
+  typename is_bidirectional_iterator<Iter>::type;
 
 /*!
  * \brief Type trait to check if an iterator is a forward iterator.
@@ -252,7 +252,7 @@ using is_bidirectional_iterator_t =
  **/
 template<typename Iter>
 struct is_forward_iterator
-    : public detail::is_forward_tag<detail::iterator_category_t<Iter>> {
+  : public detail::is_forward_tag<detail::iterator_category_t<Iter>> {
 };
 
 /*!
@@ -275,7 +275,7 @@ using is_forward_iterator_t = typename is_forward_iterator<Iter>::type;
  **/
 template<typename Iter>
 struct is_input_iterator
-    : public detail::is_input_tag<detail::iterator_category_t<Iter>> {
+  : public detail::is_input_tag<detail::iterator_category_t<Iter>> {
 };
 
 /*!

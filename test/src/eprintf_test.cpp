@@ -37,10 +37,10 @@
 
 TEST_CASE("eprintf_test")
 {
-    static constexpr int expected_count = 11;
+  static constexpr int expected_count = 11;
 
-    const int ret_val{pl::eprintf("Test %s\n", "Hello")};
+  const int ret_val{pl::eprintf("Test %s\n", "Hello")};
 
-    REQUIRE(ret_val >= 0);
-    CHECK(ret_val == expected_count);
+  REQUIRE(ret_val >= 0);
+  CHECK(ret_val == expected_count);
 }

@@ -48,105 +48,105 @@ namespace thd {
 template<typename ValueType>
 class thread_safe_queue {
 public:
-    using this_type      = thread_safe_queue;
-    using value_type     = ValueType;
-    using container_type = std::queue<value_type>;
-    using size_type      = typename container_type::size_type;
+  using this_type      = thread_safe_queue;
+  using value_type     = ValueType;
+  using container_type = std::queue<value_type>;
+  using size_type      = typename container_type::size_type;
 
-    /*!
-     * \brief Creates a thread_safe_queue.
-     *        The thread_safe_queue will start out empty.
-     **/
-    thread_safe_queue() noexcept : m_cont{}, m_mutex{}, m_cv_has_elements{}
-    {
-    }
-    /*!
-     * \brief This type is non-copyable.
-     **/
-    thread_safe_queue(const this_type&) = delete;
+  /*!
+   * \brief Creates a thread_safe_queue.
+   *        The thread_safe_queue will start out empty.
+   **/
+  thread_safe_queue() noexcept : m_cont{}, m_mutex{}, m_cv_has_elements{}
+  {
+  }
+  /*!
+   * \brief This type is non-copyable.
+   **/
+  thread_safe_queue(const this_type&) = delete;
 
-    /*!
-     * \brief This type is non-copyable.
-     **/
-    this_type& operator=(const this_type&) = delete;
+  /*!
+   * \brief This type is non-copyable.
+   **/
+  this_type& operator=(const this_type&) = delete;
 
-    /*!
-     * \brief Removes the first element and returns it.
-     * \return The element that used to be at the front of the queue.
-     *
-     * If the queue is currently empty the calling thread will be put to sleep
-     * until the queue is no longer empty.
-     **/
-    value_type pop()
-    {
-        std::unique_lock<std::mutex> lock{m_mutex};
-        m_cv_has_elements.wait(lock, [this] { return not m_cont.empty(); });
-        auto return_value = m_cont.front();
-        m_cont.pop();
-        return return_value;
-    }
+  /*!
+   * \brief Removes the first element and returns it.
+   * \return The element that used to be at the front of the queue.
+   *
+   * If the queue is currently empty the calling thread will be put to sleep
+   * until the queue is no longer empty.
+   **/
+  value_type pop()
+  {
+    std::unique_lock<std::mutex> lock{m_mutex};
+    m_cv_has_elements.wait(lock, [this] { return not m_cont.empty(); });
+    auto return_value = m_cont.front();
+    m_cont.pop();
+    return return_value;
+  }
 
-    /*!
-     * \brief Pushes the object passed into the parameter to the back of the
-     *        queue.
-     * \param data The object to push to the back of the queue.
-     * \return A reference to this object.
-     *
-     * Will notify threads waiting for the queue to no longer be empty that
-     * the queue is no longer empty.
-     **/
-    this_type& push(PL_IN const value_type& data)
-    {
-        std::unique_lock<std::mutex> lock{m_mutex};
-        m_cont.push(data);
-        lock.unlock();
-        m_cv_has_elements.notify_all();
-        return *this;
-    }
+  /*!
+   * \brief Pushes the object passed into the parameter to the back of the
+   *        queue.
+   * \param data The object to push to the back of the queue.
+   * \return A reference to this object.
+   *
+   * Will notify threads waiting for the queue to no longer be empty that
+   * the queue is no longer empty.
+   **/
+  this_type& push(PL_IN const value_type& data)
+  {
+    std::unique_lock<std::mutex> lock{m_mutex};
+    m_cont.push(data);
+    lock.unlock();
+    m_cv_has_elements.notify_all();
+    return *this;
+  }
 
-    /*!
-     * \brief Pushes the rvalue passed to the back of the queue.
-     * \param data The rvalue to add to the back of the queue
-     * \return A reference to this object.
-     *
-     * Will notify threads waiting for the queue to no longer be empty that
-     * the queue is no longer empty.
-     **/
-    this_type& push(PL_IN value_type&& data)
-    {
-        std::unique_lock<std::mutex> lock{m_mutex};
-        m_cont.push(std::move(data));
-        lock.unlock();
-        m_cv_has_elements.notify_all();
-        return *this;
-    }
+  /*!
+   * \brief Pushes the rvalue passed to the back of the queue.
+   * \param data The rvalue to add to the back of the queue
+   * \return A reference to this object.
+   *
+   * Will notify threads waiting for the queue to no longer be empty that
+   * the queue is no longer empty.
+   **/
+  this_type& push(PL_IN value_type&& data)
+  {
+    std::unique_lock<std::mutex> lock{m_mutex};
+    m_cont.push(std::move(data));
+    lock.unlock();
+    m_cv_has_elements.notify_all();
+    return *this;
+  }
 
-    /*!
-     * \brief Queries the queue as to whether or not it is empty.
-     * \return true if the queue is empty; false otherwise.
-     **/
-    PL_NODISCARD bool empty() const noexcept
-    {
-        std::lock_guard<std::mutex> lock{m_mutex};
-        (void)lock;
-        return m_cont.empty();
-    }
+  /*!
+   * \brief Queries the queue as to whether or not it is empty.
+   * \return true if the queue is empty; false otherwise.
+   **/
+  PL_NODISCARD bool empty() const noexcept
+  {
+    std::lock_guard<std::mutex> lock{m_mutex};
+    (void)lock;
+    return m_cont.empty();
+  }
 
-    /*!
-     * \brief Queries the queue's size.
-     * \return The size of the queue.
-     **/
-    size_type size() const noexcept
-    {
-        std::lock_guard<std::mutex> lock{m_mutex};
-        (void)lock;
-        return m_cont.size();
-    }
+  /*!
+   * \brief Queries the queue's size.
+   * \return The size of the queue.
+   **/
+  size_type size() const noexcept
+  {
+    std::lock_guard<std::mutex> lock{m_mutex};
+    (void)lock;
+    return m_cont.size();
+  }
 
 private:
-    container_type          m_cont;
-    mutable std::mutex      m_mutex;
-    std::condition_variable m_cv_has_elements;
+  container_type          m_cont;
+  mutable std::mutex      m_mutex;
+  std::condition_variable m_cv_has_elements;
 };
 } // namespace thd
 } // namespace pl

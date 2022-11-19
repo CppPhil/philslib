@@ -40,44 +40,44 @@
 
 TEST_CASE("is_reference_wrapper_positive_test")
 {
-    using ty1 = std::reference_wrapper<int>;
-    using ty2 = std::reference_wrapper<double>;
-    using ty3 = std::reference_wrapper<float>;
-    using ty4 = std::reference_wrapper<long long>;
+  using ty1 = std::reference_wrapper<int>;
+  using ty2 = std::reference_wrapper<double>;
+  using ty3 = std::reference_wrapper<float>;
+  using ty4 = std::reference_wrapper<long long>;
 
-    PL_TEST_STATIC_ASSERT(pl::meta::is_reference_wrapper<ty1>::value);
-    PL_TEST_STATIC_ASSERT(not pl::meta::is_not_reference_wrapper<ty1>::value);
+  PL_TEST_STATIC_ASSERT(pl::meta::is_reference_wrapper<ty1>::value);
+  PL_TEST_STATIC_ASSERT(not pl::meta::is_not_reference_wrapper<ty1>::value);
 
-    PL_TEST_STATIC_ASSERT(pl::meta::is_reference_wrapper<ty2>::value);
-    PL_TEST_STATIC_ASSERT(not pl::meta::is_not_reference_wrapper<ty2>::value);
+  PL_TEST_STATIC_ASSERT(pl::meta::is_reference_wrapper<ty2>::value);
+  PL_TEST_STATIC_ASSERT(not pl::meta::is_not_reference_wrapper<ty2>::value);
 
-    PL_TEST_STATIC_ASSERT(pl::meta::is_reference_wrapper<ty3>::value);
-    PL_TEST_STATIC_ASSERT(not pl::meta::is_not_reference_wrapper<ty3>::value);
+  PL_TEST_STATIC_ASSERT(pl::meta::is_reference_wrapper<ty3>::value);
+  PL_TEST_STATIC_ASSERT(not pl::meta::is_not_reference_wrapper<ty3>::value);
 
-    PL_TEST_STATIC_ASSERT(pl::meta::is_reference_wrapper<ty4>::value);
-    PL_TEST_STATIC_ASSERT(not pl::meta::is_not_reference_wrapper<ty4>::value);
+  PL_TEST_STATIC_ASSERT(pl::meta::is_reference_wrapper<ty4>::value);
+  PL_TEST_STATIC_ASSERT(not pl::meta::is_not_reference_wrapper<ty4>::value);
 
-    CHECK_UNARY(true);
+  CHECK_UNARY(true);
 }
 
 TEST_CASE("is_reference_wrapper_negative_test")
 {
-    using ty1 = unsigned long long;
-    using ty2 = wchar_t;
-    using ty3 = short;
-    using ty4 = std::unordered_map<int, const char*>;
+  using ty1 = unsigned long long;
+  using ty2 = wchar_t;
+  using ty3 = short;
+  using ty4 = std::unordered_map<int, const char*>;
 
-    PL_TEST_STATIC_ASSERT(not pl::meta::is_reference_wrapper<ty1>::value);
-    PL_TEST_STATIC_ASSERT(pl::meta::is_not_reference_wrapper<ty1>::value);
+  PL_TEST_STATIC_ASSERT(not pl::meta::is_reference_wrapper<ty1>::value);
+  PL_TEST_STATIC_ASSERT(pl::meta::is_not_reference_wrapper<ty1>::value);
 
-    PL_TEST_STATIC_ASSERT(not pl::meta::is_reference_wrapper<ty2>::value);
-    PL_TEST_STATIC_ASSERT(pl::meta::is_not_reference_wrapper<ty2>::value);
+  PL_TEST_STATIC_ASSERT(not pl::meta::is_reference_wrapper<ty2>::value);
+  PL_TEST_STATIC_ASSERT(pl::meta::is_not_reference_wrapper<ty2>::value);
 
-    PL_TEST_STATIC_ASSERT(not pl::meta::is_reference_wrapper<ty3>::value);
-    PL_TEST_STATIC_ASSERT(pl::meta::is_not_reference_wrapper<ty3>::value);
+  PL_TEST_STATIC_ASSERT(not pl::meta::is_reference_wrapper<ty3>::value);
+  PL_TEST_STATIC_ASSERT(pl::meta::is_not_reference_wrapper<ty3>::value);
 
-    PL_TEST_STATIC_ASSERT(not pl::meta::is_reference_wrapper<ty4>::value);
-    PL_TEST_STATIC_ASSERT(pl::meta::is_not_reference_wrapper<ty4>::value);
+  PL_TEST_STATIC_ASSERT(not pl::meta::is_reference_wrapper<ty4>::value);
+  PL_TEST_STATIC_ASSERT(pl::meta::is_not_reference_wrapper<ty4>::value);
 
-    CHECK_UNARY(true);
+  CHECK_UNARY(true);
 }

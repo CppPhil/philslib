@@ -41,46 +41,45 @@
 
 TEST_CASE("asprintf_unique_ptr_test")
 {
-    static constexpr int expected_bytes_written{7};
+  static constexpr int expected_bytes_written{7};
 
-    std::unique_ptr<char[]> up{nullptr};
+  std::unique_ptr<char[]> up{nullptr};
 
-    const int ret{pl::asprintf(&up, "Text %02X", 0xF)};
+  const int ret{pl::asprintf(&up, "Text %02X", 0xF)};
 
-    REQUIRE(ret >= 0);
-    REQUIRE(up != nullptr);
+  REQUIRE(ret >= 0);
+  REQUIRE(up != nullptr);
 
-    CHECK(ret == expected_bytes_written);
-    CHECK(
-        std::strlen(up.get())
-        == static_cast<std::size_t>(expected_bytes_written));
-    CHECK(std::strcmp(up.get(), "Text 0F") == 0);
+  CHECK(ret == expected_bytes_written);
+  CHECK(
+    std::strlen(up.get()) == static_cast<std::size_t>(expected_bytes_written));
+  CHECK(std::strcmp(up.get(), "Text 0F") == 0);
 }
 
 TEST_CASE("asprintf_string_test")
 {
-    static constexpr int  expected_bytes_written{21};
-    static constexpr char str[]{"Hello World"};
+  static constexpr int  expected_bytes_written{21};
+  static constexpr char str[]{"Hello World"};
 
-    std::string string{};
+  std::string string{};
 
-    int ret{pl::asprintf(&string, "String: \"%s\"", str)};
+  int ret{pl::asprintf(&string, "String: \"%s\"", str)};
 
-    REQUIRE(ret >= 0);
-    REQUIRE_UNARY_FALSE(string.empty());
+  REQUIRE(ret >= 0);
+  REQUIRE_UNARY_FALSE(string.empty());
 
-    CHECK(ret == expected_bytes_written);
-    CHECK(
-        string.size()
-        == static_cast<std::string::size_type>(expected_bytes_written));
-    CHECK(string == "String: \"Hello World\"");
+  CHECK(ret == expected_bytes_written);
+  CHECK(
+    string.size()
+    == static_cast<std::string::size_type>(expected_bytes_written));
+  CHECK(string == "String: \"Hello World\"");
 
-    ret = pl::asprintf(&string, "%.*s", 6, "Sample Text");
+  ret = pl::asprintf(&string, "%.*s", 6, "Sample Text");
 
-    REQUIRE(ret >= 0);
-    REQUIRE_UNARY_FALSE(string.empty());
+  REQUIRE(ret >= 0);
+  REQUIRE_UNARY_FALSE(string.empty());
 
-    CHECK(ret == 6);
-    CHECK(string.size() == 6U);
-    CHECK(string == "Sample");
+  CHECK(ret == 6);
+  CHECK(string.size() == 6U);
+  CHECK(string == "Sample");
 }

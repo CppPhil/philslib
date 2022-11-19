@@ -39,27 +39,27 @@
  * \warning There must be a correct operator< and operator== already defined for
  *          type.
  **/
-#define PL_TOTAL_ORDER(type)                                              \
-                                                                          \
-    PL_NODISCARD inline bool operator!=(const type& lhs, const type& rhs) \
-    {                                                                     \
-        return not static_cast<bool>(lhs == rhs);                         \
-    }                                                                     \
-                                                                          \
-    PL_NODISCARD inline bool operator>(const type& lhs, const type& rhs)  \
-    {                                                                     \
-        return rhs < lhs;                                                 \
-    }                                                                     \
-                                                                          \
-    PL_NODISCARD inline bool operator<=(const type& lhs, const type& rhs) \
-    {                                                                     \
-        return not static_cast<bool>(lhs > rhs);                          \
-    }                                                                     \
-                                                                          \
-    PL_NODISCARD inline bool operator>=(const type& lhs, const type& rhs) \
-    {                                                                     \
-        return not static_cast<bool>(lhs < rhs);                          \
-    }
+#define PL_TOTAL_ORDER(type)                                            \
+                                                                        \
+  PL_NODISCARD inline bool operator!=(const type& lhs, const type& rhs) \
+  {                                                                     \
+    return not static_cast<bool>(lhs == rhs);                           \
+  }                                                                     \
+                                                                        \
+  PL_NODISCARD inline bool operator>(const type& lhs, const type& rhs)  \
+  {                                                                     \
+    return rhs < lhs;                                                   \
+  }                                                                     \
+                                                                        \
+  PL_NODISCARD inline bool operator<=(const type& lhs, const type& rhs) \
+  {                                                                     \
+    return not static_cast<bool>(lhs > rhs);                            \
+  }                                                                     \
+                                                                        \
+  PL_NODISCARD inline bool operator>=(const type& lhs, const type& rhs) \
+  {                                                                     \
+    return not static_cast<bool>(lhs < rhs);                            \
+  }
 
 /*!
  * \def PL_TOTAL_ORDER_CONSTEXPR
@@ -68,25 +68,25 @@
  * \warning There must be a correct operator< and operator== already defined for
  *          type. Additionally those operators must be declared constexpr.
  **/
-#define PL_TOTAL_ORDER_CONSTEXPR(type)                                       \
-                                                                             \
-    PL_NODISCARD constexpr bool operator!=(const type& lhs, const type& rhs) \
-    {                                                                        \
-        return not static_cast<bool>(lhs == rhs);                            \
-    }                                                                        \
-                                                                             \
-    PL_NODISCARD constexpr bool operator>(const type& lhs, const type& rhs)  \
-    {                                                                        \
-        return rhs < lhs;                                                    \
-    }                                                                        \
-                                                                             \
-    PL_NODISCARD constexpr bool operator<=(const type& lhs, const type& rhs) \
-    {                                                                        \
-        return not static_cast<bool>(lhs > rhs);                             \
-    }                                                                        \
-                                                                             \
-    PL_NODISCARD constexpr bool operator>=(const type& lhs, const type& rhs) \
-    {                                                                        \
-        return not static_cast<bool>(lhs < rhs);                             \
-    }
+#define PL_TOTAL_ORDER_CONSTEXPR(type)                                     \
+                                                                           \
+  PL_NODISCARD constexpr bool operator!=(const type& lhs, const type& rhs) \
+  {                                                                        \
+    return not static_cast<bool>(lhs == rhs);                              \
+  }                                                                        \
+                                                                           \
+  PL_NODISCARD constexpr bool operator>(const type& lhs, const type& rhs)  \
+  {                                                                        \
+    return rhs < lhs;                                                      \
+  }                                                                        \
+                                                                           \
+  PL_NODISCARD constexpr bool operator<=(const type& lhs, const type& rhs) \
+  {                                                                        \
+    return not static_cast<bool>(lhs > rhs);                               \
+  }                                                                        \
+                                                                           \
+  PL_NODISCARD constexpr bool operator>=(const type& lhs, const type& rhs) \
+  {                                                                        \
+    return not static_cast<bool>(lhs < rhs);                               \
+  }
 #endif // INCG_PL_TOTAL_ORDER_HPP

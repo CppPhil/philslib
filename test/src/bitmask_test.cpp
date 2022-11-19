@@ -40,11 +40,11 @@ namespace pl {
 namespace test {
 namespace {
 enum class flag : std::uint8_t {
-    a = 0b0000'0000,
-    b = 0b0000'0001,
-    c = 0b0000'0010,
-    d = 0b0000'0011,
-    e = 0b1111'1111
+  a = 0b0000'0000,
+  b = 0b0000'0001,
+  c = 0b0000'0010,
+  d = 0b0000'0011,
+  e = 0b1111'1111
 };
 PL_ENABLE_BITMASK_OPERATORS(flag)
 } // anonymous namespace
@@ -53,47 +53,47 @@ PL_ENABLE_BITMASK_OPERATORS(flag)
 
 TEST_CASE("bit_or_test")
 {
-    CHECK((pl::test::flag::a | pl::test::flag::b) == pl::test::flag::b);
-    CHECK((pl::test::flag::a | pl::test::flag::c) == pl::test::flag::c);
-    CHECK((pl::test::flag::b | pl::test::flag::c) == pl::test::flag::d);
-    CHECK((pl::test::flag::d | pl::test::flag::b) == pl::test::flag::d);
-    CHECK((pl::test::flag::d | pl::test::flag::c) == pl::test::flag::d);
+  CHECK((pl::test::flag::a | pl::test::flag::b) == pl::test::flag::b);
+  CHECK((pl::test::flag::a | pl::test::flag::c) == pl::test::flag::c);
+  CHECK((pl::test::flag::b | pl::test::flag::c) == pl::test::flag::d);
+  CHECK((pl::test::flag::d | pl::test::flag::b) == pl::test::flag::d);
+  CHECK((pl::test::flag::d | pl::test::flag::c) == pl::test::flag::d);
 
-    pl::test::flag flag{pl::test::flag::b};
-    flag |= pl::test::flag::c;
+  pl::test::flag flag{pl::test::flag::b};
+  flag |= pl::test::flag::c;
 
-    CHECK(flag == pl::test::flag::d);
+  CHECK(flag == pl::test::flag::d);
 }
 
 TEST_CASE("bit_and_test")
 {
-    CHECK((pl::test::flag::d & pl::test::flag::c) == pl::test::flag::c);
-    CHECK((pl::test::flag::d & pl::test::flag::b) == pl::test::flag::b);
-    CHECK((pl::test::flag::a & pl::test::flag::b) == pl::test::flag::a);
-    CHECK((pl::test::flag::a & pl::test::flag::c) == pl::test::flag::a);
-    CHECK((pl::test::flag::a & pl::test::flag::d) == pl::test::flag::a);
-    CHECK((pl::test::flag::a & pl::test::flag::e) == pl::test::flag::a);
+  CHECK((pl::test::flag::d & pl::test::flag::c) == pl::test::flag::c);
+  CHECK((pl::test::flag::d & pl::test::flag::b) == pl::test::flag::b);
+  CHECK((pl::test::flag::a & pl::test::flag::b) == pl::test::flag::a);
+  CHECK((pl::test::flag::a & pl::test::flag::c) == pl::test::flag::a);
+  CHECK((pl::test::flag::a & pl::test::flag::d) == pl::test::flag::a);
+  CHECK((pl::test::flag::a & pl::test::flag::e) == pl::test::flag::a);
 
-    pl::test::flag flag{pl::test::flag::d};
-    flag &= pl::test::flag::b;
+  pl::test::flag flag{pl::test::flag::d};
+  flag &= pl::test::flag::b;
 
-    CHECK(flag == pl::test::flag::b);
+  CHECK(flag == pl::test::flag::b);
 }
 
 TEST_CASE("xor_test")
 {
-    CHECK((pl::test::flag::b ^ pl::test::flag::c) == pl::test::flag::d);
-    CHECK((pl::test::flag::c ^ pl::test::flag::d) == pl::test::flag::b);
-    CHECK((pl::test::flag::b ^ pl::test::flag::d) == pl::test::flag::c);
+  CHECK((pl::test::flag::b ^ pl::test::flag::c) == pl::test::flag::d);
+  CHECK((pl::test::flag::c ^ pl::test::flag::d) == pl::test::flag::b);
+  CHECK((pl::test::flag::b ^ pl::test::flag::d) == pl::test::flag::c);
 
-    pl::test::flag flag{pl::test::flag::b};
-    flag ^= pl::test::flag::c;
+  pl::test::flag flag{pl::test::flag::b};
+  flag ^= pl::test::flag::c;
 
-    CHECK(flag == pl::test::flag::d);
+  CHECK(flag == pl::test::flag::d);
 }
 
 TEST_CASE("bit_complement_test")
 {
-    CHECK(~pl::test::flag::a == pl::test::flag::e);
-    CHECK(~pl::test::flag::e == pl::test::flag::a);
+  CHECK(~pl::test::flag::a == pl::test::flag::e);
+  CHECK(~pl::test::flag::e == pl::test::flag::a);
 }

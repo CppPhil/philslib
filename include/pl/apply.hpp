@@ -49,13 +49,13 @@ namespace detail {
  **/
 template<typename Callable, typename TupleLike, std::size_t... Indices>
 inline auto apply_impl(
-    PL_IN Callable&& callable,
-    PL_IN TupleLike&& tuple_like,
-    std::index_sequence<Indices...>) -> decltype(auto)
+  PL_IN Callable&& callable,
+  PL_IN TupleLike&& tuple_like,
+  std::index_sequence<Indices...>) -> decltype(auto)
 {
-    return ::pl::invoke(
-        std::forward<Callable>(callable),
-        std::get<Indices>(std::forward<TupleLike>(tuple_like))...);
+  return ::pl::invoke(
+    std::forward<Callable>(callable),
+    std::get<Indices>(std::forward<TupleLike>(tuple_like))...);
 }
 } // namespace detail
 
@@ -71,12 +71,12 @@ inline auto apply_impl(
  **/
 template<typename Callable, typename TupleLike>
 inline auto apply(PL_IN Callable&& callable, PL_IN TupleLike&& tuple_like)
-    -> decltype(auto)
+  -> decltype(auto)
 {
-    return detail::apply_impl(
-        std::forward<Callable>(callable),
-        std::forward<TupleLike>(tuple_like),
-        std::make_index_sequence<std::tuple_size<decay_t<TupleLike>>::value>{});
+  return detail::apply_impl(
+    std::forward<Callable>(callable),
+    std::forward<TupleLike>(tuple_like),
+    std::make_index_sequence<std::tuple_size<decay_t<TupleLike>>::value>{});
 }
 } // namespace pl
 #if PL_COMPILER == PL_COMPILER_MSVC

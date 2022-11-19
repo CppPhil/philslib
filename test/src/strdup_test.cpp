@@ -39,58 +39,58 @@
 
 TEST_CASE("strdup_test")
 {
-    static constexpr char   str[]{"Text"};
-    std::unique_ptr<char[]> up{pl::strdup(str)};
+  static constexpr char   str[]{"Text"};
+  std::unique_ptr<char[]> up{pl::strdup(str)};
 
-    REQUIRE(up != nullptr);
-    CHECK(std::strlen(up.get()) == 4U);
-    CHECK(std::strcmp(up.get(), str) == 0);
+  REQUIRE(up != nullptr);
+  CHECK(std::strlen(up.get()) == 4U);
+  CHECK(std::strcmp(up.get(), str) == 0);
 
-    up = pl::strdup("");
-    REQUIRE(up != nullptr);
-    CHECK(std::strlen(up.get()) == 0U);
-    CHECK(up[0U] == '\0');
+  up = pl::strdup("");
+  REQUIRE(up != nullptr);
+  CHECK(std::strlen(up.get()) == 0U);
+  CHECK(up[0U] == '\0');
 }
 
 TEST_CASE("strndup_test")
 {
-    static constexpr char        str[]{"Sample text"};
-    static constexpr std::size_t str_len{
-        (sizeof(str) / sizeof(str[0U])) - sizeof(str[0U])};
-    std::unique_ptr<char[]> up{nullptr};
+  static constexpr char        str[]{"Sample text"};
+  static constexpr std::size_t str_len{
+    (sizeof(str) / sizeof(str[0U])) - sizeof(str[0U])};
+  std::unique_ptr<char[]> up{nullptr};
 
-    up = pl::strndup(str, 0U);
-    REQUIRE(up != nullptr);
-    REQUIRE(std::strlen(up.get()) == 0U);
-    CHECK(up[0U] == '\0');
+  up = pl::strndup(str, 0U);
+  REQUIRE(up != nullptr);
+  REQUIRE(std::strlen(up.get()) == 0U);
+  CHECK(up[0U] == '\0');
 
-    up = pl::strndup(str, 1U);
-    REQUIRE(up != nullptr);
-    REQUIRE(std::strlen(up.get()) == 1U);
-    CHECK(up[0U] == 'S');
-    CHECK(up[1U] == '\0');
+  up = pl::strndup(str, 1U);
+  REQUIRE(up != nullptr);
+  REQUIRE(std::strlen(up.get()) == 1U);
+  CHECK(up[0U] == 'S');
+  CHECK(up[1U] == '\0');
 
-    up = pl::strndup(str, 3U);
-    REQUIRE(up != nullptr);
-    REQUIRE(std::strlen(up.get()) == 3U);
-    CHECK(std::strcmp(up.get(), "Sam") == 0);
-    CHECK(up[3U] == '\0');
+  up = pl::strndup(str, 3U);
+  REQUIRE(up != nullptr);
+  REQUIRE(std::strlen(up.get()) == 3U);
+  CHECK(std::strcmp(up.get(), "Sam") == 0);
+  CHECK(up[3U] == '\0');
 
-    up = pl::strndup(str, str_len);
-    REQUIRE(up != nullptr);
-    REQUIRE(std::strlen(up.get()) == str_len);
-    CHECK(std::strcmp(up.get(), str) == 0);
-    CHECK(up[str_len] == '\0');
+  up = pl::strndup(str, str_len);
+  REQUIRE(up != nullptr);
+  REQUIRE(std::strlen(up.get()) == str_len);
+  CHECK(std::strcmp(up.get(), str) == 0);
+  CHECK(up[str_len] == '\0');
 
-    up = pl::strndup(str, str_len + 1U);
-    REQUIRE(up != nullptr);
-    REQUIRE(std::strlen(up.get()) == str_len);
-    CHECK(std::strcmp(up.get(), str) == 0);
-    CHECK(up[str_len] == '\0');
+  up = pl::strndup(str, str_len + 1U);
+  REQUIRE(up != nullptr);
+  REQUIRE(std::strlen(up.get()) == str_len);
+  CHECK(std::strcmp(up.get(), str) == 0);
+  CHECK(up[str_len] == '\0');
 
-    up = pl::strndup(str, 500U);
-    REQUIRE(up != nullptr);
-    REQUIRE(std::strlen(up.get()) == str_len);
-    CHECK(std::strcmp(up.get(), str) == 0);
-    CHECK(up[str_len] == '\0');
+  up = pl::strndup(str, 500U);
+  REQUIRE(up != nullptr);
+  REQUIRE(std::strlen(up.get()) == str_len);
+  CHECK(std::strcmp(up.get(), str) == 0);
+  CHECK(up[str_len] == '\0');
 }

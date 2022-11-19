@@ -35,24 +35,24 @@ namespace pl {
 namespace test {
 class cheshire_cat_test_type::implementation {
 public:
-    implementation(std::uint32_t p_a, std::string p_s) noexcept
-        : a{p_a}, s{std::move(p_s)}
-    {
-    }
+  implementation(std::uint32_t p_a, std::string p_s) noexcept
+    : a{p_a}, s{std::move(p_s)}
+  {
+  }
 
-    std::uint32_t a;
-    std::string   s;
+  std::uint32_t a;
+  std::string   s;
 };
 
 cheshire_cat_test_type::cheshire_cat_test_type() noexcept
-    : cheshire_cat_test_type{0U, "0"}
+  : cheshire_cat_test_type{0U, "0"}
 {
 }
 
 cheshire_cat_test_type::cheshire_cat_test_type(
-    std::uint32_t   a,
-    pl::string_view sv) noexcept
-    : m_cc{pl::in_place_t{}, a, sv.to_string()}
+  std::uint32_t   a,
+  pl::string_view sv) noexcept
+  : m_cc{pl::in_place_t{}, a, sv.to_string()}
 {
 }
 
@@ -61,42 +61,42 @@ cheshire_cat_test_type::cheshire_cat_test_type(const this_type&) = default;
 cheshire_cat_test_type::cheshire_cat_test_type(this_type&&) noexcept = default;
 
 cheshire_cat_test_type& cheshire_cat_test_type::operator=(const this_type&)
-    = default;
+  = default;
 
 cheshire_cat_test_type& cheshire_cat_test_type::operator=(
-    this_type&&) noexcept = default;
+  this_type&&) noexcept = default;
 
 cheshire_cat_test_type::~cheshire_cat_test_type() = default;
 
 void cheshire_cat_test_type::swap(this_type& other) noexcept
 {
-    using std::swap;
-    swap(m_cc->a, other.m_cc->a);
-    swap(m_cc->s, other.m_cc->s);
+  using std::swap;
+  swap(m_cc->a, other.m_cc->a);
+  swap(m_cc->s, other.m_cc->s);
 }
 
 std::uint32_t cheshire_cat_test_type::sum() const noexcept
 {
-    return m_cc->a + static_cast<std::uint32_t>(std::stoull(m_cc->s));
+  return m_cc->a + static_cast<std::uint32_t>(std::stoull(m_cc->s));
 }
 
 bool operator==(
-    const cheshire_cat_test_type& a,
-    const cheshire_cat_test_type& b) noexcept
+  const cheshire_cat_test_type& a,
+  const cheshire_cat_test_type& b) noexcept
 {
-    return (a.m_cc->a == b.m_cc->a) and (a.m_cc->s == b.m_cc->s);
+  return (a.m_cc->a == b.m_cc->a) and (a.m_cc->s == b.m_cc->s);
 }
 
 void swap(cheshire_cat_test_type& a, cheshire_cat_test_type& b) noexcept
 {
-    a.swap(b);
+  a.swap(b);
 }
 
 bool operator!=(
-    const cheshire_cat_test_type& a,
-    const cheshire_cat_test_type& b) noexcept
+  const cheshire_cat_test_type& a,
+  const cheshire_cat_test_type& b) noexcept
 {
-    return not(a == b);
+  return not(a == b);
 }
 } // namespace test
 } // namespace pl

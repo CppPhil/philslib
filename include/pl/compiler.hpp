@@ -140,16 +140,16 @@
  *        to a specific version.
  **/
 #define PL_COMPILER_VERSION_CHECK(major, minor, patch) \
-    (((major)*16777216) + ((minor)*65536)              \
-     + (patch)) /* multipliers to 'push' the numbers leftward */
+  (((major)*16777216) + ((minor)*65536)                \
+   + (patch)) /* multipliers to 'push' the numbers leftward */
 
 /*!
  * \def PL_COMPILER_VERSION
  * \brief The current compiler version, may be compared to a number generated
  *        with PL_COMPILER_VERSION_CHECK
  **/
-#define PL_COMPILER_VERSION    \
-    PL_COMPILER_VERSION_CHECK( \
-        PL_COMPILER_MAJOR, PL_COMPILER_MINOR, PL_COMPILER_PATCH)
+#define PL_COMPILER_VERSION  \
+  PL_COMPILER_VERSION_CHECK( \
+    PL_COMPILER_MAJOR, PL_COMPILER_MINOR, PL_COMPILER_PATCH)
 
 #endif // INCG_PL_COMPILER_HPP

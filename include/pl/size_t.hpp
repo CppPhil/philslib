@@ -53,13 +53,13 @@ inline namespace integer_literals {
 constexpr std::size_t operator""_zu(unsigned long long value)
 {
 #if (PL_COMPILER != PL_COMPILER_MSVC) \
-    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
-    assert(
+  || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
+  assert(
         (value <= std::numeric_limits<std::size_t>::max PL_NO_MACRO_SUBSTITUTION())
         and "value was too large in pl::literals::integer_literals::operator\"\"_zu");
 #endif // (PL_COMPILER != PL_COMPILER_MSVC) || (PL_COMPILER_VERSION >=
        // PL_COMPILER_VERSION_CHECK(19, 11, 0))
-    return static_cast<std::size_t>(value);
+  return static_cast<std::size_t>(value);
 }
 } // inline namespace integer_literals
 } // inline namespace literals

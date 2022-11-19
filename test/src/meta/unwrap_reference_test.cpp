@@ -39,13 +39,13 @@
 
 TEST_CASE("unwrap_reference_test")
 {
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<
-            pl::meta::unwrap_reference_t<std::reference_wrapper<int>>,
-            int&>::value);
+  PL_TEST_STATIC_ASSERT(
+    std::is_same<
+      pl::meta::unwrap_reference_t<std::reference_wrapper<int>>,
+      int&>::value);
 
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<pl::meta::unwrap_reference_t<double>, double>::value);
+  PL_TEST_STATIC_ASSERT(
+    std::is_same<pl::meta::unwrap_reference_t<double>, double>::value);
 
-    CHECK_UNARY(true);
+  CHECK_UNARY(true);
 }

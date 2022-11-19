@@ -39,48 +39,47 @@
 
 TEST_CASE("assert_test")
 {
-    static constexpr char str1[]{"test"};
-    const char* const     str2{"test"};
-    const std::string     str3{"test"};
+  static constexpr char str1[]{"test"};
+  const char* const     str2{"test"};
+  const std::string     str3{"test"};
 
-    CHECK_THROWS_AS(PL_CHECK_PRE(false), pl::precondition_violation_exception);
-    CHECK_THROWS_AS(
-        PL_CHECK_POST(false), pl::postcondition_violation_exception);
-    CHECK_THROWS_AS(PL_ASSERT(false), pl::assertion_violation_exception);
-    CHECK_THROWS_AS(
-        PL_ASSERT_MSG(false, "test"), pl::assertion_violation_exception);
-    CHECK_THROWS_AS(
-        PL_ASSERT_MSG(false, str1), pl::assertion_violation_exception);
-    CHECK_THROWS_AS(
-        PL_ASSERT_MSG(false, str2), pl::assertion_violation_exception);
-    CHECK_THROWS_AS(
-        PL_ASSERT_MSG(false, str3), pl::assertion_violation_exception);
+  CHECK_THROWS_AS(PL_CHECK_PRE(false), pl::precondition_violation_exception);
+  CHECK_THROWS_AS(PL_CHECK_POST(false), pl::postcondition_violation_exception);
+  CHECK_THROWS_AS(PL_ASSERT(false), pl::assertion_violation_exception);
+  CHECK_THROWS_AS(
+    PL_ASSERT_MSG(false, "test"), pl::assertion_violation_exception);
+  CHECK_THROWS_AS(
+    PL_ASSERT_MSG(false, str1), pl::assertion_violation_exception);
+  CHECK_THROWS_AS(
+    PL_ASSERT_MSG(false, str2), pl::assertion_violation_exception);
+  CHECK_THROWS_AS(
+    PL_ASSERT_MSG(false, str3), pl::assertion_violation_exception);
 
-    try {
-        PL_ASSERT_MSG(false, "test");
-    }
-    catch (const pl::assertion_violation_exception& ex) {
-        CHECK(std::strstr(ex.what(), "assertion message: test") != nullptr);
-    }
+  try {
+    PL_ASSERT_MSG(false, "test");
+  }
+  catch (const pl::assertion_violation_exception& ex) {
+    CHECK(std::strstr(ex.what(), "assertion message: test") != nullptr);
+  }
 
-    try {
-        PL_ASSERT_MSG(false, str1);
-    }
-    catch (const pl::assertion_violation_exception& ex) {
-        CHECK(std::strstr(ex.what(), "assertion message: test") != nullptr);
-    }
+  try {
+    PL_ASSERT_MSG(false, str1);
+  }
+  catch (const pl::assertion_violation_exception& ex) {
+    CHECK(std::strstr(ex.what(), "assertion message: test") != nullptr);
+  }
 
-    try {
-        PL_ASSERT_MSG(false, str2);
-    }
-    catch (const pl::assertion_violation_exception& ex) {
-        CHECK(std::strstr(ex.what(), "assertion message: test") != nullptr);
-    }
+  try {
+    PL_ASSERT_MSG(false, str2);
+  }
+  catch (const pl::assertion_violation_exception& ex) {
+    CHECK(std::strstr(ex.what(), "assertion message: test") != nullptr);
+  }
 
-    try {
-        PL_ASSERT_MSG(false, str3);
-    }
-    catch (const pl::assertion_violation_exception& ex) {
-        CHECK(std::strstr(ex.what(), "assertion message: test") != nullptr);
-    }
+  try {
+    PL_ASSERT_MSG(false, str3);
+  }
+  catch (const pl::assertion_violation_exception& ex) {
+    CHECK(std::strstr(ex.what(), "assertion message: test") != nullptr);
+  }
 }

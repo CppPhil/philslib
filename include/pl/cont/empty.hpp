@@ -45,9 +45,9 @@ namespace cont {
  **/
 template<typename Container>
 PL_NODISCARD constexpr auto empty(PL_IN const Container& container)
-    -> decltype(container.empty())
+  -> decltype(container.empty())
 {
-    return container.empty();
+  return container.empty();
 }
 
 /*!
@@ -60,8 +60,8 @@ PL_NODISCARD constexpr auto empty(PL_IN const Container& container)
 template<typename Ty, std::size_t Size>
 PL_NODISCARD constexpr bool empty(PL_IN const Ty (&array)[Size]) noexcept
 {
-    (void)array;
-    return false;
+  (void)array;
+  return false;
 }
 
 /*!
@@ -74,7 +74,7 @@ PL_NODISCARD constexpr bool empty(PL_IN const Ty (&array)[Size]) noexcept
 template<typename Ty>
 PL_NODISCARD constexpr bool empty(std::initializer_list<Ty> il) noexcept
 {
-    return il.size() == 0U;
+  return il.size() == 0U;
 }
 } // namespace cont
 } // namespace pl

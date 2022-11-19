@@ -31,7 +31,7 @@ namespace pl {
 namespace test {
 void freeer::operator()(void* to_be_freed) const noexcept
 {
-    std::free(to_be_freed); // free the memory
+  std::free(to_be_freed); // free the memory
 }
 } // namespace test
 } // namespace pl

@@ -49,14 +49,14 @@ namespace algo {
 template<typename ForwardIterator, typename SizeType>
 inline ForwardIterator destroy_n(ForwardIterator first, SizeType n)
 {
-    while (n > 0) {
-        ::pl::algo::destroy_at(std::addressof(*first));
+  while (n > 0) {
+    ::pl::algo::destroy_at(std::addressof(*first));
 
-        ++first;
-        --n;
-    }
+    ++first;
+    --n;
+  }
 
-    return first;
+  return first;
 }
 } // namespace algo
 } // namespace pl

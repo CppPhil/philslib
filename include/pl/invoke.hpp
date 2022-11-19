@@ -46,15 +46,13 @@ namespace detail {
  **/
 template<typename Callable, typename... Args>
 inline auto invoke_impl(
-    std::true_type,
-    PL_IN Callable&& callable,
-    PL_IN            Args&&... args) noexcept(noexcept(std::
-                                                mem_fn(callable)(
-                                                    std::forward<Args>(
-                                                        args)...)))
-    -> decltype(auto)
+  std::true_type,
+  PL_IN Callable&& callable,
+  PL_IN            Args&&... args) noexcept(noexcept(std::
+                                            mem_fn(callable)(std::forward<Args>(
+                                              args)...))) -> decltype(auto)
 {
-    return std::mem_fn(callable)(std::forward<Args>(args)...);
+  return std::mem_fn(callable)(std::forward<Args>(args)...);
 }
 
 /*!
@@ -63,15 +61,14 @@ inline auto invoke_impl(
  **/
 template<typename Callable, typename... Args>
 inline auto invoke_impl(
-    std::false_type,
-    PL_IN Callable&& callable,
-    PL_IN            Args&&... args) noexcept(noexcept(std::
-                                                forward<Callable>(callable)(
-                                                    std::forward<Args>(
-                                                        args)...)))
-    -> decltype(auto)
+  std::false_type,
+  PL_IN Callable&& callable,
+  PL_IN            Args&&... args) noexcept(noexcept(std::
+                                            forward<Callable>(callable)(
+                                              std::forward<Args>(args)...)))
+  -> decltype(auto)
 {
-    return std::forward<Callable>(callable)(std::forward<Args>(args)...);
+  return std::forward<Callable>(callable)(std::forward<Args>(args)...);
 }
 } // namespace detail
 
@@ -93,15 +90,15 @@ inline auto invoke_impl(
  **/
 template<typename Callable, typename... Args>
 inline auto invoke(PL_IN Callable&& callable, PL_IN Args&&... args) noexcept(
-    noexcept(::pl::detail::invoke_impl(
-        typename std::is_member_pointer<decay_t<Callable>>::type{},
-        std::forward<Callable>(callable),
-        std::forward<Args>(args)...))) -> decltype(auto)
+  noexcept(::pl::detail::invoke_impl(
+    typename std::is_member_pointer<decay_t<Callable>>::type{},
+    std::forward<Callable>(callable),
+    std::forward<Args>(args)...))) -> decltype(auto)
 {
-    return ::pl::detail::invoke_impl(
-        typename std::is_member_pointer<decay_t<Callable>>::type{},
-        std::forward<Callable>(callable),
-        std::forward<Args>(args)...);
+  return ::pl::detail::invoke_impl(
+    typename std::is_member_pointer<decay_t<Callable>>::type{},
+    std::forward<Callable>(callable),
+    std::forward<Args>(args)...);
 }
 
 #if PL_COMPILER == PL_COMPILER_MSVC

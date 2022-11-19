@@ -46,50 +46,49 @@
 
 TEST_CASE("test_destroy_algorithms")
 {
-    static constexpr std::size_t size = 10U;
+  static constexpr std::size_t size = 10U;
 
-    std::unique_ptr<unsigned char, pl::test::freeer> up{
-        static_cast<unsigned char*>(
-            std::malloc(size * sizeof(pl::test::destroy_test_type))),
-        pl::test::freeer{}};
+  std::unique_ptr<unsigned char, pl::test::freeer> up{
+    static_cast<unsigned char*>(
+      std::malloc(size * sizeof(pl::test::destroy_test_type))),
+    pl::test::freeer{}};
 
-    auto* begin = reinterpret_cast<pl::test::destroy_test_type*>(up.get());
-    auto* end   = begin + size;
+  auto* begin = reinterpret_cast<pl::test::destroy_test_type*>(up.get());
+  auto* end   = begin + size;
 
-    std::array<bool, size> ary{};
-    ary.fill(false);
+  std::array<bool, size> ary{};
+  ary.fill(false);
 
+  for (std::size_t i{0U}; i < size; ++i) {
+    ::new (static_cast<void*>(&begin[i])) pl::test::destroy_test_type{&ary[i]};
+  }
+
+  SUBCASE("test_destroy")
+  {
+    pl::algo::destroy(begin, end);
+
+    for (bool b : ary) {
+      CHECK_UNARY(b);
+    }
+  }
+
+  SUBCASE("test_destroy_at")
+  {
     for (std::size_t i{0U}; i < size; ++i) {
-        ::new (static_cast<void*>(&begin[i]))
-            pl::test::destroy_test_type{&ary[i]};
+      pl::algo::destroy_at(&begin[i]);
     }
 
-    SUBCASE("test_destroy")
-    {
-        pl::algo::destroy(begin, end);
-
-        for (bool b : ary) {
-            CHECK_UNARY(b);
-        }
+    for (bool b : ary) {
+      CHECK_UNARY(b);
     }
+  }
 
-    SUBCASE("test_destroy_at")
-    {
-        for (std::size_t i{0U}; i < size; ++i) {
-            pl::algo::destroy_at(&begin[i]);
-        }
+  SUBCASE("test_destroy_n")
+  {
+    pl::algo::destroy_n(begin, size);
 
-        for (bool b : ary) {
-            CHECK_UNARY(b);
-        }
+    for (bool b : ary) {
+      CHECK_UNARY(b);
     }
-
-    SUBCASE("test_destroy_n")
-    {
-        pl::algo::destroy_n(begin, size);
-
-        for (bool b : ary) {
-            CHECK_UNARY(b);
-        }
-    }
+  }
 }

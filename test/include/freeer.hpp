@@ -35,14 +35,14 @@ namespace test {
  **/
 class freeer {
 public:
-    using this_type = freeer;
+  using this_type = freeer;
 
-    /*!
-     * \brief Frees data dynamically allocated with std::malloc
-     *        or std::calloc.
-     * \param to_be_freed Pointer to the data to free.
-     **/
-    void operator()(void* to_be_freed) const noexcept;
+  /*!
+   * \brief Frees data dynamically allocated with std::malloc
+   *        or std::calloc.
+   * \param to_be_freed Pointer to the data to free.
+   **/
+  void operator()(void* to_be_freed) const noexcept;
 };
 } // namespace test
 } // namespace pl

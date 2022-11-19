@@ -45,10 +45,10 @@ namespace detail {
  **/
 template<typename Ty, std::size_t Size, std::size_t... Indices>
 constexpr std::array<remove_cv_t<Ty>, Size> to_array_impl(
-    PL_IN Ty (&array)[Size],
-    std::index_sequence<Indices...>)
+  PL_IN Ty (&array)[Size],
+  std::index_sequence<Indices...>)
 {
-    return {{array[Indices]...}};
+  return {{array[Indices]...}};
 }
 
 #if PL_COMPILER != PL_COMPILER_MSVC
@@ -57,11 +57,11 @@ constexpr std::array<remove_cv_t<Ty>, Size> to_array_impl(
  **/
 template<typename Ty, std::size_t Size, std::size_t... Indices>
 constexpr std::array<remove_cv_t<Ty>, Size> to_array_impl(
-    PL_INOUT Ty(&&array)[Size],
-    std::index_sequence<Indices...>)
+  PL_INOUT Ty(&&array)[Size],
+  std::index_sequence<Indices...>)
 
 {
-    return {{std::move(array[Indices])...}};
+  return {{std::move(array[Indices])...}};
 }
 #endif // PL_COMPILER != PL_COMPILER_MSVC
 } // namespace detail
@@ -79,8 +79,8 @@ constexpr std::array<remove_cv_t<Ty>, Size> to_array_impl(
 template<typename Ty, std::size_t Size>
 constexpr std::array<remove_cv_t<Ty>, Size> to_array(PL_IN Ty (&array)[Size])
 {
-    return ::pl::cont::detail::to_array_impl(
-        array, std::make_index_sequence<Size>{});
+  return ::pl::cont::detail::to_array_impl(
+    array, std::make_index_sequence<Size>{});
 }
 
 #if PL_COMPILER != PL_COMPILER_MSVC
@@ -98,8 +98,8 @@ constexpr std::array<remove_cv_t<Ty>, Size> to_array(PL_IN Ty (&array)[Size])
 template<typename Ty, std::size_t Size>
 constexpr std::array<remove_cv_t<Ty>, Size> to_array(PL_INOUT Ty(&&array)[Size])
 {
-    return ::pl::cont::detail::to_array_impl(
-        std::move(array), std::make_index_sequence<Size>{});
+  return ::pl::cont::detail::to_array_impl(
+    std::move(array), std::make_index_sequence<Size>{});
 }
 #endif // PL_COMPILER != PL_COMPILER_MSVC
 } // namespace cont

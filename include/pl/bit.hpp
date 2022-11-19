@@ -50,20 +50,20 @@ namespace pl {
  **/
 template<typename Numeric>
 #if (PL_COMPILER != PL_COMPILER_MSVC) \
-    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
+  || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
 constexpr
 #else
 inline
 #endif
-    Numeric&
-    set_bit(PL_INOUT Numeric& numeric, Numeric bit) noexcept
+  Numeric&
+  set_bit(PL_INOUT Numeric& numeric, Numeric bit) noexcept
 {
-    static_assert(
-        std::is_unsigned<Numeric>::value,
-        "Numeric in pl::setBit should be an unsigned type.");
+  static_assert(
+    std::is_unsigned<Numeric>::value,
+    "Numeric in pl::setBit should be an unsigned type.");
 
-    numeric |= static_cast<Numeric>(static_cast<Numeric>(1U) << bit);
-    return numeric;
+  numeric |= static_cast<Numeric>(static_cast<Numeric>(1U) << bit);
+  return numeric;
 }
 
 /*!
@@ -78,20 +78,20 @@ inline
  **/
 template<typename Numeric>
 #if (PL_COMPILER != PL_COMPILER_MSVC) \
-    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
+  || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
 constexpr
 #else
 inline
 #endif
-    Numeric&
-    clear_bit(PL_INOUT Numeric& numeric, Numeric bit) noexcept
+  Numeric&
+  clear_bit(PL_INOUT Numeric& numeric, Numeric bit) noexcept
 {
-    static_assert(
-        std::is_unsigned<Numeric>::value,
-        "Numeric in pl::clearBit should be an unsigned type.");
+  static_assert(
+    std::is_unsigned<Numeric>::value,
+    "Numeric in pl::clearBit should be an unsigned type.");
 
-    numeric &= static_cast<Numeric>(~(static_cast<Numeric>(1U) << bit));
-    return numeric;
+  numeric &= static_cast<Numeric>(~(static_cast<Numeric>(1U) << bit));
+  return numeric;
 }
 
 /*!
@@ -111,20 +111,20 @@ inline
  **/
 template<typename Numeric>
 #if (PL_COMPILER != PL_COMPILER_MSVC) \
-    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
+  || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
 constexpr
 #else
 inline
 #endif
-    Numeric&
-    toggle_bit(PL_INOUT Numeric& numeric, Numeric bit) noexcept
+  Numeric&
+  toggle_bit(PL_INOUT Numeric& numeric, Numeric bit) noexcept
 {
-    static_assert(
-        std::is_unsigned<Numeric>::value,
-        "Numeric in pl::toggleBit should be an unsigned type.");
+  static_assert(
+    std::is_unsigned<Numeric>::value,
+    "Numeric in pl::toggleBit should be an unsigned type.");
 
-    numeric ^= static_cast<Numeric>(static_cast<Numeric>(1U) << bit);
-    return numeric;
+  numeric ^= static_cast<Numeric>(static_cast<Numeric>(1U) << bit);
+  return numeric;
 }
 
 /*!
@@ -138,11 +138,11 @@ inline
 template<typename Numeric>
 constexpr bool is_bit_set(Numeric numeric, Numeric bit) noexcept
 {
-    static_assert(
-        std::is_unsigned<Numeric>::value,
-        "Numeric in pl::isBitSet should be an unsigned type.");
+  static_assert(
+    std::is_unsigned<Numeric>::value,
+    "Numeric in pl::isBitSet should be an unsigned type.");
 
-    return ((numeric & (static_cast<Numeric>(1U) << bit)) != 0);
+  return ((numeric & (static_cast<Numeric>(1U) << bit)) != 0);
 }
 
 /*!
@@ -164,20 +164,18 @@ constexpr bool is_bit_set(Numeric numeric, Numeric bit) noexcept
 template<typename To, typename From>
 inline To bit_cast(PL_IN const From& from) noexcept
 {
-    static_assert(
-        sizeof(To) == sizeof(From),
-        "To and From must have the same byte size.");
-    static_assert(
-        alignof(To) == alignof(From),
-        "To and From must have the same alignment requirements.");
-    static_assert(std::is_trivial<To>::value, "To is not trivial!");
-    static_assert(
-        std::is_trivially_copyable<From>::value,
-        "From is not trivially copyable!");
+  static_assert(
+    sizeof(To) == sizeof(From), "To and From must have the same byte size.");
+  static_assert(
+    alignof(To) == alignof(From),
+    "To and From must have the same alignment requirements.");
+  static_assert(std::is_trivial<To>::value, "To is not trivial!");
+  static_assert(
+    std::is_trivially_copyable<From>::value, "From is not trivially copyable!");
 
-    remove_const_t<To> to;
-    std::memcpy(std::addressof(to), std::addressof(from), sizeof(To));
-    return to;
+  remove_const_t<To> to;
+  std::memcpy(std::addressof(to), std::addressof(from), sizeof(To));
+  return to;
 }
 } // namespace pl
 #endif // INCG_PL_BIT_HPP

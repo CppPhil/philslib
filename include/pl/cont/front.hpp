@@ -48,9 +48,9 @@ namespace cont {
 template<typename Cont>
 constexpr auto front(PL_IN Cont& cont) -> decltype(auto)
 {
-    PL_DBG_CHECK_PRE(not cont.empty());
+  PL_DBG_CHECK_PRE(not cont.empty());
 
-    return cont.front();
+  return cont.front();
 }
 
 /*!
@@ -61,7 +61,7 @@ constexpr auto front(PL_IN Cont& cont) -> decltype(auto)
 template<typename Type, std::size_t Size>
 constexpr auto front(PL_IN Type (&arr)[Size]) noexcept -> decltype(auto)
 {
-    return arr[static_cast<std::size_t>(0U)];
+  return arr[static_cast<std::size_t>(0U)];
 }
 
 /*!
@@ -73,9 +73,9 @@ constexpr auto front(PL_IN Type (&arr)[Size]) noexcept -> decltype(auto)
  **/
 template<typename Ty>
 constexpr auto front(std::initializer_list<Ty> init_list) noexcept
-    -> decltype(auto)
+  -> decltype(auto)
 {
-    return *(init_list.begin());
+  return *(init_list.begin());
 }
 } // namespace cont
 } // namespace pl

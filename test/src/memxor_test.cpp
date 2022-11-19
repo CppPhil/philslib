@@ -41,54 +41,54 @@
 
 TEST_CASE("memxor_test")
 {
-    constexpr auto expected_array = pl::cont::make_array(
-        static_cast<pl::byte>('\x17'),
-        static_cast<pl::byte>('\x0A'),
-        static_cast<pl::byte>('\x1C'),
-        static_cast<pl::byte>('\x1F'),
-        static_cast<pl::byte>('\x49'),
-        static_cast<pl::byte>('\x11'),
-        static_cast<pl::byte>('\x16'),
-        static_cast<pl::byte>('\x59'),
-        static_cast<pl::byte>('\x55'),
-        static_cast<pl::byte>('\x00'));
+  constexpr auto expected_array = pl::cont::make_array(
+    static_cast<pl::byte>('\x17'),
+    static_cast<pl::byte>('\x0A'),
+    static_cast<pl::byte>('\x1C'),
+    static_cast<pl::byte>('\x1F'),
+    static_cast<pl::byte>('\x49'),
+    static_cast<pl::byte>('\x11'),
+    static_cast<pl::byte>('\x16'),
+    static_cast<pl::byte>('\x59'),
+    static_cast<pl::byte>('\x55'),
+    static_cast<pl::byte>('\x00'));
 
-    constexpr auto src_array = pl::cont::make_array(
-        static_cast<pl::byte>('\x63'),
-        static_cast<pl::byte>('\x6F'),
-        static_cast<pl::byte>('\x6F'),
-        static_cast<pl::byte>('\x6B'),
-        static_cast<pl::byte>('\x69'),
-        static_cast<pl::byte>('\x65'),
-        static_cast<pl::byte>('\x73'),
-        static_cast<pl::byte>('\x21'),
-        static_cast<pl::byte>('\x21'),
-        static_cast<pl::byte>('\x00'));
+  constexpr auto src_array = pl::cont::make_array(
+    static_cast<pl::byte>('\x63'),
+    static_cast<pl::byte>('\x6F'),
+    static_cast<pl::byte>('\x6F'),
+    static_cast<pl::byte>('\x6B'),
+    static_cast<pl::byte>('\x69'),
+    static_cast<pl::byte>('\x65'),
+    static_cast<pl::byte>('\x73'),
+    static_cast<pl::byte>('\x21'),
+    static_cast<pl::byte>('\x21'),
+    static_cast<pl::byte>('\x00'));
 
-    auto dest_array = pl::cont::make_array(
-        static_cast<pl::byte>('\x74'),
-        static_cast<pl::byte>('\x65'),
-        static_cast<pl::byte>('\x73'),
-        static_cast<pl::byte>('\x74'),
-        static_cast<pl::byte>('\x20'),
-        static_cast<pl::byte>('\x74'),
-        static_cast<pl::byte>('\x65'),
-        static_cast<pl::byte>('\x78'),
-        static_cast<pl::byte>('\x74'),
-        static_cast<pl::byte>('\x00'));
+  auto dest_array = pl::cont::make_array(
+    static_cast<pl::byte>('\x74'),
+    static_cast<pl::byte>('\x65'),
+    static_cast<pl::byte>('\x73'),
+    static_cast<pl::byte>('\x74'),
+    static_cast<pl::byte>('\x20'),
+    static_cast<pl::byte>('\x74'),
+    static_cast<pl::byte>('\x65'),
+    static_cast<pl::byte>('\x78'),
+    static_cast<pl::byte>('\x74'),
+    static_cast<pl::byte>('\x00'));
 
-    REQUIRE(dest_array.size() == src_array.size());
-    REQUIRE(dest_array.size() == expected_array.size());
+  REQUIRE(dest_array.size() == src_array.size());
+  REQUIRE(dest_array.size() == expected_array.size());
 
-    void* const       dest{dest_array.data()};
-    const void* const src{src_array.data()};
-    const void* const expected{expected_array.data()};
+  void* const       dest{dest_array.data()};
+  const void* const src{src_array.data()};
+  const void* const expected{expected_array.data()};
 
-    const std::size_t size{dest_array.size()};
+  const std::size_t size{dest_array.size()};
 
-    void* const ret_val{pl::memxor(dest, src, size)};
+  void* const ret_val{pl::memxor(dest, src, size)};
 
-    CHECK(ret_val == dest);
+  CHECK(ret_val == dest);
 
-    CHECK(std::memcmp(dest, expected, size) == 0);
+  CHECK(std::memcmp(dest, expected, size) == 0);
 }

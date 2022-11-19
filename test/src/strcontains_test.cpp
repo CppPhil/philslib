@@ -37,7 +37,7 @@
 #include "../../include/pl/string_view.hpp" // pl::string_view
 #include <string> // std::basic_string, std::literals::string_literals::operator""s
 #if (PL_COMPILER == PL_COMPILER_GCC) \
-    && (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(7, 0, 0))
+  && (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(7, 0, 0))
 #include <string_view>
 #endif
 
@@ -45,146 +45,146 @@ using namespace pl::literals::string_view_literals;
 using namespace std::literals::string_literals;
 
 #if (PL_COMPILER == PL_COMPILER_GCC) \
-    && (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(7, 0, 0))
-#define CHECK_STRCONTAINS_IMPL_STD_STRING_VIEW(check_macro, haystack, needle)  \
-    check_macro(pl::strcontains(                                               \
-        std::string_view{haystack}, std::string_view{needle}));                \
-    check_macro(pl::strcontains(std::string_view{haystack}, needle));          \
-    check_macro(pl::strcontains(haystack, std::string_view{needle}));          \
-                                                                               \
-    check_macro(pl::strcontains(                                               \
-        std::u16string_view{u##haystack}, std::u16string_view{u##needle}));    \
-    check_macro(pl::strcontains(std::u16string_view{u##haystack}, u##needle)); \
-    check_macro(pl::strcontains(u##haystack, std::u16string_view{u##needle})); \
-                                                                               \
-    check_macro(pl::strcontains(                                               \
-        std::u32string_view{U##haystack}, std::u32string_view{U##needle}));    \
-    check_macro(pl::strcontains(std::u32string_view{U##haystack}, U##needle)); \
-    check_macro(pl::strcontains(U##haystack, std::u32string_view{U##needle})); \
-                                                                               \
-    check_macro(pl::strcontains(                                               \
-        std::wstring_view{L##haystack}, std::wstring_view{L##needle}));        \
-    check_macro(pl::strcontains(std::wstring_view{L##haystack}, L##needle));   \
-    check_macro(pl::strcontains(L##haystack, std::wstring_view{L##needle}))
+  && (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(7, 0, 0))
+#define CHECK_STRCONTAINS_IMPL_STD_STRING_VIEW(check_macro, haystack, needle) \
+  check_macro(                                                                \
+    pl::strcontains(std::string_view{haystack}, std::string_view{needle}));   \
+  check_macro(pl::strcontains(std::string_view{haystack}, needle));           \
+  check_macro(pl::strcontains(haystack, std::string_view{needle}));           \
+                                                                              \
+  check_macro(pl::strcontains(                                                \
+    std::u16string_view{u##haystack}, std::u16string_view{u##needle}));       \
+  check_macro(pl::strcontains(std::u16string_view{u##haystack}, u##needle));  \
+  check_macro(pl::strcontains(u##haystack, std::u16string_view{u##needle}));  \
+                                                                              \
+  check_macro(pl::strcontains(                                                \
+    std::u32string_view{U##haystack}, std::u32string_view{U##needle}));       \
+  check_macro(pl::strcontains(std::u32string_view{U##haystack}, U##needle));  \
+  check_macro(pl::strcontains(U##haystack, std::u32string_view{U##needle}));  \
+                                                                              \
+  check_macro(pl::strcontains(                                                \
+    std::wstring_view{L##haystack}, std::wstring_view{L##needle}));           \
+  check_macro(pl::strcontains(std::wstring_view{L##haystack}, L##needle));    \
+  check_macro(pl::strcontains(L##haystack, std::wstring_view{L##needle}))
 #else
 #define CHECK_STRCONTAINS_IMPL_STD_STRING_VIEW(check_macro, haystack, needle) \
-    (void)0
+  (void)0
 #endif
 
-#define CHECK_STRCONTAINS_IMPL(check_macro, haystack, needle)       \
-    check_macro(pl::strcontains(haystack, needle));                 \
-    check_macro(pl::strcontains(haystack##_sv, needle##_sv));       \
-    check_macro(pl::strcontains(haystack##_sv, needle));            \
-    check_macro(pl::strcontains(haystack, needle##_sv));            \
-    check_macro(pl::strcontains(haystack##s, needle##s));           \
-    check_macro(pl::strcontains(haystack##s, needle));              \
-    check_macro(pl::strcontains(haystack, needle##s));              \
-                                                                    \
-    check_macro(pl::strcontains(u##haystack, u##needle));           \
-    check_macro(pl::strcontains(u##haystack##_sv, u##needle##_sv)); \
-    check_macro(pl::strcontains(u##haystack##_sv, u##needle));      \
-    check_macro(pl::strcontains(u##haystack, u##needle##_sv));      \
-    check_macro(pl::strcontains(u##haystack##s, u##needle##s));     \
-    check_macro(pl::strcontains(u##haystack##s, u##needle));        \
-    check_macro(pl::strcontains(u##haystack, u##needle##s));        \
-                                                                    \
-    check_macro(pl::strcontains(U##haystack, U##needle));           \
-    check_macro(pl::strcontains(U##haystack##_sv, U##needle##_sv)); \
-    check_macro(pl::strcontains(U##haystack##_sv, U##needle));      \
-    check_macro(pl::strcontains(U##haystack, U##needle##_sv));      \
-    check_macro(pl::strcontains(U##haystack##s, U##needle##s));     \
-    check_macro(pl::strcontains(U##haystack##s, U##needle));        \
-    check_macro(pl::strcontains(U##haystack, U##needle##s));        \
-                                                                    \
-    check_macro(pl::strcontains(L##haystack, L##needle));           \
-    check_macro(pl::strcontains(L##haystack##_sv, L##needle##_sv)); \
-    check_macro(pl::strcontains(L##haystack##_sv, L##needle));      \
-    check_macro(pl::strcontains(L##haystack, L##needle##_sv));      \
-    check_macro(pl::strcontains(L##haystack##s, L##needle##s));     \
-    check_macro(pl::strcontains(L##haystack##s, L##needle));        \
-    check_macro(pl::strcontains(L##haystack, L##needle##s));        \
-                                                                    \
-    CHECK_STRCONTAINS_IMPL_STD_STRING_VIEW(check_macro, haystack, needle)
+#define CHECK_STRCONTAINS_IMPL(check_macro, haystack, needle)     \
+  check_macro(pl::strcontains(haystack, needle));                 \
+  check_macro(pl::strcontains(haystack##_sv, needle##_sv));       \
+  check_macro(pl::strcontains(haystack##_sv, needle));            \
+  check_macro(pl::strcontains(haystack, needle##_sv));            \
+  check_macro(pl::strcontains(haystack##s, needle##s));           \
+  check_macro(pl::strcontains(haystack##s, needle));              \
+  check_macro(pl::strcontains(haystack, needle##s));              \
+                                                                  \
+  check_macro(pl::strcontains(u##haystack, u##needle));           \
+  check_macro(pl::strcontains(u##haystack##_sv, u##needle##_sv)); \
+  check_macro(pl::strcontains(u##haystack##_sv, u##needle));      \
+  check_macro(pl::strcontains(u##haystack, u##needle##_sv));      \
+  check_macro(pl::strcontains(u##haystack##s, u##needle##s));     \
+  check_macro(pl::strcontains(u##haystack##s, u##needle));        \
+  check_macro(pl::strcontains(u##haystack, u##needle##s));        \
+                                                                  \
+  check_macro(pl::strcontains(U##haystack, U##needle));           \
+  check_macro(pl::strcontains(U##haystack##_sv, U##needle##_sv)); \
+  check_macro(pl::strcontains(U##haystack##_sv, U##needle));      \
+  check_macro(pl::strcontains(U##haystack, U##needle##_sv));      \
+  check_macro(pl::strcontains(U##haystack##s, U##needle##s));     \
+  check_macro(pl::strcontains(U##haystack##s, U##needle));        \
+  check_macro(pl::strcontains(U##haystack, U##needle##s));        \
+                                                                  \
+  check_macro(pl::strcontains(L##haystack, L##needle));           \
+  check_macro(pl::strcontains(L##haystack##_sv, L##needle##_sv)); \
+  check_macro(pl::strcontains(L##haystack##_sv, L##needle));      \
+  check_macro(pl::strcontains(L##haystack, L##needle##_sv));      \
+  check_macro(pl::strcontains(L##haystack##s, L##needle##s));     \
+  check_macro(pl::strcontains(L##haystack##s, L##needle));        \
+  check_macro(pl::strcontains(L##haystack, L##needle##s));        \
+                                                                  \
+  CHECK_STRCONTAINS_IMPL_STD_STRING_VIEW(check_macro, haystack, needle)
 
 #define CHECK_STRCONTAINS(haystack, needle) \
-    CHECK_STRCONTAINS_IMPL(CHECK_UNARY, haystack, needle)
+  CHECK_STRCONTAINS_IMPL(CHECK_UNARY, haystack, needle)
 
 #define CHECK_STRNOTCONTAINS(haystack, needle) \
-    CHECK_STRCONTAINS_IMPL(CHECK_UNARY_FALSE, haystack, needle)
+  CHECK_STRCONTAINS_IMPL(CHECK_UNARY_FALSE, haystack, needle)
 
 TEST_CASE("strcontains should find substring")
 {
-    CHECK_STRCONTAINS("Hello World", "World");
-    CHECK_STRCONTAINS("test", "");
-    CHECK_STRCONTAINS("test", "t");
-    CHECK_STRCONTAINS("test", "te");
-    CHECK_STRCONTAINS("test", "es");
-    CHECK_STRCONTAINS("test", "st");
-    CHECK_STRCONTAINS("test", "test");
+  CHECK_STRCONTAINS("Hello World", "World");
+  CHECK_STRCONTAINS("test", "");
+  CHECK_STRCONTAINS("test", "t");
+  CHECK_STRCONTAINS("test", "te");
+  CHECK_STRCONTAINS("test", "es");
+  CHECK_STRCONTAINS("test", "st");
+  CHECK_STRCONTAINS("test", "test");
 }
 
 TEST_CASE("strcontains should find the empty string in the empty string")
 {
-    CHECK_STRCONTAINS("", "");
+  CHECK_STRCONTAINS("", "");
 }
 
 TEST_CASE("strcontains shouldn't find text in an empty string")
 {
-    CHECK_STRNOTCONTAINS("", "a");
-    CHECK_STRNOTCONTAINS("", "test");
+  CHECK_STRNOTCONTAINS("", "a");
+  CHECK_STRNOTCONTAINS("", "test");
 }
 
 TEST_CASE("strcontains should find single character in single character string")
 {
-    CHECK_STRCONTAINS("a", "a");
+  CHECK_STRCONTAINS("a", "a");
 }
 
 TEST_CASE("strcontains should find all substrings")
 {
-    CHECK_STRCONTAINS("abc", "");
-    CHECK_STRCONTAINS("abc", "a");
-    CHECK_STRCONTAINS("abc", "ab");
-    CHECK_STRCONTAINS("abc", "abc");
-    CHECK_STRCONTAINS("abc", "b");
-    CHECK_STRCONTAINS("abc", "bc");
-    CHECK_STRCONTAINS("abc", "c");
+  CHECK_STRCONTAINS("abc", "");
+  CHECK_STRCONTAINS("abc", "a");
+  CHECK_STRCONTAINS("abc", "ab");
+  CHECK_STRCONTAINS("abc", "abc");
+  CHECK_STRCONTAINS("abc", "b");
+  CHECK_STRCONTAINS("abc", "bc");
+  CHECK_STRCONTAINS("abc", "c");
 }
 
 TEST_CASE("strcontains shouldn't find reverse string")
 {
-    CHECK_STRNOTCONTAINS("test_string", "gnirts_tset");
+  CHECK_STRNOTCONTAINS("test_string", "gnirts_tset");
 }
 
 TEST_CASE("strcontains should find the empty string in any string")
 {
-    CHECK_STRCONTAINS("", "");
-    CHECK_STRCONTAINS("a", "");
-    CHECK_STRCONTAINS("ab", "");
-    CHECK_STRCONTAINS("abc", "");
-    CHECK_STRCONTAINS("text", "");
+  CHECK_STRCONTAINS("", "");
+  CHECK_STRCONTAINS("a", "");
+  CHECK_STRCONTAINS("ab", "");
+  CHECK_STRCONTAINS("abc", "");
+  CHECK_STRCONTAINS("text", "");
 }
 
 TEST_CASE("strcontains should find equal string")
 {
-    CHECK_STRCONTAINS("This is a sample text.", "This is a sample text.");
+  CHECK_STRCONTAINS("This is a sample text.", "This is a sample text.");
 }
 
 TEST_CASE("strcontains should find string at the start")
 {
-    CHECK_STRCONTAINS("This is a lengthy text.", "This");
+  CHECK_STRCONTAINS("This is a lengthy text.", "This");
 }
 
 TEST_CASE("strcontains should find a string in the middle")
 {
-    CHECK_STRCONTAINS("This is a lengthy text.", "a lengthy ");
+  CHECK_STRCONTAINS("This is a lengthy text.", "a lengthy ");
 }
 
 TEST_CASE("strcontains should find a string at the end")
 {
-    CHECK_STRCONTAINS("This is a lengthy text.", "text.");
+  CHECK_STRCONTAINS("This is a lengthy text.", "text.");
 }
 
 TEST_CASE("strcontains should find bytes")
 {
-    CHECK_STRCONTAINS("\xDE\xAD\xC0\xDE", "\xC0\xDE");
+  CHECK_STRCONTAINS("\xDE\xAD\xC0\xDE", "\xC0\xDE");
 }

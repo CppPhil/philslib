@@ -59,31 +59,30 @@ template<typename InputIterator, typename SizeType, typename ForwardIterator>
 inline std::pair<InputIterator, ForwardIterator>
 uninitialized_move_n(InputIterator first, SizeType count, ForwardIterator dest)
 {
-    using value_type =
-        typename std::iterator_traits<ForwardIterator>::value_type;
+  using value_type = typename std::iterator_traits<ForwardIterator>::value_type;
 
-    ForwardIterator cur{dest};
+  ForwardIterator cur{dest};
 
-    try {
-        while (count > 0) {
-            ::new (PL_VOIDIFY(*cur)) value_type(std::move(*first));
+  try {
+    while (count > 0) {
+      ::new (PL_VOIDIFY(*cur)) value_type(std::move(*first));
 
-            ++first;
-            ++cur;
-            --count;
-        }
+      ++first;
+      ++cur;
+      --count;
     }
-    catch (...) {
-        while (dest != cur) {
-            dest->~value_type();
+  }
+  catch (...) {
+    while (dest != cur) {
+      dest->~value_type();
 
-            ++dest;
-        }
-
-        throw;
+      ++dest;
     }
 
-    return std::make_pair(first, cur);
+    throw;
+  }
+
+  return std::make_pair(first, cur);
 }
 } // namespace algo
 } // namespace pl

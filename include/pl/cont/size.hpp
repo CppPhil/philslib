@@ -45,7 +45,7 @@ namespace cont {
 template<typename Cont>
 constexpr auto size(PL_IN const Cont& cont) -> decltype(cont.size())
 {
-    return cont.size();
+  return cont.size();
 }
 
 /*!
@@ -56,8 +56,8 @@ constexpr auto size(PL_IN const Cont& cont) -> decltype(cont.size())
 template<typename Type, std::size_t Size>
 constexpr std::size_t size(PL_IN const Type (&arr)[Size]) noexcept
 {
-    (void)arr;
-    return Size;
+  (void)arr;
+  return Size;
 }
 } // namespace cont
 } // namespace pl

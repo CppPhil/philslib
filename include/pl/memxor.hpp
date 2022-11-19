@@ -51,22 +51,22 @@ namespace pl {
  * \warning Make sure 'byte_count' is correct!
  **/
 inline void* memxor(
-    PL_INOUT void* PL_RESTRICT    destination,
-    PL_IN const void* PL_RESTRICT source,
-    std::size_t                   byte_count) noexcept
+  PL_INOUT void* PL_RESTRICT    destination,
+  PL_IN const void* PL_RESTRICT source,
+  std::size_t                   byte_count) noexcept
 {
-    auto dest = static_cast<byte * PL_RESTRICT>(destination);
-    auto src  = static_cast<const byte * PL_RESTRICT>(source);
+  auto dest = static_cast<byte * PL_RESTRICT>(destination);
+  auto src  = static_cast<const byte * PL_RESTRICT>(source);
 
-    while (byte_count > 0) {
-        *dest ^= *src;
+  while (byte_count > 0) {
+    *dest ^= *src;
 
-        --byte_count;
-        ++dest;
-        ++src;
-    }
+    --byte_count;
+    ++dest;
+    ++src;
+  }
 
-    return destination;
+  return destination;
 }
 } // namespace pl
 #endif // INCG_PL_MEMXOR_HPP

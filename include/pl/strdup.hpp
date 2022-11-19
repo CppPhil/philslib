@@ -47,18 +47,18 @@ namespace {
  * \return std::strlen(string) or maximum_length, whichever is less.
  **/
 std::size_t strnlen(
-    PL_IN       PL_NULL_TERMINATED(const char*) string,
-    std::size_t maximum_length) noexcept
+  PL_IN       PL_NULL_TERMINATED(const char*) string,
+  std::size_t maximum_length) noexcept
 {
-    std::size_t pos{0U};
+  std::size_t pos{0U};
 
-    for (; pos < maximum_length; ++pos) {
-        if (string[pos] == '\0') {
-            break;
-        }
+  for (; pos < maximum_length; ++pos) {
+    if (string[pos] == '\0') {
+      break;
     }
+  }
 
-    return pos;
+  return pos;
 }
 } // anonymous namespace
 } // namespace detail
@@ -71,12 +71,12 @@ namespace {
  * \return The copy.
  **/
 PL_NODISCARD std::unique_ptr<char[]> strdup(
-    PL_IN PL_NULL_TERMINATED(const char*) str) noexcept
+  PL_IN PL_NULL_TERMINATED(const char*) str) noexcept
 {
-    const auto bytes_needed = std::strlen(str) + static_cast<std::size_t>(1U);
-    auto       return_value = std::make_unique<char[]>(bytes_needed);
-    std::memcpy(return_value.get(), str, bytes_needed);
-    return return_value;
+  const auto bytes_needed = std::strlen(str) + static_cast<std::size_t>(1U);
+  auto       return_value = std::make_unique<char[]>(bytes_needed);
+  std::memcpy(return_value.get(), str, bytes_needed);
+  return return_value;
 }
 
 /*!
@@ -92,14 +92,14 @@ PL_NODISCARD std::unique_ptr<char[]> strdup(
  * 'size' bytes, it is added to the duplicated string.
  **/
 PL_NODISCARD std::unique_ptr<char[]> strndup(
-    PL_IN       PL_NULL_TERMINATED(const char*) str,
-    std::size_t size) noexcept
+  PL_IN       PL_NULL_TERMINATED(const char*) str,
+  std::size_t size) noexcept
 {
-    const auto string_length = ::pl::detail::strnlen(str, size);
-    auto       return_value  = std::make_unique<char[]>(string_length + 1U);
-    std::memcpy(return_value.get(), str, string_length);
-    return_value[string_length] = '\0';
-    return return_value;
+  const auto string_length = ::pl::detail::strnlen(str, size);
+  auto       return_value  = std::make_unique<char[]>(string_length + 1U);
+  std::memcpy(return_value.get(), str, string_length);
+  return_value[string_length] = '\0';
+  return return_value;
 }
 } // anonymous namespace
 } // namespace pl

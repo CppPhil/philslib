@@ -58,16 +58,16 @@ namespace pl {
  * \see secure_zero_memory
  **/
 PL_ALWAYS_INLINE void* zero_memory(
-    PL_OUT void* dest,
-    std::size_t  count_bytes) noexcept
+  PL_OUT void* dest,
+  std::size_t  count_bytes) noexcept
 {
-    byte* ptr{static_cast<byte*>(dest)};
+  byte* ptr{static_cast<byte*>(dest)};
 
-    for (; count_bytes != 0U; ++ptr, --count_bytes) {
-        *ptr = 0U;
-    }
+  for (; count_bytes != 0U; ++ptr, --count_bytes) {
+    *ptr = 0U;
+  }
 
-    return dest;
+  return dest;
 }
 
 /*!
@@ -94,16 +94,16 @@ PL_ALWAYS_INLINE void* zero_memory(
  * a call to this function.
  **/
 PL_ALWAYS_INLINE void* secure_zero_memory(
-    PL_OUT void* dest,
-    std::size_t  count_bytes) noexcept
+  PL_OUT void* dest,
+  std::size_t  count_bytes) noexcept
 {
-    volatile byte* ptr{static_cast<volatile byte*>(dest)};
+  volatile byte* ptr{static_cast<volatile byte*>(dest)};
 
-    for (; count_bytes != 0U; ++ptr, --count_bytes) {
-        *ptr = 0U;
-    }
+  for (; count_bytes != 0U; ++ptr, --count_bytes) {
+    *ptr = 0U;
+  }
 
-    return dest;
+  return dest;
 }
 } // namespace pl
 #endif // INCG_PL_ZERO_MEMORY_HPP

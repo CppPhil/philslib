@@ -39,54 +39,54 @@ namespace detail {
 namespace {
 template<typename CharT>
 #if (PL_COMPILER != PL_COMPILER_MSVC) \
-    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
+  || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
 constexpr
 #endif
-    bool
-    strcontains(
-        PL_IN PL_NULL_TERMINATED(const CharT*) haystack,
-        PL_IN PL_NULL_TERMINATED(const CharT*) needle) noexcept
+  bool
+  strcontains(
+    PL_IN PL_NULL_TERMINATED(const CharT*) haystack,
+    PL_IN PL_NULL_TERMINATED(const CharT*) needle) noexcept
 {
-    const auto* str1 = haystack;
-    const auto* str2 = needle;
+  const auto* str1 = haystack;
+  const auto* str2 = needle;
 
-    for (;;) {
-        if (*str2 == CharT{0}) {
-            return true;
-        }
-
-        if (*str1 == CharT{0}) {
-            return false;
-        }
-
-        if (*str1++ != *str2++) {
-            ++haystack;
-            str1 = haystack;
-            str2 = needle;
-        }
+  for (;;) {
+    if (*str2 == CharT{0}) {
+      return true;
     }
+
+    if (*str1 == CharT{0}) {
+      return false;
+    }
+
+    if (*str1++ != *str2++) {
+      ++haystack;
+      str1 = haystack;
+      str2 = needle;
+    }
+  }
 }
 
 template<typename Ptr>
 #if (PL_COMPILER != PL_COMPILER_MSVC) \
-    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
+  || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
 constexpr
 #endif
     Ptr
     get_pointer(Ptr ptr, std::true_type) noexcept
 {
-    return ptr;
+  return ptr;
 }
 
 template<typename Str>
 #if (PL_COMPILER != PL_COMPILER_MSVC) \
-    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
+  || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
 constexpr
 #endif
-    auto
-    get_pointer(const Str& str, std::false_type) noexcept
+  auto
+  get_pointer(const Str& str, std::false_type) noexcept
 {
-    return str.data();
+  return str.data();
 }
 } // anonymous namespace
 } // namespace detail
@@ -103,17 +103,17 @@ namespace {
 template<typename Str1, typename Str2>
 PL_NODISCARD
 #if (PL_COMPILER != PL_COMPILER_MSVC) \
-    || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
-    constexpr
+  || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
+  constexpr
 #endif
-    bool
-    strcontains(const Str1& haystack, const Str2& needle) noexcept
+  bool
+  strcontains(const Str1& haystack, const Str2& needle) noexcept
 {
-    return ::pl::detail::strcontains(
-        ::pl::detail::get_pointer(
-            haystack, typename std::is_pointer<std::decay_t<Str1>>::type{}),
-        ::pl::detail::get_pointer(
-            needle, typename std::is_pointer<std::decay_t<Str2>>::type{}));
+  return ::pl::detail::strcontains(
+    ::pl::detail::get_pointer(
+      haystack, typename std::is_pointer<std::decay_t<Str1>>::type{}),
+    ::pl::detail::get_pointer(
+      needle, typename std::is_pointer<std::decay_t<Str2>>::type{}));
 }
 } // anonymous namespace
 } // namespace pl

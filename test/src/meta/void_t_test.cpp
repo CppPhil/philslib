@@ -47,15 +47,15 @@ struct is_prefix_incrementable : public std::false_type {
 
 template<typename Ty>
 struct is_prefix_incrementable<
-    Ty,
-    pl::meta::void_t<decltype(++std::declval<Ty&>())>> : public std::true_type {
+  Ty,
+  pl::meta::void_t<decltype(++std::declval<Ty&>())>> : public std::true_type {
 };
 
 struct prefix_incrementable {
-    prefix_incrementable& operator++() noexcept
-    {
-        return *this;
-    }
+  prefix_incrementable& operator++() noexcept
+  {
+    return *this;
+  }
 };
 
 struct postfix_incrementable {
@@ -63,36 +63,36 @@ struct postfix_incrementable {
 
 postfix_incrementable operator++(postfix_incrementable& a, int) noexcept
 {
-    return a;
+  return a;
 }
 } // anonymous namespace
 } // namespace test
 
 TEST_CASE("void_t_test")
 {
-    // avoid unused function warnings.
-    test::prefix_incrementable  prefix_incrementable{};
-    test::postfix_incrementable postfix_incrementable{};
-    ++prefix_incrementable;
-    postfix_incrementable++;
+  // avoid unused function warnings.
+  test::prefix_incrementable  prefix_incrementable{};
+  test::postfix_incrementable postfix_incrementable{};
+  ++prefix_incrementable;
+  postfix_incrementable++;
 
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<test::is_prefix_incrementable<int>::type, std::true_type>::
-            value);
+  PL_TEST_STATIC_ASSERT(
+    std::is_same<test::is_prefix_incrementable<int>::type, std::true_type>::
+      value);
 
-    PL_TEST_STATIC_ASSERT(std::is_same<
-                          test::is_prefix_incrementable<std::string>::type,
-                          std::false_type>::value);
+  PL_TEST_STATIC_ASSERT(std::is_same<
+                        test::is_prefix_incrementable<std::string>::type,
+                        std::false_type>::value);
 
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<
-            test::is_prefix_incrementable<test::prefix_incrementable>::type,
-            std::true_type>::value);
+  PL_TEST_STATIC_ASSERT(
+    std::is_same<
+      test::is_prefix_incrementable<test::prefix_incrementable>::type,
+      std::true_type>::value);
 
-    PL_TEST_STATIC_ASSERT(
-        std::is_same<
-            test::is_prefix_incrementable<test::postfix_incrementable>::type,
-            std::false_type>::value);
+  PL_TEST_STATIC_ASSERT(
+    std::is_same<
+      test::is_prefix_incrementable<test::postfix_incrementable>::type,
+      std::false_type>::value);
 
-    CHECK_UNARY(true);
+  CHECK_UNARY(true);
 }
