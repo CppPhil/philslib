@@ -10,7 +10,7 @@ cd "%dir%"
 
 set mingw_dir=mingw_dist
 
-set nuwen_archive=mingw-17.1-without-git.exe
+set nuwen_archive=mingw-18.0-without-git.exe
 set url=https://nuwen.net/files/mingw/%nuwen_archive%
 
 if exist %mingw_dir%\ (
