@@ -34,7 +34,6 @@
 #include "../annotations.hpp"  // PL_IN, PL_NODISCARD
 #include "../apply.hpp"        // pl::apply
 #include "../byte.hpp"         // pl::byte
-#include "../voidify.hpp"      // PL_VOIDIFY
 #include <algorithm>           // std::for_each
 #include <ciso646>             // not, or
 #include <condition_variable>  // std::condition_variable
@@ -445,16 +444,27 @@ inline thread_pool::thread_pool(std::size_t amt_threads)
                                                        * is out of bounds.
                                                        */
 {
-    // pointer to the thread_pool
-    // used in the lambda below.
-    auto self = this;
+    if (m_thread_count == 0) {
+        return;
+    }
 
-    // construct the threads into the raw memory.
-    // start running the thread running the thread_function which is a
-    // non-static member function of thread_pool.
-    std::for_each(m_thread_begin, m_thread_end, [self](PL_OUT std::thread& t) {
-        ::new (PL_VOIDIFY(t)) std::thread{&thread_pool::thread_function, self};
-    });
+    m_thread_begin = ::new(
+        const_cast<void*>(
+            static_cast<const volatile void*>(
+                m_thread_begin
+            )
+        )
+    ) std::thread{&thread_pool::thread_function, this};
+
+    for (std::size_t i{1}; i < m_thread_count; ++i) {
+        ::new(
+            const_cast<void*>(
+                static_cast<const volatile void*>(
+                     m_thread_begin + i
+                )
+            )
+        ) std::thread{&thread_pool::thread_function, this};
+    }
 }
 
 inline thread_pool::~thread_pool()
