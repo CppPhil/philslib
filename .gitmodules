@@ -1,3 +1,0 @@
-[submodule "deps/clang-format"]
-	path = deps/clang-format
-	url = https://github.com/CppPhil/clang-format.git
