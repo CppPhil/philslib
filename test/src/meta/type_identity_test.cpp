@@ -56,14 +56,14 @@ TEST_CASE("type_identity_positive_test")
 TEST_CASE("type_identity_negative_test")
 {
   PL_TEST_STATIC_ASSERT(
-    not std::is_same<pl::meta::type_identity_t<void>, int>::value);
+    ! std::is_same<pl::meta::type_identity_t<void>, int>::value);
   PL_TEST_STATIC_ASSERT(
-    not std::is_same<pl::meta::type_identity_t<long double>, float>::value);
-  PL_TEST_STATIC_ASSERT(not std::is_same<
+    ! std::is_same<pl::meta::type_identity_t<long double>, float>::value);
+  PL_TEST_STATIC_ASSERT(! std::is_same<
                         pl::meta::type_identity_t<std::string>,
                         std::vector<char>>::value);
   PL_TEST_STATIC_ASSERT(
-    not std::is_same<pl::meta::type_identity_t<unsigned long long>, short>::
+    ! std::is_same<pl::meta::type_identity_t<unsigned long long>, short>::
       value);
 
   CHECK_UNARY(true);

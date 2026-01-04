@@ -257,7 +257,7 @@ inline bool operator!=(
   PL_IN const observer_ptr<WatchedType1>& p1,
   PL_IN const observer_ptr<WatchedType2>& p2)
 {
-  return not(p1 == p2);
+  return !(p1 == p2);
 }
 
 /*!
@@ -356,7 +356,7 @@ inline bool operator<=(
   PL_IN const observer_ptr<WatchedType1>& p1,
   PL_IN const observer_ptr<WatchedType2>& p2)
 {
-  return not(p2 < p1);
+  return !(p2 < p1);
 }
 
 /*!
@@ -371,7 +371,7 @@ inline bool operator>=(
   PL_IN const observer_ptr<WatchedType1>& p1,
   PL_IN const observer_ptr<WatchedType2>& p2)
 {
-  return not(p1 < p2);
+  return !(p1 < p2);
 }
 
 /*!

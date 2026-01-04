@@ -535,7 +535,7 @@ public:
    **/
   constexpr bool starts_with(value_type character) const noexcept
   {
-    return not empty() and traits_type::eq(character, front());
+    return ! empty() && traits_type::eq(character, front());
   }
 
   /*!
@@ -548,7 +548,7 @@ public:
   constexpr bool starts_with(this_type string_view) const noexcept
   {
     return size() >= string_view.size()
-           and traits_type::compare(
+           && traits_type::compare(
                  data(), string_view.data(), string_view.size())
                  == 0;
   }
@@ -562,7 +562,7 @@ public:
    **/
   constexpr bool ends_with(value_type character) const noexcept
   {
-    return not empty() and traits_type::eq(character, back());
+    return ! empty() && traits_type::eq(character, back());
   }
 
   /*!
@@ -575,7 +575,7 @@ public:
   constexpr bool ends_with(this_type string_view) const noexcept
   {
     return size() >= string_view.size()
-           and traits_type::compare(
+           && traits_type::compare(
                  data() + size() - string_view.size(),
                  string_view.data(),
                  string_view.size())
@@ -696,7 +696,7 @@ constexpr bool operator!=(
   basic_string_view<CharT, Traits> x,
   basic_string_view<CharT, Traits> y) noexcept
 {
-  return not(x == y);
+  return !(x == y);
 }
 
 template<typename CharT, typename Traits, typename Allocator>

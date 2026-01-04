@@ -42,7 +42,7 @@
                                                                         \
   PL_NODISCARD inline bool operator!=(const type& lhs, const type& rhs) \
   {                                                                     \
-    return not static_cast<bool>(lhs == rhs);                           \
+    return ! static_cast<bool>(lhs == rhs);                           \
   }                                                                     \
                                                                         \
   PL_NODISCARD inline bool operator>(const type& lhs, const type& rhs)  \
@@ -52,12 +52,12 @@
                                                                         \
   PL_NODISCARD inline bool operator<=(const type& lhs, const type& rhs) \
   {                                                                     \
-    return not static_cast<bool>(lhs > rhs);                            \
+    return ! static_cast<bool>(lhs > rhs);                            \
   }                                                                     \
                                                                         \
   PL_NODISCARD inline bool operator>=(const type& lhs, const type& rhs) \
   {                                                                     \
-    return not static_cast<bool>(lhs < rhs);                            \
+    return ! static_cast<bool>(lhs < rhs);                            \
   }
 
 /*!
@@ -71,7 +71,7 @@
                                                                            \
   PL_NODISCARD constexpr bool operator!=(const type& lhs, const type& rhs) \
   {                                                                        \
-    return not static_cast<bool>(lhs == rhs);                              \
+    return ! static_cast<bool>(lhs == rhs);                              \
   }                                                                        \
                                                                            \
   PL_NODISCARD constexpr bool operator>(const type& lhs, const type& rhs)  \
@@ -81,11 +81,11 @@
                                                                            \
   PL_NODISCARD constexpr bool operator<=(const type& lhs, const type& rhs) \
   {                                                                        \
-    return not static_cast<bool>(lhs > rhs);                               \
+    return ! static_cast<bool>(lhs > rhs);                               \
   }                                                                        \
                                                                            \
   PL_NODISCARD constexpr bool operator>=(const type& lhs, const type& rhs) \
   {                                                                        \
-    return not static_cast<bool>(lhs < rhs);                               \
+    return ! static_cast<bool>(lhs < rhs);                               \
   }
 #endif // INCG_PL_TOTAL_ORDER_HPP

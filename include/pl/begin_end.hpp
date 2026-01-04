@@ -123,7 +123,7 @@ template<typename Container>
 constexpr auto rbegin(PL_IN Container& container) noexcept
   -> meta::disable_if_t<
     std::is_array<meta::remove_cvref_t<Container>>::value
-      or meta::is_initializer_list<meta::remove_cvref_t<Container>>::value,
+      || meta::is_initializer_list<meta::remove_cvref_t<Container>>::value,
     decltype(container.rbegin())>
 {
   return container.rbegin();
@@ -173,7 +173,7 @@ constexpr auto crbegin(PL_IN const Container& container) noexcept
 template<typename Container>
 constexpr auto rend(PL_IN Container& container) noexcept -> meta::disable_if_t<
   std::is_array<meta::remove_cvref_t<Container>>::value
-    or meta::is_initializer_list<meta::remove_cvref_t<Container>>::value,
+    || meta::is_initializer_list<meta::remove_cvref_t<Container>>::value,
   decltype(container.rend())>
 {
   return container.rend();

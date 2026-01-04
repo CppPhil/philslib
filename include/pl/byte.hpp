@@ -58,7 +58,7 @@ constexpr ::pl::byte operator""_byte(unsigned long long value)
   || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
   assert(
         (value <= UCHAR_MAX)
-        and "value was too large in "
+        && "value was too large in "
         "pl::literals::integer_literals::operator\"\"_byte");
 #endif // (PL_COMPILER != PL_COMPILER_MSVC) || (PL_COMPILER_VERSION >=
        // PL_COMPILER_VERSION_CHECK(19, 11, 0))

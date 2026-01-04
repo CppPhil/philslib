@@ -40,7 +40,7 @@ namespace meta {
  *        are satisfied. Otherwise will behave like std::false_type.
  **/
 template<typename... Traits>
-using none = bool_constant<not disjunction<Traits...>::value>;
+using none = bool_constant<! disjunction<Traits...>::value>;
 } // namespace meta
 } // namespace pl
 #endif // INCG_PL_META_NONE_HPP

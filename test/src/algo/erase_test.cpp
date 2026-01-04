@@ -83,10 +83,10 @@ TEST_CASE("erase_if_from_deque")
 {
   std::deque<int> dq{1, 2, 3, 4};
 
-  pl::algo::erase_if(dq, [](int i) { return (i >= 2) and (i <= 3); });
+  pl::algo::erase_if(dq, [](int i) { return (i >= 2) && (i <= 3); });
   CHECK(dq == std::deque<int>{1, 4});
 
-  pl::algo::erase_if(dq, [](int i) { return (i >= 2) and (i <= 3); });
+  pl::algo::erase_if(dq, [](int i) { return (i >= 2) && (i <= 3); });
   CHECK(dq == std::deque<int>{1, 4});
 }
 
@@ -171,10 +171,10 @@ TEST_CASE("erase_if_from_multiset")
 {
   std::multiset<int> set{0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
-  pl::algo::erase_if(set, [](int i) { return (i == 0) or (i == 4); });
+  pl::algo::erase_if(set, [](int i) { return (i == 0) || (i == 4); });
   CHECK(set == std::multiset<int>{1, 2, 3, 5, 6, 7, 8, 9});
 
-  pl::algo::erase_if(set, [](int i) { return (i == 0) or (i == 4); });
+  pl::algo::erase_if(set, [](int i) { return (i == 0) || (i == 4); });
   CHECK(set == std::multiset<int>{1, 2, 3, 5, 6, 7, 8, 9});
 }
 
@@ -223,12 +223,12 @@ TEST_CASE("erase_from_multimap")
     const std::multimap<int, std::string> expected{{1, "std::nullptr_t"}};
 
     pl::algo::erase_if(map, [](const auto& p) {
-      return (p.second.front() == 'v') or (p.second.front() == 'b');
+      return (p.second.front() == 'v') || (p.second.front() == 'b');
     });
     CHECK(map == expected);
 
     pl::algo::erase_if(map, [](const auto& p) {
-      return (p.second.front() == 'v') or (p.second.front() == 'b');
+      return (p.second.front() == 'v') || (p.second.front() == 'b');
     });
     CHECK(map == expected);
   }
@@ -250,11 +250,11 @@ TEST_CASE("erase_from_unordered_set")
   SUBCASE("erase_if_from_unordered_set")
   {
     pl::algo::erase_if(
-      set, [](int i) { return ((i & 1) == 0) or ((i % 3) == 0); });
+      set, [](int i) { return ((i & 1) == 0) || ((i % 3) == 0); });
     CHECK(set == std::unordered_set<int>{1, 5});
 
     pl::algo::erase_if(
-      set, [](int i) { return ((i & 1) == 0) or ((i % 3) == 0); });
+      set, [](int i) { return ((i & 1) == 0) || ((i % 3) == 0); });
     CHECK(set == std::unordered_set<int>{1, 5});
   }
 }
@@ -363,11 +363,11 @@ TEST_CASE("erase_from_string")
   SUBCASE("erase_if_from_string")
   {
     pl::algo::erase_if(
-      string, [](char c) { return (c >= 'A') and (c <= 'Z'); });
+      string, [](char c) { return (c >= 'A') && (c <= 'Z'); });
     CHECK(string == "ello orld");
 
     pl::algo::erase_if(
-      string, [](char c) { return (c >= 'A') and (c <= 'Z'); });
+      string, [](char c) { return (c >= 'A') && (c <= 'Z'); });
     CHECK(string == "ello orld");
   }
 }

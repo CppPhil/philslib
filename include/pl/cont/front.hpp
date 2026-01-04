@@ -47,7 +47,7 @@ namespace cont {
 template<typename Cont>
 constexpr auto front(PL_IN Cont& cont) -> decltype(auto)
 {
-  PL_DBG_CHECK_PRE(not cont.empty());
+  PL_DBG_CHECK_PRE(! cont.empty());
 
   return cont.front();
 }

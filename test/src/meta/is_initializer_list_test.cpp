@@ -64,11 +64,11 @@ TEST_CASE("is_initializer_list_positive_tests")
 TEST_CASE("is_initializer_list_negative_tests")
 {
   PL_TEST_STATIC_ASSERT(
-    not pl::meta::is_initializer_list<pl::test::ty4>::value);
+    ! pl::meta::is_initializer_list<pl::test::ty4>::value);
   PL_TEST_STATIC_ASSERT(
-    not pl::meta::is_initializer_list<pl::test::ty5>::value);
+    ! pl::meta::is_initializer_list<pl::test::ty5>::value);
   PL_TEST_STATIC_ASSERT(
-    not pl::meta::is_initializer_list<pl::test::ty6>::value);
+    ! pl::meta::is_initializer_list<pl::test::ty6>::value);
 
   CHECK_UNARY(true);
 }

@@ -101,7 +101,7 @@
 #define PL_DETAIL_ASSERTION_IMPLEMENTATION(                             \
   condition, exception_type, violation_type_string)                     \
   PL_BEGIN_MACRO                                                        \
-  if (not(condition)) {                                                 \
+  if (!(condition)) {                                                 \
     PL_THROW_WITH_SOURCE_INFO(                                          \
       exception_type,                                                   \
       violation_type_string                                             \
@@ -119,7 +119,7 @@
 #define PL_DETAIL_ASSERTION_IMPLEMENTATION_MSG(                  \
   condition, exception_type, violation_type_string, message)     \
   PL_BEGIN_MACRO                                                 \
-  if (not(condition)) {                                          \
+  if (!(condition)) {                                          \
     PL_THROW_WITH_SOURCE_INFO(                                   \
       exception_type,                                            \
       violation_type_string                                      \

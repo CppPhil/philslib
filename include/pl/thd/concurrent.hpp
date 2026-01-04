@@ -68,7 +68,7 @@ public:
    **/
   explicit concurrent(Type value)
     : m_value{std::move(value)}, m_q{}, m_is_done{false}, m_thd{[this] {
-      while (not m_is_done) {
+      while (! m_is_done) {
         m_q.pop()();
       }
     }}

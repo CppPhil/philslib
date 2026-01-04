@@ -38,7 +38,7 @@ namespace meta {
  * \brief Forms the logical negation of the type trait 'Trait'.
  **/
 template<typename Trait>
-struct negation : public std::integral_constant<bool, not bool(Trait::value)> {
+struct negation : public std::integral_constant<bool, ! bool(Trait::value)> {
 };
 } // namespace meta
 } // namespace pl

@@ -54,7 +54,7 @@ inline
   bool
   toggle_bool(PL_INOUT bool& b) noexcept
 {
-  b = not b;
+  b = ! b;
   return b;
 }
 } // namespace pl

@@ -507,10 +507,10 @@ inline void thread_pool::thread_function()
     std::unique_lock<std::mutex> lock{m_mutex};
     m_cv.wait(
       lock, // wait until shutdown or got task to run.
-      [this] { return m_is_finished_shared or not m_tasks_shared.empty(); });
+      [this] { return m_is_finished_shared || ! m_tasks_shared.empty(); });
 
     // if we woke up because there's a task to run.
-    if (not m_tasks_shared.empty()) {
+    if (! m_tasks_shared.empty()) {
       auto task = m_tasks_shared.top(); // get the highest priority task.
       m_tasks_shared.pop();             // remove it from the queue
       lock.unlock(); // unlock the mutex, we're not accessing shared data
@@ -520,7 +520,7 @@ inline void thread_pool::thread_function()
     else {
       // if there was no task.
       // set running to false if we're shutting down.
-      running = not m_is_finished_shared;
+      running = ! m_is_finished_shared;
       // exit the loop if we're shutting down.
       // if running is still true it was just a spurious wake.
     }

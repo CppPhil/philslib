@@ -98,14 +98,14 @@ TEST_CASE("is_detected_test")
                         pl::test::copy_assignable_weird_return_type>::value);
 
   PL_TEST_STATIC_ASSERT(
-    not pl::meta::
+    ! pl::meta::
       is_detected<pl::test::copy_assign, pl::test::not_copy_assignable>::value);
 
   PL_TEST_STATIC_ASSERT(
     pl::meta::is_detected<pl::test::nested_size_type, std::vector<double>>::
       value);
 
-  PL_TEST_STATIC_ASSERT(not pl::meta::is_detected<
+  PL_TEST_STATIC_ASSERT(! pl::meta::is_detected<
                         pl::test::nested_size_type,
                         pl::test::copy_assignable>::value);
 
@@ -201,12 +201,12 @@ TEST_CASE("is_detected_exact_test")
                         pl::test::copy_assign,
                         pl::test::copy_assignable>::value);
 
-  PL_TEST_STATIC_ASSERT(not pl::meta::is_detected_exact<
+  PL_TEST_STATIC_ASSERT(! pl::meta::is_detected_exact<
                         pl::test::copy_assignable_weird_return_type&,
                         pl::test::copy_assign,
                         pl::test::copy_assignable_weird_return_type>::value);
 
-  PL_TEST_STATIC_ASSERT(not pl::meta::is_detected_exact<
+  PL_TEST_STATIC_ASSERT(! pl::meta::is_detected_exact<
                         pl::test::not_copy_assignable&,
                         pl::test::copy_assign,
                         pl::test::not_copy_assignable>::value);
@@ -234,7 +234,7 @@ TEST_CASE("is_detected_convertible")
                         pl::test::nested_difference_type,
                         DiffTypeConvertible>::value);
 
-  PL_TEST_STATIC_ASSERT(not pl::meta::is_detected_convertible<
+  PL_TEST_STATIC_ASSERT(! pl::meta::is_detected_convertible<
                         int,
                         pl::test::nested_difference_type,
                         DiffTypeNonConvertible>::value);

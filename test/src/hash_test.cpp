@@ -68,7 +68,7 @@ public:
 
   friend bool operator==(const hashable& a, const hashable& b)
   {
-    return (a.m_string == b.m_string) and (a.m_integer == b.m_integer);
+    return (a.m_string == b.m_string) && (a.m_integer == b.m_integer);
   }
 
 private:

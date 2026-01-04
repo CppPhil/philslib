@@ -446,7 +446,7 @@ DOCTEST_GCC_SUPPRESS_WARNING_POP
 
 #if DOCTEST_CLANG
 // to detect if libc++ is being used with clang (the _LIBCPP_VERSION identifier)
-#include <ciso646>
+
 #endif // clang
 
 #ifdef _LIBCPP_VERSION

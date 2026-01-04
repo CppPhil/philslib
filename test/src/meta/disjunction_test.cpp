@@ -55,7 +55,7 @@ TEST_CASE("disjunction_positive_test")
 
 TEST_CASE("disjunction_negative_test")
 {
-  PL_TEST_STATIC_ASSERT(not pl::meta::disjunction<
+  PL_TEST_STATIC_ASSERT(! pl::meta::disjunction<
                         std::is_same<int, double>,         // false
                         std::is_pod<std::vector<unsigned>> // false
                         >::value);

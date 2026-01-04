@@ -68,7 +68,7 @@ public:
   template<typename... Args>
   return_type operator()(PL_IN Args&&... args)
   {
-    return not ::pl::invoke(m_predicate, std::forward<Args>(args)...);
+    return ! ::pl::invoke(m_predicate, std::forward<Args>(args)...);
   }
 
 private:

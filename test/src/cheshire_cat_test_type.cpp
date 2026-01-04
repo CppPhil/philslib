@@ -83,7 +83,7 @@ bool operator==(
   const cheshire_cat_test_type& a,
   const cheshire_cat_test_type& b) noexcept
 {
-  return (a.m_cc->a == b.m_cc->a) and (a.m_cc->s == b.m_cc->s);
+  return (a.m_cc->a == b.m_cc->a) && (a.m_cc->s == b.m_cc->s);
 }
 
 void swap(cheshire_cat_test_type& a, cheshire_cat_test_type& b) noexcept
@@ -95,7 +95,7 @@ bool operator!=(
   const cheshire_cat_test_type& a,
   const cheshire_cat_test_type& b) noexcept
 {
-  return not(a == b);
+  return !(a == b);
 }
 } // namespace test
 } // namespace pl

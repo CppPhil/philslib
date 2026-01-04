@@ -107,8 +107,8 @@ PL_ALWAYS_INLINE std::uint8_t bswap(std::uint8_t val) noexcept
  **/
 PL_ALWAYS_INLINE std::uint16_t bswap(std::uint16_t val) noexcept
 {
-#if (PL_COMPILER == PL_COMPILER_GCC) or (PL_COMPILER == PL_COMPILER_CLANG) \
-  or (PL_COMPILER == PL_COMPILER_ICC)
+#if (PL_COMPILER == PL_COMPILER_GCC) || (PL_COMPILER == PL_COMPILER_CLANG) \
+  || (PL_COMPILER == PL_COMPILER_ICC)
   return __builtin_bswap16(val);
 #elif PL_COMPILER == PL_COMPILER_MSVC
   return _byteswap_ushort(val);
@@ -132,8 +132,8 @@ PL_ALWAYS_INLINE std::uint16_t bswap(std::uint16_t val) noexcept
  **/
 PL_ALWAYS_INLINE std::uint32_t bswap(std::uint32_t val) noexcept
 {
-#if (PL_COMPILER == PL_COMPILER_GCC) or (PL_COMPILER == PL_COMPILER_CLANG) \
-  or (PL_COMPILER == PL_COMPILER_ICC)
+#if (PL_COMPILER == PL_COMPILER_GCC) || (PL_COMPILER == PL_COMPILER_CLANG) \
+  || (PL_COMPILER == PL_COMPILER_ICC)
   return __builtin_bswap32(val);
 #elif PL_COMPILER == PL_COMPILER_MSVC
   return _byteswap_ulong(val);
@@ -157,8 +157,8 @@ PL_ALWAYS_INLINE std::uint32_t bswap(std::uint32_t val) noexcept
  **/
 PL_ALWAYS_INLINE std::uint64_t bswap(std::uint64_t val) noexcept
 {
-#if (PL_COMPILER == PL_COMPILER_GCC) or (PL_COMPILER == PL_COMPILER_CLANG) \
-  or (PL_COMPILER == PL_COMPILER_ICC)
+#if (PL_COMPILER == PL_COMPILER_GCC) || (PL_COMPILER == PL_COMPILER_CLANG) \
+  || (PL_COMPILER == PL_COMPILER_ICC)
   return __builtin_bswap64(val);
 #elif PL_COMPILER == PL_COMPILER_MSVC
   return _byteswap_uint64(val);
@@ -255,16 +255,16 @@ PL_ALWAYS_INLINE std::int64_t bswap(std::int64_t val) noexcept
 template<typename Ty>
 PL_ALWAYS_INLINE auto bswap(Ty ty) noexcept -> meta::disable_if_t<
   std::is_same<meta::remove_cvref_t<Ty>, std::uint8_t>::value
-    or std::is_same<meta::remove_cvref_t<Ty>, std::uint16_t>::value
-    or std::is_same<meta::remove_cvref_t<Ty>, std::uint32_t>::value
-    or std::is_same<meta::remove_cvref_t<Ty>, std::uint64_t>::value
-    or std::is_same<meta::remove_cvref_t<Ty>, std::int8_t>::value
-    or std::is_same<meta::remove_cvref_t<Ty>, std::int16_t>::value
-    or std::is_same<meta::remove_cvref_t<Ty>, std::int32_t>::value
-    or std::is_same<meta::remove_cvref_t<Ty>, std::int64_t>::value
-    or std::is_same<meta::remove_cvref_t<Ty>, char>::value
-    or std::is_same<meta::remove_cvref_t<Ty>, unsigned char>::value
-    or std::is_same<meta::remove_cvref_t<Ty>, signed char>::value,
+    || std::is_same<meta::remove_cvref_t<Ty>, std::uint16_t>::value
+    || std::is_same<meta::remove_cvref_t<Ty>, std::uint32_t>::value
+    || std::is_same<meta::remove_cvref_t<Ty>, std::uint64_t>::value
+    || std::is_same<meta::remove_cvref_t<Ty>, std::int8_t>::value
+    || std::is_same<meta::remove_cvref_t<Ty>, std::int16_t>::value
+    || std::is_same<meta::remove_cvref_t<Ty>, std::int32_t>::value
+    || std::is_same<meta::remove_cvref_t<Ty>, std::int64_t>::value
+    || std::is_same<meta::remove_cvref_t<Ty>, char>::value
+    || std::is_same<meta::remove_cvref_t<Ty>, unsigned char>::value
+    || std::is_same<meta::remove_cvref_t<Ty>, signed char>::value,
   Ty>
 {
   return ::pl::detail::bswap_impl(ty);

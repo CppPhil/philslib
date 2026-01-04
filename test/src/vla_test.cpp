@@ -62,7 +62,7 @@ private:
 
 bool operator==(const vla_test_type& a, const vla_test_type& b)
 {
-  return (a.s() == b.s()) and (a.i() == b.i());
+  return (a.s() == b.s()) && (a.i() == b.i());
 }
 } // anonymous namespace
 } // namespace test

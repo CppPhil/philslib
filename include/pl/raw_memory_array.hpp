@@ -125,7 +125,7 @@ public:
    **/
   PL_NODISCARD reference at(size_type pos)
   {
-    if (not(pos < size())) {
+    if (!(pos < size())) {
       throw std::out_of_range{
         "pos in pl::raw_memory_array::at was out of bounds!"};
     }
@@ -181,7 +181,7 @@ public:
    **/
   PL_NODISCARD reference front()
   {
-    PL_DBG_CHECK_PRE(not empty());
+    PL_DBG_CHECK_PRE(! empty());
     return *begin();
   }
 
@@ -204,7 +204,7 @@ public:
    **/
   PL_NODISCARD reference back()
   {
-    PL_DBG_CHECK_PRE(not empty());
+    PL_DBG_CHECK_PRE(! empty());
     return *rbegin();
   }
 
@@ -507,7 +507,7 @@ bool operator!=(
   PL_IN const ::pl::raw_memory_array<Ty>& lhs,
   PL_IN const ::pl::raw_memory_array<Ty>& rhs)
 {
-  return not(lhs == rhs);
+  return !(lhs == rhs);
 }
 
 /*!
@@ -538,7 +538,7 @@ bool operator<=(
   PL_IN const ::pl::raw_memory_array<Ty>& lhs,
   PL_IN const ::pl::raw_memory_array<Ty>& rhs)
 {
-  return not(rhs < lhs);
+  return !(rhs < lhs);
 }
 
 /*!
@@ -568,7 +568,7 @@ bool operator>=(
   PL_IN const ::pl::raw_memory_array<Ty>& lhs,
   PL_IN const ::pl::raw_memory_array<Ty>& rhs)
 {
-  return not(lhs < rhs);
+  return !(lhs < rhs);
 }
 } // namespace pl
 #endif // INCG_PL_RAW_MEMORY_ARRAY_HPP
