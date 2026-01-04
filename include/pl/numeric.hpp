@@ -53,7 +53,7 @@ constexpr bool is_even(Numeric numeric)
 template<typename Numeric>
 constexpr bool is_odd(Numeric numeric)
 {
-  return ! ::pl::is_even(numeric);
+  return !::pl::is_even(numeric);
 }
 
 /*!

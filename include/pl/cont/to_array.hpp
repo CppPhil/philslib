@@ -57,7 +57,7 @@ constexpr std::array<remove_cv_t<Ty>, Size> to_array_impl(
  **/
 template<typename Ty, std::size_t Size, std::size_t... Indices>
 constexpr std::array<remove_cv_t<Ty>, Size> to_array_impl(
-  PL_INOUT Ty(&&array)[Size],
+  PL_INOUT Ty (&&array)[Size],
   std::index_sequence<Indices...>)
 
 {
@@ -96,7 +96,8 @@ constexpr std::array<remove_cv_t<Ty>, Size> to_array(PL_IN Ty (&array)[Size])
  * corresponding element of 'array'.
  **/
 template<typename Ty, std::size_t Size>
-constexpr std::array<remove_cv_t<Ty>, Size> to_array(PL_INOUT Ty(&&array)[Size])
+constexpr std::array<remove_cv_t<Ty>, Size> to_array(
+  PL_INOUT Ty (&&array)[Size])
 {
   return ::pl::cont::detail::to_array_impl(
     std::move(array), std::make_index_sequence<Size>{});

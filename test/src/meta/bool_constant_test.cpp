@@ -64,7 +64,7 @@ TEST_CASE("bool_constant_value_type_test")
 TEST_CASE("bool_constant_value_test")
 {
   PL_TEST_STATIC_ASSERT(pl::meta::bool_constant<true>::value);
-  PL_TEST_STATIC_ASSERT(! pl::meta::bool_constant<false>::value);
+  PL_TEST_STATIC_ASSERT(!pl::meta::bool_constant<false>::value);
 
   CHECK_UNARY(true);
 }
@@ -72,11 +72,10 @@ TEST_CASE("bool_constant_value_test")
 TEST_CASE("bool_constant_operator_test")
 {
   PL_TEST_STATIC_ASSERT(static_cast<bool>(pl::meta::bool_constant<true>{}));
-  PL_TEST_STATIC_ASSERT(
-    ! static_cast<bool>(pl::meta::bool_constant<false>{}));
+  PL_TEST_STATIC_ASSERT(!static_cast<bool>(pl::meta::bool_constant<false>{}));
 
   PL_TEST_STATIC_ASSERT(pl::meta::bool_constant<true>{}());
-  PL_TEST_STATIC_ASSERT(! pl::meta::bool_constant<false>{}());
+  PL_TEST_STATIC_ASSERT(!pl::meta::bool_constant<false>{}());
 
   CHECK_UNARY(true);
 }

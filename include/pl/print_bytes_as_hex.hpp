@@ -145,7 +145,7 @@ inline print_bytes_as_hex& print_bytes_as_hex::operator=(this_type&&) noexcept(
   = default;
 
 inline std::ostream& operator<<(
-  PL_INOUT std::ostream& os,
+  PL_INOUT std::ostream&          os,
   PL_IN const print_bytes_as_hex& to_print)
 {
   static constexpr auto nibbles_per_byte = 2;

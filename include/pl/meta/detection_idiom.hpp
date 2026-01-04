@@ -40,9 +40,9 @@ namespace meta {
  * \warning Do not instantiate this type.
  **/
 struct nonesuch {
-  nonesuch()                = delete;
-  ~nonesuch()               = delete;
-  nonesuch(const nonesuch&) = delete;
+  nonesuch()                      = delete;
+  ~nonesuch()                     = delete;
+  nonesuch(const nonesuch&)       = delete;
   void operator=(const nonesuch&) = delete;
 };
 
@@ -55,8 +55,7 @@ namespace detail {
 template<
   typename Default,
   typename AlwaysVoid,
-  template<typename...>
-  class Op,
+  template<typename...> class Op,
   typename... Args>
 struct detector {
   using value_t = std::false_type;

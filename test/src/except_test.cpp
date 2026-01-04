@@ -101,7 +101,7 @@ TEST_CASE("throw_with_source_info_test")
 #if PL_COMPILER == PL_COMPILER_MSVC
 #pragma warning(push)
 #pragma warning(disable : 4127) // conditional expression is constant
-#endif // PL_COMPILER == PL_COMPILER_MSVC
+#endif                          // PL_COMPILER == PL_COMPILER_MSVC
 TEST_CASE("throw_if_null_test")
 {
   const void* const p1{nullptr};

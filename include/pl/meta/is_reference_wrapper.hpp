@@ -47,8 +47,7 @@ namespace meta {
  * Is derived from std::false_type.
  **/
 template<typename Ty>
-struct is_reference_wrapper : public std::false_type {
-};
+struct is_reference_wrapper : public std::false_type {};
 
 /*!
  * \brief Detects whether Ty is a std::reference_wrapper type.
@@ -59,8 +58,7 @@ struct is_reference_wrapper : public std::false_type {
  **/
 template<typename Ty>
 struct is_reference_wrapper<std::reference_wrapper<Ty>>
-  : public std::true_type {
-};
+  : public std::true_type {};
 
 /*!
  * \brief Negation of is_reference_wrapper.

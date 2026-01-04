@@ -12,8 +12,8 @@
  *        Used to declare a type as noncopyable.
  **/
 
-#define PL_NONCOPYABLE(type_identifier)             \
-  type_identifier(const type_identifier&) = delete; \
+#define PL_NONCOPYABLE(type_identifier)                        \
+  type_identifier(const type_identifier&)            = delete; \
   type_identifier& operator=(const type_identifier&) = delete
 
 #endif // INCG_PL_NONCOPYABLE_HPP

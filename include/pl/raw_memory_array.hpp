@@ -181,7 +181,7 @@ public:
    **/
   PL_NODISCARD reference front()
   {
-    PL_DBG_CHECK_PRE(! empty());
+    PL_DBG_CHECK_PRE(!empty());
     return *begin();
   }
 
@@ -204,7 +204,7 @@ public:
    **/
   PL_NODISCARD reference back()
   {
-    PL_DBG_CHECK_PRE(! empty());
+    PL_DBG_CHECK_PRE(!empty());
     return *rbegin();
   }
 

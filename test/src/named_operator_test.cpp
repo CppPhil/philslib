@@ -60,6 +60,6 @@ TEST_CASE("named_operator_test")
   CHECK(val == doctest::Approx(16.0));
 
   const std::vector<int> v{1, 2, 3, 4, 5};
-  CHECK_UNARY(v<contains> 3);
-  CHECK_UNARY_FALSE(v<contains> 0);
+  CHECK_UNARY(v < contains > 3);
+  CHECK_UNARY_FALSE(v < contains > 0);
 }

@@ -45,7 +45,7 @@ namespace detail {
 template<typename Ty, typename Continuation>
 inline auto then_impl(
   PL_INOUT std::future<Ty>& future,
-  PL_IN Continuation& continuation) -> decltype(auto)
+  PL_IN Continuation&       continuation) -> decltype(auto)
 {
   return ::pl::invoke(continuation, future.get());
 }
@@ -57,7 +57,7 @@ inline auto then_impl(
 template<typename Continuation>
 inline auto then_impl(
   PL_INOUT std::future<void>& future,
-  PL_IN Continuation& continuation) -> decltype(auto)
+  PL_IN Continuation&         continuation) -> decltype(auto)
 {
   future.wait();
   return ::pl::invoke(continuation);

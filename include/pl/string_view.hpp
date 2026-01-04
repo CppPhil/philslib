@@ -535,7 +535,7 @@ public:
    **/
   constexpr bool starts_with(value_type character) const noexcept
   {
-    return ! empty() && traits_type::eq(character, front());
+    return !empty() && traits_type::eq(character, front());
   }
 
   /*!
@@ -549,8 +549,8 @@ public:
   {
     return size() >= string_view.size()
            && traits_type::compare(
-                 data(), string_view.data(), string_view.size())
-                 == 0;
+                data(), string_view.data(), string_view.size())
+                == 0;
   }
 
   /*!
@@ -562,7 +562,7 @@ public:
    **/
   constexpr bool ends_with(value_type character) const noexcept
   {
-    return ! empty() && traits_type::eq(character, back());
+    return !empty() && traits_type::eq(character, back());
   }
 
   /*!
@@ -576,10 +576,10 @@ public:
   {
     return size() >= string_view.size()
            && traits_type::compare(
-                 data() + size() - string_view.size(),
-                 string_view.data(),
-                 string_view.size())
-                 == 0;
+                data() + size() - string_view.size(),
+                string_view.data(),
+                string_view.size())
+                == 0;
   }
 
   /*!

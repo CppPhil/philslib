@@ -40,16 +40,14 @@ namespace meta {
  *        effectively performing a logical 'and' on the sequence of traits.
  **/
 template<typename...>
-struct conjunction : public std::true_type {
-};
+struct conjunction : public std::true_type {};
 
 /*!
  * \brief Forms the logical conjunction of the type traits 'Traits'
  *        effectively performing a logical 'and' on the sequence of traits.
  **/
 template<typename Trait1>
-struct conjunction<Trait1> : public Trait1 {
-};
+struct conjunction<Trait1> : public Trait1 {};
 
 /*!
  * \brief Forms the logical conjunction of the type traits 'Traits'

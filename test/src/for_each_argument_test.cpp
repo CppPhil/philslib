@@ -68,7 +68,7 @@ TEST_CASE("for_each_argument_test")
   void (pl::test::structure::*mem_fun_ptr)()
     const {&pl::test::structure::mem_fun};
 
-  int pl::test::structure::*mem_obj_ptr{&pl::test::structure::m_val};
+  int pl::test::structure::* mem_obj_ptr{&pl::test::structure::m_val};
 
   pl::test::structure functor{};
 

@@ -43,8 +43,7 @@ namespace meta {
  * Is derived from std::false_type.
  **/
 template<typename Ty>
-struct is_initializer_list : public std::false_type {
-};
+struct is_initializer_list : public std::false_type {};
 
 /*!
  * \brief Detects whether Ty is a std::initializer_list type.
@@ -54,8 +53,8 @@ struct is_initializer_list : public std::false_type {
  * Is derived from std::true_type.
  **/
 template<typename Ty>
-struct is_initializer_list<std::initializer_list<Ty>> : public std::true_type {
-};
+struct is_initializer_list<std::initializer_list<Ty>>
+  : public std::true_type {};
 } // namespace meta
 } // namespace pl
 #endif // INCG_PL_META_IS_INITIALIZER_LIST_HPP

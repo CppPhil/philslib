@@ -48,7 +48,7 @@ auto foo(Ty&&, Args&&...) -> std::enable_if_t<
 
 template<typename Ty, typename... Args>
 auto foo(Ty&&, Args&&...) -> std::enable_if_t<
-  ! pl::meta::conjunction<std::is_same<Ty, Args>...>::value,
+  !pl::meta::conjunction<std::is_same<Ty, Args>...>::value,
   std::false_type>;
 } // anonymous namespace
 } // namespace test
@@ -63,10 +63,11 @@ TEST_CASE("conjunction_positive_test")
     std::is_same<decltype(pl::test::foo(5.5, 1.1, 3.3)), std::true_type>::
       value);
 
-  PL_TEST_STATIC_ASSERT(pl::meta::conjunction<
-                        std::is_same<int, int>,
-                        std::is_pointer<double*>,
-                        std::is_integral<short>>::value);
+  PL_TEST_STATIC_ASSERT(
+    pl::meta::conjunction<
+      std::is_same<int, int>,
+      std::is_pointer<double*>,
+      std::is_integral<short>>::value);
 
   CHECK_UNARY(true);
 }
@@ -82,7 +83,7 @@ TEST_CASE("conjunction_negative_test")
     std::is_same<decltype(pl::test::foo("a"s, "b"s, "c")), std::false_type>::
       value);
 
-  PL_TEST_STATIC_ASSERT(! pl::meta::conjunction<
+  PL_TEST_STATIC_ASSERT(!pl::meta::conjunction<
                         std::is_floating_point<long double>,
                         std::is_const<int>>::value);
 

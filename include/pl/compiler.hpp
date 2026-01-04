@@ -140,7 +140,7 @@
  *        to a specific version.
  **/
 #define PL_COMPILER_VERSION_CHECK(major, minor, patch) \
-  (((major)*16777216) + ((minor)*65536)                \
+  (((major) * 16777216) + ((minor) * 65536)            \
    + (patch)) /* multipliers to 'push' the numbers leftward */
 
 /*!

@@ -114,8 +114,8 @@ TEST_CASE("observer_ptr_test")
   {
     CHECK_UNARY_FALSE(static_cast<bool>(null_ptr));
     CHECK_UNARY(static_cast<bool>(pointer));
-    CHECK_UNARY(! static_cast<bool>(null_ptr));
-    CHECK_UNARY_FALSE(! static_cast<bool>(pointer));
+    CHECK_UNARY(!static_cast<bool>(null_ptr));
+    CHECK_UNARY_FALSE(!static_cast<bool>(pointer));
   }
 
   SUBCASE("indirection_operator")
@@ -163,9 +163,10 @@ TEST_CASE("observer_ptr_test")
     PL_TEST_STATIC_ASSERT(
       std::is_same<decltype(const_observer_ptr.operator->()), const int*>::
         value);
-    PL_TEST_STATIC_ASSERT(std::is_same<
-                          decltype(const_observer_ptr.operator const int*()),
-                          const int*>::value);
+    PL_TEST_STATIC_ASSERT(
+      std::is_same<
+        decltype(const_observer_ptr.operator const int*()),
+        const int*>::value);
 
     CHECK(const_observer_ptr.get() == &i);
     CHECK(const_observer_ptr == pointer);
@@ -176,7 +177,7 @@ TEST_CASE("observer_ptr_constexpr_test")
 {
   static constexpr pl::observer_ptr<int> op{nullptr};
   PL_TEST_STATIC_ASSERT(op.get() == nullptr);
-  PL_TEST_STATIC_ASSERT(! op.operator bool());
+  PL_TEST_STATIC_ASSERT(!op.operator bool());
 
   CHECK_UNARY(true);
 }

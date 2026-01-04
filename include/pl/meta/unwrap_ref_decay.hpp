@@ -45,8 +45,7 @@ namespace meta {
  * std::decay_t<Type>.
  **/
 template<typename Type>
-struct unwrap_ref_decay : public unwrap_reference<std::decay_t<Type>> {
-};
+struct unwrap_ref_decay : public unwrap_reference<std::decay_t<Type>> {};
 
 /*!
  * \brief C++14 style helper type alias for unwrap_ref_decay

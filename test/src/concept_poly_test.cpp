@@ -73,7 +73,7 @@ public:
   virtual ~draw_concept()                             = default;
   virtual std::unique_ptr<draw_concept> clone() const = 0;
   virtual std::ostream& draw(std::ostream& os, std::size_t position) const = 0;
-  draw_concept(const draw_concept&) = delete;
+  draw_concept(const draw_concept&)            = delete;
   draw_concept& operator=(const draw_concept&) = delete;
 };
 

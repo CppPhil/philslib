@@ -79,7 +79,7 @@ public:
   value_type pop()
   {
     std::unique_lock<std::mutex> lock{m_mutex};
-    m_cv_has_elements.wait(lock, [this] { return ! m_cont.empty(); });
+    m_cv_has_elements.wait(lock, [this] { return !m_cont.empty(); });
     auto return_value = m_cont.front();
     m_cont.pop();
     return return_value;

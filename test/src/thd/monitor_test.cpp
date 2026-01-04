@@ -88,8 +88,9 @@ TEST_CASE("monitor_test")
   monitor(&pl::test::monitor_test_type::set_d_to_25);
 
   CHECK(
-    monitor(static_cast<double (pl::test::monitor_test_type::*)() const>(
-      &pl::test::monitor_test_type::d))
+    monitor(
+      static_cast<double (pl::test::monitor_test_type::*)() const>(
+        &pl::test::monitor_test_type::d))
     == doctest::Approx{25.0});
 
   CHECK(std::strcmp(monitor(&pl::test::monitor_test_type::str), "text") == 0);

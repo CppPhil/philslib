@@ -52,18 +52,21 @@ using namespace std::literals::string_literals;
   check_macro(pl::strcontains(std::string_view{haystack}, needle));           \
   check_macro(pl::strcontains(haystack, std::string_view{needle}));           \
                                                                               \
-  check_macro(pl::strcontains(                                                \
-    std::u16string_view{u##haystack}, std::u16string_view{u##needle}));       \
+  check_macro(                                                                \
+    pl::strcontains(                                                          \
+      std::u16string_view{u##haystack}, std::u16string_view{u##needle}));     \
   check_macro(pl::strcontains(std::u16string_view{u##haystack}, u##needle));  \
   check_macro(pl::strcontains(u##haystack, std::u16string_view{u##needle}));  \
                                                                               \
-  check_macro(pl::strcontains(                                                \
-    std::u32string_view{U##haystack}, std::u32string_view{U##needle}));       \
+  check_macro(                                                                \
+    pl::strcontains(                                                          \
+      std::u32string_view{U##haystack}, std::u32string_view{U##needle}));     \
   check_macro(pl::strcontains(std::u32string_view{U##haystack}, U##needle));  \
   check_macro(pl::strcontains(U##haystack, std::u32string_view{U##needle}));  \
                                                                               \
-  check_macro(pl::strcontains(                                                \
-    std::wstring_view{L##haystack}, std::wstring_view{L##needle}));           \
+  check_macro(                                                                \
+    pl::strcontains(                                                          \
+      std::wstring_view{L##haystack}, std::wstring_view{L##needle}));         \
   check_macro(pl::strcontains(std::wstring_view{L##haystack}, L##needle));    \
   check_macro(pl::strcontains(L##haystack, std::wstring_view{L##needle}))
 #else

@@ -362,12 +362,10 @@ TEST_CASE("erase_from_string")
 
   SUBCASE("erase_if_from_string")
   {
-    pl::algo::erase_if(
-      string, [](char c) { return (c >= 'A') && (c <= 'Z'); });
+    pl::algo::erase_if(string, [](char c) { return (c >= 'A') && (c <= 'Z'); });
     CHECK(string == "ello orld");
 
-    pl::algo::erase_if(
-      string, [](char c) { return (c >= 'A') && (c <= 'Z'); });
+    pl::algo::erase_if(string, [](char c) { return (c >= 'A') && (c <= 'Z'); });
     CHECK(string == "ello orld");
   }
 }

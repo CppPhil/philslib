@@ -44,9 +44,9 @@ TEST_CASE("is_even_test")
   CHECK_UNARY_FALSE(pl::is_even(1));
 
   PL_TEST_STATIC_ASSERT(pl::is_even(-2));
-  PL_TEST_STATIC_ASSERT(! pl::is_even(-1));
+  PL_TEST_STATIC_ASSERT(!pl::is_even(-1));
   PL_TEST_STATIC_ASSERT(pl::is_even(0));
-  PL_TEST_STATIC_ASSERT(! pl::is_even(1));
+  PL_TEST_STATIC_ASSERT(!pl::is_even(1));
 }
 
 TEST_CASE("is_odd_test")
@@ -56,9 +56,9 @@ TEST_CASE("is_odd_test")
   CHECK_UNARY_FALSE(pl::is_odd(0));
   CHECK_UNARY(pl::is_odd(1));
 
-  PL_TEST_STATIC_ASSERT(! pl::is_odd(-2));
+  PL_TEST_STATIC_ASSERT(!pl::is_odd(-2));
   PL_TEST_STATIC_ASSERT(pl::is_odd(-1));
-  PL_TEST_STATIC_ASSERT(! pl::is_odd(0));
+  PL_TEST_STATIC_ASSERT(!pl::is_odd(0));
   PL_TEST_STATIC_ASSERT(pl::is_odd(1));
 }
 
@@ -86,5 +86,5 @@ TEST_CASE("is_between_test")
   PL_TEST_STATIC_ASSERT(pl::is_between(0, 0, 1));
   PL_TEST_STATIC_ASSERT(pl::is_between(0, -1, 1));
 
-  PL_TEST_STATIC_ASSERT(! pl::is_between(5, 6, 6));
+  PL_TEST_STATIC_ASSERT(!pl::is_between(5, 6, 6));
 }

@@ -41,114 +41,100 @@ namespace detail {
  * \brief Anything else is not an output iterator.
  **/
 template<typename IterTag>
-struct is_output_tag : public std::false_type {
-};
+struct is_output_tag : public std::false_type {};
 
 /*!
  * \brief Only output iterators are output iterators.
  **/
 template<>
-struct is_output_tag<std::output_iterator_tag> : public std::true_type {
-};
+struct is_output_tag<std::output_iterator_tag> : public std::true_type {};
 
 /*!
  * \brief Anything else is not a random access iterator.
  **/
 template<typename IterTag>
-struct is_random_access_tag : public std::false_type {
-};
+struct is_random_access_tag : public std::false_type {};
 
 /*!
  * \brief Only random access iterators are random access iterators.
  **/
 template<>
 struct is_random_access_tag<std::random_access_iterator_tag>
-  : public std::true_type {
-};
+  : public std::true_type {};
 
 /*!
  * \brief Anything else is not a bidirectional iterator.
  **/
 template<typename IterTag>
-struct is_bidi_tag : public std::false_type {
-};
+struct is_bidi_tag : public std::false_type {};
 
 /*!
  * \brief Bidirectional iterators are bidirectional iterators.
  **/
 template<>
-struct is_bidi_tag<std::bidirectional_iterator_tag> : public std::true_type {
-};
+struct is_bidi_tag<std::bidirectional_iterator_tag> : public std::true_type {};
 
 /*!
  * \brief Random access iterators are bidirectional iterators.
  **/
 template<>
-struct is_bidi_tag<std::random_access_iterator_tag> : public std::true_type {
-};
+struct is_bidi_tag<std::random_access_iterator_tag> : public std::true_type {};
 
 /*!
  * \brief Anything else is not a forward iterator.
  **/
 template<typename IterTag>
-struct is_forward_tag : public std::false_type {
-};
+struct is_forward_tag : public std::false_type {};
 
 /*!
  * \brief Forward iterators are forward iterators.
  **/
 template<>
-struct is_forward_tag<std::forward_iterator_tag> : public std::true_type {
-};
+struct is_forward_tag<std::forward_iterator_tag> : public std::true_type {};
 
 /*!
  * \brief Bidirectional iterators are forward iterators.
  **/
 template<>
-struct is_forward_tag<std::bidirectional_iterator_tag> : public std::true_type {
-};
+struct is_forward_tag<std::bidirectional_iterator_tag>
+  : public std::true_type {};
 
 /*!
  * \brief Random access iterators are forward iterators.
  **/
 template<>
-struct is_forward_tag<std::random_access_iterator_tag> : public std::true_type {
-};
+struct is_forward_tag<std::random_access_iterator_tag>
+  : public std::true_type {};
 
 /*!
  * \brief Anything else is not an input iterator.
  **/
 template<typename IterTag>
-struct is_input_tag : public std::false_type {
-};
+struct is_input_tag : public std::false_type {};
 
 /*!
  * \brief Input iterators are input iterators.
  **/
 template<>
-struct is_input_tag<std::input_iterator_tag> : public std::true_type {
-};
+struct is_input_tag<std::input_iterator_tag> : public std::true_type {};
 
 /*!
  * \brief Forward iterators are input iterators.
  **/
 template<>
-struct is_input_tag<std::forward_iterator_tag> : public std::true_type {
-};
+struct is_input_tag<std::forward_iterator_tag> : public std::true_type {};
 
 /*!
  * \brief Bidirectional iterators are input iterators.
  **/
 template<>
-struct is_input_tag<std::bidirectional_iterator_tag> : public std::true_type {
-};
+struct is_input_tag<std::bidirectional_iterator_tag> : public std::true_type {};
 
 /*!
  * \brief Random access iterators are input iterators.
  **/
 template<>
-struct is_input_tag<std::random_access_iterator_tag> : public std::true_type {
-};
+struct is_input_tag<std::random_access_iterator_tag> : public std::true_type {};
 
 /*!
  * \brief Defines its nested type type as the iterator_category, which is the
@@ -181,8 +167,7 @@ using iterator_category_t = typename iterator_category<Iter>::type;
  **/
 template<typename Iter>
 struct is_output_iterator
-  : public detail::is_output_tag<detail::iterator_category_t<Iter>> {
-};
+  : public detail::is_output_tag<detail::iterator_category_t<Iter>> {};
 
 /*!
  * \brief A template alias for the nested type type of
@@ -204,8 +189,7 @@ using is_output_iterator_t = typename is_output_iterator<Iter>::type;
  **/
 template<typename Iter>
 struct is_random_access_iterator
-  : public detail::is_random_access_tag<detail::iterator_category_t<Iter>> {
-};
+  : public detail::is_random_access_tag<detail::iterator_category_t<Iter>> {};
 
 /*!
  * \brief A template alias for the nested type type of
@@ -228,8 +212,7 @@ using is_random_access_iterator_t =
  **/
 template<typename Iter>
 struct is_bidirectional_iterator
-  : public detail::is_bidi_tag<detail::iterator_category_t<Iter>> {
-};
+  : public detail::is_bidi_tag<detail::iterator_category_t<Iter>> {};
 
 /*!
  * \brief A template alias for the nested type type of
@@ -252,8 +235,7 @@ using is_bidirectional_iterator_t =
  **/
 template<typename Iter>
 struct is_forward_iterator
-  : public detail::is_forward_tag<detail::iterator_category_t<Iter>> {
-};
+  : public detail::is_forward_tag<detail::iterator_category_t<Iter>> {};
 
 /*!
  * \brief A template alias for the nested type type of
@@ -275,8 +257,7 @@ using is_forward_iterator_t = typename is_forward_iterator<Iter>::type;
  **/
 template<typename Iter>
 struct is_input_iterator
-  : public detail::is_input_tag<detail::iterator_category_t<Iter>> {
-};
+  : public detail::is_input_tag<detail::iterator_category_t<Iter>> {};
 
 /*!
  * \brief A template alias for the nested type type of

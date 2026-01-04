@@ -48,9 +48,9 @@ TEST_CASE("negation_positive_test")
 
 TEST_CASE("negation_negative_test")
 {
-  PL_TEST_STATIC_ASSERT(! pl::meta::negation<std::is_integral<char>>::value);
+  PL_TEST_STATIC_ASSERT(!pl::meta::negation<std::is_integral<char>>::value);
   PL_TEST_STATIC_ASSERT(
-    ! pl::meta::negation<std::is_trivially_constructible<long>>::value);
+    !pl::meta::negation<std::is_trivially_constructible<long>>::value);
 
   CHECK_UNARY(true);
 }

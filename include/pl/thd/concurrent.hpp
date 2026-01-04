@@ -68,7 +68,7 @@ public:
    **/
   explicit concurrent(Type value)
     : m_value{std::move(value)}, m_q{}, m_is_done{false}, m_thd{[this] {
-      while (! m_is_done) {
+      while (!m_is_done) {
         m_q.pop()();
       }
     }}
@@ -142,8 +142,8 @@ private:
   template<typename Fut, typename Callable, typename Ty>
   static void set_value(
     PL_OUT std::promise<Fut>& p,
-    PL_IN Callable& callable,
-    PL_INOUT Ty& ty)
+    PL_IN Callable&           callable,
+    PL_INOUT Ty&              ty)
   {
     p.set_value(::pl::invoke(callable, ty));
   }
@@ -151,7 +151,7 @@ private:
 #if PL_COMPILER == PL_COMPILER_MSVC
 #pragma warning(push)
 #pragma warning(disable : 4702) // unreachable code
-#endif // PL_COMPILER == PL_COMPILER_MSVC
+#endif                          // PL_COMPILER == PL_COMPILER_MSVC
 
   /*!
    * \brief Invokes the callable with ty and sets the result to the promise.
@@ -161,8 +161,8 @@ private:
   template<typename Callable, typename Ty>
   static void set_value(
     PL_OUT std::promise<void>& p,
-    PL_IN Callable& callable,
-    PL_INOUT Ty& ty)
+    PL_IN Callable&            callable,
+    PL_INOUT Ty&               ty)
   {
     ::pl::invoke(callable, ty);
     p.set_value();

@@ -40,16 +40,14 @@ namespace meta {
  *        effectively performing a logical 'or' on the sequence of traits.
  **/
 template<typename...>
-struct disjunction : public std::false_type {
-};
+struct disjunction : public std::false_type {};
 
 /*!
  * \brief Forms the logical disjunction of the type traits 'Traits',
  *        effectively performing a logical 'or' on the sequence of traits.
  **/
 template<typename Trait1>
-struct disjunction<Trait1> : public Trait1 {
-};
+struct disjunction<Trait1> : public Trait1 {};
 
 /*!
  * \brief Forms the logical disjunction of the type traits 'Traits',

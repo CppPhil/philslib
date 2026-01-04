@@ -42,8 +42,7 @@ namespace meta {
  * and will have its const and volatile type qualifiers removed.
  **/
 template<typename Type>
-struct remove_cvref : public std::remove_cv<remove_reference_t<Type>> {
-};
+struct remove_cvref : public std::remove_cv<remove_reference_t<Type>> {};
 
 /*!
  * \brief C++14 style meta function helper that is an alias of the nested type

@@ -122,7 +122,7 @@ public:
       void>>
   explicit concept_poly(PL_IN Impl&& impl)
     : m_ptr{std::make_unique<Model<meta::remove_cvref_t<Impl>>>(
-      std::forward<Impl>(impl))}
+        std::forward<Impl>(impl))}
   {
   }
 

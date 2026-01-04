@@ -69,8 +69,8 @@ namespace algo {
  **/
 template<typename Ty, typename BinaryComparator>
 constexpr const Ty& clamp(
-  PL_IN const Ty& value,
-  PL_IN const Ty& lower_bound,
+  PL_IN const Ty&  value,
+  PL_IN const Ty&  lower_bound,
   PL_IN const Ty&  upper_bound,
   BinaryComparator comp)
 {

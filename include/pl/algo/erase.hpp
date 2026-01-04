@@ -51,7 +51,7 @@ namespace detail {
 template<typename Container, typename Type>
 inline void erase_helper(
   PL_INOUT Container& container,
-  PL_IN const Type& element_to_remove,
+  PL_IN const Type&   element_to_remove,
   meta::vectorlike_tag)
 {
   container.erase(
@@ -72,7 +72,7 @@ inline void erase_helper(
  **/
 template<typename Container, typename UnaryPredicate>
 inline void erase_if_helper(
-  PL_INOUT Container& container,
+  PL_INOUT Container&    container,
   PL_IN UnaryPredicate&& unary_predicate,
   meta::vectorlike_tag)
 {
@@ -96,7 +96,7 @@ inline void erase_if_helper(
 template<typename Container, typename Type>
 inline void erase_helper(
   PL_INOUT Container& container,
-  PL_IN const Type& element_to_remove,
+  PL_IN const Type&   element_to_remove,
   meta::listlike_tag)
 {
   container.remove(element_to_remove);
@@ -115,7 +115,7 @@ inline void erase_helper(
  **/
 template<typename Container, typename UnaryPredicate>
 inline void erase_if_helper(
-  PL_INOUT Container& container,
+  PL_INOUT Container&    container,
   PL_IN UnaryPredicate&& unary_predicate,
   meta::listlike_tag)
 {
@@ -136,7 +136,7 @@ inline void erase_if_helper(
 template<typename Container, typename Type>
 inline void erase_helper(
   PL_INOUT Container& container,
-  PL_IN const Type& element_to_remove,
+  PL_IN const Type&   element_to_remove,
   meta::associative_tag)
 {
   container.erase(element_to_remove);
@@ -198,7 +198,7 @@ inline void erase_if_helper(
 template<typename Container, typename Type>
 inline void erase(
   PL_INOUT Container& container,
-  PL_IN const Type& element_to_remove)
+  PL_IN const Type&   element_to_remove)
 {
   detail::erase_helper(
     container, element_to_remove, meta::container_traits_category<Container>{});
@@ -217,7 +217,7 @@ inline void erase(
  **/
 template<typename Container, typename UnaryPredicate>
 inline void erase_if(
-  PL_INOUT Container& container,
+  PL_INOUT Container&    container,
   PL_IN UnaryPredicate&& unary_predicate)
 {
   detail::erase_if_helper(

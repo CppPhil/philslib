@@ -38,8 +38,7 @@
 
 namespace test {
 namespace {
-struct Empty {
-};
+struct Empty {};
 
 struct Struct {
   std::int32_t               value;

@@ -42,14 +42,12 @@
 namespace test {
 namespace {
 template<typename, typename = pl::meta::void_t<>>
-struct is_prefix_incrementable : public std::false_type {
-};
+struct is_prefix_incrementable : public std::false_type {};
 
 template<typename Ty>
 struct is_prefix_incrementable<
   Ty,
-  pl::meta::void_t<decltype(++std::declval<Ty&>())>> : public std::true_type {
-};
+  pl::meta::void_t<decltype(++std::declval<Ty&>())>> : public std::true_type {};
 
 struct prefix_incrementable {
   prefix_incrementable& operator++() noexcept
@@ -58,8 +56,7 @@ struct prefix_incrementable {
   }
 };
 
-struct postfix_incrementable {
-};
+struct postfix_incrementable {};
 
 postfix_incrementable operator++(postfix_incrementable& a, int) noexcept
 {
@@ -80,9 +77,10 @@ TEST_CASE("void_t_test")
     std::is_same<test::is_prefix_incrementable<int>::type, std::true_type>::
       value);
 
-  PL_TEST_STATIC_ASSERT(std::is_same<
-                        test::is_prefix_incrementable<std::string>::type,
-                        std::false_type>::value);
+  PL_TEST_STATIC_ASSERT(
+    std::is_same<
+      test::is_prefix_incrementable<std::string>::type,
+      std::false_type>::value);
 
   PL_TEST_STATIC_ASSERT(
     std::is_same<

@@ -47,8 +47,7 @@ namespace {
 template<typename Ty>
 using copy_assign = decltype(std::declval<Ty&>() = std::declval<const Ty&>());
 
-struct copy_assignable {
-};
+struct copy_assignable {};
 
 struct copy_assignable_weird_return_type {
 #if PL_COMPILER == PL_COMPILER_GCC
@@ -77,8 +76,7 @@ struct has_diff_type {
   using difference_type = int;
 };
 
-struct has_no_diff_type {
-};
+struct has_no_diff_type {};
 
 template<typename Ty>
 using difference_type
@@ -93,19 +91,20 @@ TEST_CASE("is_detected_test")
     pl::meta::is_detected<pl::test::copy_assign, pl::test::copy_assignable>::
       value);
 
-  PL_TEST_STATIC_ASSERT(pl::meta::is_detected<
-                        pl::test::copy_assign,
-                        pl::test::copy_assignable_weird_return_type>::value);
+  PL_TEST_STATIC_ASSERT(
+    pl::meta::is_detected<
+      pl::test::copy_assign,
+      pl::test::copy_assignable_weird_return_type>::value);
 
   PL_TEST_STATIC_ASSERT(
-    ! pl::meta::
+    !pl::meta::
       is_detected<pl::test::copy_assign, pl::test::not_copy_assignable>::value);
 
   PL_TEST_STATIC_ASSERT(
     pl::meta::is_detected<pl::test::nested_size_type, std::vector<double>>::
       value);
 
-  PL_TEST_STATIC_ASSERT(! pl::meta::is_detected<
+  PL_TEST_STATIC_ASSERT(!pl::meta::is_detected<
                         pl::test::nested_size_type,
                         pl::test::copy_assignable>::value);
 
@@ -149,12 +148,13 @@ TEST_CASE("detected_t_test")
 
 TEST_CASE("detected_or_test")
 {
-  PL_TEST_STATIC_ASSERT(std::is_same<
-                        pl::meta::detected_or<
-                          std::ptrdiff_t,
-                          pl::test::nested_difference_type,
-                          pl::test::has_diff_type>::value_t,
-                        std::true_type>::value);
+  PL_TEST_STATIC_ASSERT(
+    std::is_same<
+      pl::meta::detected_or<
+        std::ptrdiff_t,
+        pl::test::nested_difference_type,
+        pl::test::has_diff_type>::value_t,
+      std::true_type>::value);
 
   PL_TEST_STATIC_ASSERT(
     std::is_same<
@@ -164,19 +164,21 @@ TEST_CASE("detected_or_test")
         pl::test::has_diff_type>::type,
       pl::test::nested_difference_type<pl::test::has_diff_type>>::value);
 
-  PL_TEST_STATIC_ASSERT(std::is_same<
-                        pl::meta::detected_or<
-                          std::ptrdiff_t,
-                          pl::test::nested_difference_type,
-                          pl::test::has_no_diff_type>::value_t,
-                        std::false_type>::value);
+  PL_TEST_STATIC_ASSERT(
+    std::is_same<
+      pl::meta::detected_or<
+        std::ptrdiff_t,
+        pl::test::nested_difference_type,
+        pl::test::has_no_diff_type>::value_t,
+      std::false_type>::value);
 
-  PL_TEST_STATIC_ASSERT(std::is_same<
-                        pl::meta::detected_or<
-                          std::ptrdiff_t,
-                          pl::test::nested_difference_type,
-                          pl::test::has_no_diff_type>::type,
-                        std::ptrdiff_t>::value);
+  PL_TEST_STATIC_ASSERT(
+    std::is_same<
+      pl::meta::detected_or<
+        std::ptrdiff_t,
+        pl::test::nested_difference_type,
+        pl::test::has_no_diff_type>::type,
+      std::ptrdiff_t>::value);
 
   CHECK_UNARY(true);
 }
@@ -187,26 +189,28 @@ TEST_CASE("detected_or_t_test")
     std::is_same<pl::test::difference_type<pl::test::has_diff_type>, int>::
       value);
 
-  PL_TEST_STATIC_ASSERT(std::is_same<
-                        pl::test::difference_type<pl::test::has_no_diff_type>,
-                        std::ptrdiff_t>::value);
+  PL_TEST_STATIC_ASSERT(
+    std::is_same<
+      pl::test::difference_type<pl::test::has_no_diff_type>,
+      std::ptrdiff_t>::value);
 
   CHECK_UNARY(true);
 }
 
 TEST_CASE("is_detected_exact_test")
 {
-  PL_TEST_STATIC_ASSERT(pl::meta::is_detected_exact<
-                        pl::test::copy_assignable&,
-                        pl::test::copy_assign,
-                        pl::test::copy_assignable>::value);
+  PL_TEST_STATIC_ASSERT(
+    pl::meta::is_detected_exact<
+      pl::test::copy_assignable&,
+      pl::test::copy_assign,
+      pl::test::copy_assignable>::value);
 
-  PL_TEST_STATIC_ASSERT(! pl::meta::is_detected_exact<
+  PL_TEST_STATIC_ASSERT(!pl::meta::is_detected_exact<
                         pl::test::copy_assignable_weird_return_type&,
                         pl::test::copy_assign,
                         pl::test::copy_assignable_weird_return_type>::value);
 
-  PL_TEST_STATIC_ASSERT(! pl::meta::is_detected_exact<
+  PL_TEST_STATIC_ASSERT(!pl::meta::is_detected_exact<
                         pl::test::not_copy_assignable&,
                         pl::test::copy_assign,
                         pl::test::not_copy_assignable>::value);
@@ -224,17 +228,19 @@ TEST_CASE("is_detected_convertible")
     using difference_type = std::string;
   };
 
-  PL_TEST_STATIC_ASSERT(pl::meta::is_detected_convertible<
-                        int,
-                        pl::test::nested_difference_type,
-                        pl::test::has_diff_type>::value);
+  PL_TEST_STATIC_ASSERT(
+    pl::meta::is_detected_convertible<
+      int,
+      pl::test::nested_difference_type,
+      pl::test::has_diff_type>::value);
 
-  PL_TEST_STATIC_ASSERT(pl::meta::is_detected_convertible<
-                        int,
-                        pl::test::nested_difference_type,
-                        DiffTypeConvertible>::value);
+  PL_TEST_STATIC_ASSERT(
+    pl::meta::is_detected_convertible<
+      int,
+      pl::test::nested_difference_type,
+      DiffTypeConvertible>::value);
 
-  PL_TEST_STATIC_ASSERT(! pl::meta::is_detected_convertible<
+  PL_TEST_STATIC_ASSERT(!pl::meta::is_detected_convertible<
                         int,
                         pl::test::nested_difference_type,
                         DiffTypeNonConvertible>::value);

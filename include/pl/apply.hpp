@@ -49,7 +49,7 @@ namespace detail {
  **/
 template<typename Callable, typename TupleLike, std::size_t... Indices>
 inline auto apply_impl(
-  PL_IN Callable&& callable,
+  PL_IN Callable&&  callable,
   PL_IN TupleLike&& tuple_like,
   std::index_sequence<Indices...>) -> decltype(auto)
 {

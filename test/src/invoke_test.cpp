@@ -102,7 +102,7 @@ TEST_CASE("invoke_test_member_object_pointer")
 {
   static constexpr std::uint64_t v{5U};
 
-  std::uint64_t pl::test::test_class::*member_object_pointer{
+  std::uint64_t pl::test::test_class::* member_object_pointer{
     &pl::test::test_class::m_v};
 
   pl::test::test_class  object{v};

@@ -122,13 +122,10 @@ public:
   /*!
    * \brief Default constructs the element_type.
    **/
-  cheshire_cat() : m_storage
-  {
-  }
+  cheshire_cat()
+    : m_storage{}
 #ifndef __cpp_lib_launder
-  , m_ptr
-  {
-  }
+    , m_ptr{}
 #endif
   {
     create();
@@ -153,13 +150,10 @@ public:
    * \brief Creates a cheshire_cat from an lvalue element_type.
    * \param value The lvalue element_type to construct from.
    **/
-  explicit cheshire_cat(PL_IN const_reference value) : m_storage
-  {
-  }
+  explicit cheshire_cat(PL_IN const_reference value)
+    : m_storage{}
 #ifndef __cpp_lib_launder
-  , m_ptr
-  {
-  }
+    , m_ptr{}
 #endif
   {
     create(value);
@@ -170,13 +164,10 @@ public:
    * \param value The rvalue element_type to construct from.
    * \note 'value' will be left in its moved-from state.
    **/
-  explicit cheshire_cat(PL_INOUT element_type&& value) noexcept : m_storage
-  {
-  }
+  explicit cheshire_cat(PL_INOUT element_type&& value) noexcept
+    : m_storage{}
 #ifndef __cpp_lib_launder
-  , m_ptr
-  {
-  }
+    , m_ptr{}
 #endif
   {
     create(std::move(value));
@@ -190,13 +181,10 @@ public:
   template<
     typename... Args,
     typename = enable_if_t<std::is_constructible<element_type, Args...>::value>>
-  explicit cheshire_cat(in_place_t, PL_INOUT Args&&... args) : m_storage
-  {
-  }
+  explicit cheshire_cat(in_place_t, PL_INOUT Args&&... args)
+    : m_storage{}
 #ifndef __cpp_lib_launder
-  , m_ptr
-  {
-  }
+    , m_ptr{}
 #endif
   {
     create(std::forward<Args>(args)...);
@@ -218,14 +206,10 @@ public:
   explicit cheshire_cat(
     in_place_t,
     std::initializer_list<Ty> il,
-    PL_INOUT                  Args&&... args)
-    : m_storage
-  {
-  }
+    PL_INOUT Args&&... args)
+    : m_storage{}
 #ifndef __cpp_lib_launder
-  , m_ptr
-  {
-  }
+    , m_ptr{}
 #endif
   {
     create(il, std::forward<Args>(args)...);

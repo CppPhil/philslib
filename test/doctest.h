@@ -71,7 +71,7 @@
 // https://github.com/cxxstuff/cxx_detect
 
 #define DOCTEST_COMPILER(MAJOR, MINOR, PATCH) \
-  ((MAJOR)*10000000 + (MINOR)*100000 + (PATCH))
+  ((MAJOR) * 10000000 + (MINOR) * 100000 + (PATCH))
 
 // GCC/Clang and GCC/MSVC are mutually exclusive, but Clang/MSVC are not because
 // of clang-cl...
@@ -317,7 +317,7 @@ DOCTEST_MSVC_SUPPRESS_WARNING(26812) // Prefer 'enum class' over 'enum'
 #define DOCTEST_SYMBOL_EXPORT __attribute__((dllexport))
 #define DOCTEST_SYMBOL_IMPORT __attribute__((dllimport))
 #endif // MSVC
-#else // _WIN32
+#else  // _WIN32
 #define DOCTEST_SYMBOL_EXPORT __attribute__((visibility("default")))
 #define DOCTEST_SYMBOL_IMPORT
 #endif // _WIN32
@@ -328,7 +328,7 @@ DOCTEST_MSVC_SUPPRESS_WARNING(26812) // Prefer 'enum class' over 'enum'
 #else // DOCTEST_CONFIG_IMPLEMENT
 #define DOCTEST_INTERFACE DOCTEST_SYMBOL_IMPORT
 #endif // DOCTEST_CONFIG_IMPLEMENT
-#else // DOCTEST_CONFIG_IMPLEMENTATION_IN_DLL
+#else  // DOCTEST_CONFIG_IMPLEMENTATION_IN_DLL
 #define DOCTEST_INTERFACE
 #endif // DOCTEST_CONFIG_IMPLEMENTATION_IN_DLL
 
@@ -833,8 +833,7 @@ struct ContextOptions //! OCLINT too many fields
 
 namespace detail {
 template<bool CONDITION, typename TYPE = void>
-struct enable_if {
-};
+struct enable_if {};
 
 template<typename TYPE>
 struct enable_if<true, TYPE> {
@@ -950,8 +949,7 @@ const char* type_to_string()
 
 template<typename T>
 struct StringMaker
-  : public detail::StringMakerBase<detail::has_insertion_operator<T>::value> {
-};
+  : public detail::StringMakerBase<detail::has_insertion_operator<T>::value> {};
 
 template<typename T>
 struct StringMaker<T*> {
@@ -966,7 +964,7 @@ struct StringMaker<T*> {
 
 template<typename R, typename C>
 struct StringMaker<R C::*> {
-  static String convert(R C::*p)
+  static String convert(R C::* p)
   {
     if (p)
       return detail::rawMemoryToString(p);
@@ -1126,8 +1124,7 @@ namespace detail {
 #endif // DOCTEST_CONFIG_TREAT_CHAR_STAR_AS_STRING
 // clang-format on
 
-struct DOCTEST_INTERFACE TestFailureException {
-};
+struct DOCTEST_INTERFACE TestFailureException {};
 
 DOCTEST_INTERFACE bool checkIfShouldThrow(assertType::Enum at);
 
@@ -1165,10 +1162,8 @@ DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wunused-comparison")
 // global scope is defined after this template, the template won't be
 // instantiated due to SFINAE. Once the template is not instantiated it can look
 // for global operator using normal conversions.
-#define SFINAE_OP(ret, op)                                          \
-  decltype(                                                         \
-    doctest::detail::declval<L>() op doctest::detail::declval<R>(), \
-    static_cast<ret>(0))
+#define SFINAE_OP(ret, op) \
+  decltype(doctest::detail::declval<L>() op doctest::detail::declval<R>(), static_cast<ret>(0))
 
 #define DOCTEST_DO_BINARY_EXPRESSION_COMPARISON(op, op_str, op_macro)      \
   template<typename R>                                                     \
@@ -1637,7 +1632,7 @@ public:
     }
     catch (...) {
     } //! OCLINT -  empty catch statement
-#endif // DOCTEST_CONFIG_NO_EXCEPTIONS
+#endif                      // DOCTEST_CONFIG_NO_EXCEPTIONS
     static_cast<void>(res); // to silence -Wunused-parameter
     return false;
   }
@@ -1676,8 +1671,7 @@ struct StringStreamBase<true> {
 
 template<typename T>
 struct StringStream
-  : public StringStreamBase<has_insertion_operator<T>::value> {
-};
+  : public StringStreamBase<has_insertion_operator<T>::value> {};
 
 template<typename T>
 void toStream(std::ostream* s, const T& value)
@@ -1830,7 +1824,7 @@ DOCTEST_INTERFACE doctest::detail::TestSuite& getCurrentTestSuite();
 } // namespace doctest_detail_test_suite_ns
 
 namespace doctest {
-#else // DOCTEST_CONFIG_DISABLE
+#else  // DOCTEST_CONFIG_DISABLE
 template<typename T>
 int registerExceptionTranslator(String (*)(T))
 {
@@ -2169,10 +2163,10 @@ int registerReporter(const char* name, int priority, bool isReporter)
     dec, T, DOCTEST_ANONYMOUS(_DOCTEST_ANON_TMP_), __VA_ARGS__)
 
 // for subcases
-#define DOCTEST_SUBCASE(name)                                    \
-  if (                                                           \
-    const doctest::detail::Subcase                               \
-      & DOCTEST_ANONYMOUS(_DOCTEST_ANON_SUBCASE_) DOCTEST_UNUSED \
+#define DOCTEST_SUBCASE(name)                                                 \
+  if (                                                                        \
+    const doctest::detail::Subcase& DOCTEST_ANONYMOUS(_DOCTEST_ANON_SUBCASE_) \
+      DOCTEST_UNUSED                                                          \
     = doctest::detail::Subcase(name, __FILE__, __LINE__))
 
 // for grouping tests in test suites by using code blocks
@@ -3149,41 +3143,41 @@ DOCTEST_MSVC_SUPPRESS_WARNING(26812) // Prefer 'enum class' over 'enum'
 DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_BEGIN
 
 // required includes - will go only in one translation unit!
-#include <ctime>
-#include <cmath>
 #include <climits>
+#include <cmath>
+#include <ctime>
 // borland (Embarcadero) compiler requires math.h and not cmath -
 // https://github.com/onqtam/doctest/pull/37
 #ifdef __BORLANDC__
 #include <math.h>
 #endif // __BORLANDC__
-#include <new>
+#include <algorithm>
+#include <atomic>
+#include <cctype>
+#include <cfloat>
+#include <csignal>
+#include <cstdint>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
-#include <limits>
-#include <utility>
-#include <fstream>
-#include <sstream>
-#include <iostream>
-#include <algorithm>
-#include <iomanip>
-#include <vector>
-#include <atomic>
-#include <mutex>
-#include <set>
-#include <map>
 #include <exception>
+#include <fstream>
+#include <iomanip>
+#include <iostream>
+#include <limits>
+#include <map>
+#include <mutex>
+#include <new>
+#include <set>
+#include <sstream>
 #include <stdexcept>
-#include <csignal>
-#include <cfloat>
-#include <cctype>
-#include <cstdint>
+#include <utility>
+#include <vector>
 
 #ifdef DOCTEST_PLATFORM_MAC
+#include <sys/sysctl.h>
 #include <sys/types.h>
 #include <unistd.h>
-#include <sys/sysctl.h>
 #endif // DOCTEST_PLATFORM_MAC
 
 #ifdef DOCTEST_PLATFORM_WINDOWS
@@ -3347,7 +3341,7 @@ namespace timer_large_integer {
 
 #if defined(DOCTEST_PLATFORM_WINDOWS)
 typedef ULONGLONG type;
-#else // DOCTEST_PLATFORM_WINDOWS
+#else  // DOCTEST_PLATFORM_WINDOWS
 using namespace std;
 typedef uint64_t type;
 #endif // DOCTEST_PLATFORM_WINDOWS
@@ -3372,7 +3366,7 @@ ticks_t getCurrentTicks()
   QueryPerformanceCounter(&t);
   return ((t.QuadPart - hzo.QuadPart) * LONGLONG(1000000)) / hz.QuadPart;
 }
-#else // DOCTEST_PLATFORM_WINDOWS
+#else  // DOCTEST_PLATFORM_WINDOWS
 ticks_t getCurrentTicks()
 {
   timeval t;
@@ -3406,7 +3400,7 @@ private:
 #ifdef DOCTEST_CONFIG_NO_MULTI_LANE_ATOMICS
 template<typename T>
 using AtomicOrMultiLaneAtomic = std::atomic<T>;
-#else // DOCTEST_CONFIG_NO_MULTI_LANE_ATOMICS
+#else  // DOCTEST_CONFIG_NO_MULTI_LANE_ATOMICS
 // Provides a multilane implementation of an atomic variable that supports add,
 // sub, load, store. Instead of using a single atomic variable, this splits up
 // into multiple ones, each sitting on a separate cache line. The goal is to
@@ -4228,7 +4222,7 @@ DOCTEST_NORETURN void throwException()
   g_cs->shouldLogCurrentException = false;
   throw TestFailureException();
 } // NOLINT(cert-err60-cpp)
-#else // DOCTEST_CONFIG_NO_EXCEPTIONS
+#else  // DOCTEST_CONFIG_NO_EXCEPTIONS
 void throwException()
 {
 }
@@ -4651,7 +4645,7 @@ String translateActiveException()
         }
         DOCTEST_GCC_SUPPRESS_WARNING_POP
 // clang-format on
-#else // DOCTEST_CONFIG_NO_EXCEPTIONS
+#else  // DOCTEST_CONFIG_NO_EXCEPTIONS
   return "";
 #endif // DOCTEST_CONFIG_NO_EXCEPTIONS
 }
@@ -5157,7 +5151,7 @@ using namespace detail;
 // TODO: integration with XCode and other IDEs
 #define DOCTEST_OUTPUT_DEBUG_STRING( \
   text) // NOLINT(clang-diagnostic-unused-macros)
-#endif // Platform
+#endif  // Platform
 
 void addAssert(assertType::Enum at)
 {
@@ -5355,7 +5349,7 @@ DOCTEST_NORETURN void throw_exception(Ex const& e)
 {
 #ifndef DOCTEST_CONFIG_NO_EXCEPTIONS
   throw e;
-#else // DOCTEST_CONFIG_NO_EXCEPTIONS
+#else  // DOCTEST_CONFIG_NO_EXCEPTIONS
   std::cerr
     << "doctest will terminate because it needed to throw an exception.\n"
     << "The message was: " << e.what() << '\n';
@@ -5365,8 +5359,9 @@ DOCTEST_NORETURN void throw_exception(Ex const& e)
 
 #ifndef DOCTEST_INTERNAL_ERROR
 #define DOCTEST_INTERNAL_ERROR(msg) \
-  throw_exception(std::logic_error( \
-    __FILE__ ":" DOCTEST_TOSTR(__LINE__) ": Internal doctest error: " msg))
+  throw_exception(                  \
+    std::logic_error(               \
+      __FILE__ ":" DOCTEST_TOSTR(__LINE__) ": Internal doctest error: " msg))
 #endif // DOCTEST_INTERNAL_ERROR
 
 // clang-format off
@@ -6050,9 +6045,8 @@ void fulltext_log_assert_to_stream(std::ostream& s, const AssertData& rb)
                                                  //! in conditional
     s << Color::Cyan << assertString(rb.m_at) << "( " << rb.m_expr << ", "
       << rb.m_exception_type << " ) " << Color::None
-      << (rb.m_threw ? (
-            rb.m_threw_as ? "threw as expected!"
-                          : "threw a DIFFERENT exception: ")
+      << (rb.m_threw ? (rb.m_threw_as ? "threw as expected!"
+                                      : "threw a DIFFERENT exception: ")
                      : "did NOT throw at all!")
       << Color::Cyan << rb.m_exception << "\n";
   }
@@ -6060,9 +6054,8 @@ void fulltext_log_assert_to_stream(std::ostream& s, const AssertData& rb)
                                                    //! in conditional
     s << Color::Cyan << assertString(rb.m_at) << "( " << rb.m_expr << ", \""
       << rb.m_exception_string << "\" ) " << Color::None
-      << (rb.m_threw ? (
-            !rb.m_failed ? "threw as expected!"
-                         : "threw a DIFFERENT exception: ")
+      << (rb.m_threw ? (!rb.m_failed ? "threw as expected!"
+                                     : "threw a DIFFERENT exception: ")
                      : "did NOT throw at all!")
       << Color::Cyan << rb.m_exception << "\n";
   }
@@ -6107,7 +6100,7 @@ struct JUnitReporter : public IReporter {
       std::tm timeInfo;
 #ifdef DOCTEST_PLATFORM_WINDOWS
       gmtime_s(&timeInfo, &rawtime);
-#else // DOCTEST_PLATFORM_WINDOWS
+#else  // DOCTEST_PLATFORM_WINDOWS
       gmtime_r(&rawtime, &timeInfo);
 #endif // DOCTEST_PLATFORM_WINDOWS
 

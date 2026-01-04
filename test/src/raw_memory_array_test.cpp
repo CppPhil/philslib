@@ -128,8 +128,9 @@ TEST_CASE("raw_memory_array_test")
       s = "Test"s;
     }
 
-    CHECK_UNARY(pl::algo::all_of(
-      ary1, [](const std::string& s) { return s == "Test"s; }));
+    CHECK_UNARY(pl::algo::all_of(ary1, [](const std::string& s) {
+      return s == "Test"s;
+    }));
 
     const pl::raw_memory_array<std::string>& r{ary2};
 
@@ -145,10 +146,11 @@ TEST_CASE("raw_memory_array_test")
       s = "Test"s;
     }
 
-    CHECK_UNARY(std::all_of(
-      std::crbegin(ary2), std::crend(ary2), [](const std::string& s) {
-        return s == "Test"s;
-      }));
+    CHECK_UNARY(
+      std::all_of(
+        std::crbegin(ary2), std::crend(ary2), [](const std::string& s) {
+          return s == "Test"s;
+        }));
 
     for (const std::string& s : pl::iterate_reversed(pl::as_const(ary1))) {
       CHECK_UNARY(s.empty());
@@ -177,8 +179,9 @@ TEST_CASE("raw_memory_array_test")
     const auto& retVal = ary1.fill("sample text"s);
     CHECK(retVal == ary1);
 
-    CHECK_UNARY(pl::algo::all_of(
-      ary1, [](const std::string& s) { return s == "sample text"s; }));
+    CHECK_UNARY(pl::algo::all_of(ary1, [](const std::string& s) {
+      return s == "sample text"s;
+    }));
 
     empty.assign("20");
     CHECK_UNARY(empty.empty());

@@ -92,7 +92,7 @@ TEST_CASE("empty_test")
 TEST_CASE("empty_constexpr_array_test")
 {
   static constexpr int a[]{1};
-  PL_TEST_STATIC_ASSERT(! pl::cont::empty(a));
+  PL_TEST_STATIC_ASSERT(!pl::cont::empty(a));
 
   CHECK_UNARY(true);
 }
@@ -102,7 +102,7 @@ TEST_CASE("empty_constexpr_std_array_test")
   static constexpr std::array<int, 0U> a1{};
   static constexpr std::array<int, 1U> a2{{1}};
   PL_TEST_STATIC_ASSERT(pl::cont::empty(a1));
-  PL_TEST_STATIC_ASSERT(! pl::cont::empty(a2));
+  PL_TEST_STATIC_ASSERT(!pl::cont::empty(a2));
 
   CHECK_UNARY(true);
 }
@@ -113,7 +113,7 @@ TEST_CASE("empty_constexpr_initializer_list_test")
   static constexpr std::initializer_list<int> il1{};
   static constexpr std::initializer_list<int> il2{1};
   PL_TEST_STATIC_ASSERT(pl::cont::empty(il1));
-  PL_TEST_STATIC_ASSERT(! pl::cont::empty(il2));
+  PL_TEST_STATIC_ASSERT(!pl::cont::empty(il2));
 
   CHECK_UNARY(true);
 }

@@ -48,16 +48,14 @@ namespace meta {
  *
  * Tag used for std::vector and std::deque.
  **/
-struct vectorlike_tag {
-};
+struct vectorlike_tag {};
 
 /*!
  * \brief Tag for list-like containers.
  *
  * Tag used for std::list and std::forward_list.
  **/
-struct listlike_tag {
-};
+struct listlike_tag {};
 
 /*!
  * \brief Tag for associative containers.
@@ -66,8 +64,7 @@ struct listlike_tag {
  * std::unordered_multiset, std::map, std::multimap, std::unordered_map and
  * std::unordered_multimap.
  **/
-struct associative_tag {
-};
+struct associative_tag {};
 
 /*!
  * \brief struct that has a nested type called category that is an alias

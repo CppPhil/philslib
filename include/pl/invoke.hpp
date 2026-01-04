@@ -47,7 +47,7 @@ template<typename Callable, typename... Args>
 inline auto invoke_impl(
   std::true_type,
   PL_IN Callable&& callable,
-  PL_IN            Args&&... args) noexcept(noexcept(std::
+  PL_IN Args&&... args) noexcept(noexcept(std::
                                             mem_fn(callable)(std::forward<Args>(
                                               args)...))) -> decltype(auto)
 {
@@ -62,7 +62,7 @@ template<typename Callable, typename... Args>
 inline auto invoke_impl(
   std::false_type,
   PL_IN Callable&& callable,
-  PL_IN            Args&&... args) noexcept(noexcept(std::
+  PL_IN Args&&... args) noexcept(noexcept(std::
                                             forward<Callable>(callable)(
                                               std::forward<Args>(args)...)))
   -> decltype(auto)
@@ -74,7 +74,7 @@ inline auto invoke_impl(
 #if PL_COMPILER == PL_COMPILER_MSVC
 #pragma warning(push)
 #pragma warning(disable : 4505) // unreferenced local function has been removed
-#endif // PL_COMPILER == PL_COMPILER_MSVC
+#endif                          // PL_COMPILER == PL_COMPILER_MSVC
 
 /*!
  * \brief Calls 'callable' with 'args'.
