@@ -30,7 +30,6 @@
  **/
 #ifndef INCG_PL_CHAR_TO_INT_HPP
 #define INCG_PL_CHAR_TO_INT_HPP
-#include <ciso646> // and
 #include <cstdint> // std::uint8_t
 
 namespace pl {

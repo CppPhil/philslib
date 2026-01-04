@@ -34,7 +34,6 @@
 #pragma GCC diagnostic pop
 #endif                              // PL_COMPILER == PL_COMPILER_GCC
 #include "../../include/pl/vla.hpp" // PL_VLA
-#include <ciso646>                  // and, not
 #include <cstddef>                  // std::size_t
 #include <string>  // std::string, std::literals::string_literals::operator""s
 #include <utility> // std::move

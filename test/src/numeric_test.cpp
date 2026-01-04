@@ -35,7 +35,6 @@
 #endif                                  // PL_COMPILER == PL_COMPILER_GCC
 #include "../../include/pl/numeric.hpp" // pl::is_even, pl::is_odd, pl::is_between
 #include "../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
-#include <ciso646>                      // not
 
 TEST_CASE("is_even_test")
 {

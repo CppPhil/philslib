@@ -32,7 +32,6 @@
 #ifndef INCG_PL_CONT_AT_HPP
 #define INCG_PL_CONT_AT_HPP
 #include "../annotations.hpp" // PL_IN
-#include <ciso646>            // not
 #include <cstddef>            // std::size_t
 #include <initializer_list>   // std::initializer_list
 #include <stdexcept>          // std::out_of_range

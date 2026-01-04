@@ -35,7 +35,6 @@
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../../include/pl/meta/is_reference_wrapper.hpp" // pl::meta::is_reference_wrapper, pl::meta::is_not_reference_wrapper
 #include "../../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
-#include <ciso646>                         // not
 #include <unordered_map>                   // std::unordered_map
 
 TEST_CASE("is_reference_wrapper_positive_test")

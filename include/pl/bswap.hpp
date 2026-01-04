@@ -37,7 +37,6 @@
 #include "meta/disable_if.hpp"   // pl::meta::disable_if_t
 #include "meta/remove_cvref.hpp" // pl::meta::remove_cvref_t
 #include <algorithm>             // std::reverse
-#include <ciso646>               // or
 #include <cstdint> // std::uint8_t, std::uint16_t, std::uint32_t, std::uint64_t, std::int8_t, std::int16_t, std::int32_t, std::int64_t
 #if PL_COMPILER == PL_COMPILER_MSVC
 #include <stdlib.h> // _byteswap_ushort, _byteswap_ulong, _byteswap_uint64

@@ -33,7 +33,6 @@
 #include "annotations.hpp" // PL_IN_OPT, PL_INOUT, PL_NODISCARD, PL_IMPLICIT
 #include "compiler.hpp"    // PL_COMPILER, PL_COMPILER_MSVC, ...
 #include "type_traits.hpp" // pl::enable_if_t, pl::add_lvalue_reference_t
-#include <ciso646>         // not
 #include <cstddef>         // std::nullptr_t, std::size_t
 #include <functional>      // std::hash
 #include <type_traits>     // std::is_convertible

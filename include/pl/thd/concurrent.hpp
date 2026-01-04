@@ -36,7 +36,6 @@
 #include "../compiler.hpp"       // PL_COMPILER, PL_COMPILER_MSVC
 #include "../invoke.hpp"         // pl::invoke
 #include "thread_safe_queue.hpp" // pl::thread_safe_queue
-#include <ciso646>               // not
 #include <exception>             // std::current_exception
 #include <functional>            // std::function
 #include <future>                // std::future, std::promise

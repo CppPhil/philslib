@@ -30,7 +30,6 @@
  **/
 #ifndef INCG_PL_META_NEGATION_HPP
 #define INCG_PL_META_NEGATION_HPP
-#include <ciso646>     // not
 #include <type_traits> // std::integral_constant
 
 namespace pl {

@@ -35,7 +35,6 @@
 #include "../apply.hpp"        // pl::apply
 #include "../byte.hpp"         // pl::byte
 #include <algorithm>           // std::for_each
-#include <ciso646>             // not, or
 #include <condition_variable>  // std::condition_variable
 #include <cstddef>             // std::size_t
 #include <cstdint>             // std::uint8_t

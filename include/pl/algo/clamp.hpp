@@ -32,7 +32,6 @@
 #define INCG_PL_ALGO_CLAMP_HPP
 #include "../annotations.hpp" // PL_IN
 #include "../compiler.hpp" // PL_COMPILER, PL_COMPILER_MSVC, PL_COMPILER_VERSION, PL_COMPILER_VERSION_CHECK
-#include <ciso646>    // not
 #include <functional> // std::less
 
 namespace pl {

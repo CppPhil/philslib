@@ -33,7 +33,6 @@
 #include "annotations.hpp"  // PL_IN, PL_INOUT
 #include "type_traits.hpp"  // pl::enable_if_t
 #include "voidify.hpp"      // PL_VOIDIFY
-#include <ciso646>          // and
 #include <cstddef>          // std::size_t, std::max_align_t
 #include <initializer_list> // std::initializer_list
 #include <new>              // ::operator new, __cpp_lib_launder, std::launder

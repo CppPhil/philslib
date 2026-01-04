@@ -31,7 +31,6 @@
 #ifndef INCG_PL_TOTAL_ORDER_HPP
 #define INCG_PL_TOTAL_ORDER_HPP
 #include "annotations.hpp" // PL_NODISCARD
-#include <ciso646>         // not
 
 /*!
  * \def PL_TOTAL_ORDER

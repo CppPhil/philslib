@@ -35,7 +35,6 @@
 #endif                                       // PL_COMPILER == PL_COMPILER_GCC
 #include "../../include/pl/as_ptr_const.hpp" // pl::as_ptr_const
 #include "../include/static_assert.hpp"      // PL_TEST_STATIC_ASSERT
-#include <ciso646>                           // not
 #include <type_traits> // std::is_same, std::remove_pointer_t, std::is_const
 
 namespace pl {

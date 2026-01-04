@@ -34,7 +34,6 @@
 #pragma GCC diagnostic pop
 #endif                               // PL_COMPILER == PL_COMPILER_GCC
 #include "../../include/pl/hash.hpp" // pl::hash
-#include <ciso646>                   // and
 #include <cstddef>                   // std::size_t
 #include <functional>                // std::hash
 #include <iterator>                  // std::end

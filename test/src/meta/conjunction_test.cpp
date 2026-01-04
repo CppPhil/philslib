@@ -35,7 +35,6 @@
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../../include/pl/meta/conjunction.hpp" // pl::meta::conjunction
 #include "../../include/static_assert.hpp"          // PL_TEST_STATIC_ASSERT
-#include <ciso646>                                  // not
 #include <string> // std::string, std::literals::string_literals::operator""s
 #include <type_traits> // std::enable_if_t, std::is_same, std::true_type, std::false_type
 

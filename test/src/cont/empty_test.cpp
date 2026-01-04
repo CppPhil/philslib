@@ -36,7 +36,6 @@
 #include "../../../include/pl/cont/empty.hpp" // pl::cont::empty
 #include "../../include/static_assert.hpp"    // PL_TEST_STATIC_ASSERT
 #include <array>                              // std::array
-#include <ciso646>                            // not
 #include <cstddef>                            // std::size_t
 #include <deque>                              // std::deque
 #include <initializer_list>                   // std::initializer_list

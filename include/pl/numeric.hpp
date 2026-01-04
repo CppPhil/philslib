@@ -30,7 +30,6 @@
  **/
 #ifndef INCG_PL_NUMERIC_HPP
 #define INCG_PL_NUMERIC_HPP
-#include <ciso646> // not, and
 
 namespace pl {
 /*!

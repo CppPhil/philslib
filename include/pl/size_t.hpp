@@ -34,7 +34,6 @@
 #include "compiler.hpp" // PL_COMPILER, PL_COMPILER_MSVC, PL_COMPILER_VERSION, PL_COMPILER_VERSION_CHECK
 #include "no_macro_substitution.hpp" // PL_NO_MACRO_SUBSTITUTION
 #include <cassert>                   // assert
-#include <ciso646>                   // and
 #include <cstddef>                   // std::size_t
 #include <limits>                    // std::numeric_limits
 

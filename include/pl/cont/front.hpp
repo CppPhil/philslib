@@ -33,7 +33,6 @@
 #define INCG_PL_CONT_FRONT_HPP
 #include "../annotations.hpp" // PL_IN
 #include "../assert.hpp"      // PL_DBG_CHECK_PRE
-#include <ciso646>            // not
 #include <cstddef>            // std::size_t
 #include <initializer_list>   // std::initializer_list
 

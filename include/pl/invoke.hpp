@@ -33,7 +33,6 @@
 #include "annotations.hpp" // PL_IN
 #include "compiler.hpp"    // PL_COMPILER, PL_COMPILER_MSVC
 #include "type_traits.hpp" // pl::decay_t
-#include <ciso646>         // not
 #include <functional>      // std::mem_fn
 #include <type_traits> // std::is_member_pointer, std::true_type, std::false_type
 #include <utility>     // std::forward

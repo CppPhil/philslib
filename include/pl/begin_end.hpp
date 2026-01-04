@@ -35,7 +35,6 @@
 #include "meta/disable_if.hpp"          // pl::meta::disable_if_t
 #include "meta/is_initializer_list.hpp" // pl::meta::is_initializer_list
 #include "meta/remove_cvref.hpp"        // pl::meta::remove_cvref_t
-#include <ciso646>                      // or
 #include <cstddef>                      // std::size_t
 #include <initializer_list>             // std::initializer_list
 #include <iterator>                     // std::reverse_iterator

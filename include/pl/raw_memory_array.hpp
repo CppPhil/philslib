@@ -34,7 +34,6 @@
 #include "annotations.hpp"  // PL_NODISCARD, PL_OUT, PL_IN
 #include "assert.hpp"       // PL_DBG_CHECK_PRE
 #include <algorithm> // std::fill, std::equal, std::lexicographical_compare
-#include <ciso646>   // not
 #include <cstddef>   // std::size_t, std::ptrdiff_t
 #include <iterator>  // std::reverse_iterator
 #include <memory>    // std::uninitialized_fill

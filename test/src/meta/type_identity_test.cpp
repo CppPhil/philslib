@@ -35,7 +35,6 @@
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../../include/pl/meta/type_identity.hpp" // pl::meta::type_identity_t
 #include "../../include/static_assert.hpp"            // PL_TEST_STATIC_ASSERT
-#include <ciso646>                                    // not
 #include <string>                                     // std::string
 #include <type_traits>                                // std::is_same
 #include <vector>                                     // std::vector

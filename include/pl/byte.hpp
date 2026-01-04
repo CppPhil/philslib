@@ -32,7 +32,6 @@
 #define INCG_PL_BYTE_HPP
 #include "compiler.hpp" // PL_COMPILER, PL_COMPILER_MSVC, PL_COMPILER_VERSION, PL_COMPILER_VERSION_CHECK
 #include <cassert> // assert
-#include <ciso646> // and
 #include <climits> // UCHAR_MAX
 
 namespace pl {

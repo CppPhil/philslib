@@ -35,7 +35,6 @@
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../../include/pl/meta/is_initializer_list.hpp" // pl::meta::is_initializer_list
 #include "../../include/static_assert.hpp" // PL_TEST_STATIC_ASSERT
-#include <ciso646>                         // not
 #include <initializer_list>                // std::initializer_list
 #include <string>                          // std::string
 #include <vector>                          // std::vector

@@ -35,7 +35,6 @@
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../../include/pl/meta/disable_if.hpp" // pl::meta::disable_if_t
 #include "../../include/static_assert.hpp"         // PL_TEST_STATIC_ASSERT
-#include <ciso646>                                 // not
 #include <type_traits> // std::true_type, std::false_type, std::is_same
 
 namespace pl {

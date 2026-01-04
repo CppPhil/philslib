@@ -35,7 +35,6 @@
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../../include/pl/meta/disjunction.hpp" // pl::meta::disjunction
 #include "../../include/static_assert.hpp"          // PL_TEST_STATIC_ASSERT
-#include <ciso646>                                  // not
 #include <type_traits> // std::is_integral, std::is_same, std::is_trivially_copyable
 #include <vector>      // std::vector
 

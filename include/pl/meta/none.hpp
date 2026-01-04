@@ -32,7 +32,6 @@
 #define INCG_PL_META_NONE_HPP
 #include "bool_constant.hpp" // pl::meta::bool_constant
 #include "disjunction.hpp"   // pl::meta::disjunction
-#include <ciso646>           // not
 
 namespace pl {
 namespace meta {

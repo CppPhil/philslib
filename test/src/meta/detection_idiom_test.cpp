@@ -35,7 +35,6 @@
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../../include/pl/meta/detection_idiom.hpp" // pl::meta::nonesuch, pl::meta::is_detected, pl::meta::detected_t, pl::meta::detected_or, pl::meta::detected_or_t, pl::meta::is_detected_exact, pl::meta::is_detected_convertible
 #include "../../include/static_assert.hpp"              // PL_TEST_STATIC_ASSERT
-#include <ciso646>                                      // not
 #include <cstddef>                                      // std::ptrdiff_t
 #include <string>                                       // std::string
 #include <type_traits> // std::is_same, std::true_type, std::false_type

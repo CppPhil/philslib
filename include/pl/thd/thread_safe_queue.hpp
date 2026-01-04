@@ -31,7 +31,6 @@
 #ifndef INCG_PL_THD_THREAD_SAFE_QUEUE_HPP
 #define INCG_PL_THD_THREAD_SAFE_QUEUE_HPP
 #include "../annotations.hpp" // PL_IN, PL_NODISCARD
-#include <ciso646>            // not
 #include <condition_variable> // std::condition_variable
 #include <mutex>              // std::mutex, std::unique_lock
 #include <queue>              // std::queue

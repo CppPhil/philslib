@@ -33,7 +33,6 @@
 #include "annotations.hpp"       // PL_IN
 #include "invoke.hpp"            // pl::invoke
 #include "meta/remove_cvref.hpp" // pl::meta::remove_cvref_t
-#include <ciso646>               // not
 #include <type_traits>           // std::is_nothrow_move_constructible
 #include <utility>               // std::move, std::forward
 

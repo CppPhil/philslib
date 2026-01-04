@@ -38,7 +38,6 @@
 #include "strcontains.hpp"           // pl::strcontains
 #include "type_traits.hpp" // pl::remove_const_t, pl::remove_pointer_t, pl::enable_if_t
 #include <algorithm>   // std::min, std::copy_n
-#include <ciso646>     // and, not
 #include <cstddef>     // std::size_t, std::ptrdiff_t, std::nullptr_t
 #include <ios>         // std::streamsize
 #include <iterator>    // std::reverse_iterator

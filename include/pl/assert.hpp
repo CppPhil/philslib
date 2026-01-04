@@ -34,7 +34,6 @@
 #include "begin_end_macro.hpp" // PL_BEGIN_MACRO, PL_END_MACRO
 #include "except.hpp" // pl::assertion_violation_exception, pl::precondition_violation_exception, pl::postcondition_violation_exception
 #include <cassert>    // NDEBUG
-#include <ciso646>    // not
 #include <string>     // std::string
 
 /*!

@@ -25,7 +25,6 @@
  */
 
 #include "../include/cheshire_cat_test_type.hpp" // pl::test::cheshire_cat_test_type
-#include <ciso646>                               // and, not
 #include <string>                                // std::string, std::stoull
 #include <utility>                               // std::move, std::swap
 

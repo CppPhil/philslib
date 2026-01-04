@@ -35,7 +35,6 @@
 #endif                                       // PL_COMPILER == PL_COMPILER_GCC
 #include "../../include/pl/observer_ptr.hpp" // pl::observer_ptr
 #include "../include/static_assert.hpp"      // PL_TEST_STATIC_ASSERT
-#include <ciso646>                           // not
 #include <cstring>                           // std::strcmp
 #include <functional>                        // std::hash
 #include <string>                            // std::string

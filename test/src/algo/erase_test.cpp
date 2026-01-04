@@ -35,7 +35,6 @@
 #endif // PL_COMPILER == PL_COMPILER_GCC
 #include "../../../include/pl/algo/erase.hpp"
 #include <algorithm> // std::all_of
-#include <ciso646>   // and, or
 #include <deque>
 #include <forward_list>
 #include <iterator> // std::begin, std::end

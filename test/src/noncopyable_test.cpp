@@ -35,7 +35,6 @@
 #endif                                      // PL_COMPILER == PL_COMPILER_GCC
 #include "../../include/pl/noncopyable.hpp" // PL_NONCOPYABLE
 #include "../include/static_assert.hpp"     // PL_TEST_STATIC_ASSERT
-#include <ciso646>                          // not
 #include <type_traits> // std::is_copy_constructible, std::is_copy_assignable
 
 namespace pl {
