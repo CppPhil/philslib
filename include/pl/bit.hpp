@@ -55,8 +55,7 @@ constexpr
 #else
 inline
 #endif
-  Numeric&
-  set_bit(PL_INOUT Numeric& numeric, Numeric bit) noexcept
+  Numeric& set_bit(PL_INOUT Numeric& numeric, Numeric bit) noexcept
 {
   static_assert(
     std::is_unsigned<Numeric>::value,
@@ -83,8 +82,7 @@ constexpr
 #else
 inline
 #endif
-  Numeric&
-  clear_bit(PL_INOUT Numeric& numeric, Numeric bit) noexcept
+  Numeric& clear_bit(PL_INOUT Numeric& numeric, Numeric bit) noexcept
 {
   static_assert(
     std::is_unsigned<Numeric>::value,
@@ -116,8 +114,7 @@ constexpr
 #else
 inline
 #endif
-  Numeric&
-  toggle_bit(PL_INOUT Numeric& numeric, Numeric bit) noexcept
+  Numeric& toggle_bit(PL_INOUT Numeric& numeric, Numeric bit) noexcept
 {
   static_assert(
     std::is_unsigned<Numeric>::value,

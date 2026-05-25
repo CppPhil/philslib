@@ -128,21 +128,17 @@ inline print_bytes_as_hex::print_bytes_as_hex(
 }
 
 inline print_bytes_as_hex::print_bytes_as_hex(const this_type&) noexcept(
-  std::is_nothrow_copy_constructible<std::string>::value)
-  = default;
+  std::is_nothrow_copy_constructible<std::string>::value) = default;
 
 inline print_bytes_as_hex::print_bytes_as_hex(this_type&&) noexcept(
-  std::is_nothrow_move_constructible<std::string>::value)
-  = default;
+  std::is_nothrow_move_constructible<std::string>::value) = default;
 
 inline print_bytes_as_hex&
 print_bytes_as_hex::operator=(const this_type&) noexcept(
-  std::is_nothrow_copy_assignable<std::string>::value)
-  = default;
+  std::is_nothrow_copy_assignable<std::string>::value) = default;
 
 inline print_bytes_as_hex& print_bytes_as_hex::operator=(this_type&&) noexcept(
-  std::is_nothrow_move_assignable<std::string>::value)
-  = default;
+  std::is_nothrow_move_assignable<std::string>::value) = default;
 
 inline std::ostream& operator<<(
   PL_INOUT std::ostream&          os,

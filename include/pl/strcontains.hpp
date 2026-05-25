@@ -42,8 +42,7 @@ template<typename CharT>
   || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
 constexpr
 #endif
-  bool
-  strcontains(
+  bool strcontains(
     PL_IN PL_NULL_TERMINATED(const CharT*) haystack,
     PL_IN PL_NULL_TERMINATED(const CharT*) needle) noexcept
 {
@@ -72,8 +71,7 @@ template<typename Ptr>
   || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
 constexpr
 #endif
-    Ptr
-    get_pointer(Ptr ptr, std::true_type) noexcept
+  Ptr get_pointer(Ptr ptr, std::true_type) noexcept
 {
   return ptr;
 }
@@ -83,8 +81,7 @@ template<typename Str>
   || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
 constexpr
 #endif
-  auto
-  get_pointer(const Str& str, std::false_type) noexcept
+  auto get_pointer(const Str& str, std::false_type) noexcept
 {
   return str.data();
 }
@@ -106,8 +103,7 @@ PL_NODISCARD
   || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
   constexpr
 #endif
-  bool
-  strcontains(const Str1& haystack, const Str2& needle) noexcept
+  bool strcontains(const Str1& haystack, const Str2& needle) noexcept
 {
   return ::pl::detail::strcontains(
     ::pl::detail::get_pointer(

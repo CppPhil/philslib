@@ -119,8 +119,7 @@ public:
   || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
   constexpr
 #endif
-    element_type*
-    release() noexcept
+    element_type* release() noexcept
   {
     auto* return_value = m_p;
     m_p                = nullptr;
@@ -138,8 +137,7 @@ public:
   || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
   constexpr
 #endif
-    void
-    reset(PL_IN_OPT element_type* p = nullptr) noexcept
+    void reset(PL_IN_OPT element_type* p = nullptr) noexcept
   {
     m_p = p;
   }
@@ -156,8 +154,7 @@ public:
   || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
   constexpr
 #endif
-    void
-    swap(PL_INOUT::pl::observer_ptr<element_type>& other) noexcept
+    void swap(PL_INOUT::pl::observer_ptr<element_type>& other) noexcept
   {
     ::std::swap(m_p, other.m_p);
   }

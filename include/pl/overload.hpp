@@ -57,7 +57,7 @@ public:
   {
   }
 
-  using Lambda1::               operator();
+  using Lambda1::operator();
   using overloaded<Lambdas...>::operator();
 };
 

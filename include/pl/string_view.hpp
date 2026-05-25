@@ -428,8 +428,7 @@ public:
   || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
   constexpr
 #endif
-    void
-    remove_prefix(size_type characters_to_remove) noexcept
+    void remove_prefix(size_type characters_to_remove) noexcept
   {
     if (characters_to_remove > size()) {
       characters_to_remove = size();
@@ -450,8 +449,7 @@ public:
   || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
   constexpr
 #endif
-    void
-    swap(PL_INOUT this_type& other) noexcept
+    void swap(PL_INOUT this_type& other) noexcept
   {
     const const_pointer ptr = m_data;
     m_data                  = other.m_data;
@@ -490,8 +488,7 @@ public:
   || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
   constexpr
 #endif
-    int
-    compare(this_type other) const noexcept
+    int compare(this_type other) const noexcept
   {
     const size_type length{
       std::min PL_NO_MACRO_SUBSTITUTION(size(), other.size())};
@@ -520,8 +517,7 @@ public:
   || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
   constexpr
 #endif
-    int
-    compare(PL_IN PL_NULL_TERMINATED(const_pointer) string) const noexcept
+    int compare(PL_IN PL_NULL_TERMINATED(const_pointer) string) const noexcept
   {
     return compare(this_type{string});
   }
@@ -629,8 +625,7 @@ template<typename CharT, typename Traits>
   || (PL_COMPILER_VERSION >= PL_COMPILER_VERSION_CHECK(19, 11, 0))
 constexpr
 #endif
-  void
-  swap(
+  void swap(
     PL_INOUT basic_string_view<CharT, Traits>& first,
     PL_INOUT basic_string_view<CharT, Traits>& second) noexcept
 {
