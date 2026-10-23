@@ -2533,7 +2533,7 @@ public:
       return true;
     }
     catch (...) {
-    }                       // NOLINT(bugprone-empty-catch)
+    } // NOLINT(bugprone-empty-catch)
 #endif                      // DOCTEST_CONFIG_NO_EXCEPTIONS
     static_cast<void>(res); // to silence -Wunused-parameter
     return false;

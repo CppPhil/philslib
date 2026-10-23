@@ -30,23 +30,19 @@
  **/
 #ifndef INCG_PL_THD_THREAD_POOL_HPP
 #define INCG_PL_THD_THREAD_POOL_HPP
-#include "../algo/destroy.hpp" // pl::algo::destroy
-#include "../annotations.hpp"  // PL_IN, PL_NODISCARD
-#include "../apply.hpp"        // pl::apply
-#include "../byte.hpp"         // pl::byte
-#include <algorithm>           // std::for_each
-#include <condition_variable>  // std::condition_variable
-#include <cstddef>             // std::size_t
-#include <cstdint>             // std::uint8_t
-#include <future>              // std::future, std::promise
-#include <memory>              // std::shared_ptr, std::unique_ptr
-#include <mutex>               // std::mutex
-#include <new>                 // new
-#include <queue>               // std::priority_queue
-#include <thread>              // std::thread
-#include <tuple>               // std::make_tuple
-#include <utility>             // std::move
-#include <vector>              // std::vector
+#include "../annotations.hpp" // PL_IN, PL_NODISCARD
+#include "../apply.hpp"       // pl::apply
+#include <condition_variable> // std::condition_variable
+#include <cstddef>            // std::size_t
+#include <cstdint>            // std::uint8_t
+#include <future>             // std::future, std::promise
+#include <memory>             // std::shared_ptr, std::unique_ptr
+#include <mutex>              // std::mutex
+#include <queue>              // std::priority_queue
+#include <thread>             // std::thread
+#include <tuple>              // std::make_tuple
+#include <utility>            // std::move
+#include <vector>             // std::vector
 
 namespace pl {
 namespace thd {
@@ -418,61 +414,38 @@ private:
                                  *   shutdown the threads in the join function
                                  **/
   bool m_is_finished_shared;    //!< flag that will be set to true on shutdown.
-  const std::size_t           m_thread_count; //!< the amount of threads.
-  std::unique_ptr<pl::byte[]> m_threads;      /*!< raw memory that the threads
-                                               *   live in.
-                                               **/
-  std::thread* m_thread_begin;                //!< iterator to the first thread.
-  std::thread* m_thread_end; //!< end iterator of the range of threads.
+  std::vector<std::thread> m_threads; //!< the threads of this thread_pool.
 };
 
 inline thread_pool::thread_pool(std::size_t amt_threads)
-    : m_tasks_shared{ },
-      m_mutex{ },
-      m_cv{ },
-      m_is_finished_shared{ false }, // start out not finished
-      m_thread_count{ amt_threads },
-      m_threads{ // get the memory needed for the threads.
-                 // the unique_ptr will deallocate the memory automatically.
-          std::make_unique<pl::byte[]>(m_thread_count * sizeof(std::thread))
-      },
-      m_thread_begin{ // begin iterator to the range of threads
-          reinterpret_cast<std::thread *>(m_threads.get())
-      },
-      m_thread_end{ m_thread_begin + m_thread_count } /* end iterator.
-                                                       * is out of bounds.
-                                                       */
+  : m_tasks_shared{}
+  , m_mutex{}
+  , m_cv{}
+  , m_is_finished_shared{false}
+  , m_threads{}
 {
-  if (m_thread_count == 0) {
-    return;
+  m_threads.reserve(amt_threads);
+
+  try {
+    for (std::size_t i{0}; i < amt_threads; ++i) {
+      m_threads.emplace_back(&thread_pool::thread_function, this);
+    }
   }
-
-  m_thread_begin = ::new (
-    const_cast<void*>(static_cast<const volatile void*>(m_thread_begin)))
-    std::thread{&thread_pool::thread_function, this};
-
-  for (std::size_t i{1}; i < m_thread_count; ++i) {
-    ::new (
-      const_cast<void*>(static_cast<const volatile void*>(m_thread_begin + i)))
-      std::thread{&thread_pool::thread_function, this};
+  catch (...) {
+    // The destructor won't run, so join the threads started so far.
+    join();
+    throw;
   }
 }
 
 inline thread_pool::~thread_pool()
 {
-  // join the threads
-  // this will shut all the threads down and then actually join them.
   join();
-
-  /* Call the destructors of the threads.
-   * the unique_ptr will only free the raw memory of pl::bytes.
-   **/
-  algo::destroy(m_thread_begin, m_thread_end);
 }
 
 PL_NODISCARD inline std::size_t thread_pool::thread_count() const
 {
-  return m_thread_count; // return the requested constant.
+  return m_threads.size();
 }
 
 PL_NODISCARD inline std::size_t thread_pool::tasks_waiting_for_execution() const
@@ -540,8 +513,9 @@ inline void thread_pool::join()
   m_cv.notify_all();
 
   // join every thread.
-  std::for_each(
-    m_thread_begin, m_thread_end, [](PL_INOUT std::thread& t) { t.join(); });
+  for (std::thread& thread : m_threads) {
+    thread.join();
+  }
 }
 } // namespace thd
 } // namespace pl

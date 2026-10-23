@@ -36,6 +36,7 @@
 #include <cstddef>          // std::size_t, std::max_align_t
 #include <initializer_list> // std::initializer_list
 #include <new>              // ::operator new, __cpp_lib_launder, std::launder
+#include <type_traits>      // std::is_nothrow_move_constructible, ...
 #include <utility>          // std::move, std::forward
 
 namespace pl {
@@ -143,7 +144,9 @@ public:
    * \param other The other cheshire_cat to move construct from.
    * \note 'other' will be left in its moved-from state.
    **/
-  cheshire_cat(PL_INOUT this_type&& other) noexcept : cheshire_cat{*other}
+  cheshire_cat(PL_INOUT this_type&& other) noexcept(
+    std::is_nothrow_move_constructible<element_type>::value)
+    : cheshire_cat{std::move(*other)}
   {
   }
   /*!
@@ -164,7 +167,8 @@ public:
    * \param value The rvalue element_type to construct from.
    * \note 'value' will be left in its moved-from state.
    **/
-  explicit cheshire_cat(PL_INOUT element_type&& value) noexcept
+  explicit cheshire_cat(PL_INOUT element_type&& value) noexcept(
+    std::is_nothrow_move_constructible<element_type>::value)
     : m_storage{}
 #ifndef __cpp_lib_launder
     , m_ptr{}
@@ -232,9 +236,10 @@ public:
    * \return A reference to this object.
    * \note 'other' will be left in its moved-from state.
    **/
-  this_type& operator=(PL_INOUT this_type&& other) noexcept
+  this_type& operator=(PL_INOUT this_type&& other) noexcept(
+    std::is_nothrow_move_assignable<element_type>::value)
   {
-    *this = *other;
+    *this = std::move(*other);
     return *this;
   }
 
@@ -255,7 +260,8 @@ public:
    * \return A reference to this object.
    * \note 'value' will be left in its moved-from state.
    **/
-  this_type& operator=(PL_INOUT element_type&& value) noexcept
+  this_type& operator=(PL_INOUT element_type&& value) noexcept(
+    std::is_nothrow_move_assignable<element_type>::value)
   {
     **this = std::move(value);
     return *this;
